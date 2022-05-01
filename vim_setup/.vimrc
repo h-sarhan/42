@@ -25,6 +25,20 @@ nnoremap q <c-v>
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
+
+syntax enable
 set mouse=a
 syntax on
-colorscheme onedark
+
+set nocompatible
+
+call plug#begin()
+
+Plug 'sheerun/vim-polyglot'
+Plug 'sainnhe/edge'
+call plug#end()
+
+:set background=dark
+let g:edge_better_performance = 1
+let g:edge_style = 'neon'
+colorscheme edge
