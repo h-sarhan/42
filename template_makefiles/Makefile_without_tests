@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/01 10:56:20 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/02 11:56:17 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJS := $(SRCS:%.c=$(OBJDIR)/%.o)
 
 MUSTAFA_FLAGS = -Werror -Wall -Wextra
 
-.PHONY: clean
+.PHONY: clean norm
 TARGET = changethis
 
 $(TARGET): $(OBJS)
@@ -26,6 +26,9 @@ $(TARGET): $(OBJS)
 
 $(OBJDIR)/%.o: %.c | $(OBJDIR)
 	gcc -c $(MUSTAFA_FLAGS) -o $@ $<
+
+norm:
+	norminette $(SRCS)
 
 clean:
 	rm -rf $(OBJDIR) $(TARGET)
