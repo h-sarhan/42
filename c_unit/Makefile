@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/01 16:57:18 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/02 11:01:09 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,14 @@ OBJS := $(SRCS:%.c=$(OBJDIR)/%.o)
 
 MUSTAFA_FLAGS = -Werror -Wall -Wextra
 
-.PHONY: clean
+.PHONY: clean test
 TARGET = tests
 
 $(TARGET): $(OBJS)
 	gcc -o $@ $^
+
+test: $(TARGET)
+	./$(TARGET)
 
 $(OBJDIR)/%.o: %.c | $(OBJDIR)
 	gcc -c $(MUSTAFA_FLAGS) -o $@ $<

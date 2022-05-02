@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 15:06:28 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/01 17:36:01 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/02 10:53:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int main(void)
 	test_assert_char_equal();
 }
 */
-
 int	main(void)
 {
 	print_msg_color("Uncomment the tests :)\n", BLUE);

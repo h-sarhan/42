@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    Makefile_with_tests                                :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/01 08:16:12 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/02 11:00:29 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,12 @@ C_UNIT_SRCS := $(wildcard $(C_UNIT_DIR)/*.c)
 OBJS := $(SRCS:%.c=$(OBJDIR)/%.o)
 C_UNIT_OBJS := $(C_UNIT_SRCS:%.c=$(OBJDIR)/%.o)
 
-UNIT_TEST_SRCS := tests.c
-UNIT_TEST_OBJS := tests.o
+UNIT_TEST_SRCS = tests.c
+UNIT_TEST_OBJS = tests.o
 
 MUSTAFA_FLAGS = -Werror -Wall -Wextra
 
-.PHONY: clean
+.PHONY: clean test
 TARGET = changethis
 TEST_TARGET = tests
 
@@ -33,6 +33,9 @@ $(TARGET): $(OBJS)
 
 $(TEST_TARGET): $(UNIT_TEST_OBJS) $(C_UNIT_OBJS) $(OBJS)
 	gcc -o $@ $^
+	./$(TEST_TARGET)
+
+test: $(TEST_TARGET)
 	./$(TEST_TARGET)
 
 $(OBJDIR)/%.o: %.c | $(OBJDIR)
