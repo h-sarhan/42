@@ -6,28 +6,45 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:53:55 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/01 17:30:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/02 11:39:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "c_unit.h"
 
-void	print_int_array(int *arr, int arr_len)
+void	print_int_array(int *arr, int arr_len, char *color)
 {
 	int	idx;
 
 	idx = 0;
-	write(1, YELLOW, 5);
+	write(1, color, 5);
 	write(1, "[", 1);
 	while (idx < arr_len - 1)
 	{
-		ft_putnbr(arr[idx]);
+		ft_putnbr(arr[idx], color);
 		write(1, ", ", 2);
 		idx++;
 	}
-	ft_putnbr(arr[idx]);
+	ft_putnbr(arr[idx], color);
 	write(1, "]\n", 2);
 	write(1, RESET, 5);
+}
+
+void	print_str_array(char **arr, int arr_len, char *color)
+{
+	int	idx;
+
+	idx = 0;
+	write(1, color, 5);
+	write(1, "[", 1);
+	while (idx < arr_len - 1)
+	{
+		print_msg_color(arr[idx], color);
+		print_msg_color(", ", YELLOW);
+		idx++;
+	}
+	print_msg_color(arr[idx], color);
+	print_msg_color("]\n", YELLOW);
 }
 
 void	print_msg_color(char *msg, char *color)
@@ -41,10 +58,11 @@ void	print_msg_color(char *msg, char *color)
 	write(1, RESET, 5);
 }
 
-void	ft_putnbr(int nb)
+void	ft_putnbr(int nb, char *color)
 {
 	char	nb_as_char;
 
+	write(1, color, 5);
 	if (nb < 0)
 	{
 		write(1, "-", 1);
@@ -52,11 +70,14 @@ void	ft_putnbr(int nb)
 	}
 	if (nb >= 10)
 	{
-		ft_putnbr(nb / 10);
+		ft_putnbr(nb / 10, color);
 		nb %= 10;
 	}
-	nb_as_char = nb + '0';
-	write(1, &nb_as_char, 1);
+	if (nb < 10)
+	{
+		nb_as_char = nb + '0';
+		write(1, &nb_as_char, 1);
+	}
 }
 
 int	ft_strcmp(char *s1, char *s2)
