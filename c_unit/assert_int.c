@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:51:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/02 11:16:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/02 16:51:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	assert_int_equal(char *msg, int result, int expected)
 		write(1, "\n", 1);
 	}
 	else
-		print_msg_color(CHECKMARK " Test Passed!\n\n", SUCCESS);
+		print_msg_color(CHECKMARK " Test Passed!\n", SUCCESS);
 }
 
 void	assert_int_array_equal(char *msg, int *result, int *expected, int len)
@@ -54,7 +54,7 @@ void	assert_int_array_equal(char *msg, int *result, int *expected, int len)
 		write(1, "\n", 1);
 	}
 	else
-		print_msg_color(CHECKMARK " Test Passed!\n\n", SUCCESS);
+		print_msg_color(CHECKMARK " Test Passed!\n", SUCCESS);
 }
 
 void	assert_int_array_is_sorted(char *msg, int *arr, int len)
@@ -80,5 +80,5 @@ void	assert_int_array_is_sorted(char *msg, int *arr, int len)
 		write(1, "\n", 1);
 	}
 	else
-		print_msg_color(CHECKMARK " Test Passed!\nArray is Sorted\n\n", SUCCESS);
+		print_msg_color(CHECKMARK " Test Passed!\nArray is Sorted\n", SUCCESS);
 }

@@ -1,6 +1,6 @@
 set tabstop=4
 set shiftwidth=4
-set number
+set relativenumber
 let g:user42 = 'hsarhan'
 let g:mail42 = 'hassanAsarhan@outlook.com'
 set softtabstop=4

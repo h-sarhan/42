@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 11:39:58 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/02 11:47:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/02 16:24:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	assert_true(char *msg, int result)
 	write(1, "\n", 1);
 	if (result)
 	{
-		print_msg_color(CHECKMARK " Test Passed!\n\n", SUCCESS);
+		print_msg_color(CHECKMARK " Test Passed!\n", SUCCESS);
 	}
 	else
 	{
 		print_msg_color(CROSS " Test Failed!\n", ERROR);
-		print_msg_color("Result is False\n\n", ERROR);
+		print_msg_color("Result is False\n", ERROR);
 	}
 }
 
@@ -33,11 +33,11 @@ void	assert_false(char *msg, int result)
 	write(1, "\n", 1);
 	if (!result)
 	{
-		print_msg_color(CHECKMARK " Test Passed!\n\n", SUCCESS);
+		print_msg_color(CHECKMARK " Test Passed!\n", SUCCESS);
 	}
 	else
 	{
 		print_msg_color(CROSS " Test Failed!\n", ERROR);
-		print_msg_color("Result is True\n\n", ERROR);
+		print_msg_color("Result is True\n", ERROR);
 	}
 }

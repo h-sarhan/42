@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:53:26 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/02 11:38:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/02 16:51:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	assert_str_equal(char *msg, char *result, char *expected)
 		write(1, "\n", 1);
 		print_msg_color("Expected = ", YELLOW);
 		print_msg_color(expected, YELLOW);
-		write(1, "\n\n", 2);
+		write(1, "\n", 2);
 	}
 	else
-		print_msg_color(CHECKMARK " Test Passed!\n\n", SUCCESS);
+		print_msg_color(CHECKMARK " Test Passed!\n", SUCCESS);
 }
 
 void	assert_char_equal(char *msg, char result, char expected)
@@ -43,10 +43,10 @@ void	assert_char_equal(char *msg, char result, char expected)
 		print_msg_color("\nExpected = ", YELLOW);
 		write(1, YELLOW, 5);
 		write(1, &expected, 1);
-		write(1, "\n\n" RESET, 7);
+		write(1, "\n" RESET, 7);
 	}
 	else
-		print_msg_color(CHECKMARK " Test Passed!\n\n", SUCCESS);
+		print_msg_color(CHECKMARK " Test Passed!\n", SUCCESS);
 }
 
 void	assert_str_array_equal(char *msg, char **res, char **expected, int len)
@@ -74,7 +74,7 @@ void	assert_str_array_equal(char *msg, char **res, char **expected, int len)
 		write(1, "\n", 1);
 	}
 	else
-		print_msg_color(CHECKMARK " Test Passed!\n\n", SUCCESS);
+		print_msg_color(CHECKMARK " Test Passed!\n", SUCCESS);
 }
 
 void	assert_str_array_is_sorted(char *msg, char **arr, int arr_len)
@@ -100,5 +100,5 @@ void	assert_str_array_is_sorted(char *msg, char **arr, int arr_len)
 		write(1, "\n", 1);
 	}
 	else
-		print_msg_color(CHECKMARK " Test Passed!\nArray is Sorted\n\n", SUCCESS);
+		print_msg_color(CHECKMARK " Test Passed!\nArray is Sorted\n", SUCCESS);
 }
