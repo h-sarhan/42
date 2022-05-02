@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/02 11:53:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/02 13:36:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define C_UNIT_H
 
 # include <unistd.h>
-# include <string.h>
-# include <stdio.h>
 
+// Colors
 # define SUCCESS "\x1b[32m"
 # define YELLOW  "\x1b[33m"
 # define BLUE  "\x1b[36m"
@@ -24,6 +23,7 @@
 # define RESET "\x1b[0m"
 # define WHITE "\x1b[0m"
 
+// Symbols
 # define CHECKMARK "\xE2\x9C\x93"
 # define CROSS "\u2717"
 
