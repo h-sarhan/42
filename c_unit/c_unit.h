@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/02 13:36:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/03 12:00:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ void	assert_str_array_is_sorted(char *msg, char **arr, int arr_len);
 void	assert_is_not_null(char *msg, void *result);
 void	assert_is_null(char *msg, void *result);
 
+// assert_bool.c
+void	assert_true(char *msg, int result);
+void	assert_false(char *msg, int result);
+
 // test_utils.c
 void	print_int_array(int *arr, int arr_len, char *color);
 void	print_msg_color(char *msg, char *color);
 void	print_str_array(char **arr, int arr_len, char *color);
 void	ft_putnbr(int nb, char *color);
 int		ft_strcmp(char *s1, char *s2);
-
-// assert_bool.c
-void	assert_true(char *msg, int result);
-void	assert_false(char *msg, int result);
 #endif
