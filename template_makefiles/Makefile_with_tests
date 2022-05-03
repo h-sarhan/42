@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/03 12:47:56 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/03 16:17:23 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,10 +29,10 @@ TARGET = changethis
 TEST_TARGET = tests
 
 $(TARGET): $(OBJS)
-	gcc -o $@ $^
+	gcc $(MUSTAFA_FLAGS) -o $@ $^
 
 $(TEST_TARGET): $(UNIT_TEST_OBJS) $(C_UNIT_OBJS) $(OBJS)
-	gcc -o $@ $^
+	gcc $(MUSTAFA_FLAGS) -o $@ $^
 
 test: $(TEST_TARGET)
 	./$(TEST_TARGET)

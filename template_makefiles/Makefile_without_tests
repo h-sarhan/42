@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/03 12:47:38 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/03 16:18:07 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ MUSTAFA_FLAGS = -Werror -Wall -Wextra
 TARGET = changethis
 
 $(TARGET): $(OBJS)
-	gcc -o $@ $^
+	gcc $(MUSTAFA_FLAGS) -o $@ $^
 
 $(OBJDIR)/%.o: %.c | $(OBJDIR)
 	gcc -c $(MUSTAFA_FLAGS) -o $@ $<
