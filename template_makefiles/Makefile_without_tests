@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/03 09:31:50 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/03 12:47:38 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJS := $(SRCS:%.c=$(OBJDIR)/%.o)
 
 MUSTAFA_FLAGS = -Werror -Wall -Wextra
 
-.PHONY: clean norm
+.PHONY: clean norm re
 TARGET = changethis
 
 $(TARGET): $(OBJS)
@@ -32,6 +32,8 @@ norm:
 
 clean:
 	rm -rf $(OBJDIR) $(TARGET)
+
+re: clean $(TARGET)
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)

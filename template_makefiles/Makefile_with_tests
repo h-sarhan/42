@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/03 09:31:43 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/03 12:47:56 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ UNIT_TEST_OBJS = tests.o
 
 MUSTAFA_FLAGS = -Werror -Wall -Wextra
 
-.PHONY: clean test norm
+.PHONY: clean test norm re retest
 TARGET = changethis
 TEST_TARGET = tests
 
@@ -45,6 +45,12 @@ $(OBJDIR)/%.o: %.c | $(OBJDIR)
 
 clean:
 	rm -rf $(OBJDIR) $(TARGET) $(TEST_TARGET) $(UNIT_TEST_OBJS)
+
+re: clean $(TARGET)
+	
+
+retest: clean test
+	
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
