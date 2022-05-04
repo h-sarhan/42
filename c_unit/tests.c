@@ -6,11 +6,12 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 15:06:28 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/02 11:54:08 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/04 10:26:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "c_unit.h"
+
 /*
 void	test_print_msg_color()
 {
@@ -128,6 +129,73 @@ void	test_assert_false()
 	assert_false("This should fail: ", 'a' == 'a');
 }
 
+void	test_return_values()
+{
+	print_msg_color("\n---Testing assert methods return values---\n", BLUE);
+	
+	bool	trues[11];
+	bool	falses[11];
+	bool	expected_trues[11];
+	bool	expected_falses[11];
+	int		i;
+
+	i = 0;
+	while (i < 11)
+		expected_trues[i++] = true;
+	
+	i = 0;
+	while (i < 11)
+		expected_falses[i++] = false;
+
+
+	trues[0] = assert_int_equal("", 10, 10);
+	falses[0] = assert_int_equal("", 10, 11);
+	
+	int	nums[2] = {1, 2};
+	int	nums2[2] = {3, 1};
+	
+	trues[1] = assert_int_array_equal("", nums, nums, 2);
+	falses[1] = assert_int_array_equal("", nums, nums2, 2);
+	
+	trues[2] = 	assert_int_array_is_sorted("", nums, 2);
+	falses[2] =	assert_int_array_is_sorted("", nums2, 2);
+
+	trues[3] = assert_char_equal("", 'a', 'a');
+	falses[3] =assert_char_equal("", 'a', 'b');
+	
+	trues[4] = assert_str_equal("", "abc", "abc");
+	falses[4] =assert_str_equal("", "abc", "ab");
+
+	char	*words[2] = {"ab", "bc"};
+	char	*words2[2] = {"zy", "bc"};
+
+	trues[5] = assert_str_array_equal("", words, words, 2);
+	falses[5] =assert_str_array_equal("", words, words2, 2);
+
+	trues[6] = assert_str_array_is_sorted("", words, 2);
+	falses[6] =assert_str_array_is_sorted("", words2, 2);
+
+	int	num = 4;
+	int	*num_ptr = &num;
+	int	*this_is_null = NULL;
+
+	trues[7] = assert_is_not_null("", num_ptr);
+	falses[7] =assert_is_not_null("", this_is_null);
+	
+	trues[8] = assert_is_null("", this_is_null);
+	falses[8] =assert_is_null("", num_ptr);
+
+	trues[9] = assert_true("", true);
+	falses[9] =assert_true("", false);
+
+	trues[10] = assert_false("", false);
+	falses[10] =assert_false("", true);
+	assert_bool_array_equal("All true return values are correct: ",
+			trues, expected_trues, 11);
+	assert_bool_array_equal("All false return values are correct: ",
+			falses, expected_falses, 11);
+}
+
 int main(void)
 {
 	test_print_msg_color();
@@ -143,6 +211,7 @@ int main(void)
 	test_assert_str_array_is_sorted();
 	test_assert_true();
 	test_assert_false();
+	test_return_values();
 }
 */
 int	main(void)

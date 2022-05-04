@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:53:55 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/02 11:39:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/04 10:25:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,30 @@ void	print_str_array(char **arr, int arr_len, char *color)
 	print_msg_color("]\n", YELLOW);
 }
 
+void	print_bool_array(bool *arr, int arr_len, char *color)
+{
+	int	idx;
+
+	idx = 0;
+	write(1, color, 5);
+	write(1, "[", 1);
+	while (idx < arr_len - 1)
+	{
+		if (arr[idx] == true)
+			print_msg_color("true", color);
+		else
+			print_msg_color("false", color);
+		write(1, ", ", 2);
+		idx++;
+	}
+	if (arr[idx] == true)
+		print_msg_color("true", color);
+	else
+		print_msg_color("false", color);
+	write(1, "]\n", 2);
+	write(1, RESET, 5);
+}
+
 void	print_msg_color(char *msg, char *color)
 {
 	write(1, color, 5);
@@ -56,36 +80,4 @@ void	print_msg_color(char *msg, char *color)
 		msg++;
 	}
 	write(1, RESET, 5);
-}
-
-void	ft_putnbr(int nb, char *color)
-{
-	char	nb_as_char;
-
-	write(1, color, 5);
-	if (nb < 0)
-	{
-		write(1, "-", 1);
-		nb *= -1;
-	}
-	if (nb >= 10)
-	{
-		ft_putnbr(nb / 10, color);
-		nb %= 10;
-	}
-	if (nb < 10)
-	{
-		nb_as_char = nb + '0';
-		write(1, &nb_as_char, 1);
-	}
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-		i++;
-	return (s1[i] - s2[i]);
 }

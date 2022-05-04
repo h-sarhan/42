@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/02 13:38:12 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/04 10:26:47 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ test: $(TARGET)
 	./$(TARGET)
 
 norm:
-	norminette $(SRCS) c_unit.h
+	norminette
 
 $(OBJDIR)/%.o: %.c | $(OBJDIR)
 	gcc -c $(MUSTAFA_FLAGS) -o $@ $<

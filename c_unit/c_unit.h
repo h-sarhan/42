@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/03 12:00:08 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/04 10:21:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define C_UNIT_H
 
 # include <unistd.h>
+# include <stdbool.h>
 
 // Colors
 # define SUCCESS "\x1b[32m"
@@ -28,28 +29,30 @@
 # define CROSS "\u2717"
 
 // assert_int.c
-void	assert_int_equal(char *msg, int result, int expected);
-void	assert_int_array_equal(char *msg, int *result, int *expected, int len);
-void	assert_int_array_is_sorted(char *msg, int *arr, int arr_len);
+bool	assert_int_equal(char *msg, int result, int expected);
+bool	assert_int_array_equal(char *msg, int *result, int *expected, int len);
+bool	assert_int_array_is_sorted(char *msg, int *arr, int arr_len);
 
 // assert_string.c
-void	assert_char_equal(char *msg, char result, char expected);
-void	assert_str_equal(char *msg, char *result, char *expected);
-void	assert_str_array_equal(char *msg, char **res, char **expected, int len);
-void	assert_str_array_is_sorted(char *msg, char **arr, int arr_len);
+bool	assert_char_equal(char *msg, char result, char expected);
+bool	assert_str_equal(char *msg, char *result, char *expected);
+bool	assert_str_array_equal(char *msg, char **res, char **expected, int len);
+bool	assert_str_array_is_sorted(char *msg, char **arr, int arr_len);
 
 // assert_null.c
-void	assert_is_not_null(char *msg, void *result);
-void	assert_is_null(char *msg, void *result);
+bool	assert_is_not_null(char *msg, void *result);
+bool	assert_is_null(char *msg, void *result);
 
 // assert_bool.c
-void	assert_true(char *msg, int result);
-void	assert_false(char *msg, int result);
+bool	assert_true(char *msg, bool result);
+bool	assert_false(char *msg, bool result);
+bool	assert_bool_array_equal(char *msg, bool *res, bool *expected, int len);
 
 // test_utils.c
 void	print_int_array(int *arr, int arr_len, char *color);
 void	print_msg_color(char *msg, char *color);
 void	print_str_array(char **arr, int arr_len, char *color);
+void	print_bool_array(bool *arr, int arr_len, char *color);
 void	ft_putnbr(int nb, char *color);
 int		ft_strcmp(char *s1, char *s2);
 #endif
