@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/04 10:21:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/04 22:52:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	print_int_array(int *arr, int arr_len, char *color);
 void	print_msg_color(char *msg, char *color);
 void	print_str_array(char **arr, int arr_len, char *color);
 void	print_bool_array(bool *arr, int arr_len, char *color);
-void	ft_putnbr(int nb, char *color);
-int		ft_strcmp(char *s1, char *s2);
+
+// test_utils_2.c
+void	test_util_putnbr(int nb, char *color);
+int		test_util_strcmp(char *s1, char *s2);
 #endif
