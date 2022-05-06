@@ -1,10 +1,6 @@
-set tabstop=4
-set shiftwidth=4
 set relativenumber
 let g:user42 = 'hsarhan'
 let g:mail42 = 'hassanAsarhan@outlook.com'
-set softtabstop=4
-set autoindent
 set showtabline=2
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -42,3 +38,5 @@ call plug#end()
 let g:edge_better_performance = 1
 let g:edge_style = 'neon'
 colorscheme edge
+set noet ci pi sts=0 sw=4 ts=4
+set autoindent
