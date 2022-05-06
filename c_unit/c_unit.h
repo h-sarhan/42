@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/04 22:52:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/07 00:32:01 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdbool.h>
+# include <stdlib.h>
 
 // Colors
 # define SUCCESS "\x1b[32m"
@@ -57,4 +58,6 @@ void	print_bool_array(bool *arr, int arr_len, char *color);
 // test_utils_2.c
 void	test_util_putnbr(int nb, char *color);
 int		test_util_strcmp(char *s1, char *s2);
+int		*str_to_ints(char *str, int *len);
+
 #endif

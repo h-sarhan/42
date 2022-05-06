@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 15:06:28 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/04 23:12:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/07 00:59:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,66 @@ void	test_return_values()
 			falses, expected_falses, 11);
 }
 
+void	test_strs_to_ints()
+{
+	print_msg_color("\n---Testing assert atrs_to_ints---\n", BLUE);
+	
+	char	example_1[] = "[1, 2, 3]";
+	int		expected_1[] = {1, 2, 3};
+	int		expected_size_1 = 3;
+	int		size;
+	int		*res_1 = str_to_ints(example_1, &size);
+	
+	assert_int_array_equal("Test array of single digits in brackets: ",
+			res_1, expected_1, expected_size_1);
+	assert_int_equal("Test that size is correct: ", size, expected_size_1);
+	
+	char	example_2[] = "2, 2, 3";
+	int		expected_2[] = {2, 2, 3};
+	int		expected_size_2 = 3;
+	int		*res_2 = str_to_ints(example_2, &size);
+	
+	assert_int_array_equal("Test array of single digits without brackets: ",
+			res_2, expected_2, expected_size_2);
+	assert_int_equal("Test that size is correct: ", size, expected_size_2);
+
+	char	example_3[] = "132133, 19813, 1763";
+	int		expected_3[] = {132133, 19813, 1763};
+	int		expected_size_3 = 3;
+	int		*res_3 = str_to_ints(example_3, &size);
+	
+	assert_int_array_equal("Test array of big numbers without brackets: ",
+			res_3, expected_3, expected_size_3);
+	assert_int_equal("Test that size is correct: ", size, expected_size_3);
+	
+	char	example_4[] = "-132133, 19813, -1763";
+	int		expected_4[] = {-132133, 19813, -1763};
+	int		expected_size_4 = 3;
+	int		*res_4 = str_to_ints(example_4, &size);
+	
+	assert_int_array_equal("Test array of big negative numbers without brackets: ",
+			res_4, expected_4, expected_size_4);
+	assert_int_equal("Test that size is correct: ", size, expected_size_4);
+	
+	char	example_5[] = "[-132133, 19813, -1763]";
+	int		expected_5[] = {-132133, 19813, -1763};
+	int		expected_size_5 = 3;
+	int		*res_5 = str_to_ints(example_5, &size);
+	
+	assert_int_array_equal("Test array of big negative numbers in brackets: ",
+			res_5, expected_5, expected_size_5);
+	assert_int_equal("Test that size is correct: ", size, expected_size_5);
+	
+	char	example_6[] = "[-132133]";
+	int		expected_6[] = {-132133};
+	int		expected_size_6 = 1;
+	int		*res_6 = str_to_ints(example_6, &size);
+	
+	assert_int_array_equal("Test array of single big negative integer: ",
+			res_6, expected_6, expected_size_6);
+	assert_int_equal("Test that size is correct: ", size, expected_size_6);
+}
+
 int main(void)
 {
 	test_print_msg_color();
@@ -211,8 +271,10 @@ int main(void)
 	test_assert_true();
 	test_assert_false();
 	test_return_values();
+	test_strs_to_ints();
 }
 */
+
 int	main(void)
 {
 	print_msg_color("Uncomment the tests :)\n", BLUE);
