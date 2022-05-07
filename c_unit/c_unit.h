@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/07 00:32:01 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/07 08:07:21 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 // Colors
 # define SUCCESS "\x1b[32m"
