@@ -1,9 +1,14 @@
 #include <stdio.h>
 
-void pn(int*n,int l){while(l--)l?printf("%d ",*n++):printf("\n");}
+void	print_nums(int *nums, int len)
+{
+	while(len--)
+		printf("%d ", *nums++);
+}
 
 int	main()
 {
 	int nums[] = {1, 2, 3, 4};
-	pn(nums, 4);
+	print_nums(nums, 4);
+	
 }

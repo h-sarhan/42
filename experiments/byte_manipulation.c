@@ -12,7 +12,6 @@ int	main()
 	int		*num_pointer = &num;
 	char	*num_byte = (char *)num_pointer; // byte now points to the first byte 0 of num
 
-
 	*num_byte = 32; // change first byte to 2^5
 	// 00000001 00000001 00000001 00100000
 	// 		  ^		   ^		^	^	  
@@ -48,7 +47,7 @@ int	main()
     // *byte 4   byte 3   byte 2   byte 1
     
     // return to the first byte of num
-    num_byte = num_byte - 3;
+    num_byte -= 3;
 	printf("Value of num is now = 2^27 + 2^17 + 2^12 + 2^10 + 2^5 or %d\n", num);
 	printf("Value of 1st byte of p is now = 2^5 or %d\n", *num_byte);
 	printf("Value of 2nd byte of p is now = 2^4 + 2^2 or %d\n", *(num_byte + 1));
