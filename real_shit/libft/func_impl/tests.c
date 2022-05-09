@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:12:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/09 13:58:09 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/09 18:04:21 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,12 +199,14 @@ void	test_memset()
 	int	memsize = 1000;
 	char	*result = malloc(memsize);
 	char	*expected = malloc(memsize);
+	result = memset(result, 1, memsize);
+	expected = memset(expected, 1, memsize);
 
 	result = ft_memset(result, 12, 123);
 	expected = memset(expected, 12, 123);
 	int 	i = 0;
 	bool	test = true;
-	while (i < 123)
+	while (i < memsize)
 	{
 		if(!assert_true("", result[i] == expected[i]))
 			test = false;
@@ -295,20 +297,40 @@ void	test_bzero()
 	free(expected);
 }
 
-
 void	test_memcpy()
 {
 	print_msg_color("\n---Testing ft_memcpy---\n", BLUE);
-	int	memsize = sizeof(int) * 100;
-	int	*original_memory(memsize);
+	int	memsize =  100;
+	char *original_memory = malloc(memsize);
 	int i = 0;
 	while (i < 100)
-		original_memory[i++] = i;
-	void	*expected_memory = malloc(memsize);
-	void	*result_memory = malloc(memsize);
+	{
+		original_memory[i] = i + 1;
+		i++;
+	}
+	// original_memory = [1...100]
+	
+	char	*expected = malloc(memsize);
+	char	*result = malloc(memsize);
+	memset(result, 42, memsize);
+	memset(expected, 42, memsize);
+	ft_memcpy(result, original_memory, memsize - 40);
+	memcpy(expected, original_memory, memsize - 40);
 
-	expected_memory = memcpy(expected_memory, result_memory, memsize);
+	i = 0;
+	bool test = true;
+	while (i < memsize)
+	{
+		if (!assert_true("", expected[i] == result[i]))
+			test = false;
+		i++;
+	}
+	assert_true("Memory has been copied correctly: ", test);
+	free(original_memory);
+	free(expected);
+	free(result);
 }
+
 int	main()
 {
 	srand(42);
