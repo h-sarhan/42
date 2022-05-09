@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:12:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/09 23:34:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/10 00:14:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	test_isalpha()
 	assert_true("Testing all possible ascii values: ", test);
 
 	i = 128;
-	while (i < 10000)
+	while (i < 256)
 	{
 		ft_res = ft_isalpha(i);
 		libc_res = isalpha(i);
@@ -55,8 +55,8 @@ void	test_isdigit()
 	int	i = 0;
 	while (i < 128)
 	{
-		ft_res = ft_isalpha(i);
-		libc_res = isalpha(i);
+		ft_res = ft_isdigit(i);
+		libc_res = isdigit(i);
 		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
@@ -64,10 +64,10 @@ void	test_isdigit()
 	assert_true("Testing all possible ascii values: ", test);
 
 	i = 128;
-	while (i < 10000)
+	while (i < 256)
 	{
-		ft_res = ft_isalpha(i);
-		libc_res = isalpha(i);
+		ft_res = ft_isdigit(i);
+		libc_res = isdigit(i);
 		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
@@ -84,8 +84,8 @@ void	test_isalnum()
 	int	i = 0;
 	while (i < 128)
 	{
-		ft_res = ft_isalpha(i);
-		libc_res = isalpha(i);
+		ft_res = ft_isalnum(i);
+		libc_res = isalnum(i);
 		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
@@ -93,10 +93,10 @@ void	test_isalnum()
 	assert_true("Testing all possible ascii values: ", test);
 
 	i = 128;
-	while (i < 10000)
+	while (i < 256)
 	{
-		ft_res = ft_isalpha(i);
-		libc_res = isalpha(i);
+		ft_res = ft_isalnum(i);
+		libc_res = isalnum(i);
 		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
@@ -113,8 +113,8 @@ void	test_isascii()
 	int	i = 0;
 	while (i < 128)
 	{
-		ft_res = ft_isalpha(i);
-		libc_res = isalpha(i);
+		ft_res = ft_isascii(i);
+		libc_res = isascii(i);
 		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
@@ -122,10 +122,10 @@ void	test_isascii()
 	assert_true("Testing all possible ascii values: ", test);
 
 	i = 128;
-	while (i < 10000)
+	while (i < 256)
 	{
-		ft_res = ft_isalpha(i);
-		libc_res = isalpha(i);
+		ft_res = ft_isascii(i);
+		libc_res = isascii(i);
 		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
@@ -142,8 +142,8 @@ void	test_isprint()
 	int	i = 0;
 	while (i < 128)
 	{
-		ft_res = ft_isalpha(i);
-		libc_res = isalpha(i);
+		ft_res = ft_isprint(i);
+		libc_res = isprint(i);
 		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
@@ -151,10 +151,10 @@ void	test_isprint()
 	assert_true("Testing all possible ascii values: ", test);
 
 	i = 128;
-	while (i < 10000)
+	while (i < 256)
 	{
-		ft_res = ft_isalpha(i);
-		libc_res = isalpha(i);
+		ft_res = ft_isprint(i);
+		libc_res = isprint(i);
 		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
@@ -211,6 +211,22 @@ void	test_memset()
 	free(result);
 	free(expected);
 	
+	char	expected_byte;
+	char	*expected_byte_ptr = &expected_byte;
+	char	result_byte;
+	char	*result_byte_ptr = &result_byte;
+	test = true;
+	i = 0;
+	while (i < 256)
+	{
+		result_byte_ptr = ft_memset(result_byte_ptr, i, 1);
+		expected_byte_ptr = memset(expected_byte_ptr, i, 1);
+		if (!assert_true("", *result_byte_ptr == *expected_byte_ptr))
+			test = false;
+		i++;
+	}
+	assert_true("Writing all possible single byte values: ", test);
+	
 
 	int num_tests = 1000;
 	i = 0;
@@ -237,25 +253,6 @@ void	test_memset()
 	}
 	assert_true("Ran 1,000 random tests: ", test);
 
-	char	expected_byte;
-	char	*expected_byte_ptr = &expected_byte;
-	char	result_byte;
-	char	*result_byte_ptr = &result_byte;
-	test = true;
-	i = 0;
-	while (i < 256)
-	{
-		result_byte_ptr = ft_memset(result_byte_ptr, i, 1);
-		expected_byte_ptr = memset(expected_byte_ptr, i, 1);
-		if (!assert_true("", *result_byte_ptr == *expected_byte_ptr))
-			test = false;
-		i++;
-		if (i == INT_MIN + 100000)
-			i = -100000;
-		if (i == 100000)
-			i = INT_MAX - 100000;
-	}
-	assert_true("Writing single byte values: ", test);
 
 	char	expected_str[100] = "abcdef";
 	char	result_str[100] = "abcdef";
@@ -275,8 +272,8 @@ void	test_bzero()
 	char	*expected = malloc(memsize);
 
 	// fill bytes 100 to 1000 with 1
-	memset((char*)result + 100, 1, 900);
-	memset((char*)expected + 100, 1, 900);
+	memset(&result[99], 1, 900);
+	memset(&expected[99], 1, 900);
 	int 	i = 0;
 	bool	test = true;
 	ft_bzero(result, 100);
