@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:12:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/09 18:04:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/09 19:10:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,6 +329,11 @@ void	test_memcpy()
 	free(original_memory);
 	free(expected);
 	free(result);
+}
+
+void	test_memmove()
+{
+	
 }
 
 int	main()
