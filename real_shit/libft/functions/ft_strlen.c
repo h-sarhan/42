@@ -6,10 +6,10 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:04:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/09 12:24:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/09 22:57:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_lib.h"
+#include "libft.h"
 
 size_t	ft_strlen(const char *s)
 {

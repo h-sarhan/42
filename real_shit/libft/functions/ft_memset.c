@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/09 13:45:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/09 18:03:20 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/05/09 12:47:22 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/05/09 22:57:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_lib.h"
+#include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t len)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	char		*dst_bytes;
-	const char	*src_bytes;
-	size_t		i;
+	char			*bytes;
+	unsigned char	val;
+	size_t			i;
 
-	dst_bytes = dst;
-	src_bytes = src;
+	bytes = b;
+	val = (unsigned char) c;
 	i = 0;
 	while (i < len)
 	{
-		dst_bytes[i] = src_bytes[i];
+		bytes[i] = val;
 		i++;
 	}
-	return (dst);
+	return (b);
 }

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:12:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/09 19:10:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/09 23:34:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,31 @@
 #include <string.h>
 #include <limits.h>
 #include "c_unit/c_unit.h"
-#include "ft_lib.h"
+#include "libft.h"
 
 void	test_isalpha()
 {
 	print_msg_color("\n---Testing ft_isalpha---\n", BLUE);
 	bool	test = true;
+	bool	ft_res;
+	bool	libc_res;
 	int i =  0;
 	while (i < 128)
 	{
-		if (!assert_true("", ft_isalpha(i) == isalpha(i)))
+		ft_res = ft_isalpha(i);
+		libc_res = isalpha(i);
+		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
 	}
 	assert_true("Testing all possible ascii values: ", test);
-	i = -10000;
-	test = true;
-	while (i < 0)
-	{
-		if (!assert_true("", ft_isalpha(i) == isalpha(i)))
-			test = false;
-		i++;
-	}
+
 	i = 128;
 	while (i < 10000)
 	{
-		if (!assert_true("", ft_isalpha(i) == isalpha(i)))
+		ft_res = ft_isalpha(i);
+		libc_res = isalpha(i);
+		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
 	}
@@ -51,26 +50,25 @@ void	test_isdigit()
 {
 	print_msg_color("\n---Testing ft_isdigit---\n", BLUE);
 	bool	test = true;
+	bool	ft_res;
+	bool	libc_res;
 	int	i = 0;
 	while (i < 128)
 	{
-		if (!assert_true("", ft_isdigit(i) == isdigit(i)))
+		ft_res = ft_isalpha(i);
+		libc_res = isalpha(i);
+		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
 	}
 	assert_true("Testing all possible ascii values: ", test);
-	i = -10000;
-	test = true;
-	while (i < 0)
-	{
-		if (!assert_true("", ft_isdigit(i) == isdigit(i)))
-			test = false;
-		i++;
-	}
+
 	i = 128;
 	while (i < 10000)
 	{
-		if (!assert_true("", ft_isdigit(i) == isdigit(i)))
+		ft_res = ft_isalpha(i);
+		libc_res = isalpha(i);
+		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
 	}
@@ -81,26 +79,25 @@ void	test_isalnum()
 {
 	print_msg_color("\n---Testing ft_isalnum---\n", BLUE);
 	bool	test = true;
+	bool	ft_res;
+	bool	libc_res;
 	int	i = 0;
 	while (i < 128)
 	{
-		if (!assert_true("", ft_isalnum(i) == isalnum(i)))
+		ft_res = ft_isalpha(i);
+		libc_res = isalpha(i);
+		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
 	}
 	assert_true("Testing all possible ascii values: ", test);
-	i = -10000;
-	test = true;
-	while (i < 0)
-	{
-		if (!assert_true("", ft_isalnum(i) == isalnum(i)))
-			test = false;
-		i++;
-	}
+
 	i = 128;
 	while (i < 10000)
 	{
-		if (!assert_true("", ft_isalnum(i) == isalnum(i)))
+		ft_res = ft_isalpha(i);
+		libc_res = isalpha(i);
+		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
 	}
@@ -111,26 +108,25 @@ void	test_isascii()
 {
 	print_msg_color("\n---Testing ft_isascii---\n", BLUE);
 	bool	test = true;
+	bool	ft_res;
+	bool	libc_res;
 	int	i = 0;
 	while (i < 128)
 	{
-		if (!assert_true("", ft_isascii(i) == isascii(i)))
+		ft_res = ft_isalpha(i);
+		libc_res = isalpha(i);
+		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
 	}
 	assert_true("Testing all possible ascii values: ", test);
-	i = -10000;
-	test = true;
-	while (i < 0)
-	{
-		if (!assert_true("", ft_isascii(i) == isascii(i)))
-			test = false;
-		i++;
-	}
+
 	i = 128;
 	while (i < 10000)
 	{
-		if (!assert_true("", ft_isascii(i) == isascii(i)))
+		ft_res = ft_isalpha(i);
+		libc_res = isalpha(i);
+		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
 	}
@@ -141,26 +137,25 @@ void	test_isprint()
 {
 	print_msg_color("\n---Testing ft_isprint---\n", BLUE);
 	bool	test = true;
+	bool	ft_res;
+	bool	libc_res;
 	int	i = 0;
 	while (i < 128)
 	{
-		if (!assert_true("", ft_isprint(i) == isprint(i)))
+		ft_res = ft_isalpha(i);
+		libc_res = isalpha(i);
+		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
 	}
 	assert_true("Testing all possible ascii values: ", test);
-	i = -10000;
-	test = true;
-	while (i < 0)
-	{
-		if (!assert_true("", ft_isprint(i) == isprint(i)))
-			test = false;
-		i++;
-	}
+
 	i = 128;
 	while (i < 10000)
 	{
-		if (!assert_true("", ft_isprint(i) == isprint(i)))
+		ft_res = ft_isalpha(i);
+		libc_res = isalpha(i);
+		if (!assert_true("", ft_res == libc_res))
 			test = false;
 		i++;
 	}
@@ -247,8 +242,8 @@ void	test_memset()
 	char	result_byte;
 	char	*result_byte_ptr = &result_byte;
 	test = true;
-	i = INT_MIN;
-	while (i < INT_MAX)
+	i = 0;
+	while (i < 256)
 	{
 		result_byte_ptr = ft_memset(result_byte_ptr, i, 1);
 		expected_byte_ptr = memset(expected_byte_ptr, i, 1);
@@ -280,13 +275,13 @@ void	test_bzero()
 	char	*expected = malloc(memsize);
 
 	// fill bytes 100 to 1000 with 1
-	memset((char*)result, 1, 900);
+	memset((char*)result + 100, 1, 900);
 	memset((char*)expected + 100, 1, 900);
 	int 	i = 0;
 	bool	test = true;
 	ft_bzero(result, 100);
 	bzero(expected, 100);
-	while (i < 100)
+	while (i < memsize)
 	{
 		if(!assert_true("", result[i] == expected[i]))
 			test = false;

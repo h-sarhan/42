@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/09 13:27:59 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/09 13:34:52 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/05/09 13:45:53 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/05/09 22:57:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_lib.h"
+#include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t len)
 {
-	char		*bytes;
+	char		*dst_bytes;
+	const char	*src_bytes;
 	size_t		i;
 
-	if (n == 0)
-		return ;
-	bytes = s;
+	dst_bytes = dst;
+	src_bytes = src;
 	i = 0;
-	while (i < n)
+	while (i < len)
 	{
-		bytes[i] = 0;
+		dst_bytes[i] = src_bytes[i];
 		i++;
 	}
+	return (dst);
 }
