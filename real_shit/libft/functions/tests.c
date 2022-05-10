@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:12:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 00:14:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/10 09:03:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	test_isalpha()
 	bool	test = true;
 	bool	ft_res;
 	bool	libc_res;
-	int i =  0;
+	int i =  EOF;
 	while (i < 128)
 	{
 		ft_res = ft_isalpha(i);
@@ -52,7 +52,7 @@ void	test_isdigit()
 	bool	test = true;
 	bool	ft_res;
 	bool	libc_res;
-	int	i = 0;
+	int	i = EOF;
 	while (i < 128)
 	{
 		ft_res = ft_isdigit(i);
@@ -81,7 +81,7 @@ void	test_isalnum()
 	bool	test = true;
 	bool	ft_res;
 	bool	libc_res;
-	int	i = 0;
+	int	i = EOF;
 	while (i < 128)
 	{
 		ft_res = ft_isalnum(i);
@@ -110,7 +110,7 @@ void	test_isascii()
 	bool	test = true;
 	bool	ft_res;
 	bool	libc_res;
-	int	i = 0;
+	int	i = EOF;
 	while (i < 128)
 	{
 		ft_res = ft_isascii(i);
@@ -139,7 +139,7 @@ void	test_isprint()
 	bool	test = true;
 	bool	ft_res;
 	bool	libc_res;
-	int	i = 0;
+	int	i = EOF;
 	while (i < 128)
 	{
 		ft_res = ft_isprint(i);
@@ -216,7 +216,7 @@ void	test_memset()
 	char	result_byte;
 	char	*result_byte_ptr = &result_byte;
 	test = true;
-	i = 0;
+	i = EOF;
 	while (i < 256)
 	{
 		result_byte_ptr = ft_memset(result_byte_ptr, i, 1);
@@ -328,6 +328,38 @@ void	test_memmove()
 	
 }
 
+void	test_toupper()
+{
+	print_msg_color("\n---Testing ft_toupper---\n", BLUE);
+	char	all_a[] = "aaaaaaaaaa";
+	char	all_A[] = "AAAAAAAAAA";
+	char	res[11];
+	res[10] = '\0';
+
+	for (int i = 0; i < 10; i++)
+		res[i] = ft_toupper(all_a[i]);
+	assert_str_equal("Test that conversion succeeds with lowercase letters: ",
+					res, all_A);
+	strcpy(res, all_A);
+	for (int i = 0; i < 10; i++)
+		res[i] = ft_toupper(res[i]);
+	assert_str_equal("Test that uppercase letters do not get converted: ",
+					res, all_A);
+
+	int		i = EOF;
+	bool	test = true;
+	while (i < 256)
+	{
+		int ft_upper = ft_toupper(i);
+		int	c_upper = toupper(i);
+		if (!assert_true("", ft_upper == c_upper))
+			test = false;
+		i++;
+	}
+	assert_true("Test ft_toupper with all possible values: ", test);
+
+}
+
 int	main()
 {
 	srand(42);
@@ -340,4 +372,5 @@ int	main()
 	test_memset();
 	test_bzero();
 	test_memcpy();
+	test_toupper();
 }
