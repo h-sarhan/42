@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:12:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 10:20:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:54:12 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -477,17 +477,17 @@ void	test_strrchr()
 int	main()
 {
 	srand(42);
-//	test_isalpha();
-//	test_isdigit();
-//	test_isalnum();
-//	test_isascii();
-//	test_isprint();
-//	test_strlen();
-//	test_memset();
-//	test_bzero();
-//	test_memcpy();
-//	test_toupper();
-//	test_tolower();
+	test_isalpha();
+	test_isdigit();
+	test_isalnum();
+	test_isascii();
+	test_isprint();
+	test_strlen();
+	test_memset();
+	test_bzero();
+	test_memcpy();
+	test_toupper();
+	test_tolower();
 	test_strchr();
 	test_strrchr();
 }

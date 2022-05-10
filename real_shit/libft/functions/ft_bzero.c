@@ -6,15 +6,15 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 13:27:59 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/09 22:57:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:48:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
 void	ft_bzero(void *s, size_t n)
 {
-	char		*bytes;
-	size_t		i;
+	unsigned char	*bytes;
+	size_t			i;
 
 	if (n == 0)
 		return ;

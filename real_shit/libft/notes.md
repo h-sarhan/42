@@ -68,6 +68,11 @@
 7. ft_memset
 8. ft_bzero
 9. ft_memcpy
+10. ft_toupper
+11. ft_tolower
+12. ft_strchr
+13. ft_strrchr
+14. 
 
 # TODO:
 1. Create Makefile

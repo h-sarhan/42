@@ -6,16 +6,16 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 13:45:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/09 22:57:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:49:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t len)
 {
-	char		*dst_bytes;
-	const char	*src_bytes;
-	size_t		i;
+	unsigned char		*dst_bytes;
+	const unsigned char	*src_bytes;
+	size_t				i;
 
 	dst_bytes = dst;
 	src_bytes = src;
