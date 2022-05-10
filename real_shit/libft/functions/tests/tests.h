@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:57 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 15:23:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/10 16:48:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <limits.h>
 
 # include "c_unit/c_unit.h"
-# include "libft.h"
+# include "../libft.h"
 
 // ASCII tests
 void	test_isalpha();
