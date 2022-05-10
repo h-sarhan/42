@@ -1,16 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests2.c                                           :+:      :+:    :+:   */
+/*   string_tests.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 15:11:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 15:18:25 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/05/10 15:25:10 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/05/10 15:25:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
+
+void	test_strlen()
+{
+	print_msg_color("\n---Testing ft_strlen---\n", BLUE);
+
+	char	str[100001];
+
+	int 	test_num = 0;
+	bool	test = true;
+	print_msg_color("Testing with random strings (<= 100000 chars)\n", YELLOW);
+	while (test_num < 1000)
+	{
+		int	str_len = rand() % 100001;
+		int	j = 0;
+		while (j < str_len)
+		{
+			str[j] = 1 + (rand() % 127);
+			j++;
+		}
+		str[j] = '\0';
+		if(!assert_true("", ft_strlen(str) == strlen(str)))
+			test = false;
+		test_num++;
+	}
+	assert_true("Passed 1000 randomised tests: ", test);
+}
 
 void	test_toupper()
 {
