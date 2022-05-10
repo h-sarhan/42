@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:12:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 09:03:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/10 09:10:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,7 +357,37 @@ void	test_toupper()
 		i++;
 	}
 	assert_true("Test ft_toupper with all possible values: ", test);
+}
 
+void	test_tolower()
+{
+	print_msg_color("\n---Testing ft_tolower---\n", BLUE);
+	char	all_a[] = "aaaaaaaaaa";
+	char	all_A[] = "AAAAAAAAAA";
+	char	res[11];
+	res[10] = '\0';
+
+	for (int i = 0; i < 10; i++)
+		res[i] = ft_tolower(all_A[i]);
+	assert_str_equal("Test that conversion succeeds with uppercase letters: ",
+					res, all_a);
+	strcpy(res, all_a);
+	for (int i = 0; i < 10; i++)
+		res[i] = ft_tolower(res[i]);
+	assert_str_equal("Test that lowercase letters do not get converted: ",
+					res, all_a);
+
+	int		i = EOF;
+	bool	test = true;
+	while (i < 256)
+	{
+		int ft_lower = ft_tolower(i);
+		int	c_lower = tolower(i);
+		if (!assert_true("", ft_lower == c_lower))
+			test = false;
+		i++;
+	}
+	assert_true("Test ft_tolower with all possible values: ", test);
 }
 
 int	main()
@@ -373,4 +403,5 @@ int	main()
 	test_bzero();
 	test_memcpy();
 	test_toupper();
+	test_tolower();
 }
