@@ -75,8 +75,9 @@
 14. 
 
 # TODO:
-1. Create Makefile
-2. Watch video on how to create a library
+1. Create Makefile *DONE*
+2. Create a library *DONE*
+3. Test Makefile
 3. Clone C03 to get ft_strlcat
 4. Clone C09 to get ft_split
 5. Check if I need to check for zero or integer overflow with calloc
