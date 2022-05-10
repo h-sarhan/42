@@ -79,11 +79,4 @@
 2. Watch video on how to create a library
 3. Clone C03 to get ft_strlcat
 4. Clone C09 to get ft_split
-5. Ask student what they mean by this 
-
-"""
-	If the subject requires it, you must submit a Makefile which will compile your
-	source files to the required output with the flags -Wall, -Wextra and -Werror, use
-	*cc*, and your Makefile must not relink.
-"""
-
+5. Check if I need to check for zero or integer overflow with calloc
