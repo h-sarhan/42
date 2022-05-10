@@ -6,12 +6,12 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:23:07 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 09:07:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/10 10:16:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LIB_H
-# define FT_LIB_H
+#ifndef LIBFT_H
+# define LIBFT_H
 # include <stddef.h>
 
 int		ft_isalpha(int c);
@@ -26,4 +26,6 @@ void	*ft_memcpy(void *dst, const void *src, size_t len);
 void	*ft_memmove(void *dst, const void *src, size_t len);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strrchr(const char *s, int c);
 #endif

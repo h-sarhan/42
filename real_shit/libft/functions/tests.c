@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:12:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 09:10:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/10 10:20:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,18 +390,104 @@ void	test_tolower()
 	assert_true("Test ft_tolower with all possible values: ", test);
 }
 
+void	test_strchr()
+{
+	print_msg_color("\n---Testing ft_strchr---\n", BLUE);
+	
+	char	*haystack = "0123456";
+
+	assert_true("ft_strchr finds single non-terminating character correctly: ",
+				ft_strchr(haystack, '6') == strchr(haystack, '6'));
+	assert_true("ft_strchr finds terminating character correctly: ",
+				ft_strchr(haystack, '\0') == strchr(haystack, '\0'));
+	assert_true("ft_strchr returns NULL when character is not found: ",
+				ft_strchr(haystack, 'a') == strchr(haystack, 'a'));
+
+	char	ran_string[1001];
+	ran_string[1000] = '\0';
+	int	num_tests = 100000;
+	int	i = 0;
+	int	j = 0;
+	bool	test = true;
+	char	ran_char;
+	int		str_size;
+	print_msg_color("Running random tests: \n", YELLOW);
+	while (i < num_tests)
+	{
+		j = 0;
+		str_size = rand() % 1000;
+		// fill string with random characters
+		while (j < str_size)
+		{
+			ran_string[j] = 1 + (rand() % 127);
+			j++;
+		}
+		ran_string[j] = '\0';
+		// pick random char to look for (including \0)
+		ran_char = rand() % 128;
+		if (!assert_true("", ft_strchr(ran_string, ran_char) == strchr(ran_string, ran_char)))
+				test = false;
+		i++;
+	}
+	assert_true("Random tests passed: ", test);
+}
+
+void	test_strrchr()
+{
+	print_msg_color("\n---Testing ft_strrchr---\n", BLUE);
+	
+	char	*haystack = "01234561";
+
+	assert_true("ft_strrchr finds single non-terminating character correctly: ",
+				ft_strrchr(haystack, '1') == strrchr(haystack, '1'));
+	assert_true("ft_strrchr finds terminating character correctly: ",
+				ft_strrchr(haystack, '\0') == strrchr(haystack, '\0'));
+	assert_true("ft_strrchr returns NULL when character is not found: ",
+				ft_strrchr(haystack, 'a') == strrchr(haystack, 'a'));
+
+	char	ran_string[1001];
+	ran_string[1000] = '\0';
+	int	num_tests = 100000;
+	int	i = 0;
+	int	j = 0;
+	bool	test = true;
+	char	ran_char;
+	int		str_size;
+	print_msg_color("Running random tests: \n", YELLOW);
+	while (i < num_tests)
+	{
+		j = 0;
+		str_size = rand() % 1000;
+		// fill string with random characters
+		while (j < str_size)
+		{
+			ran_string[j] = 1 + (rand() % 127);
+			j++;
+		}
+		ran_string[j] = '\0';
+		// pick random char to look for (including \0)
+		ran_char = rand() % 128;
+		if (!assert_true("", ft_strrchr(ran_string, ran_char) == strrchr(ran_string, ran_char)))
+				test = false;
+		i++;
+	}
+	assert_true("Random tests passed: ", test);
+}
+
 int	main()
 {
 	srand(42);
-	test_isalpha();
-	test_isdigit();
-	test_isalnum();
-	test_isascii();
-	test_isprint();
-	test_strlen();
-	test_memset();
-	test_bzero();
-	test_memcpy();
-	test_toupper();
-	test_tolower();
+//	test_isalpha();
+//	test_isdigit();
+//	test_isalnum();
+//	test_isascii();
+//	test_isprint();
+//	test_strlen();
+//	test_memset();
+//	test_bzero();
+//	test_memcpy();
+//	test_toupper();
+//	test_tolower();
+	test_strchr();
+	test_strrchr();
 }
