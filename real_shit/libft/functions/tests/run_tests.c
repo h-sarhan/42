@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 13:34:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 13:44:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main()
 //	test_isascii();
 //	test_isprint();
 //
-	print_msg_color("\n===Testing string functions===\n", MAGENTA);
+//	print_msg_color("\n===Testing string functions===\n", MAGENTA);
 //	test_strlen();
 //	test_toupper();
 //	test_tolower();
@@ -37,5 +37,5 @@ int	main()
 //	test_bzero();
 //	test_memcpy();
 //	test_calloc();
-	test_memchr();
+//	test_memchr();
 }
