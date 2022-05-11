@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 21:04:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 23:00:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,34 @@
 int	main()
 {
 	srand(42);
-	print_msg_color("\n===Testing libc ascii functions===\n", MAGENTA);
-	test_isalpha();
-	test_isdigit();
-	test_isalnum();
-	test_isascii();
-	test_isprint();
-
-	print_msg_color("\n===Testing libc string functions===\n", MAGENTA);
-	test_strlen();
-	test_toupper();
-	test_tolower();
-	test_strchr();
-	test_strrchr();
-	test_strdup();
-	test_strncmp();
-  
-  	print_msg_color("\n===Testing libc memory functions===\n", MAGENTA);
-	test_memset();
-	test_bzero();
-	test_memcpy();
-	test_calloc();
-	test_memchr();
-
-	print_msg_color("\n===Testing additional functions===\n", MAGENTA);
-	test_ft_putchar_fd();
-	test_ft_putstr_fd();
-	test_ft_putendl_fd();
+//	print_msg_color("\n===Testing libc ascii functions===\n", MAGENTA);
+//	test_isalpha();
+//	test_isdigit();
+//	test_isalnum();
+//	test_isascii();
+//	test_isprint();
+//
+//	print_msg_color("\n===Testing libc string functions===\n", MAGENTA);
+//	test_strlen();
+//	test_toupper();
+//	test_tolower();
+//	test_strchr();
+//	test_strrchr();
+//	test_strdup();
+//	test_strncmp();
+//  
+//  	print_msg_color("\n===Testing libc memory functions===\n", MAGENTA);
+//	test_memset();
+//	test_bzero();
+//	test_memcpy();
+//	test_calloc();
+//	test_memchr();
+//
+//	print_msg_color("\n===Testing additional functions===\n", MAGENTA);
+//	test_ft_putchar_fd();
+//	test_ft_putstr_fd();
+//	test_ft_putendl_fd();
 	test_ft_putnbr_fd();
 	test_ft_substr();
+	test_ft_strtrim();
 }

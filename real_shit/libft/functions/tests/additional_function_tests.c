@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 21:03:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 23:18:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,36 @@ void	test_ft_substr()
 					result, "ef");
 	free(result);
 	print_msg_color("Starting random tests: ", YELLOW);
+}
+
+void	test_ft_strtrim()
+{
+	print_msg_color("\n---Testing ft_strtrim---\n", BLUE);
+	
+	char *res = ft_strtrim("    \n \n'''    MOM LOVES\n' ME     \n'", "' \n");
+	char	expected[100] = "MOM LOVES\n' ME";
+	assert_str_equal("Check that strtrim trips properly under normal circumstances: ",
+					res, expected);
+	free(res);
+	
+	res = ft_strtrim("MOM LOVES\n' ME", "' \n");
+	strcpy(expected, "MOM LOVES\n' ME");
+	assert_str_equal("Check that strtrim trips properly when string is already trimmed: ",
+					res, expected);
+	free(res);
+
+	res = ft_strtrim("MOM LOVES\n' ME", "");
+	strcpy(expected, "MOM LOVES\n' ME");
+	assert_str_equal("Check that strtrim does not trim when separator strings are empty: ",
+					res, expected);
+
+	free(res);
+	
+	res = ft_strtrim("", "\n ");
+	expected[0] = '\0';
+	assert_str_equal("Check that strtrim returns an empty string when given one: ",
+					res, expected);
+	free(res);
 }
 
 void	test_ft_putchar_fd()
