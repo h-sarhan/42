@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 19:45:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 20:38:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,36 @@ void	test_ft_putendl_fd()
 			"correctly to the file putendl.test with a new line: ", chars, str_with_endl);
 	assert_int_equal("Check that the correct number of bytes has been read: ",
 			bytes_read, ft_strlen(str) + 1);
+	close(fd);
+}
+
+void	test_ft_putnbr_fd()
+{
+	print_msg_color("\n---Testing ft_putnbr_fd---\n", BLUE);
+	
+	int	num = INT_MIN;
+	int fd = open("tests/test_output/putnbr.test", O_WRONLY | O_CREAT, 0644);
+	while (num < INT_MIN + 1000)
+	{
+		ft_putnbr_fd(num, fd);
+		ft_putchar_fd('\n', fd);
+		num++;
+	}
+	num = -1000;
+	while (num < 1000)
+	{
+		ft_putnbr_fd(num, fd);
+		ft_putchar_fd('\n', fd);
+		num++;
+	}
+	num = INT_MAX - 1000;
+	while (num < INT_MAX)
+	{
+		ft_putnbr_fd(num, fd);
+		ft_putchar_fd('\n', fd);
+		num++;
+	}
+	ft_putnbr_fd(num, fd);
+	ft_putchar_fd('\n', fd);
 	close(fd);
 }

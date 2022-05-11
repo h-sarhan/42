@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/11 19:36:14 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/11 20:39:05 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ $(TESTS): $(NAME) $(TEST_OBJS) $(C_UNIT_OBJS)
 test: $(TESTS)
 	rm -f $(TEST_DIR)/test_output/*.test
 	./$(TESTS)
+	@bash ./$(TEST_DIR)/test_ft_putnbr_fd.sh
 
 norm:
 	norminette
