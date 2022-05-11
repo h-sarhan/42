@@ -76,6 +76,8 @@
 15. ft_strdup
 16. ft_strncmp
 17. ft_memchr
+18. ft_putchar_fd
+19. ft_putstr_fd
 
 # TODO:
 1. Create Makefile *DONE*

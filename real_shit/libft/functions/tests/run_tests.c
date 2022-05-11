@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 19:19:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 19:34:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ int	main()
 //
 	print_msg_color("\n===Testing additional functions===\n", MAGENTA);
 	test_ft_putchar_fd();
+	test_ft_putstr_fd();
 }
