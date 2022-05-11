@@ -73,6 +73,7 @@
 12. ft_strchr
 13. ft_strrchr
 14. ft_calloc
+15. ft_strdup
 
 # TODO:
 1. Create Makefile

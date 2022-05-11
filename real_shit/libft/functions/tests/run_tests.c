@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 11:22:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 12:57:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	main()
 //	test_tolower();
 //	test_strchr();
 //	test_strrchr();
-	test_strdup();
+//	test_strdup();
+	test_strncmp();
 	
 	print_msg_color("\n===Testing memory functions===\n", MAGENTA);
 //	test_memset();
