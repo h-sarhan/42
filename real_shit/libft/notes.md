@@ -84,3 +84,4 @@
 3. Clone C03 to get ft_strlcat *DONE*
 4. Clone C09 to get ft_split *DONE*
 5. Check if I need to check for zero or integer overflow with calloc *DONE* (We don't)
+6. Check man for memcmp strnstr and atoi on 42 computer

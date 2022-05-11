@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/10 23:27:54 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/11 19:22:26 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ $(TESTS): $(NAME) $(TEST_OBJS) $(C_UNIT_OBJS)
 	gcc $(MUSTAFA_FLAGS) -o $@ $(TEST_OBJS) $(C_UNIT_OBJS) -L. -lft 
 
 test: $(TESTS)
+	rm -f $(TEST_DIR)/test_output/*.test
 	./$(TESTS)
 
 norm:

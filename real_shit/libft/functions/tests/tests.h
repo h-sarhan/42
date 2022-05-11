@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:57 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 13:43:37 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 19:05:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <limits.h>
+# include <fcntl.h>
 
 # include "c_unit/c_unit.h"
 # include "../libft.h"
@@ -47,4 +48,6 @@ void	test_memcpy();
 void	test_calloc();
 void	test_memchr();
 
+// Additional function tests
+void	test_ft_putchar_fd();
 #endif
