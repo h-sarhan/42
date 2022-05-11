@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 07:41:26 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 21:10:35 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/05/11 21:08:42 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/05/11 21:19:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t		i;
-	const char	*str1;
-	const char	*str2;
+	char	*concat_str;
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
 
-	str1 = s1;
-	str2 = s2;
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	concat_str = malloc(sizeof(char) * (len1 + len2 + 1));
+	if (concat_str == NULL)
+		return (NULL);
 	i = 0;
-	while (str1[i] != '\0' && str2[i] != '\0' && i < n)
+	while (i < len1)
 	{
-		if (str1[i] > str2[i])
-			return (1);
-		if (str1[i] < str2[i])
-			return (-1);
+		concat_str[i] = s1[i];
 		i++;
 	}
-	if (i == n)
-		return (0);
-	if (str1[i] != '\0')
-		return (1);
-	if (str2[i] != '\0')
-		return (-1);
-	return (0);
+	while (i < len1 + len2)
+	{
+		concat_str[i] = s2[i - len1];
+		i++;
+	}
+	concat_str[i] = '\0';
+	return (concat_str);
 }
