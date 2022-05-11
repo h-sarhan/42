@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:57 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 12:10:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 13:34:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ void	test_strncmp();
 
 // Memory tests
 void	test_memset();
+void	test_memchr();
 void	test_bzero();
 void	test_memcpy();
 void	test_calloc();
+void	test_memchr();
 
 #endif
