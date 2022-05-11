@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 19:34:59 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 19:45:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,25 @@ void	test_ft_putstr_fd()
 			"correctly to the file putstr.test: ", chars, str);
 	assert_int_equal("Check that the correct number of bytes has been read: ",
 			bytes_read, ft_strlen(str));
+	close(fd);
+}
+
+void	test_ft_putendl_fd()
+{
+	print_msg_color("\n---Testing ft_putendl_fd---\n", BLUE);
+	int fd = open("tests/test_output/putendl.test", O_WRONLY | O_CREAT, 0644);
+	char str[] = "42 abu dhabi wooooooooooooooooooooooooooooooooo!";
+	ft_putendl_fd(str, fd);
+	char	*chars = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	close(fd);
+	fd = open("tests/test_output/putendl.test", O_RDONLY);
+	int	bytes_read = read(fd, chars, ft_strlen(str) + 1);
+	char *str_with_endl = malloc(sizeof(char) * (ft_strlen(str) + 2));
+	strcpy(str_with_endl, str);
+	str_with_endl[ft_strlen(str)] = '\n';
+	assert_str_equal("Check that the string has been written "
+			"correctly to the file putendl.test with a new line: ", chars, str_with_endl);
+	assert_int_equal("Check that the correct number of bytes has been read: ",
+			bytes_read, ft_strlen(str) + 1);
 	close(fd);
 }
