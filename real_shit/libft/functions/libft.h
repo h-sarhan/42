@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:23:07 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 08:51:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 11:17:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ int		ft_tolower(int c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_strdup(const char *s1);
 #endif

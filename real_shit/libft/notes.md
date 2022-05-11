@@ -16,10 +16,10 @@
 8. ft_tolower
 9. ft_strchr
 10. ft_strrchr
-12. ft_strdup
-13. ft_putchar_fd
-14. ft_putstr_fd
-15. ft_putendl_fd
+11. ft_strdup
+12. ft_putchar_fd
+13. ft_putstr_fd
+14. ft_putendl_fd
 
 # Medium Functions
 1. ft_memset
@@ -72,7 +72,7 @@
 11. ft_tolower
 12. ft_strchr
 13. ft_strrchr
-14. 
+14. ft_calloc
 
 # TODO:
 1. Create Makefile

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:25:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 15:25:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 11:29:49 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,4 +182,45 @@ void	test_strrchr()
 		i++;
 	}
 	assert_true("Random tests passed: ", test);
+}
+
+void	test_strdup()
+{
+	print_msg_color("\n---Testing ft_strdup---\n", BLUE);
+
+	char	str1[] = "abcdliugyhoilugyuygkuytreyteruvxcxbv";
+	char	*str2 = ft_strdup(str1);
+	
+	assert_str_equal("Check that string is duplicated correctly: ", str1, str2);
+	free(str2);
+	
+	int i = 0;
+	int num_tests = 10000;
+	int	string_size;
+	char	*orig_str;
+	char	*dup_str;
+	bool test = true;
+	print_msg_color("Running random tests: \n", YELLOW);
+	while (i < num_tests)
+	{
+		string_size = rand() % 1000;
+		orig_str = malloc(sizeof(char) * (string_size + 1));
+		orig_str[string_size] = '\0';
+		int j = 0;
+		while (j < string_size)
+		{
+			orig_str[j] = 1 + (rand() % 127);
+			j++;
+		}
+		dup_str = ft_strdup(orig_str);
+		if (!assert_str_equal("", dup_str, orig_str))
+		{
+			test = false;
+			break;
+		}
+		free(dup_str);
+		free(orig_str);
+		i++;
+	}
+	assert_true("Random tests have passed: ", test);
 }
