@@ -82,6 +82,7 @@
 21. ft_putnbr_fd
 22. ft_substr
 23. ft_strjoin
+24. ft_strtrim
 
 # TODO:
 1. Create Makefile *DONE*
