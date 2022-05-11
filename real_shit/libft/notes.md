@@ -16,7 +16,6 @@
 8. ft_tolower
 9. ft_strchr
 10. ft_strrchr
-11. ft_calloc
 12. ft_strdup
 13. ft_putchar_fd
 14. ft_putstr_fd
@@ -31,11 +30,12 @@
 6. ft_memcmp
 7. ft_strnstr
 8. ft_atoi
-9. ft_substr
-10. ft_strjoin
-11. ft_strmapi
-12. ft_striteri
-13. ft_putnbr_fd
+9. ft_calloc
+10. ft_substr
+11. ft_strjoin
+12. ft_strmapi
+13. ft_striteri
+14. ft_putnbr_fd
 
 # Hard Functions
 1. ft_memmove

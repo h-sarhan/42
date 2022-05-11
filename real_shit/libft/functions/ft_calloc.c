@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:00:08 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 15:08:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 10:04:09 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	unsigned char	*memory;
 	unsigned int	i;
 
-	if (nmemb == 0 || size == 0)
-		return (NULL);
 	memory = malloc(nmemb * size);
 	if (memory == NULL)
+	{
+		errno = ENOMEM;
 		return (NULL);
+	}
 	i = 0;
 	while (i < nmemb * size)
 	{

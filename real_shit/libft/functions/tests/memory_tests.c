@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests2.c                                           :+:      :+:    :+:   */
+/*   memory_tests.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:11:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 15:26:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 10:08:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,76 @@ void	test_memcpy()
 
 void	test_memmove()
 {
-	
+	// TODO: Write this function
 }
 
+void	test_calloc()
+{
+	print_msg_color("\n---Testing ft_calloc---\n", BLUE);
+	
+	int	*expected1;
+	int	*result1;
 
+	expected1 = calloc(1, sizeof(int));
+	result1 = ft_calloc(1, sizeof(int));
+
+	assert_int_equal("Check that 1 int has been initialzed propoerly: ", result1[0], 0);
+	expected1[0] = 42;
+	result1[0] = 42;
+
+	assert_int_equal("Check that 1 int is allocated correctly: ", result1[0], expected1[0]);
+	free(expected1);
+	free(result1);
+	
+	int	*expected;
+	int	*result;
+
+	size_t	nmembs;
+	int	i = 0;
+	int	num_tests = 500;
+	bool test = true;
+	print_msg_color("Starting random tests: \n", YELLOW);
+	while (i < num_tests)
+	{
+		nmembs = rand() % 1000;
+		expected = calloc(nmembs, sizeof(int));
+		result = ft_calloc(nmembs, sizeof(int));
+		size_t	j = 0;
+		while (j < nmembs)
+		{
+			if (expected == NULL)
+			{
+				printf("expected is null\n");
+				break;
+			}
+			if (result == NULL)
+			{
+				printf("result is null\n");
+				break;
+			}
+			if (!assert_int_equal("", result[j], expected[j]))
+			{
+				printf("Test number = %d\nNMEMBS = %zu\nmember index = %zu\n", i, nmembs, j);
+				test = false;
+				break;
+			}
+				
+			int	item = rand() % 100;
+			expected[j] = item;
+			result[j] = item;
+			if (!assert_int_equal("", result[j], expected[j]))
+			{
+				printf("Test number = %d\nNMEMBS = %zu\nitem = %d\nmember index = %zu\n", i, nmembs, item, j);
+				test = false;
+				break;
+			}
+			j++;
+		}
+		free(expected);
+		free(result);
+		if (!test)
+			break;
+		i++;
+	}
+	assert_true("Random tests have passed: ", test);
+}
