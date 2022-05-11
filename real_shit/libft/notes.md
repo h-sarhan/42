@@ -80,6 +80,8 @@
 19. ft_putstr_fd
 20. ft_putendl_fd
 21. ft_putnbr_fd
+22. ft_substr
+23. 
 
 # TODO:
 1. Create Makefile *DONE*
@@ -89,3 +91,6 @@
 4. Clone C09 to get ft_split *DONE*
 5. Check if I need to check for zero or integer overflow with calloc *DONE* (We don't)
 6. Check man for memcmp strnstr and atoi on 42 computer
+7. Write randomised tests for substr later
+8. Rewrite test for ft_putnbr_fd
+9. Reduce number of randomised tests

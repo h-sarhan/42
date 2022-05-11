@@ -6,11 +6,33 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 20:38:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 21:03:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
+
+void	test_ft_substr()
+{
+	print_msg_color("\n---Testing ft_substr---\n", BLUE);
+	
+	char *result = ft_substr("abcdef", 2, 2);
+
+	assert_str_equal("Check that substr returns the correct substring when len < substring length: ",
+					result, "cd");
+	free(result);
+	
+	result = ft_substr("abcdef", 0, ft_strlen("abcdef"));
+	assert_str_equal("Check that substr returns the correct substring when len == substring length: ",
+					result, "abcdef");
+	free(result);
+	
+	result = ft_substr("abcdef", 4, 23);
+	assert_str_equal("Check that substr returns the correct substring when len > substring length: ",
+					result, "ef");
+	free(result);
+	print_msg_color("Starting random tests: ", YELLOW);
+}
 
 void	test_ft_putchar_fd()
 {
@@ -70,7 +92,7 @@ void	test_ft_putendl_fd()
 
 void	test_ft_putnbr_fd()
 {
-	print_msg_color("\n---Testing ft_putnbr_fd---\n", BLUE);
+	print_msg_color("\n---Generating ft_putnbr_fd test output---\n", BLUE);
 	
 	int	num = INT_MIN;
 	int fd = open("tests/test_output/putnbr.test", O_WRONLY | O_CREAT, 0644);

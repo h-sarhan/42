@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:57 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 20:01:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 20:55:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	test_calloc();
 void	test_memchr();
 
 // Additional function tests
+void	test_ft_substr();
 void	test_ft_putchar_fd();
 void	test_ft_putstr_fd();
 void	test_ft_putendl_fd();
