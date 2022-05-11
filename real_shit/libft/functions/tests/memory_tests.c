@@ -1,16 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests2.c                                           :+:      :+:    :+:   */
+/*   memory_tests.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:11:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 15:26:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/11 13:39:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
+
+void	test_memchr()
+{
+	print_msg_color("\n---Testing ft_memchr---\n", BLUE);
+	
+	char	memory[100];
+
+	memset(memory, 8, 100);
+	memory[10] = 19;
+	assert_true("ft_memchr finds single non-terminating byte correctly: ",
+				ft_memchr(memory, 19, 100) == memchr(memory, 19, 100));
+	assert_true("ft_memchr returns NULL when character is not found: ",
+				ft_memchr(memory, 20, 100) == memchr(memory, 20, 100));
+
+	char	ran_bytes[1000];
+	int	num_tests = 10000;
+	int	i = 0;
+	int	j = 0;
+	bool	test = true;
+	char	ran_byte;
+	int		search_size;
+	print_msg_color("Running random tests: \n", YELLOW);
+	while (i < num_tests)
+	{
+		j = 0;
+		search_size = rand() % 1000;
+		// fill bytes with random characters
+		while (j < 1000)
+		{
+			ran_bytes[j] = rand() % 100;
+			j++;
+		}
+		ran_bytes[j] = '\0';
+		// pick random byte to look for
+		ran_byte = rand() % 100;
+		if (!assert_true("", ft_memchr(ran_bytes, ran_byte, search_size) == memchr(ran_bytes, ran_byte, search_size)))
+				test = false;
+		i++;
+	}
+	assert_true("Random tests passed: ", test);
+}
 
 void	test_memset()
 {
@@ -149,7 +190,76 @@ void	test_memcpy()
 
 void	test_memmove()
 {
-	
+	// TODO: Write this function
 }
 
+void	test_calloc()
+{
+	print_msg_color("\n---Testing ft_calloc---\n", BLUE);
+	
+	int	*expected1;
+	int	*result1;
 
+	expected1 = calloc(1, sizeof(int));
+	result1 = ft_calloc(1, sizeof(int));
+
+	assert_int_equal("Check that 1 int has been initialzed propoerly: ", result1[0], 0);
+	expected1[0] = 42;
+	result1[0] = 42;
+
+	assert_int_equal("Check that 1 int is allocated correctly: ", result1[0], expected1[0]);
+	free(expected1);
+	free(result1);
+	
+	int	*expected;
+	int	*result;
+
+	size_t	nmembs;
+	int	i = 0;
+	int	num_tests = 500;
+	bool test = true;
+	print_msg_color("Starting random tests: \n", YELLOW);
+	while (i < num_tests)
+	{
+		nmembs = rand() % 1000;
+		expected = calloc(nmembs, sizeof(int));
+		result = ft_calloc(nmembs, sizeof(int));
+		size_t	j = 0;
+		while (j < nmembs)
+		{
+			if (expected == NULL)
+			{
+				printf("expected is null\n");
+				break;
+			}
+			if (result == NULL)
+			{
+				printf("result is null\n");
+				break;
+			}
+			if (!assert_int_equal("", result[j], expected[j]))
+			{
+				printf("Test number = %d\nNMEMBS = %zu\nmember index = %zu\n", i, nmembs, j);
+				test = false;
+				break;
+			}
+				
+			int	item = rand() % 100;
+			expected[j] = item;
+			result[j] = item;
+			if (!assert_int_equal("", result[j], expected[j]))
+			{
+				printf("Test number = %d\nNMEMBS = %zu\nitem = %d\nmember index = %zu\n", i, nmembs, item, j);
+				test = false;
+				break;
+			}
+			j++;
+		}
+		free(expected);
+		free(result);
+		if (!test)
+			break;
+		i++;
+	}
+	assert_true("Random tests have passed: ", test);
+}

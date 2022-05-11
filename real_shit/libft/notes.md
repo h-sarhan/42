@@ -16,11 +16,10 @@
 8. ft_tolower
 9. ft_strchr
 10. ft_strrchr
-11. ft_calloc
-12. ft_strdup
-13. ft_putchar_fd
-14. ft_putstr_fd
-15. ft_putendl_fd
+11. ft_strdup
+12. ft_putchar_fd
+13. ft_putstr_fd
+14. ft_putendl_fd
 
 # Medium Functions
 1. ft_memset
@@ -31,11 +30,12 @@
 6. ft_memcmp
 7. ft_strnstr
 8. ft_atoi
-9. ft_substr
-10. ft_strjoin
-11. ft_strmapi
-12. ft_striteri
-13. ft_putnbr_fd
+9. ft_calloc
+10. ft_substr
+11. ft_strjoin
+12. ft_strmapi
+13. ft_striteri
+14. ft_putnbr_fd
 
 # Hard Functions
 1. ft_memmove
@@ -72,12 +72,15 @@
 11. ft_tolower
 12. ft_strchr
 13. ft_strrchr
-14. 
+14. ft_calloc
+15. ft_strdup
+16. ft_strncmp
+17. ft_memchr
 
 # TODO:
 1. Create Makefile *DONE*
 2. Create a library *DONE*
 3. Test Makefile
-3. Clone C03 to get ft_strlcat
-4. Clone C09 to get ft_split
-5. Check if I need to check for zero or integer overflow with calloc
+3. Clone C03 to get ft_strlcat *DONE*
+4. Clone C09 to get ft_split *DONE*
+5. Check if I need to check for zero or integer overflow with calloc *DONE* (We don't)
