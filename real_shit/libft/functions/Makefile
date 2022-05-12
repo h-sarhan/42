@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/11 22:57:51 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/12 12:06:56 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ clean:
 
 fclean: clean
 	rm -f $(TEST_DIR)/test_output/*.test
-	rm -rf $(NAME) $(TESTS)
+	rm -f $(NAME) $(TESTS)
 
 re: fclean $(NAME)
 	

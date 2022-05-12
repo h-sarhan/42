@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory_tests.c                                     :+:      :+:    :+:   */
+/*   libc_memory_tests.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:11:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 13:39:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 11:42:18 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ void	test_bzero()
 	char	*expected = malloc(memsize);
 
 	// fill bytes 100 to 1000 with 1
-	memset(&result[99], 1, 900);
-	memset(&expected[99], 1, 900);
+	memset(result, 1, 1000);
+	memset(expected, 1, 1000);
 	int 	i = 0;
 	bool	test = true;
 	ft_bzero(result, 100);

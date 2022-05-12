@@ -6,11 +6,100 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 23:18:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 12:04:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
+
+void	test_ft_split()
+{
+	print_msg_color("\n---Testing ft_substr---\n", BLUE);
+
+	char	**result = ft_split("easy example", ' ');
+	char	**expected = malloc(sizeof(char *) * 2);
+	expected[0] = "easy";
+	expected[1] = "example";
+	assert_str_array_equal("Test ft_split (easy example): ", result, expected, 2);
+	assert_is_null("Test ft_split adds NULL at the end: ", result[2]);
+	free(result);
+	free(expected);
+	
+	result = ft_split("     harder    example       1", ' ');
+	expected = malloc(sizeof(char *) * 3);
+	expected[0] = "harder";
+	expected[1] = "example";
+	expected[2] = "1";
+	assert_str_array_equal("Test ft_split (harder example 1): ", result, expected, 3);
+	assert_is_null("Test ft_split adds NULL at the end: ", result[3]);
+	free(result);
+	free(expected);
+	
+	result = ft_split("harder    example    2    ", ' ');
+	expected = malloc(sizeof(char *) * 3);
+	expected[0] = "harder";
+	expected[1] = "example";
+	expected[2] = "2";
+	assert_str_array_equal("Test ft_split (harder example 2): ", result, expected, 3);
+	assert_is_null("Test ft_split adds NULL at the end: ", result[3]);
+	free(result);
+	free(expected);
+	
+	result = ft_split("          harder    example    3    ", ' ');
+	expected = malloc(sizeof(char *) * 3);
+	expected[0] = "harder";
+	expected[1] = "example";
+	expected[2] = "3";
+	assert_str_array_equal("Test ft_split (harder example 3): ", result, expected, 3);
+	assert_is_null("Test ft_split adds NULL at the end: ", result[3]);
+	free(result);
+	free(expected);
+
+	result = ft_split("", ' ');
+	assert_is_null("Test ft_split with empty string: ", result[0]);
+	free(result);
+
+	result = ft_split(" ", ' ');
+	assert_is_null("Test ft_split with single separator: ", result[0]);
+	free(result);
+
+	result = ft_split("          ", ' ');
+	assert_is_null("Test ft_split with many separators: ", result[0]);
+	free(result);
+
+	result = ft_split("a", ' ');
+	expected = malloc(sizeof(char *) * 1);
+	expected[0] = "a";
+	assert_str_array_equal("Test ft_split with single character: ", result, expected, 1);
+	assert_is_null("Test ft_split adds NULL at the end: ", result[1]);
+	free(result);
+	free(expected);
+	
+	result = ft_split("         a", ' ');
+	expected = malloc(sizeof(char *) * 1);
+	expected[0] = "a";
+	assert_str_array_equal("Test ft_split with single character and separators to the left: ", result, expected, 1);
+	assert_is_null("Test ft_split adds NULL at the end: ", result[1]);
+	free(result);
+	free(expected);
+	
+	result = ft_split("a        ", ' ');
+	expected = malloc(sizeof(char *) * 1);
+	expected[0] = "a";
+	assert_str_array_equal("Test ft_split with single character and separators to the right: ", result, expected, 1);
+	assert_is_null("Test ft_split adds NULL at the end: ", result[1]);
+	free(result);
+	free(expected);
+	
+	result = ft_split("         a          ", ' ');
+	expected = malloc(sizeof(char *) * 1);
+	expected[0] = "a";
+	assert_str_array_equal("Test ft_split with single character and separators to the left and right: ", result, expected, 1);
+	assert_is_null("Test ft_split adds NULL at the end: ", result[1]);
+	free(result);
+	free(expected);
+	
+}
 
 void	test_ft_substr()
 {
