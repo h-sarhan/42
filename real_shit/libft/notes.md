@@ -99,9 +99,9 @@
 3. Clone C03 to get ft_strlcat *DONE*
 4. Clone C09 to get ft_split *DONE*
 5. Check if I need to check for zero or integer overflow with calloc *DONE* (We don't)
-6. Check man for memcmp strnstr and atoi on 42 computer
+6. Check man for memcmp strnstr and atoi on 42 computer *DONE*
 7. Write tests for substr later
 8. Write tests for strjoin later
 9. Rewrite test for ft_putnbr_fd
 10. Reduce number of randomised tests
-11. TEST EVERYTHING
+11. TEST EVERYTHING AGAIN
