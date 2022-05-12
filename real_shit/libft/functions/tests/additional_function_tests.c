@@ -6,11 +6,43 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 13:37:59 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 14:21:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
+
+char	return_upper_if_even(unsigned int i, char c)
+{
+	if (i % 2 == 0)
+		return (ft_toupper(c));
+	else
+		return (c);
+}
+
+
+void	test_ft_strmapi()
+{
+	print_msg_color("\n---Testing ft_strmapi---\n", BLUE);
+	char	*str = "kjhbkjhbkgvkgvkhgvkhgvkghvkuygvbk";
+
+	char	*result = ft_strmapi(str, &return_upper_if_even);
+	size_t i = 0;
+	bool test = true;
+	assert_int_equal("Check that input string is same length as result string: ", ft_strlen(result), ft_strlen(str));
+	while (i < ft_strlen(result))
+	{
+		if (i % 2 == 0)
+			if (!assert_true("", result[i] >= 'A' && result[i] <= 'Z'))
+			{
+				test = false;
+				break ;
+			}
+		i++;
+	}
+	assert_true("Check that function was applied correctly: ", test);
+	free(result);
+}
 
 void	test_ft_split()
 {

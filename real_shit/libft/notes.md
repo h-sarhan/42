@@ -85,6 +85,7 @@
 24. ft_strtrim
 25. ft_split
 26. ft_itoa
+27. ft_strmapi
 
 # TODO:
 1. Create Makefile *DONE*
@@ -98,3 +99,4 @@
 8. Write tests for strjoin later
 9. Rewrite test for ft_putnbr_fd
 10. Reduce number of randomised tests
+11. TEST EVERYTHING
