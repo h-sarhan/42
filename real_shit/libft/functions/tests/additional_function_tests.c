@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 14:21:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 14:34:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,36 @@ void	test_ft_strmapi()
 	}
 	assert_true("Check that function was applied correctly: ", test);
 	free(result);
+}
+
+void	change_to_upper_if_even(unsigned int i, char *c)
+{
+
+	if (i % 2 == 0)
+	{
+		char upper = ft_toupper(*c);
+		*c = upper;
+	}
+}
+
+void	test_ft_striteri()
+{
+	print_msg_color("\n---Testing ft_striteri---\n", BLUE);
+	char	str[] = "kjhbkjhbkgvkgvkhgvkhgvkghvkuygvbk";
+
+	ft_striteri(str, &change_to_upper_if_even);
+	size_t i = 0;
+	bool test = true;
+	while (i < ft_strlen(str))
+	{
+		if (i % 2 == 0 && !assert_true("", str[i] >= 'A' && str[i] <= 'Z'))
+		{
+			test = false;
+			break ;
+		}
+		i++;
+	}
+	assert_true("Check that function was applied correctly: ", test);
 }
 
 void	test_ft_split()

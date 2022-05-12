@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 14:22:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 14:26:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ int	main()
 	test_ft_split();
 	test_ft_itoa();
 	test_ft_strmapi();
+	test_ft_striteri();
 }
