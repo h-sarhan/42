@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 22:50:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 23:13:52 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main()
 //	test_isascii();
 //	test_isprint();
 //
-//	print_msg_color("\n===Testing libc string functions===\n", MAGENTA);
+	print_msg_color("\n===Testing libc string functions===\n", MAGENTA);
 //	test_strlen();
 //	test_toupper();
 //	test_tolower();
@@ -33,6 +33,7 @@ int	main()
 //	test_strncmp();
 //	test_strnstr();
 //	test_atoi();
+	test_strlcpy();
 //  
 //  	print_msg_color("\n===Testing libc memory functions===\n", MAGENTA);
 //	test_memset();

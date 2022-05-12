@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:25:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 22:48:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 23:58:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,4 +422,65 @@ void	test_atoi()
 	assert_int_equal("Test on INT_MAX: ", ft_atoi(num_string), atoi(num_string));
 	free(num_string);
 
+}
+#include <bsd/string.h>
+
+void	test_strlcpy()
+{
+	char	*src = "abcdefghijklmnopqrstuvwxyz";
+	char	dest1[100];
+	char	dest2[100];
+	size_t	ret1;
+	size_t	ret2;
+	
+	print_msg_color("\n---Testing ft_strlcpy---\n", BLUE);
+
+	// ensure that these two char arrays are not null terminated intially
+	memset(dest1, 'a', 100);
+	memset(dest2, 'a', 100);
+	ret1 = ft_strlcpy(dest1, src, 10);
+	ret2 = strlcpy(dest2, src, 10);
+	assert_int_equal("Check return values are the same when dstsize < src_len: ", ret1, ret2);
+	assert_str_equal("Check destination strings are the same when dstsize < src_len: ", dest1, dest2);
+	
+	memset(dest1, 'a', 100);
+	memset(dest2, 'a', 100);
+	ret1 = ft_strlcpy(dest1, src, ft_strlen(src) + 1);
+	ret2 = strlcpy(dest2, src, ft_strlen(src) + 1);
+	assert_int_equal("Check return values are the same when dstsize + 1 == src_len: ", ret1, ret2);
+	assert_str_equal("Check destination strings are the same when dstsize + 1 == src_len: ", dest1, dest2);
+	
+	memset(dest1, 'a', 100);
+	memset(dest2, 'a', 100);
+	ret1 = ft_strlcpy(dest1, src, 1000);
+	ret2 = strlcpy(dest2, src, 1000);
+	assert_int_equal("Check return values are the same when dstsize > src_len: ", ret1, ret2);
+	assert_str_equal("Check destination strings are the same when dstsize > src_len: ", dest1, dest2);
+	
+	memset(dest1, 'a', 100);
+	memset(dest2, 'a', 100);
+	dest1[99] = '\0';
+	dest2[99] = '\0';
+	ret1 = ft_strlcpy(dest1, src, 0);
+	ret2 = strlcpy(dest2, src, 0);
+	assert_int_equal("Check return values are the same when dstsize == 0: ", ret1, ret2);
+	assert_str_equal("Check destination strings are the same when dstsize == 0: ", dest1, dest2);
+
+	int i = 0;
+	bool test;
+	while (i < 10000)
+	{
+		memset(dest1, 'a', 100);
+		memset(dest2, 'a', 100);
+		dest1[99] = '\0';
+		dest2[99] = '\0';
+		ret1 = ft_strlcpy(dest1, src, 0);
+		ret2 = strlcpy(dest2, src, 0);
+		test = assert_int_equal("", ret1, ret2);
+		test = assert_str_equal("", dest1, dest2);
+		if (!test)
+			break;
+		i++;
+	}
+	assert_true("Testing dstsizes from 0 -> 10000: ", test);
 }
