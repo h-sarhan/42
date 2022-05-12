@@ -88,7 +88,7 @@
 27. ft_strmapi
 28. ft_striteri
 29. ft_memcmp
-30. 
+30. ft_strnstr
 
 # TODO:
 1. Create Makefile *DONE*

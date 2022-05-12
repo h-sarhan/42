@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_tests.c                                     :+:      :+:    :+:   */
+/*   libc_string_tests.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:25:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 13:17:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 22:14:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,4 +315,37 @@ void	test_strdup()
 		i++;
 	}
 	assert_true("Random tests have passed: ", test);
+}
+
+void	test_strnstr()
+{
+	print_msg_color("\n---Testing ft_strnstr---\n", BLUE);
+	
+	char *haystack = "Foo Bar Baz";
+	char *res = ft_strnstr(haystack, "Bar", ft_strlen(haystack));
+	//char *expected = strnstr(haystack, needle, ft_strlen(haystack));
+
+	assert_str_equal("Check that ft_strnstr works when len == string length: ",
+					res, "Bar Baz");
+	res = ft_strnstr(haystack, "Bad", ft_strlen(haystack));
+	assert_is_null("Check that ft_strnstr returns null when needle is not in haystack: ", res);
+	
+	res = ft_strnstr(haystack, "Bar", 5);
+	assert_is_null("Check that ft_strnstr works when len < string length: ", res);
+
+	res = ft_strnstr("Bar", "Bar", 3);
+	assert_str_equal("Check that ft_strnstr works when needle == haystack: ", res, "Bar");
+
+	res = ft_strnstr("Bar", "", 3);
+	assert_str_equal("Check that ft_strnstr returns haystack when needle is empty: ", res, "Bar");
+
+	print_msg_color("Additional tests: \n", WHITE);
+	res = ft_strnstr("work hard and you will earn a good living", "and", 4);
+	assert_is_null("Additional test #1: ", res);
+	
+	res = ft_strnstr("work hard and you will earn a good living", "and", 100);
+	assert_str_equal("Additional test #2: ", res, "and you will earn a good living");
+
+	res = ft_strnstr("work hard and you will earn a good living", "and", 13);
+	assert_str_equal("Additional test #3: ", res, "and you will earn a good living");
 }
