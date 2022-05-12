@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:25:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 22:14:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 22:48:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,4 +348,78 @@ void	test_strnstr()
 
 	res = ft_strnstr("work hard and you will earn a good living", "and", 13);
 	assert_str_equal("Additional test #3: ", res, "and you will earn a good living");
+}
+
+void	test_atoi()
+{
+	print_msg_color("\n---Testing ft_atoi---\n", BLUE);
+	
+	char *test_str = "123";
+	assert_int_equal("\"123\" -> 123: ", ft_atoi(test_str), atoi(test_str));
+
+	test_str = "+123";
+	assert_int_equal("\"+123\" -> 123: ", ft_atoi(test_str), atoi(test_str));
+	
+	test_str = "   +123";
+	assert_int_equal("\"   +123\" -> 123: ", ft_atoi(test_str), atoi(test_str));
+	
+	test_str = " \n \t  +123";
+	assert_int_equal("\" \\n \\t  +123\" -> 123: ", ft_atoi(test_str), atoi(test_str));
+
+	test_str = "    -123";
+	assert_int_equal("\"    -123\" -> -123: ", ft_atoi(test_str), atoi(test_str));
+	
+	test_str = "    -1298769873";
+	assert_int_equal("\"    -1298769873\" -> -1298769873: ", ft_atoi(test_str), atoi(test_str));
+	
+	test_str = "    -100000000";
+	assert_int_equal("\"    -100000000\" -> -100000000: ", ft_atoi(test_str), atoi(test_str));
+
+	test_str = "    -00000000";
+	assert_int_equal("\"    -00000000\" -> 0: ", ft_atoi(test_str), atoi(test_str));
+	
+	test_str = "    -001000000";
+	assert_int_equal("\"    -001000000\" -> -1000000: ", ft_atoi(test_str), atoi(test_str));
+	
+	test_str = "    -0010a00000";
+	assert_int_equal("\"    -0010a00000\" -> -10: ", ft_atoi(test_str), atoi(test_str));
+
+	int i = INT_MIN;
+	bool test;
+	while (i < INT_MIN + 10000)
+	{
+		char	*num_string = ft_itoa(i);
+		test = assert_int_equal("", ft_atoi(num_string), atoi(num_string));
+		free(num_string);
+		if (!test)
+			break;
+		i++;
+	}
+	assert_true("Test on numbers between INT_MIN and INT_MIN + 10,000: ", test);
+	i = -10000;
+	while (i < 10000)
+	{
+		char	*num_string = ft_itoa(i);
+		test = assert_int_equal("", ft_atoi(num_string), atoi(num_string));
+		free(num_string);
+		if (!test)
+			break;
+		i++;
+	}
+	assert_true("Test on numbers between -10,000 and 10,000: ", test);
+	i = INT_MAX - 10000;
+	while (i < INT_MAX)
+	{
+		char	*num_string = ft_itoa(i);
+		test = assert_int_equal("", ft_atoi(num_string), atoi(num_string));
+		free(num_string);
+		if (!test)
+			break;
+		i++;
+	}
+	assert_true("Test on numbers between INT_MAX - 10,000 and INT_MAX - 1: ", test);
+	char	*num_string = ft_itoa(INT_MAX);
+	assert_int_equal("Test on INT_MAX: ", ft_atoi(num_string), atoi(num_string));
+	free(num_string);
+
 }
