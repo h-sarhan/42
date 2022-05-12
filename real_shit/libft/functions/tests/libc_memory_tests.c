@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:11:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 11:42:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 21:26:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,92 @@ void	test_memset()
 	print_msg_color("Testing writing to string: \n", YELLOW);
 	printf("Expected string = \n%s\n", expected_str);
 	printf("Result string = \n%s\n", result_str);
+}
+
+bool	are_same_sign(int res, int expected)
+{
+	return ((res > 0 && expected > 0) ||
+			(res < 0 && expected < 0) ||
+			(res == 0 && expected == 0));
+}
+
+void	test_memcmp()
+{
+	print_msg_color("\n---Testing ft_memcmp---\n", BLUE);
+	
+	unsigned char *bytes1;
+	unsigned char *bytes2;
+
+	unsigned int num_bytes = 100;
+	bytes1 = malloc(num_bytes);
+	bytes2 = malloc(num_bytes);
+	memset(bytes1, 42, num_bytes);
+	memset(bytes2, 42, num_bytes);
+	int	res = ft_memcmp(bytes1, bytes2, num_bytes);
+	int	expected = memcmp(bytes1, bytes2, num_bytes);
+	assert_true("Test ft_memcmp when all bytes are equal: ",
+			are_same_sign(res, expected)); 
+
+	bytes1[10] = 200;
+	bytes2[10] = 1;
+	res = ft_memcmp(bytes1, bytes2, num_bytes);
+	expected = memcmp(bytes1, bytes2, num_bytes);
+	assert_true("Test ft_memcmp when one byte is greater than the other: ",
+			are_same_sign(res, expected)); 
+	
+	bytes1[10] = 1;
+	bytes2[10] = 200;
+	res = ft_memcmp(bytes1, bytes2, num_bytes);
+	expected = memcmp(bytes1, bytes2, num_bytes);
+	assert_true("Test ft_memcmp when one byte is less than the other: ",
+			are_same_sign(res, expected)); 
+	
+	memset(bytes1, 42, num_bytes);
+	memset(bytes2, 42, num_bytes);
+
+	bytes1[99] = 0;
+	bytes2[99] = 255;
+	res = ft_memcmp(bytes1, bytes2, num_bytes);
+	expected = memcmp(bytes1, bytes2, num_bytes);
+	assert_true("Test ft_memcmp when last byte is greater than the other: ",
+			are_same_sign(res, expected)); 
+	
+	bytes1[99] = 255;
+	bytes2[99] = 0;
+	res = ft_memcmp(bytes1, bytes2, num_bytes);
+	expected = memcmp(bytes1, bytes2, num_bytes);
+	assert_true("Test ft_memcmp when last byte is less than the other: ",
+			are_same_sign(res, expected)); 
+	
+	free(bytes1);
+	free(bytes2);
+
+	int	num_tests = 10000;
+	int i = 0;
+	bool test;
+	while (i < num_tests)
+	{
+		int num_bytes = 1 + rand() % 10;
+		bytes1 = malloc(num_bytes);
+		bytes2 = malloc(num_bytes);
+		int j = 0;
+		while (j < num_bytes)
+		{
+			bytes1[j] = rand() % 20;
+			bytes2[j] = rand() % 20;
+			j++;
+		}
+		res = ft_memcmp(bytes1, bytes2, num_bytes);
+		expected = memcmp(bytes1, bytes2, num_bytes);
+		test = assert_true("", are_same_sign(res, expected));
+
+		free(bytes1);
+		free(bytes2);
+		if (!test)
+			break ;
+		i++;
+	}
+	assert_true("Test ft_memcmp with random values: ", test);
 }
 
 void	test_bzero()

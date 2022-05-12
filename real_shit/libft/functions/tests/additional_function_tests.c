@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 14:34:53 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 20:01:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	test_ft_striteri()
 
 void	test_ft_split()
 {
-	print_msg_color("\n---Testing ft_substr---\n", BLUE);
+	print_msg_color("\n---Testing ft_split---\n", BLUE);
 
 	char	**result = ft_split("easy example", ' ');
 	char	**expected = malloc(sizeof(char *) * 2);

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:51:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/04 23:05:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 20:23:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	assert_int_equal(char *msg, int result, int expected)
 	test_util_putnbr(result, YELLOW);
 	print_msg_color("\nExpected=", YELLOW);
 	test_util_putnbr(expected, YELLOW);
-	write(1, "\n", 1);
+	write(1, RESET "\n", 6);
 	return (false);
 }
 
