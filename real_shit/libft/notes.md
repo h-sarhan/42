@@ -86,6 +86,7 @@
 25. ft_split
 26. ft_itoa
 27. ft_strmapi
+28. ft_striteri
 
 # TODO:
 1. Create Makefile *DONE*
