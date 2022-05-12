@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/10 23:35:49 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/12 13:27:01 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@
 
 SRCS := $(wildcard ft_*.c)
 
-OBJ_DIR = build
-OBJS := $(SRCS:%.c=$(OBJ_DIR)/%.o)
+OBJS := $(SRCS:%.c=%.o)
 
 NAME = libft.a
 MUSTAFA_FLAGS = -Werror -Wall -Wextra
@@ -26,20 +25,17 @@ $(NAME): $(OBJS)
 	ar -rc $@ $^
 	ranlib $@
 
-$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
-	gcc -c $(MUSTAFA_FLAGS) -o $@ $<
+%.o: %.c
+	gcc $(MUSTAFA_FLAGS) -c $^ 
 
 norm:
 	norminette
 
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -f $(OBJS)
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -f $(NAME)
 
 re: fclean $(NAME)
 	
-
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)

@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/12 12:06:56 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/12 13:01:50 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,7 @@ MUSTAFA_FLAGS = -Werror -Wall -Wextra
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar -rc $@ $^
-	ranlib $@
+	ar -rcs $@ $^
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	gcc -c $(MUSTAFA_FLAGS) -o $@ $<

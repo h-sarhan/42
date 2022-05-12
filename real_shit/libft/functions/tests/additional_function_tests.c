@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 12:04:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/12 13:37:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,66 @@ void	test_ft_split()
 	free(result);
 	free(expected);
 	
+}
+
+void	test_ft_itoa()
+{
+	print_msg_color("\n---Testing ft_itoa---\n", BLUE);
+	
+	char *result = ft_itoa(INT_MIN);
+	assert_str_equal("Testing with INT_MIN: ", ft_itoa(INT_MIN), "-2147483648");
+	free(result);
+
+
+	int	i = INT_MIN + 1;
+	bool test = true;
+	while (i < INT_MIN + 10000)
+	{
+		result = ft_itoa(i);
+		if (!assert_int_equal("", atoi(result), i))
+		{
+			test = false;
+			free(result);
+			break ;
+		}
+		free(result);
+		i++;
+	}
+	assert_true("Testing numbers from INT_MIN + 1 -> INT_MIN + 10000: ", test);
+	i = -10000;
+	test = true;
+	while (i < 10000)
+	{
+		result = ft_itoa(i);
+		if (!assert_int_equal("", atoi(result), i))
+		{
+			test = false;
+			free(result);
+			break ;
+		}
+		free(result);
+		i++;
+	}
+	assert_true("Testing numbers from -10000 -> 10000: ", test);
+	i = INT_MAX - 10000;
+	test = true;
+	while (i < INT_MAX)
+	{
+		result = ft_itoa(i);
+		if (!assert_int_equal("", atoi(result), i))
+		{
+			test = false;
+			free(result);
+			break ;
+		}
+		free(result);
+		i++;
+	}
+	assert_true("Testing numbers from INT_MAX - 10000 -> INT_MAX - 1: ", test);
+
+	result = ft_itoa(INT_MAX);
+	assert_str_equal("Testing with INT_MAX: ", ft_itoa(INT_MAX), "2147483647");
+	free(result);
 }
 
 void	test_ft_substr()
