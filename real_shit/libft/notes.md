@@ -117,3 +117,5 @@
 11. TEST EVERYTHING AGAIN (CHECK FOR OVERFLOW IN EVERY FUNCTION)
 12. Pass norminette for ft_split and ft_itoa
 13. Test Makefile
+14. TEST STRLCAT AND STRLCPY
+15. Rewrite fd tests

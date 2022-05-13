@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:25:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 19:13:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:25:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	test_strncmp()
 	assert_true("Testing strncmp with same size and different strings (n == 30): ",
 			test_strcmp_results(res, expected));
 	
-	int	num_tests = 10000;
+	int	num_tests = 100000;
 	int	i = 0;
 	int j;
 	int	strsize1;
@@ -71,8 +71,8 @@ void	test_strncmp()
 	print_msg_color("Starting random tests: \n", YELLOW);
 	while (i < num_tests)
 	{
-		strsize1 = rand() % 1000;
-		strsize2 = rand() % 1000;
+		strsize1 = rand() % 100;
+		strsize2 = rand() % 100;
 		ran_string1 = malloc(sizeof(char) * (strsize1 + 1));
 		ran_string2 = malloc(sizeof(char) * (strsize2 + 1));
 		ran_string1[strsize1] = '\0';
@@ -89,7 +89,7 @@ void	test_strncmp()
 			ran_string2[j] = 1 + rand() % 127;
 			j++;
 		}
-		num_chars_to_compare = rand() % 1000;
+		num_chars_to_compare = rand() % 100;
 		expected = strncmp(ran_string1, ran_string2, num_chars_to_compare);
 		res = ft_strncmp(ran_string1, ran_string2, num_chars_to_compare);
 		if (!assert_true("", test_strcmp_results(res, expected)))

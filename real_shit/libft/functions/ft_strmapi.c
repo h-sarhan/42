@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 14:07:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 14:16:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:57:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 		str[i] = (*f)(i, s[i]);
 		i++;
 	}
-	str[len] = '\0';
+	str[i] = '\0';
 	return (str);
 }

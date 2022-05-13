@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 20:01:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:52:01 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void	test_ft_itoa()
 
 	int	i = INT_MIN + 1;
 	bool test = true;
-	while (i < INT_MIN + 10000)
+	while (i < INT_MIN + 100000)
 	{
 		result = ft_itoa(i);
 		if (!assert_int_equal("", atoi(result), i))
@@ -187,9 +187,9 @@ void	test_ft_itoa()
 		i++;
 	}
 	assert_true("Testing numbers from INT_MIN + 1 -> INT_MIN + 10000: ", test);
-	i = -10000;
+	i = -100000;
 	test = true;
-	while (i < 10000)
+	while (i < 100000)
 	{
 		result = ft_itoa(i);
 		if (!assert_int_equal("", atoi(result), i))
@@ -202,7 +202,7 @@ void	test_ft_itoa()
 		i++;
 	}
 	assert_true("Testing numbers from -10000 -> 10000: ", test);
-	i = INT_MAX - 10000;
+	i = INT_MAX - 100000;
 	test = true;
 	while (i < INT_MAX)
 	{
@@ -242,7 +242,6 @@ void	test_ft_substr()
 	assert_str_equal("Check that substr returns the correct substring when len > substring length: ",
 					result, "ef");
 	free(result);
-	print_msg_color("Starting random tests: ", YELLOW);
 }
 
 void	test_ft_strtrim()

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:11:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 13:24:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:41:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	test_memchr()
 				ft_memchr(memory, 20, 100) == memchr(memory, 20, 100));
 
 	char	ran_bytes[1000];
+	int		byte_to_find;
 	int	num_tests = 10000;
 	int	i = 0;
 	int	j = 0;
 	bool	test = true;
-	char	ran_byte;
 	int		search_size;
 	print_msg_color("Running random tests: \n", YELLOW);
 	while (i < num_tests)
@@ -45,8 +45,8 @@ void	test_memchr()
 		}
 		ran_bytes[j] = '\0';
 		// pick random byte to look for
-		ran_byte = rand() % 100;
-		if (!assert_true("", ft_memchr(ran_bytes, ran_byte, search_size) == memchr(ran_bytes, ran_byte, search_size)))
+		byte_to_find = rand() % 100 - 50;
+		if (!assert_true("", ft_memchr(ran_bytes, byte_to_find, search_size) == memchr(ran_bytes, byte_to_find, search_size)))
 				test = false;
 		i++;
 	}
@@ -56,7 +56,7 @@ void	test_memchr()
 void	test_memset()
 {
 	print_msg_color("\n---Testing ft_memset---\n", BLUE);
-	int	memsize = 1000;
+	int	memsize = 100;
 	char	*result = malloc(memsize);
 	char	*expected = malloc(memsize);
 	result = memset(result, 1, memsize);
@@ -91,6 +91,18 @@ void	test_memset()
 		i++;
 	}
 	assert_true("Writing all possible single byte values: ", test);
+	
+	test = true;
+	i = -10000;
+	while (i < 10000)
+	{
+		result_byte_ptr = ft_memset(result_byte_ptr, i, 1);
+		expected_byte_ptr = memset(expected_byte_ptr, i, 1);
+		if (!assert_true("", *result_byte_ptr == *expected_byte_ptr))
+			test = false;
+		i++;
+	}
+	assert_true("Writing impossible single byte values: ", test);
 	
 
 	int num_tests = 1000;
@@ -372,7 +384,7 @@ void	test_calloc()
 	expected1 = calloc(1, sizeof(int));
 	result1 = ft_calloc(1, sizeof(int));
 
-	assert_int_equal("Check that 1 int has been initialzed propoerly: ", result1[0], 0);
+	assert_int_equal("Check that 1 int has been initialzed properly: ", result1[0], 0);
 	expected1[0] = 42;
 	result1[0] = 42;
 

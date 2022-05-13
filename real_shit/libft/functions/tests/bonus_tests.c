@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:08:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 18:46:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 20:03:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	test_ft_lstnew()
 	node = ft_lstnew(&num);
 
 	assert_is_not_null("Node is not NULL: ", node);
-	assert_int_equal("Node content has been set correctly: ", *(int *)node->content, 4);
+	assert_int_equal("Node content has been set correctly: ", *(int *)node->content, num);
 	assert_is_null("Next node is NULL: ", node->next);
 	free(node);
 }
