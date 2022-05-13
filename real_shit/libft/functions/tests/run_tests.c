@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 13:40:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 14:07:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main()
 	srand(42);
 	
 	print_msg_color("\n===Testing bonus functions===\n", MAGENTA);
+	test_ft_lstnew();
 
 //	print_msg_color("\n===Testing libc ascii functions===\n", MAGENTA);
 //	test_isalpha();
