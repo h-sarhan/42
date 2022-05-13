@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:08:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 18:08:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:46:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,10 +165,43 @@ void	test_ft_lstiter()
 	ft_lstiter(first, &print_int);
 }
 
+void	*add_one_to_int(void *void_num)
+{
+	int	*num;
+
+	num = malloc(sizeof(int));
+	*num = *(int*)void_num + 1;
+	return (num);
+}
+
+void	free_num(void *num)
+{
+	free(num);
+}
 
 void	test_ft_lstmap()
 {
 	print_msg_color("\n---Testing ft_lstmap---\n", BLUE);
-	print_msg_color("Test this later\n", YELLOW);
-
+	
+	t_list	*first;
+	t_list	*node;
+	int *nums_in[10];
+	int i = 0;
+	while (i < 10)
+	{
+		nums_in[i] = malloc(sizeof(int));
+		*nums_in[i] = i;
+		i++;
+	}
+	first = ft_lstnew(nums_in[0]);
+	i = 1;
+	while (i < 10)
+	{
+		node = ft_lstnew(nums_in[i]);
+		ft_lstadd_back(&first, node);
+		i++;
+	}
+	print_msg_color("This should print numbers from 1 to 10: \n", YELLOW);
+	t_list *new_list = ft_lstmap(first, &add_one_to_int, &free_num);
+	ft_lstiter(new_list, &print_int);
 }

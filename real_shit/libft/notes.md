@@ -101,11 +101,11 @@
 40. ft_lstdelone
 41. ft_lstclear
 42. ft_lstiter
+43. ft_lstmap
 
 # TODO:
 1. Create Makefile *DONE*
 2. Create a library *DONE*
-3. Test Makefile
 3. Clone C03 to get ft_strlcat *DONE*
 4. Clone C09 to get ft_split *DONE*
 5. Check if I need to check for zero or integer overflow with calloc *DONE* (We don't)
@@ -116,3 +116,4 @@
 10. Reduce number of randomised tests
 11. TEST EVERYTHING AGAIN (CHECK FOR OVERFLOW IN EVERY FUNCTION)
 12. Pass norminette for ft_split and ft_itoa
+13. Test Makefile
