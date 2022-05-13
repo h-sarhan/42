@@ -6,14 +6,12 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:09:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 15:06:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:55:27 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-#include <stdio.h>
-#include <string.h>
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	char		*dst_bytes;
@@ -35,6 +33,9 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		ft_memcpy(dst, src, len);
 	return (dst);
 }
+
+#include <stdio.h>
+#include <string.h>
 
 //int	main()
 //{
