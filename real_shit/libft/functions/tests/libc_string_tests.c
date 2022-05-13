@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:25:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 23:58:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 12:06:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,7 +423,6 @@ void	test_atoi()
 	free(num_string);
 
 }
-#include <bsd/string.h>
 
 void	test_strlcpy()
 {
@@ -449,13 +448,14 @@ void	test_strlcpy()
 	ret2 = strlcpy(dest2, src, ft_strlen(src) + 1);
 	assert_int_equal("Check return values are the same when dstsize + 1 == src_len: ", ret1, ret2);
 	assert_str_equal("Check destination strings are the same when dstsize + 1 == src_len: ", dest1, dest2);
-	
-	memset(dest1, 'a', 100);
-	memset(dest2, 'a', 100);
-	ret1 = ft_strlcpy(dest1, src, 1000);
-	ret2 = strlcpy(dest2, src, 1000);
-	assert_int_equal("Check return values are the same when dstsize > src_len: ", ret1, ret2);
-	assert_str_equal("Check destination strings are the same when dstsize > src_len: ", dest1, dest2);
+
+	// Compiler complains about this test
+//	memset(dest1, 'a', 100);
+//	memset(dest2, 'a', 100);
+//	ret1 = ft_strlcpy(dest1, src, 1000);
+//	ret2 = strlcpy(dest2, src, 1000);
+//	assert_int_equal("Check return values are the same when dstsize > src_len: ", ret1, ret2);
+//	assert_str_equal("Check destination strings are the same when dstsize > src_len: ", dest1, dest2);
 	
 	memset(dest1, 'a', 100);
 	memset(dest2, 'a', 100);
@@ -483,4 +483,56 @@ void	test_strlcpy()
 		i++;
 	}
 	assert_true("Testing dstsizes from 0 -> 10000: ", test);
+}
+
+void	test_strlcat()
+{
+	print_msg_color("\n---Testing ft_strlcat---\n", BLUE);
+
+	char	src[] = "0123456789";
+	char	dest1[100] = "abcdefghijklmnopqrstuvwxyz";
+	char	dest2[100] = "abcdefghijklmnopqrstuvwxyz";
+
+	int ret1 = ft_strlcat(dest1, src, strlen(dest1) + strlen(src) + 1);
+	int ret2 = strlcat(dest2, src, strlen(dest2) + strlen(src) + 1);
+	assert_str_equal("Check that ft_strlcat concats two strings correctly when destsize == dest_len + src_len + 1: ",
+					dest1, dest2);
+	assert_int_equal("Check that ft_strlcat returns the correct value: ", ret1, ret2);
+	
+	strcpy(dest1, "abcdefghijklmnopqrstuvwxyz");
+	strcpy(dest2, "abcdefghijklmnopqrstuvwxyz");
+	
+	ret1 = ft_strlcat(dest1, src, strlen(dest1) + 1);
+	ret2 = strlcat(dest2, src, strlen(dest2) + 1);
+
+	assert_str_equal("Check that ft_strlcat concats two strings correctly when destsize == dest_len + 1: ",
+					dest1, dest2);
+	assert_int_equal("Check that ft_strlcat returns the correct value: ", ret1, ret2);
+	
+	strcpy(dest1, "abcdefghijklmnopqrstuvwxyz");
+	strcpy(dest2, "abcdefghijklmnopqrstuvwxyz");
+	
+	ret1 = ft_strlcat(dest1, src, strlen(dest1));
+	ret2 = strlcat(dest2, src, strlen(dest2));
+
+	assert_str_equal("Check that ft_strlcat concats two strings correctly when destsize == dest_len: ",
+					dest1, dest2);
+	assert_int_equal("Check that ft_strlcat returns the correct value: ", ret1, ret2);
+
+
+	int i = 0;
+	bool test;
+	while (i < 10000)
+	{
+		strcpy(dest1, "abcdefghijklmnopqrstuvwxyz");
+		strcpy(dest2, "abcdefghijklmnopqrstuvwxyz");
+		ret1 = ft_strlcat(dest1, src, strlen(dest1));
+		ret2 = strlcat(dest2, src, strlen(dest2));
+		test = assert_str_equal("", dest1, dest2) && assert_int_equal("", ret1, ret2);
+		if (!test)
+			break;
+		i++;
+	}
+	assert_true("Testing dstsizes from 0 -> 10000: ", test);
+
 }

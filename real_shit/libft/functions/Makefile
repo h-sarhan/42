@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/12 23:42:00 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/13 08:27:40 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	gcc -c $(MUSTAFA_FLAGS) -o $@ $< 
 
 $(TESTS): $(NAME) $(TEST_OBJS) $(C_UNIT_OBJS)
-	gcc $(MUSTAFA_FLAGS) -o $@ $(TEST_OBJS) $(C_UNIT_OBJS) -L. -lft -lbsd
+	gcc $(MUSTAFA_FLAGS) -o $@ $(TEST_OBJS) $(C_UNIT_OBJS) -L. -lft
 
 test: $(TESTS)
 	rm -f $(TEST_DIR)/test_output/*.test
