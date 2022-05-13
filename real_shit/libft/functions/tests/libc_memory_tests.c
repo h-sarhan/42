@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:11:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 21:26:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 13:24:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,11 +272,94 @@ void	test_memcpy()
 	free(original_memory);
 	free(expected);
 	free(result);
+//    			         012345678
+	char	overlap[] = "hassan!"    ;
+//	                         ^  ^
+//	             src         s  e
+//	                          ^  ^
+//	             dst          s  e
+
+
+	printf("This should overlap: \n");
+	// ft_memcpy modified source code 
+	char *dst = &overlap[5];
+	char *src = &overlap[4];
+	int len = 3;
+	i = 0;
+	while (i < len)
+	{
+		printf(YELLOW "Wrote str[%d] to str[%d]\n" RESET, 4 + i, 4 + i + (int)(dst - src));
+		dst[i] = src[i];
+		i++;
+	}
 }
 
 void	test_memmove()
 {
-	// TODO: Write this function
+	print_msg_color("\n---Testing ft_memmove---\n", BLUE);
+	int	memsize =  100;
+	char *original_memory = malloc(memsize);
+	int i = 0;
+	while (i < 100)
+	{
+		original_memory[i] = i + 1;
+		i++;
+	}
+	// original_memory = [1...100]
+	
+	char	*expected = malloc(memsize);
+	char	*result = malloc(memsize);
+	memset(result, 42, memsize);
+	memset(expected, 42, memsize);
+	ft_memmove(result, original_memory, memsize - 40);
+	memmove(expected, original_memory, memsize - 40);
+
+	i = 0;
+	bool test = true;
+	while (i < memsize)
+	{
+		if (!assert_true("", expected[i] == result[i]))
+			test = false;
+		i++;
+	}
+	assert_true("Memory has been copied correctly: ", test);
+	free(original_memory);
+	free(expected);
+	free(result);
+	//			         012345678
+	char	overlap[] = "hassan!"    ;
+//	                         ^  ^
+//	             src         s  e
+//	                          ^  ^
+//	             dst          s  e
+
+
+	printf("This should not overlap: \n");
+	// ft_memmove modified source code 
+	char *dst = &overlap[5];
+	char *src = &overlap[4];
+	int len = 3;
+	i = 0;
+	if (src < dst && src + len >= dst)
+	{
+		i = len - 1;
+		while (i >= 0)
+		{
+			printf(YELLOW "Wrote str[%d] to str[%d]\n" RESET, 4 + i, 4 + i + (int)(dst - src));
+			dst[i] = src[i];
+			i--;
+		}
+	}
+	else
+	{
+		i = 0;
+		while (i < len)
+		{
+			printf(YELLOW "Wrote str[%d] to str[%d]\n" RESET, 4 + i, 4 + i + (int)(dst - src));
+			dst[i] = src[i];
+			i++;
+		}
+	}
 }
 
 void	test_calloc()

@@ -92,6 +92,7 @@
 31. ft_atoi
 32. ft_strlcpy
 33. ft_strlcat
+34. ft_memmove
 
 # TODO:
 1. Create Makefile *DONE*
