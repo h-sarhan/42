@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:57 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 14:30:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 16:17:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,7 @@ void	test_ft_striteri();
 // Bonus test
 void	test_ft_lstnew();
 void	test_ft_lstadd_front();
+void	test_ft_lstsize();
+void	test_ft_lstlast();
+void	test_ft_lstadd_back();
 #endif

@@ -108,5 +108,5 @@
 8. Write tests for strjoin later
 9. Rewrite test for ft_putnbr_fd
 10. Reduce number of randomised tests
-11. TEST EVERYTHING AGAIN
+11. TEST EVERYTHING AGAIN (CHECK FOR OVERFLOW IN EVERY FUNCTION)
 12. Pass norminette for ft_split and ft_itoa

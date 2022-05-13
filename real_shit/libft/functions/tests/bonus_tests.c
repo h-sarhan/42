@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:08:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 14:43:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 16:11:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,47 @@ void	test_ft_lstadd_front()
 	}
 	assert_int_array_equal("Check that all nodes have been added to the list properly: ",
 			nums_in_list, nums_out, 10);
+	print_msg_color("This is not being freed i'm sorry\n", YELLOW);
+}
+
+void	test_ft_lstsize()
+{
+	print_msg_color("\n---Testing ft_lstsize---\n", BLUE);
+	
+	
+	t_list	*first;
+	t_list	*node;
+	int nums_in[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+	first = ft_lstnew(&nums_in[0]);
+	int i = 1;
+	while (i < 10)
+	{
+		node = ft_lstnew(&nums_in[i]);
+		ft_lstadd_front(&first, node);
+		first = node;
+		i++;
+	}
+	
+	assert_int_equal("Check that the number of nodes is correct : ", ft_lstsize(first), 10);
+	print_msg_color("This is not being freed i'm sorry\n", YELLOW);
+}
+
+void	test_ft_lstlast()
+{
+	print_msg_color("\n---Testing ft_lstlast---\n", BLUE);
+	
+	t_list	*first;
+	t_list	*node;
+	int nums_in[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+	first = ft_lstnew(&nums_in[0]);
+	int i = 1;
+	while (i < 10)
+	{
+		node = ft_lstnew(&nums_in[i]);
+		ft_lstadd_front(&first, node);
+		first = node;
+		i++;
+	}
+	assert_int_equal("Check that the last node has been retreived: ", *(int *)ft_lstlast(first)->content, 0);
+	print_msg_color("This is not being freed i'm sorry\n", YELLOW);
 }
