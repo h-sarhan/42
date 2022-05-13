@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:01:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 13:56:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 13:47:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ static int	count_words(char const *str, char sep)
 			i++;
 	}
 	return (num_words);
-}
-
-// TODO: Replace with ft_strlcpy
-static void	string_copy(char *dest, const char *src, int num_chars)
-{
-	int	i;
-
-	i = 0;
-	while (i < num_chars)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
 }
 
 // TODO: DOES NOT PASS NORMINETTE
@@ -73,9 +59,8 @@ char	**ft_split(char const *s, char c)
 		words[word_count] = malloc(sizeof(char) * (word_end - word_start + 2));
 		if (words[word_count] == NULL)
 			return (NULL);
-		// REPLACE THIS WITH strlcpy
-		string_copy(words[word_count], &s[word_start],
-				word_end - word_start + 1);
+		ft_strlcpy(words[word_count], &s[word_start],
+			word_end - word_start + 2);
 		word_count++;
 	}
 	words[word_count] = NULL;

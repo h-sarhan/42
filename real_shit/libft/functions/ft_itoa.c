@@ -6,25 +6,11 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:12:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 13:57:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 13:37:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-// TODO: Replace with ft_strlcpy
-static void	string_copy(char *dest, const char *src, int num_chars)
-{
-	int	i;
-
-	i = 0;
-	while (i < num_chars)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-}
 
 // TODO: Does not pass norminette
 char	*ft_itoa(int n)
@@ -42,7 +28,7 @@ char	*ft_itoa(int n)
 		str = malloc(sizeof(char) * 12);
 		if (str == NULL)
 			return (NULL);
-		string_copy(str, "-2147483648", 11);
+		ft_strlcpy(str, "-2147483648", 12);
 		return (str);
 	}
 	else if (n == 0)

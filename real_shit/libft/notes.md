@@ -107,3 +107,4 @@
 9. Rewrite test for ft_putnbr_fd
 10. Reduce number of randomised tests
 11. TEST EVERYTHING AGAIN
+12. Pass norminette for ft_split and ft_itoa

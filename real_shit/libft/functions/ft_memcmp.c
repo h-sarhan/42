@@ -6,13 +6,13 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:44:47 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/12 20:22:01 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 13:44:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_memcmp(const void *s1, const void *s2, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	const unsigned char	*bytes1;
 	const unsigned char	*bytes2;
@@ -31,4 +31,3 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
-
