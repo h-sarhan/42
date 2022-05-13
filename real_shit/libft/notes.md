@@ -95,6 +95,12 @@
 34. ft_memmove
 35. ft_lstnew
 36. ft_lstadd_front
+37. ft_lstsize
+38. ft_lstlast
+39. ft_lstadd_back
+40. ft_lstdelone
+41. ft_lstclear
+42. ft_lstiter
 
 # TODO:
 1. Create Makefile *DONE*

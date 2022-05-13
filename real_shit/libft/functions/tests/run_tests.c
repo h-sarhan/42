@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 16:17:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:03:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ int	main()
 	test_ft_lstadd_front();
 	test_ft_lstsize();
 	test_ft_lstlast();
-//	test_ft_lstaddback();
+	test_ft_lstadd_back();
+	test_ft_lstdelone();
+	test_ft_lstclear();
+	test_ft_lstiter();
+	test_ft_lstmap();
 
 //	print_msg_color("\n===Testing libc ascii functions===\n", MAGENTA);
 //	test_isalpha();
