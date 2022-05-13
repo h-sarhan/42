@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:23:07 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 14:14:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 14:17:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 t_list	*ft_lstnew(void *content);
+void	ft_lstadd_front(t_list **lst, t_list *new);
 
 #endif

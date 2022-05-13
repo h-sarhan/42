@@ -93,6 +93,8 @@
 32. ft_strlcpy
 33. ft_strlcat
 34. ft_memmove
+35. ft_lstnew
+36. ft_lstadd_front
 
 # TODO:
 1. Create Makefile *DONE*
