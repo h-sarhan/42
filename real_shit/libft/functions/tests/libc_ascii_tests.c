@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ascii_tests.c                                      :+:      :+:    :+:   */
+/*   libc_ascii_tests.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:12:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/10 15:24:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:05:09 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	test_isalpha()
 	}
 	assert_true("Testing all possible ascii values: ", test);
 
-	i = 128;
-	while (i < 256)
+	i = -10000;
+	while (i < 10000)
 	{
 		ft_res = ft_isalpha(i);
 		libc_res = isalpha(i);
@@ -58,8 +58,8 @@ void	test_isdigit()
 	}
 	assert_true("Testing all possible ascii values: ", test);
 
-	i = 128;
-	while (i < 256)
+	i = -10000;
+	while (i < 10000)
 	{
 		ft_res = ft_isdigit(i);
 		libc_res = isdigit(i);
@@ -87,8 +87,8 @@ void	test_isalnum()
 	}
 	assert_true("Testing all possible ascii values: ", test);
 
-	i = 128;
-	while (i < 256)
+	i = -10000;
+	while (i < 10000)
 	{
 		ft_res = ft_isalnum(i);
 		libc_res = isalnum(i);
@@ -116,8 +116,8 @@ void	test_isascii()
 	}
 	assert_true("Testing all possible ascii values: ", test);
 
-	i = 128;
-	while (i < 256)
+	i = -10000;
+	while (i < 10000)
 	{
 		ft_res = ft_isascii(i);
 		libc_res = isascii(i);
@@ -145,8 +145,8 @@ void	test_isprint()
 	}
 	assert_true("Testing all possible ascii values: ", test);
 
-	i = 128;
-	while (i < 256)
+	i = -10000;
+	while (i < 10000)
 	{
 		ft_res = ft_isprint(i);
 		libc_res = isprint(i);

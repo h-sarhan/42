@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:25:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 12:06:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:10:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ void	test_strlen()
 
 	int 	test_num = 0;
 	bool	test = true;
-	print_msg_color("Testing with random strings (<= 100000 chars)\n", YELLOW);
-	while (test_num < 1000)
+	print_msg_color("Testing with random strings (<= 1000 chars)\n", YELLOW);
+	while (test_num < 10000)
 	{
-		int	str_len = rand() % 100001;
+		int	str_len = rand() % 1001;
 		int	j = 0;
 		while (j < str_len)
 		{
@@ -148,9 +148,9 @@ void	test_toupper()
 	assert_str_equal("Test that uppercase letters do not get converted: ",
 					res, all_A);
 
-	int		i = EOF;
+	int		i = -10000;
 	bool	test = true;
-	while (i < 256)
+	while (i < 10000)
 	{
 		int ft_upper = ft_toupper(i);
 		int	c_upper = toupper(i);
@@ -179,9 +179,9 @@ void	test_tolower()
 	assert_str_equal("Test that lowercase letters do not get converted: ",
 					res, all_a);
 
-	int		i = EOF;
+	int		i = -10000;
 	bool	test = true;
-	while (i < 256)
+	while (i < 10000)
 	{
 		int ft_lower = ft_tolower(i);
 		int	c_lower = tolower(i);
@@ -211,7 +211,7 @@ void	test_strchr()
 	int	i = 0;
 	int	j = 0;
 	bool	test = true;
-	char	ran_char;
+	int	ran_char;
 	int		str_size;
 	print_msg_color("Running random tests: \n", YELLOW);
 	while (i < num_tests)
@@ -226,7 +226,7 @@ void	test_strchr()
 		}
 		ran_string[j] = '\0';
 		// pick random char to look for (including \0)
-		ran_char = rand() % 1000;
+		ran_char = rand() % 1000 - 500;
 		if (!assert_true("", ft_strchr(ran_string, ran_char) == strchr(ran_string, ran_char)))
 				test = false;
 		i++;
