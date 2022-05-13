@@ -6,17 +6,19 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:09:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 13:45:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 15:06:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+#include <stdio.h>
+#include <string.h>
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char			*dst_bytes;
-	const char		*src_bytes;
-	size_t			i;
+	char		*dst_bytes;
+	const char	*src_bytes;
+	int			i;
 
 	dst_bytes = dst;
 	src_bytes = src;
@@ -30,13 +32,17 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		}
 	}
 	else
-	{
-		i = 0;
-		while (i < len)
-		{
-			dst_bytes[i] = src_bytes[i];
-			i++;
-		}
-	}
+		ft_memcpy(dst, src, len);
 	return (dst);
 }
+
+//int	main()
+//{
+//
+//	char *src = malloc(100);
+//
+//	int n = 3;
+//	strcpy(src, "Fayis");
+//
+//	ft_memmove(&src[2], &src[0], n);
+//}

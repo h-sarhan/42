@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 14:38:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 15:06:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main()
 //	test_strlcpy();
 //	test_strlcat();
 //  
-//  	print_msg_color("\n===Testing libc memory functions===\n", MAGENTA);
+  //	print_msg_color("\n===Testing libc memory functions===\n", MAGENTA);
 //	test_memset();
 //	test_bzero();
 //	test_calloc();
