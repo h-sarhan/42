@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 19:08:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:12:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	main()
 //	test_strlen();
 //	test_toupper();
 //	test_tolower();
-	test_strchr();
-//	test_strrchr();
+//	test_strchr();
+	test_strrchr();
 //	test_strdup();
 //	test_strncmp();
 //	test_strnstr();

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:25:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 19:10:08 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:13:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ void	test_strrchr()
 	int	i = 0;
 	int	j = 0;
 	bool	test = true;
-	char	ran_char;
+	int		ran_char;
 	int		str_size;
 	print_msg_color("Running random tests: \n", YELLOW);
 	while (i < num_tests)
@@ -268,7 +268,7 @@ void	test_strrchr()
 		}
 		ran_string[j] = '\0';
 		// pick random char to look for (including \0)
-		ran_char = rand() % 1000;
+		ran_char = rand() % 1000 - 500;
 		if (!assert_true("", ft_strrchr(ran_string, ran_char) == strrchr(ran_string, ran_char)))
 				test = false;
 		i++;
