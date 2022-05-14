@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:01:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/14 13:47:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 18:51:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ char	**ft_split(char const *s, char c)
 		while (s[i] != c && s[i] != '\0')
 			i++;
 		words[word_count] = create_word(s, word_start, i - 1);
+		if (words[word_count] == NULL)
+			return (NULL);
 		word_count++;
 	}
 	words[word_count] = NULL;

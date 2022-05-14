@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:48:20 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/11 20:39:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 18:48:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	if (n == -2147483648)
+	if (n == INT_MIN)
 	{
 		ft_putstr_fd("-2147483648", fd);
 		return ;

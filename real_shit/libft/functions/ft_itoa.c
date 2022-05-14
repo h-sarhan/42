@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:12:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/14 13:28:08 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 18:34:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*handle_edge_case(int n)
 {
 	char	*str;
 
-	if (n == -2147483648)
+	if (n == INT_MIN)
 	{
 		str = malloc(sizeof(char) * 12);
 		if (str == NULL)
@@ -46,15 +46,34 @@ static int	get_num_digits(int num)
 	return (num_digits);
 }
 
+static char	*fill_digits(int num, int num_digits, int is_neg)
+{
+	int		i;
+	char	*str;
+
+	str = malloc(sizeof(char) * (num_digits + is_neg + 1));
+	if (str == NULL)
+		return (NULL);
+	i = num_digits + is_neg - 1;
+	while (i >= 0)
+	{
+		str[i--] = num % 10 + '0';
+		num /= 10;
+	}
+	if (is_neg)
+		str[0] = '-';
+	str[num_digits + is_neg] = '\0';
+	return (str);
+}
+
 char	*ft_itoa(int n)
 {
 	int		num_digits;
-	int		i;
 	char	*str;
 	int		is_neg;
 
 	is_neg = 0;
-	if (n == 0 || n == -2147483648)
+	if (n == 0 || n == INT_MIN)
 		return (handle_edge_case(n));
 	else if (n < 0)
 	{
@@ -62,15 +81,6 @@ char	*ft_itoa(int n)
 		is_neg = 1;
 	}
 	num_digits = get_num_digits(n);
-	str = malloc(sizeof(char) * (num_digits + is_neg + 1));
-	i = num_digits + is_neg - 1;
-	while (i >= 0)
-	{
-		str[i--] = n % 10 + '0';
-		n /= 10;
-	}
-	if (is_neg)
-		str[0] = '-';
-	str[num_digits + is_neg] = '\0';
+	str = fill_digits(n, num_digits, is_neg);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/14 13:48:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 19:14:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main()
 	test_strnstr();
 	test_atoi();
 	test_strlcpy(); // <---- TEST HARDER (DONE)
-  test_strlcat(); // <---- TEST HARDER (DONE)
+	test_strlcat(); // <---- TEST HARDER (DONE)
 
 	print_msg_color("\n===Testing libc memory functions===\n", MAGENTA);
 	test_memset();
@@ -55,7 +55,7 @@ int	main()
 	test_ft_strjoin(); // <--- TEST HARDER (DONE)
 	test_ft_strtrim();
 	test_ft_split();
-  test_ft_itoa();
+	test_ft_itoa();
 	test_ft_strmapi();
 	test_ft_striteri();
   
