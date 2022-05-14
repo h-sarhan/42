@@ -113,15 +113,16 @@
 5. Check man for memcmp strnstr and atoi on 42 computer *DONE*
 6. Write tests for substr *DONE*
 7. Write tests for strjoin *DONE*
-8. Rewrite fd tests
+8. Rewrite fd tests *DONE*
 9. CHECK FOR OVERFLOW IN EVERY FUNCTION *DONE*
 10. Pass norminette for ft_split and ft_itoa *DONE*
 11. Rewrite Makefile to fit assignment specification
 12. Check for zero or integer overflow with calloc *DONE*
-13. Test atoi with strings that overlap
-14. Write tests for calloc with overflow and size == 0 and nmemb == 0
-15. Test ft_memmove with len == 1
+13. Test atoi with strings that overflow *DONE*
+14. Write tests for calloc with overflow and size == 0 and nmemb == 0 *DONE*
+15. Test ft_memmove with len == 1 *DONE*
 16. Fix norminette for ft_split
-17. Test strchr with empty string and null character
-18. Test strlcat condition from man
-19. Test strlcpy with dstsize == 0
+17. Test strchr with empty string and null character *DONE*
+18. Test strlcat condition from man *DONE*
+19. Test strlcpy with dstsize == 0 *DONE*
+20. Check for overflow with atoi and return -1

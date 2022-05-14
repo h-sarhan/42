@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:15:57 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/14 18:33:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 19:33:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,17 @@ void	test_strnstr();
 // Additional function tests
 void	test_ft_substr();
 void	test_ft_strtrim();
-void	test_ft_putchar_fd();
-void	test_ft_putstr_fd();
-void	test_ft_putendl_fd();
-void	test_ft_putnbr_fd();
 void	test_ft_split();
 void	test_ft_itoa();
 void	test_ft_strmapi();
 void	test_ft_striteri();
 void	test_ft_strjoin();
+
+// Put tests
+void	test_ft_putchar_fd(int flag);
+void	test_ft_putstr_fd(int flag);
+void	test_ft_putendl_fd(int flag);
+void	test_ft_putnbr_fd(int flag);
 
 // Bonus test
 void	test_ft_lstnew();

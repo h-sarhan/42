@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:25:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/14 12:01:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 20:10:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,9 @@ void	test_strchr()
 		i++;
 	}
 	assert_true("Random tests passed: ", test);
+	char *empty_string = malloc(1);
+	*empty_string = '\0';
+	assert_true("Test ft_strchr with empty string and \\0: ", ft_strchr(empty_string, '\0') == empty_string);
 }
 
 void	test_strrchr()
@@ -392,7 +395,12 @@ void	test_atoi()
 		test = assert_int_equal("", ft_atoi(num_string), atoi(num_string));
 		free(num_string);
 		if (!test)
+		{
+			print_msg_color("Failed on number = ", ERROR);
+			printf("%d", i);
+			write(1, RESET "\n", 6);
 			break;
+		}
 		i++;
 	}
 	assert_true("Test on numbers between INT_MIN and INT_MIN + 10,000: ", test);
@@ -422,6 +430,7 @@ void	test_atoi()
 	assert_int_equal("Test on INT_MAX: ", ft_atoi(num_string), atoi(num_string));
 	free(num_string);
 
+	assert_int_equal("Test on numbers that overflow: ", ft_atoi("1211111111111111111111111111111111100"), atoi("1211111111111111111111111111111111100"));
 }
 
 void	test_strlcpy()
@@ -541,12 +550,12 @@ void	test_strlcat()
 	bool test;
 	char	*ran_src = malloc(sizeof(char) * 100);
 	int		src_size;
-	char	*ran_dst = malloc(sizeof(char) * 200);
-	char	*ran_dstcpy = malloc(sizeof(char) * 200);
+	char	*ran_dst = malloc(sizeof(char) * 2000);
+	char	*ran_dstcpy = malloc(sizeof(char) * 2000);
 	int		dst_size;
 	while (i <= 10000)
 	{
-		dst_size = rand() % 100;
+		dst_size = rand() % 1000;
 		for (int i = 0; i < dst_size; i++)
 		{
 			ran_dst[i] = 'a' + rand() % 26;

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:11:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/14 10:41:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 19:58:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -445,4 +445,8 @@ void	test_calloc()
 		i++;
 	}
 	assert_true("Random tests have passed: ", test);
+	
+	assert_is_null("Test calloc with overflow: ", ft_calloc(SIZET_MAX, 2));
+	assert_is_null("Test calloc with nmembers == 0 (not sure about this): ", ft_calloc(0, 42));
+	assert_is_null("Test calloc with item size ==  0 (not sure about this): ", ft_calloc(42, 0));
 }
