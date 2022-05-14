@@ -51,12 +51,14 @@
 3. ft_lstsize
 4. ft_lstlast
 5. ft_lstadd_back
-6. ft_lstiter
 
-# Medium/Hard Bonus Questions
+# Medium Bonus Questions
 1. ft_lstdelone
 2. ft_lstclear
-3. ft_lstmap
+3. ft_lstiter
+
+# Hard Bonus Questions
+1. ft_lstmap
 
 # Functions Completed:
 1. ft_isalpha
@@ -110,12 +112,11 @@
 4. Clone C09 to get ft_split *DONE*
 5. Check if I need to check for zero or integer overflow with calloc *DONE* (We don't)
 6. Check man for memcmp strnstr and atoi on 42 computer *DONE*
-7. Write tests for substr later
-8. Write tests for strjoin later
-9. Rewrite test for ft_putnbr_fd
+7. Write tests for substr
+8. Write tests for strjoin
+9. Rewrite fd tests
 10. Reduce number of randomised tests
 11. TEST EVERYTHING AGAIN (CHECK FOR OVERFLOW IN EVERY FUNCTION)
 12. Pass norminette for ft_split and ft_itoa
 13. Test Makefile
 14. TEST STRLCAT AND STRLCPY
-15. Rewrite fd tests

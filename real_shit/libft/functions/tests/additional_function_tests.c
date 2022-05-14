@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 19:52:01 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 23:11:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,42 @@ void	test_ft_substr()
 	assert_str_equal("Check that substr returns the correct substring when len > substring length: ",
 					result, "ef");
 	free(result);
+
+	int		num_tests = 10;
+	int		i = 0;
+	int		str_start;
+	char	str[101];
+	int		j;
+	char	*substr;
+	int 	len;
+	bool	test;
+	while (i < num_tests)
+	{
+		str_start = rand() % 100;
+		len = rand() % 150;
+		j = 0;
+		while (j < 100)
+		{
+			str[j] = 1 + rand() % 127;
+			j++;
+		}
+		str[j] = '\0';
+		substr = ft_substr(str, str_start, len);
+		if (len + str_start > 100)
+		{
+			test = assert_str_equal("", substr, &str[str_start]);
+		}
+		else
+		{
+			str[str_start + len] = '\0';
+			test = assert_str_equal("", substr, &str[str_start]);
+		}
+		if (!test)
+			break;
+		free(substr);
+		i++;
+	}
+	assert_true("Randomised tests passed: ", test);
 }
 
 void	test_ft_strtrim()

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:11:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 19:41:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/13 23:25:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	test_memchr()
 void	test_memset()
 {
 	print_msg_color("\n---Testing ft_memset---\n", BLUE);
-	int	memsize = 100;
+	int	memsize = 500;
 	char	*result = malloc(memsize);
 	char	*expected = malloc(memsize);
 	result = memset(result, 1, memsize);
@@ -76,13 +76,11 @@ void	test_memset()
 	free(result);
 	free(expected);
 	
-	char	expected_byte;
-	char	*expected_byte_ptr = &expected_byte;
-	char	result_byte;
-	char	*result_byte_ptr = &result_byte;
+	char	*expected_byte_ptr = malloc(1);
+	char	*result_byte_ptr = malloc(1);
 	test = true;
-	i = EOF;
-	while (i < 256)
+	i = 0;
+	while (i < 1)
 	{
 		result_byte_ptr = ft_memset(result_byte_ptr, i, 1);
 		expected_byte_ptr = memset(expected_byte_ptr, i, 1);
