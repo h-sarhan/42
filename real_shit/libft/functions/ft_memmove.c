@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:09:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 18:55:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 10:42:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	const char	*src_bytes;
 	int			i;
 
+	if (len == 0)
+		return (dst);
 	dst_bytes = dst;
 	src_bytes = src;
 	if (src_bytes < dst_bytes && src_bytes + len >= dst_bytes)
@@ -33,17 +35,3 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		ft_memcpy(dst, src, len);
 	return (dst);
 }
-
-#include <stdio.h>
-#include <string.h>
-
-//int	main()
-//{
-//
-//	char *src = malloc(100);
-//
-//	int n = 3;
-//	strcpy(src, "Fayis");
-//
-//	ft_memmove(&src[2], &src[0], n);
-//}

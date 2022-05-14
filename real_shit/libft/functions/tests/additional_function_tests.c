@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:05:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 23:11:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 09:41:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	return_upper_if_even(unsigned int i, char c)
 	else
 		return (c);
 }
-
 
 void	test_ft_strmapi()
 {
@@ -243,7 +242,7 @@ void	test_ft_substr()
 					result, "ef");
 	free(result);
 
-	int		num_tests = 10;
+	int		num_tests = 1000;
 	int		i = 0;
 	int		str_start;
 	char	str[101];
@@ -272,9 +271,9 @@ void	test_ft_substr()
 			str[str_start + len] = '\0';
 			test = assert_str_equal("", substr, &str[str_start]);
 		}
+		free(substr);
 		if (!test)
 			break;
-		free(substr);
 		i++;
 	}
 	assert_true("Randomised tests passed: ", test);
@@ -307,6 +306,27 @@ void	test_ft_strtrim()
 	expected[0] = '\0';
 	assert_str_equal("Check that strtrim returns an empty string when given one: ",
 					res, expected);
+	free(res);
+}
+
+void test_ft_strjoin()
+{
+	print_msg_color("\n---Testing ft_strjoin---\n", BLUE);
+
+	char	*res = ft_strjoin("abc", "def");
+	assert_str_equal("\"abc\" + \"def\" = \"abcdef\" ", res, "abcdef");
+	free(res);
+
+	res = ft_strjoin("", "def");
+	assert_str_equal("\"\" + \"def\" = \"def\"", res, "def");
+	free(res);
+	
+	res = ft_strjoin("abc", "");
+	assert_str_equal("\"abc\" + \"\" = \"abc\"", res, "abc");
+	free(res);
+	
+	res = ft_strjoin("", "");
+	assert_str_equal("\"\" + \"\" = \"\"", res, "");
 	free(res);
 }
 

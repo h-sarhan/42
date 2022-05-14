@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:29:39 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 12:10:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 12:03:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	}
 	if (dstsize != 0)
 		dst[dest_len + i] = '\0';
+	if (dstsize < dest_len)
+		dest_len = dstsize;
 	return (dest_len + src_len);
 }

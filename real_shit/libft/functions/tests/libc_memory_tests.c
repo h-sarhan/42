@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:11:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 23:25:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 10:41:18 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,9 +296,10 @@ void	test_memcpy()
 	char *src = &overlap[4];
 	int len = 3;
 	i = 0;
+	printf(YELLOW "Copying left to right\n" RESET);
 	while (i < len)
 	{
-		printf(YELLOW "Wrote str[%d] to str[%d]\n" RESET, 4 + i, 4 + i + (int)(dst - src));
+		printf(YELLOW "str[%d] = str[%d]\n" RESET, 4 + i + (int)(dst - src), 4 + i );
 		dst[i] = src[i];
 		i++;
 	}
@@ -345,6 +346,7 @@ void	test_memmove()
 
 
 	printf("This should not overlap: \n");
+
 	// ft_memmove modified source code 
 	char *dst = &overlap[5];
 	char *src = &overlap[4];
@@ -353,9 +355,10 @@ void	test_memmove()
 	if (src < dst && src + len >= dst)
 	{
 		i = len - 1;
+		printf(YELLOW "Copying right to left\n" RESET);
 		while (i >= 0)
 		{
-			printf(YELLOW "Wrote str[%d] to str[%d]\n" RESET, 4 + i, 4 + i + (int)(dst - src));
+			printf(YELLOW "str[%d] = str[%d]\n" RESET, 4 + i + (int)(dst - src), 4 + i );
 			dst[i] = src[i];
 			i--;
 		}
@@ -363,9 +366,10 @@ void	test_memmove()
 	else
 	{
 		i = 0;
+		printf(YELLOW "Copying left to right\n" RESET);
 		while (i < len)
 		{
-			printf(YELLOW "Wrote str[%d] to str[%d]\n" RESET, 4 + i, 4 + i + (int)(dst - src));
+			printf(YELLOW "str[%d] = str[%d]\n" RESET, 4 + i + (int)(dst - src), 4 + i );
 			dst[i] = src[i];
 			i++;
 		}
