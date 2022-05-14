@@ -121,8 +121,9 @@
 13. Test atoi with strings that overflow *DONE*
 14. Write tests for calloc with overflow and size == 0 and nmemb == 0 *DONE*
 15. Test ft_memmove with len == 1 *DONE*
-16. Fix norminette for ft_split
+16. Fix norminette for ft_split *DONE*
 17. Test strchr with empty string and null character *DONE*
 18. Test strlcat condition from man *DONE*
 19. Test strlcpy with dstsize == 0 *DONE*
-20. Check for overflow with atoi and return -1
+20. Check for overflow with atoi and return -1 *DONE*
+21. Rewrite Makefile to conform to assifnment specification
