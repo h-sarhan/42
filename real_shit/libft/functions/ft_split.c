@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:01:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 13:47:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 13:47:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,22 @@ static int	count_words(char const *str, char sep)
 	return (num_words);
 }
 
-// TODO: DOES NOT PASS NORMINETTE
+static char	*create_word(char const *str, int word_start, int word_end)
+{
+	char	*word;
+
+	word = malloc(sizeof(char) * (word_end - word_start + 2));
+	if (word == NULL)
+		return (NULL);
+	ft_strlcpy(word, &str[word_start], word_end - word_start + 2);
+	return (word);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**words;
 	int		i;
 	int		word_start;
-	int		word_end;
 	int		word_count;
 
 	words = malloc(sizeof(char *) * (count_words(s, c) + 1));
@@ -55,12 +64,7 @@ char	**ft_split(char const *s, char c)
 		word_start = i;
 		while (s[i] != c && s[i] != '\0')
 			i++;
-		word_end = i - 1;
-		words[word_count] = malloc(sizeof(char) * (word_end - word_start + 2));
-		if (words[word_count] == NULL)
-			return (NULL);
-		ft_strlcpy(words[word_count], &s[word_start],
-			word_end - word_start + 2);
+		words[word_count] = create_word(s, word_start, i - 1);
 		word_count++;
 	}
 	words[word_count] = NULL;

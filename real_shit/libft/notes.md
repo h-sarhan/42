@@ -110,12 +110,11 @@
 2. Create a library *DONE*
 3. Clone C03 to get ft_strlcat *DONE*
 4. Clone C09 to get ft_split *DONE*
-5. Check if I need to check for zero or integer overflow with calloc *DONE* (We don't)
-6. Check man for memcmp strnstr and atoi on 42 computer *DONE*
-7. Write tests for substr *DONE*
-8. Write tests for strjoin *DONE*
-9. Rewrite fd tests (who cares)
-10. CHECK FOR OVERFLOW IN EVERY FUNCTION
-11. Pass norminette for ft_split and ft_itoa
-12. Rewrite Makefile to fit assignment specification
-
+5. Check man for memcmp strnstr and atoi on 42 computer *DONE*
+6. Write tests for substr *DONE*
+7. Write tests for strjoin *DONE*
+8. Rewrite fd tests (who cares)
+9. CHECK FOR OVERFLOW IN EVERY FUNCTION
+10. Pass norminette for ft_split and ft_itoa *DONE*
+11. Rewrite Makefile to fit assignment specification
+12. Check for zero or integer overflow with calloc 

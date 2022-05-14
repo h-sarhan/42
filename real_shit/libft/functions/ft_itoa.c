@@ -6,56 +6,68 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:12:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 13:37:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/14 13:28:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// TODO: Does not pass norminette
-char	*ft_itoa(int n)
+static char	*handle_edge_case(int n)
 {
-	int		num_copy;
-	int		num_digits;
-	int		i;
 	char	*str;
-	int		is_neg;
 
-	num_digits = 0;
-	is_neg = 0;
 	if (n == -2147483648)
 	{
 		str = malloc(sizeof(char) * 12);
 		if (str == NULL)
 			return (NULL);
 		ft_strlcpy(str, "-2147483648", 12);
-		return (str);
 	}
-	else if (n == 0)
+	else
 	{
 		str = malloc(sizeof(char) * 2);
-		str[0] = '0';
-		str[1] = '\0';
-		return (str);
+		if (str == NULL)
+			return (NULL);
+		ft_strlcpy(str, "0", 2);
 	}
+	return (str);
+}
+
+static int	get_num_digits(int num)
+{
+	int	num_digits;
+
+	num_digits = 0;
+	while (num > 0)
+	{
+		num /= 10;
+		num_digits++;
+	}
+	return (num_digits);
+}
+
+char	*ft_itoa(int n)
+{
+	int		num_digits;
+	int		i;
+	char	*str;
+	int		is_neg;
+
+	is_neg = 0;
+	if (n == 0 || n == -2147483648)
+		return (handle_edge_case(n));
 	else if (n < 0)
 	{
 		n *= -1;
 		is_neg = 1;
 	}
-	num_copy = n;
-	while (num_copy > 0)
-	{
-		num_copy /= 10;
-		num_digits++;
-	}
+	num_digits = get_num_digits(n);
 	str = malloc(sizeof(char) * (num_digits + is_neg + 1));
 	i = num_digits + is_neg - 1;
 	while (i >= 0)
 	{
-		str[i] = n % 10 + '0';
+		str[i--] = n % 10 + '0';
 		n /= 10;
-		i--;
 	}
 	if (is_neg)
 		str[0] = '-';
