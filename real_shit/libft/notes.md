@@ -127,3 +127,5 @@
 19. Test strlcpy with dstsize == 0 *DONE*
 20. Check for overflow with atoi and return -1 *DONE*
 21. Rewrite Makefile to conform to assifnment specification
+22. Check every pointer parameter if it is null
+23. Check if all memory allocated is freed
