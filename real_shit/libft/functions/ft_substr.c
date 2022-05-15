@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:44:38 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/13 19:45:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/15 12:57:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char			*substr;
-	size_t			substr_length;
-	unsigned int	i;
+	char	*substr;
+	size_t	substr_length;
+	size_t	i;
 
 	substr_length = ft_strlen(&s[start]);
 	if (len > substr_length)

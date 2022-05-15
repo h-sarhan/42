@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:00:08 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/14 18:15:52 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/15 12:28:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	unsigned char	*memory;
-	unsigned int	i;
+	size_t			i;
 
 	if (nmemb == 0 || size == 0 || nmemb > SIZET_MAX / size)
 		return (NULL);

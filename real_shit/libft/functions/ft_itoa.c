@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:12:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/14 18:34:47 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/15 12:50:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,10 @@ static int	get_num_digits(int num)
 	return (num_digits);
 }
 
-static char	*fill_digits(int num, int num_digits, int is_neg)
+static char	*fill_digits(char *str, int num, int num_digits, int is_neg)
 {
 	int		i;
-	char	*str;
 
-	str = malloc(sizeof(char) * (num_digits + is_neg + 1));
-	if (str == NULL)
-		return (NULL);
 	i = num_digits + is_neg - 1;
 	while (i >= 0)
 	{
@@ -81,6 +77,9 @@ char	*ft_itoa(int n)
 		is_neg = 1;
 	}
 	num_digits = get_num_digits(n);
-	str = fill_digits(n, num_digits, is_neg);
+	str = malloc(sizeof(char) * (num_digits + is_neg + 1));
+	if (str == NULL)
+		return (NULL);
+	fill_digits(str, n, num_digits, is_neg);
 	return (str);
 }
