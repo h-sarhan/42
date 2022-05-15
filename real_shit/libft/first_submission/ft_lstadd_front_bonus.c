@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:16:17 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/14 18:37:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/15 17:23:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -17,6 +17,10 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 
 	node = *lst;
 	if (node == NULL)
-		return ;
-	new->next = node;
+		*lst = new;
+	else
+	{
+		new->next = node;
+		*lst = new;
+	}
 }
