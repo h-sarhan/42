@@ -126,7 +126,7 @@
 18. Test strlcat condition from man *DONE*
 19. Test strlcpy with dstsize == 0 *DONE*
 20. Check for overflow with atoi and return -1 *DONE*
-21. Rewrite Makefile to conform to assignment specification
+21. Rewrite Makefile to conform to assignment specification *DONE*
 22. Check every pointer parameter if it is null
 23. Check if all memory allocated is freed
-24. Check if atoi handles INT_MIN
+24. Check if atoi handles INT_MIN (IT DOES) *DONE*
