@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:09:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/15 13:12:30 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/15 13:20:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	if (src_bytes < dst_bytes && src_bytes + len >= dst_bytes)
 	{
 		i = len - 1;
-		while (i >= 0)
+		while (i >= 0 && i != SIZET_MAX)
 		{
 			dst_bytes[i] = src_bytes[i];
 			i--;

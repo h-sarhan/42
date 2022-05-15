@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:10:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/15 12:58:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/15 13:20:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_lstsize(t_list *lst)
 {
 	t_list	*node;
-	size_t	size;
+	int		size;
 
 	size = 0;
 	node = lst;

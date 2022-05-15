@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 09:12:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/15 13:08:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/15 13:23:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strrchr(const char *s, int c)
 
 	i = ft_strlen(s);
 	to_find = (char) c;
-	while (i >= 0)
+	while (i >= 0 && i != SIZET_MAX)
 	{
 		if (s[i] == to_find)
 			return ((char *) &s[i]);

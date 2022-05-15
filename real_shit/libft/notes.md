@@ -129,5 +129,4 @@
 21. Rewrite Makefile to conform to assignment specification *DONE*
 22. Check every pointer parameter if it is null (Seg fault on WSL still need to check on 42 macs)
 23. Check if atoi handles INT_MIN (IT DOES) *DONE*
-24. Change unsigned int to size_t to avoid overflow
-25. Check whenever I decrement i (e.g. i--) and i is size_t
+24. Check ft_putnbr
