@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:14:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/16 00:37:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/16 06:29:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	void	*new_content;
 	t_list	*temp;
 
-	if (lst == NULL)
-		return (NULL);
 	old = lst;
 	new = NULL;
 	while (old != NULL)
