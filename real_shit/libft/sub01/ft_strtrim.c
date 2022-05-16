@@ -6,11 +6,22 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:39:27 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/15 13:08:37 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/16 15:04:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static char	*gen_empty_string(void)
+{
+	char	*str;
+
+	str = malloc(sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	*str = '\0';
+	return (str);
+}
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
@@ -25,8 +36,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 		start++;
 	while (ft_strchr(set, s1[end]) != NULL)
 		end--;
-	if (start > end)
-		trimmed = malloc(sizeof(char));
+	if (ft_strlen(s1) == 0 || start > end)
+		return (gen_empty_string());
 	else
 		trimmed = malloc(sizeof(char) * (end - start + 2));
 	if (trimmed == NULL)

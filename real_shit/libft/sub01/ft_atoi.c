@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 22:18:16 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/15 17:34:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/16 15:05:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	ft_atoi(const char *str)
 	{
 		num *= 10;
 		num += str[i++] - '0';
-		if (num < 0)
-			return (-1);
 	}
 	return (num * sign);
 }
