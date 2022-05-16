@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/11 10:58:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/16 16:22:30 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/03/17 07:41:26 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/05/14 19:15:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*copy;
-	size_t	len;
-	size_t	i;
+	size_t				i;
+	const unsigned char	*str1;
+	const unsigned char	*str2;
 
-	len = ft_strlen(s1);
-	copy = malloc(sizeof(char) * (len + 1));
-	if (copy == NULL)
-		return (NULL);
+	str1 = (const unsigned char *)s1;
+	str2 = (const unsigned char *)s2;
 	i = 0;
-	while (i < len)
+	while (str1[i] != '\0' && str2[i] != '\0' && i < n)
 	{
-		copy[i] = s1[i];
+		if (str1[i] > str2[i])
+			return (1);
+		if (str1[i] < str2[i])
+			return (-1);
 		i++;
 	}
-	copy[i] = '\0';
-	return (copy);
+	if (i == n)
+		return (0);
+	if (str1[i] != '\0')
+		return (1);
+	if (str2[i] != '\0')
+		return (-1);
+	return (0);
 }

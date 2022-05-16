@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 15:00:08 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/16 16:34:01 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/05/09 18:09:25 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/05/15 13:40:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	unsigned char	*memory;
-	size_t			i;
+	char		*dst_bytes;
+	const char	*src_bytes;
+	int			i;
 
-	if (nmemb == 0 || size == 0 || nmemb > SIZET_MAX / size)
-		return (NULL);
-	memory = malloc(nmemb * size);
-	if (memory == NULL)
-		return (NULL);
-	ft_bzero(memory, nmemb * size);
-	return (memory);
+	if (len == 0)
+		return (dst);
+	dst_bytes = dst;
+	src_bytes = src;
+	if (src_bytes < dst_bytes && src_bytes + len >= dst_bytes)
+	{
+		i = len - 1;
+		while (i >= 0)
+		{
+			dst_bytes[i] = src_bytes[i];
+			i--;
+		}
+	}
+	else
+		ft_memcpy(dst, src, len);
+	return (dst);
 }
