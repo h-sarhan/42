@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 15:00:08 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/16 22:47:26 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/03/17 09:02:24 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/05/13 19:24:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	unsigned char	*memory;
+	size_t	haystack_len;
+	size_t	needle_len;
+	size_t	i;
 
-	if (nmemb == 0 || size == 0 || nmemb > SIZET_MAX / size)
-		return (NULL);
-	memory = malloc(nmemb * size);
-	if (memory == NULL)
-		return (NULL);
-	ft_bzero(memory, nmemb * size);
-	return (memory);
+	needle_len = ft_strlen(needle);
+	if (needle_len == 0)
+		return ((char *) haystack);
+	haystack_len = ft_strlen(haystack);
+	i = 0;
+	while (i < haystack_len && i + needle_len <= len)
+	{
+		if (ft_strncmp(&haystack[i], needle, needle_len) == 0)
+			return ((char *) &haystack[i]);
+		i++;
+	}
+	return (NULL);
 }

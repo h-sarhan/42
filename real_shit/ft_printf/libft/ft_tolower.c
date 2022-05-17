@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 15:00:08 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/16 22:47:26 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/05/10 09:06:24 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/05/10 09:07:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+int	ft_tolower(int c)
 {
-	unsigned char	*memory;
+	int	uppercase_diff;
 
-	if (nmemb == 0 || size == 0 || nmemb > SIZET_MAX / size)
-		return (NULL);
-	memory = malloc(nmemb * size);
-	if (memory == NULL)
-		return (NULL);
-	ft_bzero(memory, nmemb * size);
-	return (memory);
+	uppercase_diff = 'a' - 'A';
+	if (c >= 'A' && c <= 'Z')
+		return (c + uppercase_diff);
+	return (c);
 }
