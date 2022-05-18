@@ -6,15 +6,10 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:38:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/18 01:05:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/18 17:28:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-#include <stdio.h>
 #include "ft_printf.h"
-
-
 
 void	print_unsigned_int(unsigned int num)
 {
@@ -29,21 +24,52 @@ void	print_unsigned_int(unsigned int num)
 	}
 }
 
-void	print_hex(unsigned long num)
+char	dec_to_hex(unsigned char dec, int print_upper)
+{
+	if (dec > 9)
+	{
+		if (print_upper == TRUE)
+			return (dec + 'A' - 10);
+		else
+			return (dec + 'a' - 10);
+	}
+	return (dec + '0');
+}
+
+void	print_hex(unsigned long num, int print_upper)
 {
 	unsigned char	*bytes;
-	int		i;
 	unsigned char	left;
 	unsigned char	right;
+	int				i;
+	int				start;
 
-
-	bytes = (char *) &num;
-	i = 0;
-	while (i < 8)
+	bytes = (unsigned char *) &num;
+	i = 7;
+	start = FALSE;
+	while (i >= 0)
 	{
-		printf("BYTE %d = %d\n", i + 1, bytes[i]);
-		printf("Left 4 bits = %d\n", bytes[i] >> 4);
-		printf("Right 4 bits = %d\n", bytes[i] & 0x0f);
-		i++;
+		left = bytes[i] >> 4;
+		right = bytes[i] & 0x0f;
+		if (left != 0 || right != 0 || start == TRUE)
+		{
+			if (left != 0 || start == TRUE)
+				ft_putchar_fd(dec_to_hex(left, print_upper), STDOUT);
+			if (right != 0 || start == TRUE)
+				ft_putchar_fd(dec_to_hex(right, print_upper), STDOUT);
+			start = TRUE;
+		}
+		i--;
 	}
+}
+
+void	print_hex_pointer(void *pointer)
+{
+	ft_putstr_fd("0x", STDOUT);
+	print_hex((long unsigned) pointer, LOWER);
+}
+
+void	print_hex_int(unsigned int num, int print_upper)
+{
+	print_hex(num, print_upper);
 }
