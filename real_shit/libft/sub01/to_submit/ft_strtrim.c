@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:39:27 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/16 15:04:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/18 17:46:00 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		end--;
 	if (ft_strlen(s1) == 0 || start > end)
 		return (gen_empty_string());
-	else
-		trimmed = malloc(sizeof(char) * (end - start + 2));
+	trimmed = malloc(sizeof(char) * (end - start + 2));
 	if (trimmed == NULL)
 		return (NULL);
 	i = 0;
