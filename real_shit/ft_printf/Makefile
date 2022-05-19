@@ -6,13 +6,11 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/16 23:04:52 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/19 15:20:46 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = 
-
-
+SRCS = count_digits.c ft_printf.c conversions.c
 
 OBJS := $(SRCS:%.c=%.o)
 
@@ -38,6 +36,12 @@ norm:
 clean:
 	rm -f $(OBJS)
 	make -s -C libft clean
+
+test: $(LIBFT) $(NAME)
+	gcc $(MUSTAFA_FLAGS) tests.c $(LIBFT) $(NAME) -o tests
+	./tests real > real
+	./tests mine > mine
+	diff real mine
 
 fclean: clean
 	rm -f $(NAME)

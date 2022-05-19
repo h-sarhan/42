@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 09:32:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/19 14:56:01 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/19 15:18:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	handle_num_conversions(char conversion, va_list args)
 {
 	int				int_arg;
-	unsigned long	hex_arg;
 	unsigned int	uint_arg;	
 
 	if (conversion == 'd' || conversion == 'i')

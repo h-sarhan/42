@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/19 12:59:09 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/19 15:53:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,32 @@
 
 int	main(int argc, char **argv)
 {
-	print_hex_int(atoi(argv[1]), UPPER);
-	printf("\nOG_PRINTF: %X\n", atoi(argv[1]));
-	int	n = 45;
-	int *p = &n;
-	print_hex_pointer((void *)45);
-	write(STDOUT, "\n", 1);
-	printf("OG_PRINTF: %p\n", (void *)45);
-	
-	
-	print_hex_int((unsigned int)4294967295 + 20, UPPER);
-	printf("\nOG_PRINTF: %X\n", (unsigned int)4294967295 + 20);
-	
-	print_hex_pointer((void *)4294967295 + 20);
-	printf("\nOG_PRINTF: %p\n", (void *)4294967295 + 20);
-	
-	print_hex_int(0, UPPER);
-	printf("\nOG_PRINTF: %X\n", 0);
-	
-	print_hex_pointer((void *)0);
-	printf("\nOG_PRINTF: %p\n", (void *)0);
+	if (argc > 1 && ft_strncmp(argv[1], "real", ft_strlen("real")) == 0)
+	{
+		// Printing characters
+		int num_chars = printf("%c%c%c%c%c%c%c", '1', '2', '3', '4', '5', '6', '7');
+		printf("\n%d\n", num_chars);
 
+		// Printing strings
+		num_chars = printf("%s%s%s", "Germany", "Japan", "Turkey");
+		printf("\n%d\n", num_chars);
 
-	int res1 = ft_printf("i = %d\nj = %d\nptr = %p\nmarks = %d%%\n", 12, 42, p, 48);
-	ft_printf("%%");
-	ft_printf("\n");
-	int exp1 = printf("i = %d\nj = %d\nptr = %p\nmarks = %d%%\n", 12, 42, p, 48);
-	printf("%%");
-	printf("\n");
-	printf("res = %d\nexpected = %d\n", res1, exp1);
+		// Printing pointers
+		unsigned long nums[] = {123, 0, 2147483647, 2147483647UL + 20, 4294967295, 4294967295UL + 20};
+		num_chars = printf("%p%p%p%p%p%p", (void*)nums[0], (void*)nums[1], (void*)nums[2], (void*)nums[3], (void*)nums[4], (void*)nums[5]);
+		printf("\n%d\n", num_chars);
+	}
+	else if (argc > 1 && ft_strncmp(argv[1], "mine", ft_strlen("mine")) == 0)
+	{
+		int num_chars = ft_printf("%c%c%c%c%c%c%c", '1', '2', '3', '4', '5', '6', '7');
+		ft_printf("\n%d\n", num_chars);
+
+		num_chars = ft_printf("%s%s%s", "Germany", "Japan", "Turkey");
+		ft_printf("\n%d\n", num_chars);
+		
+		unsigned long nums[] = {123, 0, 2147483647, 2147483647UL + 20, 4294967295UL, 4294967295UL + 20};
+		num_chars = ft_printf("%p%p%p%p%p%p", (void*)nums[0], (void*)nums[1], (void*)nums[2], (void*)nums[3], (void*)nums[4], (void*)nums[5]);
+		ft_printf("\n%d\n", num_chars);
+
+	}
 }
