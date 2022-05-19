@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:38:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/18 23:15:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:27:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -36,52 +36,53 @@ char	dec_to_hex(unsigned char dec, int print_upper)
 	return (dec + '0');
 }
 
-void	print_hex(unsigned long num, int print_upper)
+int	print_hex(unsigned long num, int print_upper)
 {
 	unsigned char	*bytes;
-	unsigned char	left;
-	unsigned char	right;
+	unsigned char	hex_char;
 	int				i;
-	int				start;
+	int				chars_printed;
 
 	bytes = (unsigned char *) &num;
 	i = 7;
-	start = FALSE;
+	chars_printed = 0;
 	while (i >= 0)
 	{
-		left = bytes[i] >> 4;
-		if (left != 0 || start == TRUE)
+		hex_char = bytes[i] >> 4;
+		if (hex_char != 0 || chars_printed > 0)
 		{
-			ft_putchar_fd(dec_to_hex(left, print_upper), STDOUT);
-			start = TRUE;
+			ft_putchar_fd(dec_to_hex(hex_char, print_upper), STDOUT);
+			chars_printed++;
 		}
-		right = bytes[i] & 0x0f;
-		if (right != 0 || start == TRUE)
+		hex_char = bytes[i] & 0x0f;
+		if (hex_char != 0 || chars_printed > 0)
 		{
-			ft_putchar_fd(dec_to_hex(right, print_upper), STDOUT);
-			start = TRUE;
+			ft_putchar_fd(dec_to_hex(hex_char, print_upper), STDOUT);
+			chars_printed++;
 		}
 		i--;
 	}
+	return (chars_printed);
 }
 
-void	print_hex_pointer(void *pointer)
+int	print_hex_pointer(void *pointer)
 {
-	ft_putstr_fd("FT_PRINTF: ", STDOUT);
+	ft_putstr_fd("0x", STDOUT);
 	if (pointer == NULL)
-		ft_putstr_fd("(null)", STDOUT);
-	else
 	{
-		ft_putstr_fd("0x", STDOUT);
-		print_hex((unsigned long) pointer, LOWER);
+		ft_putchar_fd('0', STDOUT);
+		return (3);
 	}
+	return (2 + print_hex((unsigned long) pointer, LOWER));
 }
 
-void	print_hex_int(unsigned int num, int print_upper)
+int	print_hex_int(unsigned int num, int print_upper)
 {
-	ft_putstr_fd("FT_PRINTF: ", STDOUT);
 	if (num == 0)
+	{
 		ft_putchar_fd('0', STDOUT);
+		return (1);
+	}
 	else
-		print_hex(num, print_upper);
+		return (print_hex(num, print_upper));
 }
