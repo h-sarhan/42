@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/19 15:20:46 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/20 20:24:41 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,14 +38,14 @@ clean:
 	make -s -C libft clean
 
 test: $(LIBFT) $(NAME)
-	gcc $(MUSTAFA_FLAGS) tests.c $(LIBFT) $(NAME) -o tests
-	./tests real > real
-	./tests mine > mine
-	diff real mine
+	cc -Wextra -Wall tests.c $(LIBFT) $(NAME) -o tests
+	./tests real > expected_out
+	./tests mine > my_out
+	diff expected_out my_out
 
 fclean: clean
-	rm -f $(NAME)
-	make -s -C libft fclean
+	rm -f $(NAME) expected_out my_out
+	make -s -C libft fclean 
 
 re: fclean $(NAME)
 	

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 09:32:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/19 15:18:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/20 20:56:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,13 @@ int	handle_conversion(const char *fmt, va_list args, int *chars_printed)
 		i++;
 	if (fmt[i] == '\0')
 		return (FALSE);
-	if (ft_strchr("cs%", fmt[i]) != NULL)
+	if (ft_strchr("cs", fmt[i]) != NULL)
 		num_chars = handle_str_conversions(fmt[i], args);
+	else if (fmt[i] == '%')
+	{
+		num_chars = handle_str_conversions(fmt[i], args);
+		i++;
+	}
 	else
 		num_chars = handle_num_conversions(fmt[i], args);
 	if (num_chars != -1)
