@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/21 06:44:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/21 07:26:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,30 +59,94 @@ void	parse_conversion_string(char *fmt, t_conversion *conv)
 
 int	print_conversion(t_conversion *conv, void *val)
 {
-	int	num_chars;
+	int	num_printed;
 	int	precision_padding;
 	int	min_width_padding;
 	int	i;
 
-	num_chars = 0;
+	num_printed = 0;
 	min_width_padding = 0;
 	precision_padding = 0;
+	// %s
+	if (conv->type == 's')
+	{
+		int	num_chars = ft_strlen(*(char **)val);
+		num_printed += num_chars;
+		if (conv->min_width > num_printed)
+		{
+			min_width_padding = conv->min_width - num_printed;
+			num_printed += min_width_padding;
+		}
+		if (conv->pad_right == FALSE)
+		{
+			// Pad left with spaces
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd(' ', STDOUT);
+				i++;
+			}
+		}
+		ft_putstr_fd(*(char **)val, STDOUT);
+		if (conv->pad_right == TRUE)
+		{
+			// Pad right with spaces
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd(' ', STDOUT);
+				i++;
+			}
+		}
+	}
+	// %c 
+	if (conv->type == 'c')
+	{
+		int	num_chars = 1;
+		num_printed += num_chars;
+		if (conv->min_width > num_printed)
+		{
+			min_width_padding = conv->min_width - num_printed;
+			num_printed += min_width_padding;
+		}
+		if (conv->pad_right == FALSE)
+		{
+			// Pad left with spaces
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd(' ', STDOUT);
+				i++;
+			}
+		}
+		ft_putchar_fd(*(char *)val, STDOUT);
+		if (conv->pad_right == TRUE)
+		{
+			// Pad right with spaces
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd(' ', STDOUT);
+				i++;
+			}
+		}
+	}
 	// %d or %i
 	if (conv->type == 'd' || conv->type == 'i')
 	{
 		int	num_digits = count_digits_int(*(int *)val);
-		num_chars += num_digits;
+		num_printed += num_digits;
 		if ((conv->space == TRUE || conv->sign == TRUE) && *(int *) val >= 0)
-			num_chars += 1;
+			num_printed += 1;
 		if (conv->precision == TRUE && conv->precision_amount > num_digits)
 		{
 			precision_padding = conv->precision_amount - num_digits;
-			num_chars += precision_padding;
+			num_printed += precision_padding;
 		}
-		if (conv->min_width > num_chars)
+		if (conv->min_width > num_printed)
 		{
-			min_width_padding = conv->min_width - num_chars;
-			num_chars += min_width_padding;
+			min_width_padding = conv->min_width - num_printed;
+			num_printed += min_width_padding;
 		}
 		if (conv->pad_right == FALSE && (conv->pad_zeros == FALSE || conv->precision == TRUE))
 		{
@@ -130,5 +194,5 @@ int	print_conversion(t_conversion *conv, void *val)
 			}
 		}
 	}
-	return (num_chars);
+	return (num_printed);
 }
