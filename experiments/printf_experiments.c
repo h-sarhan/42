@@ -2,5 +2,6 @@
 
 int main()
 {
-    printf("%.1000d", 10);
+    printf("%.5x", 10000);
+
 }

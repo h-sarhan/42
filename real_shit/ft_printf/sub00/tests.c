@@ -6,14 +6,36 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/20 20:59:37 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/21 05:01:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+void	print_conv_params(t_conversion *conv)
+{
+	printf("Conversion Type: %c\n", conv->type);
+	printf("Minimum Width: %d\n", conv->min_width);
+	printf("Pad to the right?: %d\n", conv->pad_right);
+	printf("Pad zeros?: %d\n", conv->pad_zeros);
+	printf("Precision?: %d\n", conv->precision);
+	printf("Precision Amount: %u\n", conv->precision_amount);
+	printf("Alt Form?: %d\n", conv->alt_form);
+	printf("Space?: %d\n", conv->space);
+	printf("Sign?: %d\n\n", conv->sign);
+}
+
+#include <string.h>
 int	main(int argc, char **argv)
 {
+	(void)argc;
+	(void)argv;
+	t_conversion	*conv = new_conversion(argv[1]);
+
+	printf("%s\n", argv[1]);
+	print_conv_params(conv);
+
+	/*
 	int (*pf)(const char *, ...);
 	if (argc > 1 && ft_strncmp(argv[1], "real", ft_strlen("real")) == 0)
 		pf = &printf;
@@ -21,6 +43,9 @@ int	main(int argc, char **argv)
 		pf = &ft_printf;
 	else
 		return (0);
+
+	// **Simple mandatory tests**
+	
 	// Printing characters
 	int num_chars = (*pf)("%c%c%c%c%c%c%c", '1', '2', '3', '4', '5', '6', '7');
 	(*pf)("\n%d\n", num_chars);
@@ -62,4 +87,5 @@ int	main(int argc, char **argv)
 	// Combination of everything
 	num_chars = (*pf)("%d\n %i\n        \t     %p\n\n %X\t%u\n", 1234, 9876, (void*) 17668, 6547, 245678999);
 	(*pf)("\n%d\n", num_chars);
+	*/
 }

@@ -6,11 +6,11 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/20 20:24:41 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/21 05:05:11 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = count_digits.c ft_printf.c conversions.c
+SRCS = $(wildcard *.c)
 
 OBJS := $(SRCS:%.c=%.o)
 
@@ -39,12 +39,13 @@ clean:
 
 test: $(LIBFT) $(NAME)
 	cc -Wextra -Wall tests.c $(LIBFT) $(NAME) -o tests
-	./tests real > expected_out
-	./tests mine > my_out
-	diff expected_out my_out
+#	./tests real > expected_out
+#	./tests mine > my_out
+#	diff expected_out my_out
+	./tests
 
 fclean: clean
-	rm -f $(NAME) expected_out my_out
+	rm -f $(NAME) expected_out my_out tests
 	make -s -C libft fclean 
 
 re: fclean $(NAME)
