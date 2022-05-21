@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:39:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/21 07:45:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/21 10:33:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,25 @@
 # define UPPER 1
 # define LOWER 0
 
+typedef int	bool;
 struct	s_conversion {
 	char	type;
 	int		min_width;
-	int		pad_zeros;
-	int		precision;
+	bool	pad_zeros;
+	bool	precision;
 	int		precision_amount;
-	int		alt_form;
-	int		space;
-	int		sign;
-	int		pad_right;
+	bool	alt_form;
+	bool	space;
+	bool	sign;
+	bool	pad_right;
+	int		min_width_padding;
+	int		precision_padding;
 };
 typedef struct s_conversion	t_conversion;
 void			print_unsigned_int(unsigned int num);
 int				print_hex_pointer(void *pointer);
-int				print_hex_int(unsigned int num, int print_upper);
-int				print_hex(unsigned long num, int print_upper);
+int				print_hex_int(unsigned int num, char hex_type);
+int				print_hex(unsigned long num, char hex_type);
 int				count_args(const char *fmt);
 int				count_digits_int(int num);
 int				count_digits_unsigned(unsigned int num);
@@ -47,4 +50,5 @@ void			parse_conversion_string(char *fmt, t_conversion *conv);
 int				count_hex(unsigned long num);
 t_conversion	*new_conversion(char *fmt);
 int				print_conversion(t_conversion *conv, void *val);
+void			print_n_chars(char c, int n);
 #endif

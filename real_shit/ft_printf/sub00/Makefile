@@ -6,11 +6,11 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/21 05:05:11 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/21 09:47:37 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = $(wildcard *.c)
+SRCS = conversion.c count_digits.c ft_printf.c print_utils.c 
 
 OBJS := $(SRCS:%.c=%.o)
 

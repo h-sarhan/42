@@ -1,9 +1,9 @@
-#include "ft_printf.h"
 #include <limits.h>
+#include <stdio.h>
 
 int	main()
 {
 	int	num = 100;
 
-	printf("%#.5x", num);
+	printf("%10%|\n");
 }
