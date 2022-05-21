@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/21 05:01:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/21 06:07:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ int	main(int argc, char **argv)
 	printf("%s\n", argv[1]);
 	print_conv_params(conv);
 
+	int	num = atoi(argv[2]);
+	printf("MY PRINTF:\n");
+	int res = print_conversion(conv, &num);
+	printf("|\nREAL PRINTF:\n");
+	int expected = printf(argv[1], num);
+	printf("|\n");
+	printf("My return value: %d\n", res);
+	printf("Correct return value: %d\n", expected);
 	/*
 	int (*pf)(const char *, ...);
 	if (argc > 1 && ft_strncmp(argv[1], "real", ft_strlen("real")) == 0)

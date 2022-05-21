@@ -2,5 +2,5 @@
 
 int	main()
 {
-	printf("%d", atoi("%-020.5d"));
+	printf("%010c", 'a');
 }
