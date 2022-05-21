@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/21 08:01:52 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/21 08:53:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,81 @@ int	print_conversion(t_conversion *conv, void *val)
 	num_printed = 0;
 	min_width_padding = 0;
 	precision_padding = 0;
+	if (conv->type == '%')
+	{
+		ft_putchar_fd('%', STDOUT);
+		num_printed = 1;
+	}
+	// %x || %X
+	if (conv->type == 'x' || conv->type == 'X')
+	{
+		int	num_digits = count_hex(*(unsigned long *)val);
+		num_printed += num_digits;
+		if (conv->alt_form == TRUE && *(unsigned long *)val != 0 && conv->pad_zeros == FALSE)
+			num_printed += 2;
+		if (conv->precision == TRUE && conv->precision_amount > num_digits)
+		{
+			precision_padding = conv->precision_amount - num_digits;
+			num_printed += precision_padding;
+		}
+		if (conv->min_width > num_printed)
+		{
+			min_width_padding = conv->min_width - num_printed;
+			num_printed += min_width_padding;
+		}
+		if (conv->pad_right == FALSE && (conv->pad_zeros == FALSE || conv->precision == TRUE))
+		{
+			// Pad left with spaces
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd(' ', STDOUT);
+				i++;
+			}
+		}
+		if (conv->pad_zeros == TRUE && conv->precision == FALSE && conv->pad_right == FALSE)
+		{
+			// Pad left with zeros
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd('0', STDOUT);
+				i++;
+			}
+		}
+		if (conv->alt_form == TRUE && *(unsigned long *)val > 0 && conv->pad_zeros == FALSE)
+		{
+			if (conv->type == 'x')
+				ft_putstr_fd("0x", STDOUT);
+			else if (conv->type == 'X')
+				ft_putstr_fd("0X", STDOUT);
+		}
+		if (conv->precision == TRUE)
+		{
+			// Add leading zeros to fill precision
+			i = 0;
+			while (i < precision_padding)
+			{
+				ft_putchar_fd('0', STDOUT);
+				i++;
+			}
+		}
+		if (conv->type == 'x')
+			print_hex(*(unsigned long *)val, LOWER);
+		else
+			print_hex(*(unsigned long *)val, UPPER);
+		if (conv->pad_right == TRUE)
+		{
+			// Pad right with spaces
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd(' ', STDOUT);
+				i++;
+			}
+		}
+	}
+	// %u
 	if (conv->type == 'u')
 	{
 		int	num_digits = count_digits_unsigned(*(unsigned int *)val);
@@ -123,11 +198,10 @@ int	print_conversion(t_conversion *conv, void *val)
 			}
 		}
 	}
-	return (num_printed);
 	// %p
 	if (conv->type == 'p')
 	{
-		int	num_digits = count_hex(*(unsigned long *)val);
+		int	num_digits = count_hex(*(unsigned long *)val) + 2;
 		num_printed += num_digits;
 		if (conv->min_width > num_printed)
 		{

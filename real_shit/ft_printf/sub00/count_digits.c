@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:34:38 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/21 07:52:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/21 08:45:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	count_hex(unsigned long num)
 	int				num_hex;
 
 	if (num == 0)
-		return (3);
+		return (1);
 	bytes = (unsigned char *) &num;
 	i = 7;
 	num_hex = 0;
@@ -71,5 +71,5 @@ int	count_hex(unsigned long num)
 			num_hex++;
 		i--;
 	}
-	return (num_hex + 2);
+	return (num_hex);
 }
