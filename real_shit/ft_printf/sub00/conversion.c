@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/21 07:26:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/21 08:01:52 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,95 @@ int	print_conversion(t_conversion *conv, void *val)
 	num_printed = 0;
 	min_width_padding = 0;
 	precision_padding = 0;
+	if (conv->type == 'u')
+	{
+		int	num_digits = count_digits_unsigned(*(unsigned int *)val);
+		num_printed += num_digits;
+		if (conv->precision == TRUE && conv->precision_amount > num_digits)
+		{
+			precision_padding = conv->precision_amount - num_digits;
+			num_printed += precision_padding;
+		}
+		if (conv->min_width > num_printed)
+		{
+			min_width_padding = conv->min_width - num_printed;
+			num_printed += min_width_padding;
+		}
+		if (conv->pad_right == FALSE && (conv->pad_zeros == FALSE || conv->precision == TRUE))
+		{
+			// Pad left with spaces
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd(' ', STDOUT);
+				i++;
+			}
+		}
+		if (conv->pad_zeros == TRUE && conv->precision == FALSE && conv->pad_right == FALSE)
+		{
+			// Pad left with zeros
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd('0', STDOUT);
+				i++;
+			}
+		}
+		if (conv->precision == TRUE)
+		{
+			// Add leading zeros to fill precision
+			i = 0;
+			while (i < precision_padding)
+			{
+				ft_putchar_fd('0', STDOUT);
+				i++;
+			}
+		}
+		print_unsigned_int(*(unsigned int *)val);
+		if (conv->pad_right == TRUE)
+		{
+			// Pad right with spaces
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd(' ', STDOUT);
+				i++;
+			}
+		}
+	}
+	return (num_printed);
+	// %p
+	if (conv->type == 'p')
+	{
+		int	num_digits = count_hex(*(unsigned long *)val);
+		num_printed += num_digits;
+		if (conv->min_width > num_printed)
+		{
+			min_width_padding = conv->min_width - num_printed;
+			num_printed += min_width_padding;
+		}
+		if (conv->pad_right == FALSE)
+		{
+			// Pad left with spaces
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd(' ', STDOUT);
+				i++;
+			}
+		}
+		print_hex_pointer(*(void **)val);
+		if (conv->pad_right == TRUE)
+		{
+			// Pad right with spaces
+			i = 0;
+			while (i < min_width_padding)
+			{
+				ft_putchar_fd(' ', STDOUT);
+				i++;
+			}
+		}
+	}
 	// %s
 	if (conv->type == 's')
 	{

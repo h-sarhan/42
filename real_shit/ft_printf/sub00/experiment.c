@@ -1,6 +1,9 @@
 #include "ft_printf.h"
-
-int	main()
+#include <limits.h>
+/*int	main()
 {
-	printf("%-10c", 'a');
+	unsigned int	num = 10;
+
+	printf("%+u", num);
 }
+*/

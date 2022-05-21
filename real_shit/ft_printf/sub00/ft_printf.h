@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:39:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/21 05:53:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/21 07:45:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int				count_digits_int(int num);
 int				count_digits_unsigned(unsigned int num);
 int				ft_printf(const char *fmt, ...);
 void			parse_conversion_string(char *fmt, t_conversion *conv);
+int				count_hex(unsigned long num);
 t_conversion	*new_conversion(char *fmt);
 int				print_conversion(t_conversion *conv, void *val);
 #endif
