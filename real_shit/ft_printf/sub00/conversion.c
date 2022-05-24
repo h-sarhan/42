@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/21 10:45:30 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/24 20:03:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_conversion	*new_conversion(char *fmt)
 	conv->sign = ft_strchr(fmt, '+') != NULL;
 	conv->pad_right = ft_strchr(fmt, '-') != NULL;
 	conv->pad_zeros = FALSE;
+	conv->min_width_padding = 0;
+	conv->precision_padding = 0;
 	parse_conversion_string(fmt, conv);
 	return (conv);
 }
@@ -56,86 +58,93 @@ void	parse_conversion_string(char *fmt, t_conversion *conv)
 	if (conv->precision)
 		conv->precision_amount = ft_atoi(ft_strchr(fmt, '.') + 1);
 }
+void	calculate_padding(t_conversion *conv, void *val);
 
-void	calculate_padding(t_conversion *conv, void *val)
-{
-	int	initial_chars;
-	int	precision_padding;
-	int	min_width_padding;
-
-	min_width_padding = 0;
-	precision_padding = 0;
-	if (conv->type == 'x' || conv->type == 'X')
-	{
-		initial_chars = count_hex(*(unsigned long *)val);
-		num_printed += initial_chars;
-		if (conv->alt_form && *(unsigned long *)val != 0 )
-			num_printed += 2;
-	}
-	if (ft_strchr("diuxX", conv->type) != NULL && conv->precision && conv->precision_amount > initial_chars)
-		precision_padding = conv->precision_amount - initial_chars;
-	num_printed += precision_padding;
-	if (conv->min_width > num_printed)
-		min_width_padding = conv->min_width - num_printed;
-	num_printed += min_width_padding;
-	conv->precision_padding = precision_padding;
-	conv->min_width_padding = min_width_padding;
-}
-
-int	print_conversion(t_conversion *conv, void *val)
+int	print_hex_conversion(t_conversion *conv, unsigned long val)
 {
 	int	num_printed;
-	//int	precision_padding;
-	//int	min_width_padding;
-//	int	initial_chars;
 
-//	num_printed = 0;
-//	min_width_padding = 0;
-//	precision_padding = 0;
-	if (conv->type == '%')
-	{
-		ft_putchar_fd('%', STDOUT);
-		num_printed = 1;
-	}
-	/*
-	// %x || %X
-	if (conv->type == 'x' || conv->type == 'X')
-	{
-		initial_chars = count_hex(*(unsigned long *)val);
-		num_printed += initial_chars;
-		if (conv->alt_form && *(unsigned long *)val != 0 )
-			num_printed += 2;
-	}
-	if (ft_strchr("diuxX", conv->type) != NULL && conv->precision && conv->precision_amount > initial_chars)
-	{
-		precision_padding = conv->precision_amount - initial_chars;
-		num_printed += precision_padding;
-	}
-	if (conv->min_width > num_printed)
-	{
-		min_width_padding = conv->min_width - num_printed;
-		num_printed += min_width_padding;
-	}
-	*/
+	num_printed = count_hex(val);
+	if (conv->alt_form && val != 0 )
+		num_printed += 2;
+	calculate_padding(conv, &val);
+	num_printed += conv->min_width_padding + conv->precision_padding;
 	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
-		print_n_chars(' ', min_width_padding);
-	if ((conv->type == 'x' || conv->type == 'X') && conv->alt_form && *(unsigned long *)val != 0)
+		print_n_chars(' ', conv->min_width_padding);
+	if (conv->alt_form && val != 0)
 	{
 		ft_putchar_fd('0', STDOUT);
 		ft_putchar_fd(conv->type, STDOUT);
 	}
-	if (ft_strchr("diuxX", conv->type) != NULL && conv->pad_zeros && !conv->precision && !conv->pad_right)
-		print_n_chars('0', min_width_padding);
-	if (ft_strchr("diuxX", conv->type) && conv->precision)
-		print_n_chars('0', precision_padding);
-	if (conv->type == 'x' || conv->type == 'X')
-		print_hex_int(*(unsigned long *)val, conv->type);
-	if (conv->pad_right == TRUE)
-		print_n_chars(' ', min_width_padding);
+	if (conv->pad_zeros && !conv->precision && !conv->pad_right)
+		print_n_chars('0', conv->min_width_padding);
+	if (conv->precision)
+		print_n_chars('0', conv->precision_padding);
+	print_hex_int(val, conv->type);
+	if (conv->pad_right)
+		print_n_chars(' ', conv->min_width_padding);
 	return (num_printed);
+}
+
+void	calculate_padding(t_conversion *conv, void *val)
+{	
+	int	initial_chars;
+
+	if (conv->type == 'x' || conv->type == 'X')
+	{
+		initial_chars = count_hex(*(unsigned long *) val);
+		if (conv->precision && conv->precision_amount > initial_chars)
+			conv->precision_padding = conv->precision_amount - initial_chars;
+		if (conv->min_width > initial_chars + conv->precision_padding)
+			conv->min_width_padding = conv->min_width - conv->precision_padding - initial_chars;
+		if (conv->alt_form)
+			conv->min_width_padding -= 2;
+	}
+	if (conv->type == 'u')
+	{
+		initial_chars = count_digits_unsigned(*(unsigned int *) val);
+		if (conv->precision && conv->precision_amount > initial_chars)
+			conv->precision_padding = conv->precision_amount - initial_chars;
+		if (conv->min_width > initial_chars + conv->precision_padding)
+			conv->min_width_padding = conv->min_width - conv->precision_padding - initial_chars;
+	}
+}
+
+
+int	print_uint_conversion(t_conversion *conv, unsigned int val)
+{
+	int	num_printed;
+
+	num_printed = count_digits_unsigned(val);
+	calculate_padding(conv, &val);
+	num_printed += conv->min_width_padding + conv->precision_padding;
+	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
+		print_n_chars(' ', conv->min_width_padding);
+	if (conv->pad_zeros && !conv->precision && !conv->pad_right)
+		print_n_chars('0', conv->min_width_padding);
+	if (conv->precision)
+		print_n_chars('0', conv->precision_padding);
+	print_unsigned_int(val);
+	if (conv->pad_right)
+		print_n_chars(' ', conv->min_width_padding);
+	return (num_printed);
+}
+
+int	print_conversion(t_conversion *conv, void *val)
+{
+	if (conv->type == '%')
+	{
+		ft_putchar_fd('%', STDOUT);
+		return (1);
+	}
+	else if (conv->type == 'x' || conv->type == 'X')
+		return (print_hex_conversion(conv, *(unsigned long *) val));
+	else if (conv->type == 'u')
+		return (print_uint_conversion(conv, *(unsigned int *) val));
+	else
+		return (-1);
 	
 //	// %u
-//	if (conv->type == 'u')
 //	{
 //		int	initial_chars = count_digits_unsigned(*(unsigned int *)val);
 //		num_printed += initial_chars;

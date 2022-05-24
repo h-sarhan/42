@@ -6,7 +6,7 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/21 09:47:37 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/24 17:15:33 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ test: $(LIBFT) $(NAME)
 #	./tests real > expected_out
 #	./tests mine > my_out
 #	diff expected_out my_out
-	./tests
+#	./tests
 
 fclean: clean
 	rm -f $(NAME) expected_out my_out tests
