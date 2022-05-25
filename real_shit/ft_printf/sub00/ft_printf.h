@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:39:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/21 10:33:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/24 21:26:46 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ struct	s_conversion {
 	bool	space;
 	bool	sign;
 	bool	pad_right;
-	int		min_width_padding;
-	int		precision_padding;
+	int		mw_padding;
+	int		pr_padding;
 };
 typedef struct s_conversion	t_conversion;
 void			print_unsigned_int(unsigned int num);

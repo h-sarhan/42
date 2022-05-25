@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/21 08:44:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/24 21:08:00 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ int	main(int argc, char **argv)
 	//char	*val = argv[2]; // %s
 	//void *val = argv[2]; // %p
 	char *whocares;
-	unsigned long val = strtoul(argv[2], &whocares, 10); //%u, %x, %X
-	
+//	unsigned long val = strtoul(argv[2], &whocares, 10); //%u, %x, %X
+	//char *val_str = argv[2];
+	int	val = atoi(argv[2]);
 	printf("MY PRINTF:\n");
 	int res = print_conversion(conv, &val);
 	printf("|\nREAL PRINTF:\n");
