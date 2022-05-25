@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/24 21:08:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/25 14:44:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
+	void *p = NULL;
 	t_conversion	*conv = new_conversion(argv[1]);
 
 	printf("%s\n", argv[1]);

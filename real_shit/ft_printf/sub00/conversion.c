@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/25 09:24:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/25 15:22:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_conversion	*new_conversion(char *fmt)
 		return (NULL);
 	conv->type = fmt[ft_strlen(fmt) - 1];
 	conv->precision = ft_strchr(fmt, '.') != NULL;
-	if (ft_isdigit(ft_strchr(fmt, '.')[1]))
+	if (conv->precision && ft_isdigit(ft_strchr(fmt, '.')[1]))
 		conv->precision = FALSE;
 	conv->alt_form = ft_strchr(fmt, '#') != NULL;
 	conv->space = ft_strchr(fmt, ' ') != NULL;
@@ -121,7 +121,10 @@ int	print_uint_conversion(t_conversion *conv, unsigned int val)
 
 	num_printed = count_digits_unsigned(val);
 	calculate_padding(conv, &val);
-	num_printed += conv->mw_padding + conv->pr_padding;
+	if (conv->mw_padding > 0)
+		num_printed += conv->mw_padding;
+	if (conv->pr_padding > 0)
+		num_printed += conv->pr_padding;
 	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
 		print_n_chars(' ', conv->mw_padding);
 	if (conv->pad_zeros && !conv->precision && !conv->pad_right)
@@ -151,9 +154,14 @@ int	print_pointer_conversion(t_conversion *conv, void *val)
 
 int	print_string_conversion(t_conversion *conv, char *val)
 {
-	int	num_printed;
+	int		num_printed;
+	char	null_str[20];
 
-	// TODO: PRINT (null) if val == NULL
+	if (val == NULL)
+	{
+		ft_strlcpy(null_str, "(null)", 20);
+		val = null_str;
+	}
 	num_printed = ft_strlen(val);
 	calculate_padding(conv, &val);
 	num_printed += conv->mw_padding;
@@ -186,13 +194,18 @@ int	print_int_conversion(t_conversion *conv, int val)
 
 	num_printed = count_digits_int(val);
 	calculate_padding(conv, &val);
+	if (conv->mw_padding > 0)
+		num_printed += conv->mw_padding;
+	if (conv->pr_padding > 0)
+		num_printed += conv->pr_padding;
+	if (conv->space || conv->sign)
+		num_printed++;
+	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
+		print_n_chars(' ', conv->mw_padding);
 	if (conv->space && !conv->sign && val >= 0)
 		ft_putchar_fd(' ', STDOUT);
 	else if (conv->sign && val >= 0)
 		ft_putchar_fd('+', STDOUT);
-	num_printed += conv->mw_padding + conv->pr_padding;
-	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
-		print_n_chars(' ', conv->mw_padding);
 	if (conv->pad_zeros && !conv->precision && !conv->pad_right)
 		print_n_chars('0', conv->mw_padding);
 	if (conv->precision)
