@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/25 21:07:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/25 21:16:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_conversion	*new_conversion(char *fmt)
 		return (NULL);
 	conv->type = fmt[ft_strlen(fmt) - 1];
 	conv->precision = ft_strchr(fmt, '.') != NULL;
-	if (conv->precision && ft_isdigit(ft_strchr(fmt, '.')[1]))
+	if (conv->precision && !ft_isdigit(ft_strchr(fmt, '.')[1]))
 		conv->precision = FALSE;
 	conv->alt_form = ft_strchr(fmt, '#') != NULL;
 	conv->space = ft_strchr(fmt, ' ') != NULL;

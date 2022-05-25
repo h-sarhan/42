@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 09:32:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/25 21:08:37 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/25 21:14:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ int	ft_printf(const char *fmt, ...)
 				conv_len++;
 			}
 			conv_str = ft_substr(fmt, conv_start, conv_len + 1);
+			printf("CONV_STR = %s\n", conv_str);
 			conv = new_conversion(conv_str);
-			//print_conv_params(conv);
+			print_conv_params(conv);
 			print_conversion(conv, args);
 			free(conv_str);
 			free(conv);
