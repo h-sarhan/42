@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/25 14:44:30 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/25 20:39:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,29 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	void *p = NULL;
-	t_conversion	*conv = new_conversion(argv[1]);
-
-	printf("%s\n", argv[1]);
-	print_conv_params(conv);
-
-	//int	val = atoi(argv[2]); // %s
-	//char	val = *argv[2]; // %c
-	//char	*val = argv[2]; // %s
-	//void *val = argv[2]; // %p
-	char *whocares;
-//	unsigned long val = strtoul(argv[2], &whocares, 10); //%u, %x, %X
-	//char *val_str = argv[2];
+	//void *p = NULL;
 	int	val = atoi(argv[2]);
-	printf("MY PRINTF:\n");
-	int res = print_conversion(conv, &val);
-	printf("|\nREAL PRINTF:\n");
-	int expected = printf(argv[1], val);
-	printf("|\n");
-	printf("My return value: %d\n", res);
-	printf("Correct return value: %d\n", expected);
+	ft_printf(argv[1], val, val, val, val);
+//	t_conversion	*conv = new_conversion(argv[1]);
+//
+//	printf("%s\n", argv[1]);
+//	print_conv_params(conv);
+//
+//	//int	val = atoi(argv[2]); // %s
+//	//char	val = *argv[2]; // %c
+//	//char	*val = argv[2]; // %s
+//	//void *val = argv[2]; // %p
+//	char *whocares;
+////	unsigned long val = strtoul(argv[2], &whocares, 10); //%u, %x, %X
+//	//char *val_str = argv[2];
+//	int	val = atoi(argv[2]);
+//	printf("MY PRINTF:\n");
+//	int res = print_conversion(conv, &val);
+//	printf("|\nREAL PRINTF:\n");
+//	int expected = printf(argv[1], val);
+//	printf("|\n");
+//	printf("My return value: %d\n", res);
+//	printf("Correct return value: %d\n", expected);
 	/*
 	int (*pf)(const char *, ...);
 	if (argc > 1 && ft_strncmp(argv[1], "real", ft_strlen("real")) == 0)

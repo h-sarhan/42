@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/25 15:22:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/25 21:07:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_conversion	*new_conversion(char *fmt)
 	conv->pad_zeros = FALSE;
 	conv->mw_padding = 0;
 	conv->pr_padding = 0;
+	conv->min_width = 0;
+	conv->precision_amount = 0;
 	parse_conversion_string(fmt, conv);
 	return (conv);
 }
@@ -216,22 +218,22 @@ int	print_int_conversion(t_conversion *conv, int val)
 	return (num_printed);
 }
 
-int	print_conversion(t_conversion *conv, void *val)
+int	print_conversion(t_conversion *conv, va_list args)
 {
 	if (conv->type == 'x' || conv->type == 'X')
-		return (print_hex_conversion(conv, *(unsigned long *) val));
+		return (print_hex_conversion(conv, va_arg(args, unsigned long)));
 	else if (conv->type == 'u')
-		return (print_uint_conversion(conv, *(unsigned int *) val));
+		return (print_uint_conversion(conv, va_arg(args, unsigned int)));
 	else if (conv->type == 'p')
-		return (print_pointer_conversion(conv, *(void **)val) + 2);
+		return (print_pointer_conversion(conv, va_arg(args, void *)) + 2);
 	else if (conv->type == 's')
-		return (print_string_conversion(conv, *(char **) val));
+		return (print_string_conversion(conv, va_arg(args, char *)));
 	else if (conv->type == 'c')
-		return (print_char_conversion(conv, *(char *) val));
+		return (print_char_conversion(conv, (char) va_arg(args, int)));
 	else if (conv->type == '%')
 		return (print_char_conversion(conv, '%'));
 	else if (conv->type == 'd' || conv->type == 'i')
-		return (print_int_conversion(conv, *(int *) val));
+		return (print_int_conversion(conv, va_arg(args, int)));
 	else
 		return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:39:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/24 21:26:46 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/25 20:31:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ int				ft_printf(const char *fmt, ...);
 void			parse_conversion_string(char *fmt, t_conversion *conv);
 int				count_hex(unsigned long num);
 t_conversion	*new_conversion(char *fmt);
-int				print_conversion(t_conversion *conv, void *val);
+int				print_conversion(t_conversion *conv, va_list args);
 void			print_n_chars(char c, int n);
 #endif
