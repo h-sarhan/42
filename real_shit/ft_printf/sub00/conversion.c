@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/24 21:29:09 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/25 09:24:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	calculate_padding(t_conversion *conv, void *val)
 		init_chrs = ft_strlen(*(char **) val);
 	else if (conv->type == 'c' || conv->type == '%')
 		init_chrs = 1;
-	else 
+	else
 		init_chrs = count_digits_int(*(int *) val);
 	if (ft_strchr("xXudi", conv->type) != NULL
 		&& conv->precision && conv->precision_amount > init_chrs)
@@ -153,6 +153,7 @@ int	print_string_conversion(t_conversion *conv, char *val)
 {
 	int	num_printed;
 
+	// TODO: PRINT (null) if val == NULL
 	num_printed = ft_strlen(val);
 	calculate_padding(conv, &val);
 	num_printed += conv->mw_padding;
@@ -192,11 +193,6 @@ int	print_int_conversion(t_conversion *conv, int val)
 	num_printed += conv->mw_padding + conv->pr_padding;
 	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
 		print_n_chars(' ', conv->mw_padding);
-	if (conv->alt_form && val != 0)
-	{
-		ft_putchar_fd('0', STDOUT);
-		ft_putchar_fd(conv->type, STDOUT);
-	}
 	if (conv->pad_zeros && !conv->precision && !conv->pad_right)
 		print_n_chars('0', conv->mw_padding);
 	if (conv->precision)
