@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_conversions.c                                :+:      :+:    :+:   */
+/*   print_num_conversions.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:45:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/26 15:51:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/26 20:08:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-int	print_hex_conversion(t_conversion *conv, unsigned long val)
+int	print_hex_conversion(t_conversion *conv, unsigned int val)
 {
 	int	num_printed;
 
 	num_printed = count_hex(val);
-	if (conv->alt_form && val != 0)
-		num_printed += 2;
 	calculate_padding(conv, &val);
-	num_printed += conv->mw_padding + conv->pr_padding;
+	if (conv->mw_padding > 0)
+		num_printed += conv->mw_padding;
+	if (conv->pr_padding > 0)
+		num_printed += conv->pr_padding;
 	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
 		print_n_chars(' ', conv->mw_padding);
 	if (conv->alt_form && val != 0)
 	{
+		num_printed += 2;
 		ft_putchar_fd('0', STDOUT);
 		ft_putchar_fd(conv->type, STDOUT);
 	}
@@ -66,7 +68,8 @@ int	print_pointer_conversion(t_conversion *conv, void *val)
 
 	num_printed = count_hex((unsigned long)val);
 	calculate_padding(conv, &val);
-	num_printed += conv->mw_padding;
+	if (conv->mw_padding > 0)
+		num_printed += conv->mw_padding;
 	if (!conv->pad_right)
 		print_n_chars(' ', conv->mw_padding);
 	print_hex_pointer(val);
@@ -85,7 +88,7 @@ int	print_int_conversion(t_conversion *conv, int val)
 		num_printed += conv->mw_padding;
 	if (conv->pr_padding > 0)
 		num_printed += conv->pr_padding;
-	if (conv->space || conv->sign)
+	if ((conv->space || conv->sign) && val >= 0)
 		num_printed++;
 	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
 		print_n_chars(' ', conv->mw_padding);

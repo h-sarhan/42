@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/26 15:47:01 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/26 19:11:29 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	calculate_padding(t_conversion *conv, void *val)
 int	print_conversion(t_conversion *conv, va_list args)
 {
 	if (conv->type == 'x' || conv->type == 'X')
-		return (print_hex_conversion(conv, va_arg(args, unsigned long)));
+		return (print_hex_conversion(conv, va_arg(args, unsigned int)));
 	else if (conv->type == 'u')
 		return (print_uint_conversion(conv, va_arg(args, unsigned int)));
 	else if (conv->type == 'p')
