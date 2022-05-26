@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/26 19:11:29 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/26 22:12:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,29 @@ void	calculate_padding(t_conversion *conv, void *val)
 {	
 	int	init_chrs;
 
+	init_chrs = count_initial_chars(conv, val);
+	if (ft_strchr("xXudi", conv->type) != NULL
+		&& conv->precision)
+	{
+		if (ft_strchr("di", conv->type) != NULL && *(int *) val < 0
+			&& conv->precision_amount > init_chrs - 1)
+			conv->pr_padding = conv->precision_amount - (init_chrs - 1);
+		else
+			conv->pr_padding = conv->precision_amount - init_chrs;
+	}
+	if (conv->min_width > init_chrs + conv->pr_padding)
+		conv->mw_padding = conv->min_width - conv->pr_padding - init_chrs;
+	if (ft_strchr("xX", conv->type) != NULL && conv->alt_form)
+		conv->mw_padding -= 2;
+	if (ft_strchr("di", conv->type) != NULL
+		&& (conv->space || conv->sign) && *(int *) val >= 0)
+		conv->mw_padding -= 1;
+}
+
+int	count_initial_chars(t_conversion *conv, void *val)
+{
+	int	init_chrs;
+
 	if (conv->type == 'x' || conv->type == 'X')
 		init_chrs = count_hex(*(unsigned long *) val);
 	else if (conv->type == 'u')
@@ -79,16 +102,7 @@ void	calculate_padding(t_conversion *conv, void *val)
 		init_chrs = 1;
 	else
 		init_chrs = count_digits_int(*(int *) val);
-	if (ft_strchr("xXudi", conv->type) != NULL
-		&& conv->precision && conv->precision_amount > init_chrs)
-		conv->pr_padding = conv->precision_amount - init_chrs;
-	if (conv->min_width > init_chrs + conv->pr_padding)
-		conv->mw_padding = conv->min_width - conv->pr_padding - init_chrs;
-	if (ft_strchr("xX", conv->type) != NULL && conv->alt_form)
-		conv->mw_padding -= 2;
-	if (ft_strchr("di", conv->type) != NULL
-		&& (conv->space || conv->sign) && *(int *) val >= 0)
-		conv->mw_padding -= 1;
+	return (init_chrs);
 }
 
 int	print_conversion(t_conversion *conv, va_list args)

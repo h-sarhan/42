@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:39:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/26 20:14:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/26 22:01:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int				print_char_conversion(t_conversion *conv, char val);
 int				print_string_conversion(t_conversion *conv, char *val);
 int				print_conversion(t_conversion *conv, va_list args);
 void			calculate_padding(t_conversion *conv, void *val);
+int				count_initial_chars(t_conversion *conv, void *val);
 void			print_n_chars(char c, int n);
 int				ft_printf(const char *fmt, ...);
 #endif
