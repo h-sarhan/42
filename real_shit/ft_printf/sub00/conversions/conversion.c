@@ -6,11 +6,11 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/25 21:16:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/26 15:47:01 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../ft_printf.h"
 
 t_conversion	*new_conversion(char *fmt)
 {
@@ -89,133 +89,6 @@ void	calculate_padding(t_conversion *conv, void *val)
 	if (ft_strchr("di", conv->type) != NULL
 		&& (conv->space || conv->sign) && *(int *) val >= 0)
 		conv->mw_padding -= 1;
-}
-
-int	print_hex_conversion(t_conversion *conv, unsigned long val)
-{
-	int	num_printed;
-
-	num_printed = count_hex(val);
-	if (conv->alt_form && val != 0)
-		num_printed += 2;
-	calculate_padding(conv, &val);
-	num_printed += conv->mw_padding + conv->pr_padding;
-	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
-		print_n_chars(' ', conv->mw_padding);
-	if (conv->alt_form && val != 0)
-	{
-		ft_putchar_fd('0', STDOUT);
-		ft_putchar_fd(conv->type, STDOUT);
-	}
-	if (conv->pad_zeros && !conv->precision && !conv->pad_right)
-		print_n_chars('0', conv->mw_padding);
-	if (conv->precision)
-		print_n_chars('0', conv->pr_padding);
-	print_hex_int(val, conv->type);
-	if (conv->pad_right)
-		print_n_chars(' ', conv->mw_padding);
-	return (num_printed);
-}
-
-int	print_uint_conversion(t_conversion *conv, unsigned int val)
-{
-	int	num_printed;
-
-	num_printed = count_digits_unsigned(val);
-	calculate_padding(conv, &val);
-	if (conv->mw_padding > 0)
-		num_printed += conv->mw_padding;
-	if (conv->pr_padding > 0)
-		num_printed += conv->pr_padding;
-	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
-		print_n_chars(' ', conv->mw_padding);
-	if (conv->pad_zeros && !conv->precision && !conv->pad_right)
-		print_n_chars('0', conv->mw_padding);
-	if (conv->precision)
-		print_n_chars('0', conv->pr_padding);
-	print_unsigned_int(val);
-	if (conv->pad_right)
-		print_n_chars(' ', conv->mw_padding);
-	return (num_printed);
-}
-
-int	print_pointer_conversion(t_conversion *conv, void *val)
-{
-	int	num_printed;
-
-	num_printed = count_hex((unsigned long)val);
-	calculate_padding(conv, &val);
-	num_printed += conv->mw_padding;
-	if (!conv->pad_right)
-		print_n_chars(' ', conv->mw_padding);
-	print_hex_pointer(val);
-	if (conv->pad_right)
-		print_n_chars(' ', conv->mw_padding);
-	return (num_printed);
-}
-
-int	print_string_conversion(t_conversion *conv, char *val)
-{
-	int		num_printed;
-	char	null_str[20];
-
-	if (val == NULL)
-	{
-		ft_strlcpy(null_str, "(null)", 20);
-		val = null_str;
-	}
-	num_printed = ft_strlen(val);
-	calculate_padding(conv, &val);
-	num_printed += conv->mw_padding;
-	if (!conv->pad_right)
-		print_n_chars(' ', conv->mw_padding);
-	ft_putstr_fd(val, STDOUT);
-	if (conv->pad_right)
-		print_n_chars(' ', conv->mw_padding);
-	return (num_printed);
-}
-
-int	print_char_conversion(t_conversion *conv, char val)
-{
-	int	num_printed;
-
-	num_printed = 1;
-	calculate_padding(conv, &val);
-	num_printed += conv->mw_padding;
-	if (!conv->pad_right)
-		print_n_chars(' ', conv->mw_padding);
-	ft_putchar_fd(val, STDOUT);
-	if (conv->pad_right)
-		print_n_chars(' ', conv->mw_padding);
-	return (num_printed);
-}
-
-int	print_int_conversion(t_conversion *conv, int val)
-{
-	int	num_printed;
-
-	num_printed = count_digits_int(val);
-	calculate_padding(conv, &val);
-	if (conv->mw_padding > 0)
-		num_printed += conv->mw_padding;
-	if (conv->pr_padding > 0)
-		num_printed += conv->pr_padding;
-	if (conv->space || conv->sign)
-		num_printed++;
-	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
-		print_n_chars(' ', conv->mw_padding);
-	if (conv->space && !conv->sign && val >= 0)
-		ft_putchar_fd(' ', STDOUT);
-	else if (conv->sign && val >= 0)
-		ft_putchar_fd('+', STDOUT);
-	if (conv->pad_zeros && !conv->precision && !conv->pad_right)
-		print_n_chars('0', conv->mw_padding);
-	if (conv->precision)
-		print_n_chars('0', conv->pr_padding);
-	ft_putnbr_fd(val, STDOUT);
-	if (conv->pad_right)
-		print_n_chars(' ', conv->mw_padding);
-	return (num_printed);
 }
 
 int	print_conversion(t_conversion *conv, va_list args)

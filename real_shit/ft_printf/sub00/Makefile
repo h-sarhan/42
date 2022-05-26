@@ -6,11 +6,13 @@
 #    By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/24 17:15:33 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/26 16:20:16 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = conversion.c count_digits.c ft_printf.c print_utils.c 
+SRCS = conversions/conversion.c conversions/print_str_conversions.c \
+	   conversions/print_num_conversions.c count_digits.c ft_printf.c \
+	   print_utils.c print_hex.c
 
 OBJS := $(SRCS:%.c=%.o)
 
@@ -20,7 +22,7 @@ LIBFT = libft/libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIBFT)
 	ar -rc $(NAME) $(OBJS)
 	ranlib $(NAME)
 
@@ -28,10 +30,10 @@ $(LIBFT):
 	make -s -C libft libft.a
 
 %.o: %.c
-	cc $(MUSTAFA_FLAGS) -c $^ 
+	cc $(MUSTAFA_FLAGS) -c $^ -o $@
 
 norm:
-	norminette
+	norminette $(SRCS)
 
 clean:
 	rm -f $(OBJS)

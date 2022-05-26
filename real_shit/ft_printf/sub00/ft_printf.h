@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:39:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/25 20:31:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/26 16:14:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@
 # define UPPER 1
 # define LOWER 0
 
-typedef int	bool;
-struct	s_conversion {
+typedef int						t_bool;
+typedef struct s_conversion		t_conversion;
+struct							s_conversion {
 	char	type;
 	int		min_width;
-	bool	pad_zeros;
-	bool	precision;
+	t_bool	pad_zeros;
+	t_bool	precision;
 	int		precision_amount;
-	bool	alt_form;
-	bool	space;
-	bool	sign;
-	bool	pad_right;
+	t_bool	alt_form;
+	t_bool	space;
+	t_bool	sign;
+	t_bool	pad_right;
 	int		mw_padding;
 	int		pr_padding;
 };
-typedef struct s_conversion	t_conversion;
 void			print_unsigned_int(unsigned int num);
 int				print_hex_pointer(void *pointer);
 int				print_hex_int(unsigned int num, char hex_type);
@@ -49,6 +49,14 @@ int				ft_printf(const char *fmt, ...);
 void			parse_conversion_string(char *fmt, t_conversion *conv);
 int				count_hex(unsigned long num);
 t_conversion	*new_conversion(char *fmt);
+int				print_hex_conversion(t_conversion *conv, unsigned long val);
+int				print_pointer_conversion(t_conversion *conv, void *val);
+int				print_int_conversion(t_conversion *conv, int val);
+int				print_uint_conversion(t_conversion *conv, unsigned int val);
+int				print_uint_conversion(t_conversion *conv, unsigned int val);
+int				print_char_conversion(t_conversion *conv, char val);
+int				print_string_conversion(t_conversion *conv, char *val);
 int				print_conversion(t_conversion *conv, va_list args);
+void			calculate_padding(t_conversion *conv, void *val);
 void			print_n_chars(char c, int n);
 #endif

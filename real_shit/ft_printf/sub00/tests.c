@@ -6,7 +6,7 @@
 /*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/25 20:39:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/26 16:21:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ int	main(int argc, char **argv)
 	(void)argv;
 	//void *p = NULL;
 	int	val = atoi(argv[2]);
-	ft_printf(argv[1], val, val, val, val);
+	ft_printf("MY PRINTF:\n");
+	int myret = ft_printf(argv[1], val, val, val, val);
+	printf("\nOG PRINTF:\n");
+	int correctret = printf(argv[1], val, val, val, val);
+	printf("\nMy ret = %d\nCorrect ret = %d\n", myret, correctret);
 //	t_conversion	*conv = new_conversion(argv[1]);
 //
 //	printf("%s\n", argv[1]);
