@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:39:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 18:05:53 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 18:20:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # define FALSE 0
 # define UPPER 1
 # define LOWER 0
-// I CAN PUT COMMENTS HERE
 typedef int						t_bool;
 typedef struct s_conversion		t_conversion;
 struct							s_conversion {
@@ -61,6 +60,6 @@ void			print_int(int num, int padding);
 int				count_initial_chars(t_conversion *conv, void *val);
 void			print_n_chars(char c, int n);
 int				max(int a, int b);
-void			print_conv_params(t_conversion *conv);
+void			print_conv_params(t_conversion *conv, void *val);
 int				ft_printf(const char *fmt, ...);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:10:58 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 18:04:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 18:23:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,8 @@ void	print_int(int num, int padding)
 	if (num < 0)
 	{
 		ft_putchar_fd('-', STDOUT);
-		print_n_chars('0', padding);
 		num *= -1;
 	}
-	if (num < 10)
-	{
-		ft_putchar_fd(num + '0', STDOUT);
-	}
-	else
-	{
-		ft_putnbr_fd(num / 10, STDOUT);
-		ft_putchar_fd(num % 10 + '0', padding);
-	}
+	print_n_chars('0', padding);
+	ft_putnbr_fd(num, STDOUT);
 }

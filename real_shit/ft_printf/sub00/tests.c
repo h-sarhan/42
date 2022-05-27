@@ -6,13 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 18:00:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 18:29:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	print_conv_params(t_conversion *conv)
+void	print_conv_params(t_conversion *conv, void *val)
 {
 	printf("Conversion Type: %c\n", conv->type);
 	printf("Minimum Width: %d\n", conv->min_width);
@@ -20,6 +20,7 @@ void	print_conv_params(t_conversion *conv)
 	printf("Pad zeros?: %d\n", conv->pad_zeros);
 	printf("Precision?: %d\n", conv->precision);
 	printf("Precision Amount: %u\n", conv->precision_amount);
+	calculate_padding(conv, val);
 	printf("Min Width Padding: %u\n", conv->mw_padding);
 	printf("Precision Padding: %u\n", conv->pr_padding);
 	printf("Alt Form?: %d\n", conv->alt_form);
@@ -36,6 +37,10 @@ int	main(int argc, char **argv)
 		pf = printf;
 	else
 		pf = ft_printf;
+	//pf("%010d\n", -10);
+	int num = 1;
+	//print_conv_params(new_conversion("%.2d"), &num);
+	pf(" %.2d \n", 1);
 	//// basic chars
 	//char ch = 0;
 	//while (ch < 127)
@@ -100,21 +105,21 @@ int	main(int argc, char **argv)
 //	pf("%04d\n", -14);
 //
 	// TODO: FIGURE OUT PRECISION WITH STRING CONVERSION
-//	pf("%.1s\n", "");
-//	pf("%.s\n", "-");
-//	pf("%.2s\n", "");
-//	pf("%.3s\n", "4");
+	pf("%.1s\n", "");
+	pf("%.s\n", "-");
+	pf("%.2s\n", "");
+	pf("%.3s\n", "4");
 	
 	// TODO: FIGURE OUT PRECISION WITH NEGATIVE NUMBERS
-	t_conversion	*conv = new_conversion("%-4x");
+	// t_conversion	*conv = new_conversion("%-4x");
 	// print_conv_params(conv);
 	// write(STDOUT, "\n", 1);
 	// print_int_conversion(conv, -1);
 	// printf("\n");
-	int ret;
-	pf("%.2d\n", -1);
-	ret = pf("%.2d\n", -1);
-	printf("%d\n", ret);
+	// int ret;
+	// pf("%.2d\n", -1);
+	// ret = pf("%.2d\n", -1);
+	// printf("%d\n", ret);
 	
 
 // DONE: - with hex

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:45:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 18:00:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 18:13:52 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ int	print_int_conversion(t_conversion *conv, int val)
 	else if (conv->sign && val >= 0)
 		ft_putchar_fd('+', STDOUT);
 	if (conv->pad_zeros && !conv->precision && !conv->pad_right)
-		print_n_chars('0', conv->mw_padding);
-	if (conv->precision)
-		print_n_chars('0', conv->pr_padding);
-	ft_putnbr_fd(val, STDOUT);
+		print_int(val, conv->mw_padding);
+	else if (conv->precision)
+		print_int(val, conv->pr_padding);
+	else
+		print_int(val, 0);
 	if (conv->pad_right)
 		print_n_chars(' ', conv->mw_padding);
 	return (num_printed);
