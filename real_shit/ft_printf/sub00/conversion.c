@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 18:00:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 19:05:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ t_conversion	*new_conversion(char *fmt)
 		return (NULL);
 	conv->type = fmt[ft_strlen(fmt) - 1];
 	conv->precision = ft_strchr(fmt, '.') != NULL;
-	if (conv->precision && !ft_isdigit(ft_strchr(fmt, '.')[1]))
-		conv->precision = FALSE;
 	conv->alt_form = ft_strchr(fmt, '#') != NULL;
 	conv->space = ft_strchr(fmt, ' ') != NULL;
 	conv->sign = ft_strchr(fmt, '+') != NULL;
@@ -48,6 +46,8 @@ void	parse_conversion_string(char *fmt, t_conversion *conv)
 			conv->pad_zeros = TRUE;
 			i++;
 		}
+		else if (fmt[i] == '.')
+			break ;
 		else if (ft_isdigit(fmt[i]))
 		{
 			conv->min_width = ft_atoi(&fmt[i]);
@@ -78,7 +78,8 @@ void	calculate_padding(t_conversion *conv, void *val)
 			conv->pr_padding = max(conv->precision_amount - init_chrs, 0);
 	}
 	if (conv->min_width > init_chrs + conv->pr_padding)
-		conv->mw_padding = max(conv->min_width - conv->pr_padding - init_chrs, 0);
+		conv->mw_padding = max(conv->min_width - conv->pr_padding
+				- init_chrs, 0);
 	if (ft_strchr("xX", conv->type) != NULL && conv->alt_form)
 		conv->mw_padding = max(conv->mw_padding - 2, 0);
 	if (ft_strchr("di", conv->type) != NULL

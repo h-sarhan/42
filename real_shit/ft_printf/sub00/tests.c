@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 18:29:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 18:58:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ int	main(int argc, char **argv)
 		pf = ft_printf;
 	//pf("%010d\n", -10);
 	int num = 1;
+	int ret = pf("%.s\n", "-");
+	pf("%d\n", ret);
+	// char *str = "-";
+	// print_conv_params(new_conversion("%.s"), &str);
 	//print_conv_params(new_conversion("%.2d"), &num);
-	pf(" %.2d \n", 1);
+	//pf(" %.2d \n", 1);
 	//// basic chars
 	//char ch = 0;
 	//while (ch < 127)
@@ -109,7 +113,18 @@ int	main(int argc, char **argv)
 	pf("%.s\n", "-");
 	pf("%.2s\n", "");
 	pf("%.3s\n", "4");
-	
+	char *str = "4";
+	// print_conv_params(new_conversion("%.3s"), &str);
+	ret = pf(" %.s \n", "-");
+	pf("ret = %d\n", ret);
+	ret  = pf(" %.2s %.1s \n", "", "-");
+	pf("ret = %d\n", ret);
+	ret = pf(" %.3s %.2s \n", " - ", "");
+	pf("ret = %d\n", ret);
+	ret = pf(" %.1s %.2s %.3s %.4s \n", " - ", "", "4", "");
+	pf("ret = %d\n", ret);
+	ret = pf(" %.2s %.3s %.4s %.5s %.1s \n", " - ", "", "4", "", "2 ");
+	pf("ret = %d\n", ret);
 	// TODO: FIGURE OUT PRECISION WITH NEGATIVE NUMBERS
 	// t_conversion	*conv = new_conversion("%-4x");
 	// print_conv_params(conv);
