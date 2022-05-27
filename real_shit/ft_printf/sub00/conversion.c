@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
 t_conversion	*new_conversion(char *fmt)
 {
@@ -73,17 +73,17 @@ void	calculate_padding(t_conversion *conv, void *val)
 	{
 		if (ft_strchr("di", conv->type) != NULL && *(int *) val < 0
 			&& conv->precision_amount > init_chrs - 1)
-			conv->pr_padding = conv->precision_amount - (init_chrs - 1);
+			conv->pr_padding = max(conv->precision_amount - (init_chrs - 1), 0);
 		else
-			conv->pr_padding = conv->precision_amount - init_chrs;
+			conv->pr_padding = max(conv->precision_amount - init_chrs, 0);
 	}
 	if (conv->min_width > init_chrs + conv->pr_padding)
-		conv->mw_padding = conv->min_width - conv->pr_padding - init_chrs;
+		conv->mw_padding = max(conv->min_width - conv->pr_padding - init_chrs, 0);
 	if (ft_strchr("xX", conv->type) != NULL && conv->alt_form)
-		conv->mw_padding -= 2;
+		conv->mw_padding = max(conv->mw_padding - 2, 0);
 	if (ft_strchr("di", conv->type) != NULL
 		&& (conv->space || conv->sign) && *(int *) val >= 0)
-		conv->mw_padding -= 1;
+		conv->mw_padding = max(conv->mw_padding - 1, 0);
 }
 
 int	count_initial_chars(t_conversion *conv, void *val)
@@ -91,7 +91,7 @@ int	count_initial_chars(t_conversion *conv, void *val)
 	int	init_chrs;
 
 	if (conv->type == 'x' || conv->type == 'X')
-		init_chrs = count_hex(*(unsigned long *) val);
+		init_chrs = count_hex(*(unsigned int *) val);
 	else if (conv->type == 'u')
 		init_chrs = count_digits_unsigned(*(unsigned int *) val);
 	else if (conv->type == 'p')

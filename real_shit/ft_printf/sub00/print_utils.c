@@ -9,6 +9,7 @@
 /*   Updated: 2022/05/26 18:29:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	print_unsigned_int(unsigned int num)
@@ -39,9 +40,9 @@ void	print_hex_int(unsigned int num, char hex_type)
 	if (num == 0)
 	{
 		ft_putchar_fd('0', STDOUT);
+		return ;
 	}
-	else
-		print_hex(num, hex_type);
+	print_hex(num, hex_type);
 }
 
 void	print_n_chars(char c, int n)
@@ -54,4 +55,11 @@ void	print_n_chars(char c, int n)
 		ft_putchar_fd(c, STDOUT);
 		i++;
 	}
+}
+
+int	max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
 }

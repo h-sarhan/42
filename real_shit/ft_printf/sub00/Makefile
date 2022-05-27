@@ -10,8 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = conversions/conversion.c conversions/print_str_conversions.c \
-	   conversions/print_num_conversions.c count_digits.c ft_printf.c \
+SRCS = conversion.c print_str_conversions.c \
+	   print_num_conversions.c count_digits.c ft_printf.c \
 	   print_utils.c print_hex.c
 
 OBJS := $(SRCS:%.c=%.o)
@@ -49,12 +49,12 @@ clean:
 	rm -f $(OBJS)
 	make -s -C libft clean
 
-test: $(LIBFT) $(NAME)
+test: $(LIBFT_OBJS) $(NAME)
 	cc -Wextra -Wall tests.c $(LIBFT_OBJS) $(NAME) -o tests
 	bash shell_tests.sh
 
 fclean: clean
-	rm -f $(NAME) expected_out my_out tests
+	rm -f $(NAME) expected actual tests
 	make -s -C libft fclean 
 
 re: fclean $(NAME)

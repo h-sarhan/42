@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-t_conversion	*extract_conversion(const char *fmt, int conv_start, int *i)
+t_conversion	*extract_conversion(const char *fmt, int conv_start, size_t *i)
 {
 	int				conv_end;
 	char			*conv_str;
@@ -30,7 +30,7 @@ t_conversion	*extract_conversion(const char *fmt, int conv_start, int *i)
 
 int	ft_printf(const char *fmt, ...)
 {
-	int				i;
+	size_t			i;
 	t_conversion	*conv;
 	va_list			args;
 	int				chars_printed;
@@ -38,7 +38,7 @@ int	ft_printf(const char *fmt, ...)
 	i = 0;
 	chars_printed = 0;
 	va_start(args, fmt);
-	while (fmt[i] != '\0')
+	while (i < ft_strlen(fmt))
 	{
 		if (fmt[i] == '%')
 		{

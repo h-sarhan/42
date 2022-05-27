@@ -32,11 +32,10 @@ int	main(int argc, char **argv)
 {
 	int		(*pf)(const char *, ...);
 	
-	if (argc > 1 && ft_strncmp(argv[1], "expected", 100))
+	if (argc > 1 && ft_strncmp(argv[1], "expected", 100) == 0)
 		pf = printf;
 	else
 		pf = ft_printf;
-
 	//// basic chars
 	//char ch = 0;
 	//while (ch < 127)
@@ -108,15 +107,32 @@ int	main(int argc, char **argv)
 //	pf("%.3s\n", "4");
 	
 	// TODO: FIGURE OUT PRECISION WITH NEGATIVE NUMBERS
-	t_conversion	*conv = new_conversion("%.2d");
+	// t_conversion	*conv = new_conversion("%-4x");
 	//print_conv_params(conv);
 //	write(STDOUT, "\n", 1);
 //	print_int_conversion(conv, -1);
 //	printf("\n");
-	pf("%.2d\n", -1);
+	//pf("%.2d\n", -1);
 	//int ret;
 //	ret = pf("%.2d\n", -1);
 //	printf("%d\n", ret);
+
+// TODO: - with hex
+	// print_hex(9, 'x');
+	// print_hex_int(9, 'x');
+	// write(1, "\n", 1);
+	pf("%-4x\n", 9);
+	unsigned int num = 9;
+	t_conversion *conv = new_conversion("%-4x");
+	// printf("init_chrs: %d\n", count_initial_chars(conv, &num));
+	// print_conv_params(conv);
+	// printf("Count hex output: %d\n", count_hex(num));
+	// write(1, "|", 1);
+	pf("%-4x\n", 9);
+	pf("%-1x\n", 10);
+	//print_hex_conversion(conv, (unsigned int)9);
+	// print_conv_params(conv);
+	// ft_printf("%-1x\n", 10);
 
 	// DONE: FIX '#' RETURN VALUE
 //	ret = pf(" %#x \n", 1);

@@ -59,5 +59,7 @@ int				print_conversion(t_conversion *conv, va_list args);
 void			calculate_padding(t_conversion *conv, void *val);
 int				count_initial_chars(t_conversion *conv, void *val);
 void			print_n_chars(char c, int n);
+int				max(int a, int b);
+void			print_conv_params(t_conversion *conv);
 int				ft_printf(const char *fmt, ...);
 #endif

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
 int	print_hex_conversion(t_conversion *conv, unsigned int val)
 {
@@ -18,10 +18,7 @@ int	print_hex_conversion(t_conversion *conv, unsigned int val)
 
 	num_printed = count_hex(val);
 	calculate_padding(conv, &val);
-	if (conv->mw_padding > 0)
-		num_printed += conv->mw_padding;
-	if (conv->pr_padding > 0)
-		num_printed += conv->pr_padding;
+	num_printed += conv->mw_padding + conv->pr_padding;
 	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
 		print_n_chars(' ', conv->mw_padding);
 	if (conv->alt_form && val != 0)
@@ -46,10 +43,7 @@ int	print_uint_conversion(t_conversion *conv, unsigned int val)
 
 	num_printed = count_digits_unsigned(val);
 	calculate_padding(conv, &val);
-	if (conv->mw_padding > 0)
-		num_printed += conv->mw_padding;
-	if (conv->pr_padding > 0)
-		num_printed += conv->pr_padding;
+	num_printed += conv->mw_padding + conv->pr_padding;
 	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
 		print_n_chars(' ', conv->mw_padding);
 	if (conv->pad_zeros && !conv->precision && !conv->pad_right)
@@ -68,8 +62,7 @@ int	print_pointer_conversion(t_conversion *conv, void *val)
 
 	num_printed = count_hex((unsigned long)val);
 	calculate_padding(conv, &val);
-	if (conv->mw_padding > 0)
-		num_printed += conv->mw_padding;
+	num_printed += conv->mw_padding;
 	if (!conv->pad_right)
 		print_n_chars(' ', conv->mw_padding);
 	print_hex_pointer(val);
@@ -84,10 +77,7 @@ int	print_int_conversion(t_conversion *conv, int val)
 
 	num_printed = count_digits_int(val);
 	calculate_padding(conv, &val);
-	if (conv->mw_padding > 0)
-		num_printed += conv->mw_padding;
-	if (conv->pr_padding > 0)
-		num_printed += conv->pr_padding;
+	num_printed += conv->mw_padding + conv->pr_padding;
 	if ((conv->space || conv->sign) && val >= 0)
 		num_printed++;
 	if (!conv->pad_right && (!conv->pad_zeros || conv->precision))
