@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:39:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 18:20:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 19:39:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define FALSE 0
 # define UPPER 1
 # define LOWER 0
+
 typedef int						t_bool;
 typedef struct s_conversion		t_conversion;
 struct							s_conversion {

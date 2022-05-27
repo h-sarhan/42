@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/05/27 18:09:06 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/05/27 19:39:23 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ OBJS := $(SRCS:%.c=%.o)
 
 NAME = libftprintf.a
 MUSTAFA_FLAGS = -Werror -Wall -Wextra
-LIBFT = libft/libft.a
 LIBFT_SRCS = ft_strchr.c ft_split.c ft_strtrim.c ft_bzero.c ft_strnstr.c ft_strmapi.c ft_isprint.c ft_atoi.c ft_strdup.c \
 			 ft_tolower.c ft_toupper.c ft_substr.c ft_striteri.c ft_memchr.c ft_putnbr_fd.c ft_strlcpy.c ft_itoa.c \
 			 ft_memset.c ft_calloc.c ft_strlen.c ft_putchar_fd.c ft_isascii.c ft_strlcat.c ft_putendl_fd.c ft_memcmp.c \
@@ -30,24 +29,20 @@ LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT_OBJS)
 	ar -rc $(NAME) $(OBJS) $(LIBFT_OBJS)
 	ranlib $(NAME)
-
-$(LIBFT):
-	make -s -C libft libft.a
 
 %.o: %.c
 	cc $(MUSTAFA_FLAGS) -c $^ -o $@
 
 norm:
-	norminette $(SRCS)
+	norminette $(SRCS) ft_printf.h
 
 bonus: $(NAME)
 
 clean:
-	rm -f $(OBJS)
-	make -s -C libft clean
+	rm -f $(OBJS) $(LIBFT_OBJS)
 
 test: $(LIBFT_OBJS) $(NAME)
 	cc -Wextra -Wall tests.c $(LIBFT_OBJS) $(NAME) -o tests
@@ -55,7 +50,6 @@ test: $(LIBFT_OBJS) $(NAME)
 
 fclean: clean
 	rm -f $(NAME) expected actual tests
-	make -s -C libft fclean 
 
 re: fclean $(NAME)
 	
