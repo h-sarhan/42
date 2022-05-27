@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
+/*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:38:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/26 18:29:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 18:01:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void	print_unsigned_int(unsigned int num)
-{
-	if (num < 10)
-	{
-		ft_putchar_fd(num + '0', 1);
-	}
-	else
-	{
-		ft_putnbr_fd(num / 10, 1);
-		ft_putchar_fd(num % 10 + '0', 1);
-	}
-}
 
 void	print_hex_pointer(void *pointer)
 {

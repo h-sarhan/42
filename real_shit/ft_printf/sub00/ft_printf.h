@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
+/*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:39:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/26 22:01:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 18:05:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int				print_char_conversion(t_conversion *conv, char val);
 int				print_string_conversion(t_conversion *conv, char *val);
 int				print_conversion(t_conversion *conv, va_list args);
 void			calculate_padding(t_conversion *conv, void *val);
+void			print_int(int num, int padding);
 int				count_initial_chars(t_conversion *conv, void *val);
 void			print_n_chars(char c, int n);
 int				max(int a, int b);

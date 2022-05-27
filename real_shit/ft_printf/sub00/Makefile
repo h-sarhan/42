@@ -12,7 +12,7 @@
 
 SRCS = conversion.c print_str_conversions.c \
 	   print_num_conversions.c count_digits.c ft_printf.c \
-	   print_utils.c print_hex.c
+	   print_utils.c print_numeric.c
 
 OBJS := $(SRCS:%.c=%.o)
 
