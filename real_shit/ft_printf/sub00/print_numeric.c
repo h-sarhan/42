@@ -6,12 +6,17 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:10:58 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 19:06:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 20:22:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+// Converts a decimal number to its hexadecimal equivalent
+// Example: 
+// 10 -> 'a' or 'A'
+// 11 -> 'b' or 'B'
+// 15 -> 'f' or 'F'
 char	dec_to_hex(unsigned char dec, char hex_type)
 {
 	if (dec > 9)
@@ -24,6 +29,9 @@ char	dec_to_hex(unsigned char dec, char hex_type)
 	return (dec + '0');
 }
 
+// Prints an unsigned long in hexadecimal form by
+// traversing through the number 4 bits at a time
+// Skips trailing zeroes
 void	print_hex(unsigned long num, char hex_type)
 {
 	unsigned char	*bytes;
@@ -52,6 +60,7 @@ void	print_hex(unsigned long num, char hex_type)
 	}
 }
 
+// Prints an unsigned int
 void	print_unsigned_int(unsigned int num)
 {
 	if (num < 10)
@@ -65,6 +74,7 @@ void	print_unsigned_int(unsigned int num)
 	}
 }
 
+// Prints a signed integer with optional zero padding
 void	print_int(int num, int padding)
 {
 	if (num == INT_MIN)

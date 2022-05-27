@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 19:05:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 20:12:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+// Creates and initialises a new conversion struct
 t_conversion	*new_conversion(char *fmt)
 {
 	t_conversion	*conv;
@@ -26,14 +27,15 @@ t_conversion	*new_conversion(char *fmt)
 	conv->sign = ft_strchr(fmt, '+') != NULL;
 	conv->pad_right = ft_strchr(fmt, '-') != NULL;
 	conv->pad_zeros = FALSE;
-	conv->mw_padding = 0;
-	conv->pr_padding = 0;
 	conv->min_width = 0;
 	conv->precision_amount = 0;
 	parse_conversion_string(fmt, conv);
+	conv->mw_padding = 0;
+	conv->pr_padding = 0;
 	return (conv);
 }
 
+// Parses a conversion string to figure out the precision and min_width amounts
 void	parse_conversion_string(char *fmt, t_conversion *conv)
 {
 	int	i;
@@ -63,13 +65,16 @@ void	parse_conversion_string(char *fmt, t_conversion *conv)
 		conv->precision_amount = ft_atoi(ft_strchr(fmt, '.') + 1);
 }
 
+// Calculates the required additional padding based on a conversion
+// and the value being printed.
+// The calculation is based on the min width amount, precision amount
+// conversion type, number of characters in the value, and the space/sign flags
 void	calculate_padding(t_conversion *conv, void *val)
 {	
 	int	init_chrs;
 
 	init_chrs = count_initial_chars(conv, val);
-	if (ft_strchr("xXudi", conv->type) != NULL
-		&& conv->precision)
+	if (ft_strchr("xXudi", conv->type) != NULL && conv->precision)
 	{
 		if (ft_strchr("di", conv->type) != NULL && *(int *) val < 0
 			&& conv->precision_amount > init_chrs - 1)
@@ -87,6 +92,8 @@ void	calculate_padding(t_conversion *conv, void *val)
 		conv->mw_padding = max(conv->mw_padding - 1, 0);
 }
 
+// Counts the the characters to be printed for a value without 
+// extra padding/flags
 int	count_initial_chars(t_conversion *conv, void *val)
 {
 	int	init_chrs;
@@ -106,6 +113,15 @@ int	count_initial_chars(t_conversion *conv, void *val)
 	return (init_chrs);
 }
 
+// Prints a conversion
+// Handles the following conversions
+// 1. Hexadecimal 'x' or 'X'
+// 2. Unsigned int 'u'
+// 3. Void Pointer 'p'
+// 4. String 's'
+// 5. Character 'c'
+// 6. Percent '%'
+// 7. Integer 'd' or 'i'
 int	print_conversion(t_conversion *conv, va_list args)
 {
 	if (conv->type == 'x' || conv->type == 'X')

@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:38:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 19:06:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 19:44:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+// Prefixes `0x` before printing the hex value of a pointer
 void	print_hex_pointer(void *pointer)
 {
 	ft_putstr_fd("0x", STDOUT);
@@ -22,6 +23,7 @@ void	print_hex_pointer(void *pointer)
 	print_hex((unsigned long) pointer, 'x');
 }
 
+// Prints the hex value of an unsigned int
 void	print_hex_int(unsigned int num, char hex_type)
 {
 	if (num == 0)
@@ -32,6 +34,7 @@ void	print_hex_int(unsigned int num, char hex_type)
 	print_hex(num, hex_type);
 }
 
+// Prints a character `c` n times
 void	print_n_chars(char c, int n)
 {
 	int	i;
@@ -44,6 +47,7 @@ void	print_n_chars(char c, int n)
 	}
 }
 
+// Returns the larger of two ints
 int	max(int a, int b)
 {
 	if (a > b)

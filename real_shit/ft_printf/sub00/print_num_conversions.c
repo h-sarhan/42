@@ -6,12 +6,19 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:45:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 18:13:52 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 20:00:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+// Prints a hexadecimal conversion 'x' or 'X'
+// Handles the following flags
+// 1. Minimum width
+// 2. Left adjustment '-'
+// 3. Zero padding
+// 4. Alt form '#'
+// 5. Precision
 int	print_hex_conversion(t_conversion *conv, unsigned int val)
 {
 	int	num_printed;
@@ -37,6 +44,12 @@ int	print_hex_conversion(t_conversion *conv, unsigned int val)
 	return (num_printed);
 }
 
+// Prints an unsigned int conversion 'u'
+// Handles the following flags
+// 1. Minimum width
+// 2. Left adjustment '-'
+// 3. Zero padding
+// 4. Precision
 int	print_uint_conversion(t_conversion *conv, unsigned int val)
 {
 	int	num_printed;
@@ -56,6 +69,10 @@ int	print_uint_conversion(t_conversion *conv, unsigned int val)
 	return (num_printed);
 }
 
+// Prints a pointer conversion 'p'
+// Handles the following flags
+// 1. Minimum width
+// 2. Left adjustment '-'
 int	print_pointer_conversion(t_conversion *conv, void *val)
 {
 	int	num_printed;
@@ -71,6 +88,14 @@ int	print_pointer_conversion(t_conversion *conv, void *val)
 	return (num_printed);
 }
 
+// Prints an integer conversion 'd' or 'i'
+// Handles the following flags
+// 1. Minimum width
+// 2. Space ' '
+// 3. Sign '+'
+// 4. Left adjustment '-'
+// 5. Zero padding
+// 6. Precision
 int	print_int_conversion(t_conversion *conv, int val)
 {
 	int	num_printed;

@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:34:38 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 18:00:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 20:02:27 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+// Counts the number of digits in an integer including the negative sign
 int	count_digits_int(int num)
 {
 	int	num_digits;
@@ -34,6 +35,7 @@ int	count_digits_int(int num)
 	return (num_digits);
 }
 
+// Counts the number of digits in an unsigned integer
 int	count_digits_unsigned(unsigned int num)
 {
 	int	num_digits;
@@ -49,6 +51,9 @@ int	count_digits_unsigned(unsigned int num)
 	return (num_digits);
 }
 
+// Counts the number of hexadecimal digits in an unsigned long
+// by traversing through it 4 bits at a time
+// Skips trailing zeros
 int	count_hex(unsigned long num)
 {
 	unsigned char	*bytes;
