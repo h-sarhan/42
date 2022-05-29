@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	static char	*line_buffer = NULL;
 	char		*line;
@@ -54,7 +54,6 @@ char	*extract_line(int fd, char **line_buffer)
 	// printf("LINE BUFFER IS == |%s| \n", *line_buffer);
 	if (*line_buffer == NULL)
 	{
-		// printf("LINE_BUFFER IS NULL\n");
 		*line_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		bytes_read = read(fd, *line_buffer, BUFFER_SIZE);
 		if (bytes_read == 0)
@@ -64,62 +63,52 @@ char	*extract_line(int fd, char **line_buffer)
 			return (NULL);
 		}
 		(*line_buffer)[bytes_read] = '\0';
-		// printf("AFTER READ\n");
 	}
 	while ((*line_buffer)[i] != '\n')
 	{
 		if ((*line_buffer)[i] == '\0')
 		{
-			// printf("i is %d\n", i);
-			// printf("INSIDE THIS\n");
 			resize(line_buffer, i, i + BUFFER_SIZE + 1, TRUE);
 			bytes_read = read(fd, &(*line_buffer)[i], BUFFER_SIZE);
+			(*line_buffer)[i + bytes_read] = '\0';
 			if (bytes_read < BUFFER_SIZE)
 			{
-				// (*line_buffer)[i + bytes_read] = '\n';
-				printf("BREAK\n");
+				while ((*line_buffer)[i] != '\n' && (*line_buffer)[i] != '\0')
+					i++;
 				break ;
 			}
-			(*line_buffer)[i + bytes_read] = '\0';
 		}
 		else
 			i++;
-	
 	}
-	// printf("OUTSIDE THIS\n");
-	
-	// TODO: ADD NEW LINE IF WE HAVE Reached the end of the file 
-	line = malloc(sizeof(char) * (i + 2));
+	if ((*line_buffer)[i] == '\0' && (*line_buffer)[0] == '\0')
+		return (NULL);
 	line_length = i + 1;
+	if ((*line_buffer)[line_length - 1] != '\0')
+		line = malloc(sizeof(char) * (line_length + 1));
+	else
+		line = malloc(sizeof(char) * (line_length + 2));
 	i = 0;
 	while (i < line_length)
 	{
-		// printf("INSIDE THIS 2\n");
 		line[i] = (*line_buffer)[i];
 		i++;
 	}
+	line[line_length - 1] = '\n';
 	line[line_length] = '\0';
 	i = 0;
-	if (bytes_read == -1 || bytes_read == BUFFER_SIZE)
+	if ((*line_buffer)[0] !='\0')
 	{
 		while ((*line_buffer)[i + line_length] != '\0')
 		{
-			// printf("INSIDE THIS 3\n");
 			(*line_buffer)[i] = (*line_buffer)[i + line_length];
 			i++;
 		}
-		while ((*line_buffer)[i] != '\0')
-		{
-			// printf("INSIDE THIS 4\n");
-			(*line_buffer)[i] = '\0';
-			i++;
-		}
 	}
-	else
+	while ((*line_buffer)[i] != '\0')
 	{
-		// printf("BYTES_READ < BUFFER_SIZE\n");
-		free(*line_buffer);
-		*line_buffer = NULL;
+		(*line_buffer)[i] = '\0';
+		i++;
 	}
 	return (line);
 }
@@ -133,10 +122,10 @@ int	main(int argc, char **argv)
 	while (i < num_lines)
 	{
 		line = get_next_line(fd);
-		if (line == NULL)
-			printf("NULL\n");
-		else
-		{
+		if (line != NULL) {		// 	printf("#%d NULL\n", i + 1);
+		// else
+		// {
+			// printf("#%d %s", i + 1, line);
 			printf("%s", line);
 			free(line);
 		}
