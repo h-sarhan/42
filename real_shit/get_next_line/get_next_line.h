@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 12:42:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/28 16:51:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/29 23:51:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 1000
 # endif
 # define STDOUT 1
 # define TRUE 1
 # define FALSE 0
 
 char	*get_next_line(int fd);
-char	*resize(char *arr, int old_len, int new_len, int term);
-char	*extract_line(int fd, char *line_buffer);
+void	resize(char **arr, int old_len, int new_len, int term);
+char	*extract_line(int fd, char **line_buffer);
 
 #endif
