@@ -39,6 +39,7 @@ void	resize(char **arr, int old_len, int new_len, int term)
 		new_arr[i] = '\0';
 	*arr = new_arr;
 }
+#include <strings.h>
 
 char	*extract_line(int fd, char **line_buffer)
 {
@@ -83,18 +84,21 @@ char	*extract_line(int fd, char **line_buffer)
 	}
 	if ((*line_buffer)[i] == '\0' && (*line_buffer)[0] == '\0')
 		return (NULL);
+	if ((*line_buffer)[i] == '\0')
+		(*line_buffer)[i  + 1] = '\0';
+		// bzero(&(*line_buffer)[i], bytes_read - i - 1);
 	line_length = i + 1;
-	if ((*line_buffer)[line_length - 1] != '\0')
-		line = malloc(sizeof(char) * (line_length + 1));
-	else
-		line = malloc(sizeof(char) * (line_length + 2));
+	// if ((*line_buffer)[line_length - 1] != '\0')
+	line = malloc(sizeof(char) * (line_length + 1));
+	// else
+	// 	line = malloc(sizeof(char) * (line_length + 2));
 	i = 0;
 	while (i < line_length)
 	{
 		line[i] = (*line_buffer)[i];
 		i++;
 	}
-	line[line_length - 1] = '\n';
+	// line[line_length - 1] = '\n';
 	line[line_length] = '\0';
 	i = 0;
 	if ((*line_buffer)[0] !='\0')
@@ -122,11 +126,12 @@ int	main(int argc, char **argv)
 	while (i < num_lines)
 	{
 		line = get_next_line(fd);
-		if (line != NULL) {		// 	printf("#%d NULL\n", i + 1);
-		// else
-		// {
-			// printf("#%d %s", i + 1, line);
-			printf("%s", line);
+		if (line == NULL) 
+			printf("#%d NULL\n", i + 1);
+		else
+		{
+			printf("#%d %s", i + 1, line);
+			// printf("%s", line);
 			free(line);
 		}
 		i++;
