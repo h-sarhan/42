@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/01 13:21:14 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/01 13:33:57 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,12 +36,12 @@ $(NAME): $(OBJS) $(LIBFT_OBJS)
 	cc $(MUSTAFA_FLAGS) -c $^ -o $@
 
 norm:
-	norminette $(SRCS) ft_printf.h $(LIBFT_SRCS) $(BONUS_SRCS)
+	norminette $(SRCS) ft_printf.h $(LIBFT_SRCS)
 
 bonus: $(NAME)
 	
 clean:
-	rm -f $(OBJS) $(BONUS_OBJS) $(LIBFT_OBJS)
+	rm -f $(OBJS) $(LIBFT_OBJS)
 
 fclean: clean
 	rm -f $(NAME)
