@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 12:43:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/29 23:50:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/31 16:21:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ char	*extract_line(int fd, char **line_buffer)
 			i++;
 	}
 	if ((*line_buffer)[i] == '\0' && (*line_buffer)[0] == '\0')
+	{
+		free(*line_buffer);
 		return (NULL);
+	}
 	if ((*line_buffer)[i] == '\0')
 		(*line_buffer)[i  + 1] = '\0';
 		// bzero(&(*line_buffer)[i], bytes_read - i - 1);
