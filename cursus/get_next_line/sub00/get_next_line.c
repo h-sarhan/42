@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 12:43:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/01 10:08:09 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:22:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ char	*extract_line(int fd, char **line_buffer)
 	buffer_len = 0;
 	bytes_read = -1;
 	// printf("LINE BUFFER IS == |%s| \n", *line_buffer);
+	
+	// IF LINE BUFFFER IS EMPTY
+	// FILL IT AND NULL TERMINATE IT
+	// IF BYTES READ is 0 FREE LINE BUFFER AND RETURN NULL
 	if (*line_buffer == NULL)
 	{
 		*line_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -65,13 +69,19 @@ char	*extract_line(int fd, char **line_buffer)
 		}
 		(*line_buffer)[bytes_read] = '\0';
 	}
+	// GO THROUGH BUFFER UNTIL WE REACH THE NEXT LINE
 	while ((*line_buffer)[i] != '\n')
 	{
+		// IF WE REACH END OF BUFFER WITHOUT FINDING A NEW LINE
+		// RESIZE BUFFER to be NUMBER OF CHARS READ + BUFFER_SIZE + 1 for '\0'
+		// READ `BUFFER_SIZE` CHARACTERS INTO THE RESIZED LINE BUFFER
 		if ((*line_buffer)[i] == '\0')
 		{
-			resize(line_buffer, i, i + BUFFER_SIZE + 1, TRUE);
+			resize(line_buffer, i, (i + 1) + BUFFER_SIZE + 1, TRUE);
 			bytes_read = read(fd, &(*line_buffer)[i], BUFFER_SIZE);
 			(*line_buffer)[i + bytes_read] = '\0';
+			// If bytes read is less than buffer size
+			// we increment i until we reach a new line or the end of the file
 			if (bytes_read < BUFFER_SIZE)
 			{
 				while ((*line_buffer)[i] != '\n' && (*line_buffer)[i] != '\0')
@@ -82,36 +92,27 @@ char	*extract_line(int fd, char **line_buffer)
 		else
 			i++;
 	}
-	if ((*line_buffer)[i] == '\0' && (*line_buffer)[0] == '\0')
+	// IF LINE BUFERR IS 
+	if ((*line_buffer)[i] == '\0')
 	{
 		free(*line_buffer);
 		*line_buffer = NULL;
 		return (NULL);
 	}
-	if ((*line_buffer)[i] == '\0')
-		(*line_buffer)[i  + 1] = '\0';
-		// bzero(&(*line_buffer)[i], bytes_read - i - 1);
 	line_length = i + 1;
-	// if ((*line_buffer)[line_length - 1] != '\0')
 	line = malloc(sizeof(char) * (line_length + 1));
-	// else
-	// 	line = malloc(sizeof(char) * (line_length + 2));
 	i = 0;
 	while (i < line_length)
 	{
 		line[i] = (*line_buffer)[i];
 		i++;
 	}
-	// line[line_length - 1] = '\n';
 	line[line_length] = '\0';
 	i = 0;
-	if ((*line_buffer)[0] !='\0')
+	while ((*line_buffer)[i + line_length] != '\0')
 	{
-		while ((*line_buffer)[i + line_length] != '\0')
-		{
-			(*line_buffer)[i] = (*line_buffer)[i + line_length];
-			i++;
-		}
+		(*line_buffer)[i] = (*line_buffer)[i + line_length];
+		i++;
 	}
 	while ((*line_buffer)[i] != '\0')
 	{
