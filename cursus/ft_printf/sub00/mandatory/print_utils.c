@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_utils_bonus.c                                :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:38:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 22:37:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 22:48:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
 // Prefixes `0x` before printing the hex value of a pointer
 void	print_hex_pointer(void *pointer)

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_numeric_bonus.c                              :+:      :+:    :+:   */
+/*   print_numeric.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 16:10:58 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 22:45:52 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 22:46:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
 // Converts a decimal number from 0 to 15 to its hexadecimal equivalent
 // Example: 

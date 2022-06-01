@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_digits_bonus.c                               :+:      :+:    :+:   */
+/*   count_digits.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 12:34:38 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/27 22:37:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/05/27 22:43:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "ft_printf.h"
 
 // Counts the number of digits in an integer including the negative sign
 int	count_digits_int(int num)
