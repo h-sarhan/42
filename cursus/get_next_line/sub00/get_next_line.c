@@ -36,7 +36,7 @@ char	*extract_line(int fd, char **line_buffer)
 	bytes_read = -1;
 	// printf("\nLINE BUFFER IS == |%s| \n", *line_buffer);
 	
-	// IF LINE BUFFFER IS EMPTY
+	// IF LINE BUFFER IS EMPTY
 	// FILL IT AND NULL TERMINATE IT
 	// IF BYTES READ is 0 FREE LINE BUFFER AND RETURN NULL
 	if (*line_buffer == NULL)
@@ -59,7 +59,7 @@ char	*extract_line(int fd, char **line_buffer)
 		// READ `BUFFER_SIZE` CHARACTERS INTO THE RESIZED LINE BUFFER
 		if ((*line_buffer)[i] == '\0')
 		{
-			resize(line_buffer, i, (i + 1) + BUFFER_SIZE + 1, TRUE);
+			resize(line_buffer, i, (i + 1) + BUFFER_SIZE + 1);
 			bytes_read = read(fd, &(*line_buffer)[i], BUFFER_SIZE);
 			(*line_buffer)[i + bytes_read] = '\0';
 			// If bytes read is less than buffer size
@@ -84,7 +84,7 @@ char	*extract_line(int fd, char **line_buffer)
 
 	// }
 	line_length = i + 1;
-	line = malloc(sizeof(char) * (line_length + 1));
+	line = ft_calloc(line_length + 1, sizeof(char));
 	i = 0;
 	while (i < line_length)
 	{
@@ -92,21 +92,22 @@ char	*extract_line(int fd, char **line_buffer)
 		i++;
 	}
 	line[line_length] = '\0';
-	i = 0;
-	if ((*line_buffer[i] == '\0'))
+	// if ((*line_buffer)[i] != '\0')
+	// {
+		i = 0;
+	// printf("buffer at i: %s\nbuffer at i + line_length: %s\n", &(*line_buffer)[i], &(*line_buffer)[i + line_length]);
+	while ((*line_buffer)[i + line_length] != '\0')
 	{
-		while ((*line_buffer)[i + line_length] != '\0')
-		{
-			(*line_buffer)[i] = (*line_buffer)[i + line_length];
-			i++;
-		}
-		
-		while ((*line_buffer)[i] != '\0')
-		{
-			(*line_buffer)[i] = '\0';
-			i++;
-		}
+		(*line_buffer)[i] = (*line_buffer)[i + line_length];
+		i++;
 	}
+
+	while ((*line_buffer)[i] != '\0')
+	{
+		(*line_buffer)[i] = '\0';
+		i++;
+	}
+	// }
 	return (line);
 }
 

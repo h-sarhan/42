@@ -17,6 +17,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <limits.h>
+# include <stdint.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
@@ -26,7 +28,8 @@
 # define FALSE 0
 
 char	*get_next_line(int fd);
-void	resize(char **arr, int old_len, int new_len, int term);
+void	resize(char **arr, int old_len, int new_len);
 char	*extract_line(int fd, char **line_buffer);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif
