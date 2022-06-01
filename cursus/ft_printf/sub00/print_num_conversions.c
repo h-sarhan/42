@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 15:45:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/01 11:42:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/01 12:46:00 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	print_int_conversion(t_conversion *conv, int val)
 		print_int(val, conv->mw_padding);
 	else if (conv->precision)
 		print_int(val, conv->pr_padding);
-	else 
+	else
 		print_int(val, 0);
 	if (conv->pad_right)
 		print_n_chars(' ', conv->mw_padding);

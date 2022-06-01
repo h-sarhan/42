@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/29 21:51:32 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/01 11:08:23 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/01 13:21:14 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,9 @@ LIBFT_SRCS = ft_strchr.c ft_substr.c ft_putchar_fd.c ft_strlen.c ft_isdigit.c \
 			 ft_atoi.c ft_putnbr_fd.c ft_putstr_fd.c ft_strlcpy.c ft_strncmp.c
 LIBFT_SRCS := $(addprefix libft_funcs/, $(LIBFT_SRCS))
 
-# BONUS_SRCS := $(SRCS:%.c=%_bonus.c)
-# BONUS_SRCS := $(addprefix bonus/, $(BONUS_SRCS))
 
 OBJS := $(SRCS:%.c=%.o)
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
-# BONUS_OBJS := $(BONUS_SRCS:%.c=%.o)
 
 MUSTAFA_FLAGS = -Werror -Wall -Wextra
 
@@ -43,12 +40,6 @@ norm:
 
 bonus: $(NAME)
 	
-
-test: bonus
-	gcc libftprintf.a tests.c -o tests
-	bash shell_tests.sh
-	
-
 clean:
 	rm -f $(OBJS) $(BONUS_OBJS) $(LIBFT_OBJS)
 

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/01 12:05:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/01 12:30:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ int	main(int argc, char **argv)
 	//pf("%010d\n", -10);
 	// char *str = "21-school.ru";
 	
-	char *conv_str = "%-10.x";
+	char *conv_str = "%-5.7s";
 	char *str = "us";
 	int num = 0;
-	print_conv_params(new_conversion(conv_str), &num);
-	// print_conv_params(new_conversion(conv_str), &str);
-	int ret = pf(conv_str, num);
-	// int ret = pf(conv_str, str);
+	// print_conv_params(new_conversion(conv_str), &num);
+	print_conv_params(new_conversion(conv_str), &str);
+	// int ret = pf(conv_str, num);
+	int ret = pf(conv_str, str);
 	pf("\n%d\n", ret);
 	// char *str = "-";
 	// print_conv_params(new_conversion("%.s"), &str);

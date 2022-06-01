@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 00:21:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/01 12:07:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/01 13:09:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,6 @@ void	calculate_padding(t_conversion *conv, void *val)
 	int	init_chrs;
 
 	init_chrs = count_initial_chars(conv, val);
-	// TODO: MOVE THIS CONDITION TO count_initial_chars
-	if (ft_strchr("iudxX", conv->type) != NULL && *(int *) val == 0 && conv->precision  && conv->precision_amount == 0)
-		init_chrs = 0;
 	if (ft_strchr("xXudi", conv->type) != NULL && conv->precision)
 	{
 		if (ft_strchr("di", conv->type) != NULL && *(int *) val < 0
@@ -85,7 +82,13 @@ void	calculate_padding(t_conversion *conv, void *val)
 		else
 			conv->pr_padding = max(conv->precision_amount - init_chrs, 0);
 	}
-	if (conv->min_width > init_chrs + conv->pr_padding)
+	if (conv->type == 's' && conv->precision)
+	{
+		if (init_chrs > conv->precision_amount)
+			init_chrs = conv->precision_amount;
+		conv->mw_padding = max(conv->min_width - init_chrs, 0);
+	}
+	else if (conv->min_width > init_chrs + conv->pr_padding)
 		conv->mw_padding = max(conv->min_width - conv->pr_padding
 				- init_chrs, 0);
 	if (ft_strchr("xX", conv->type) != NULL && conv->alt_form)
@@ -113,6 +116,11 @@ int	count_initial_chars(t_conversion *conv, void *val)
 		init_chrs = 1;
 	else
 		init_chrs = count_digits_int(*(int *) val);
+	if (ft_strchr("iudxX", conv->type) != NULL
+		&& *(int *) val == 0
+		&& conv->precision
+		&& conv->precision_amount == 0)
+		init_chrs = 0;
 	return (init_chrs);
 }
 
