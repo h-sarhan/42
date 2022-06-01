@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 12:43:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/01 14:22:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/01 19:31:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,6 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-void	resize(char **arr, int old_len, int new_len, int term)
-{
-	int		i;
-	char	*new_arr;
-	
-	i = 0;
-	new_arr = malloc(new_len);
-	while (i < old_len && i < new_len)
-	{
-		new_arr[i] = (*arr)[i];
-		i++;
-	}
-	free(*arr);
-	if (term == TRUE)
-		new_arr[i] = '\0';
-	*arr = new_arr;
-}
-#include <strings.h>
 
 char	*extract_line(int fd, char **line_buffer)
 {
@@ -52,7 +34,7 @@ char	*extract_line(int fd, char **line_buffer)
 	i = 0;
 	buffer_len = 0;
 	bytes_read = -1;
-	// printf("LINE BUFFER IS == |%s| \n", *line_buffer);
+	// printf("\nLINE BUFFER IS == |%s| \n", *line_buffer);
 	
 	// IF LINE BUFFFER IS EMPTY
 	// FILL IT AND NULL TERMINATE IT
@@ -92,13 +74,15 @@ char	*extract_line(int fd, char **line_buffer)
 		else
 			i++;
 	}
-	// IF LINE BUFERR IS 
-	if ((*line_buffer)[i] == '\0')
+	if ((*line_buffer)[i] == '\0' && (*line_buffer)[0] == '\0')
 	{
 		free(*line_buffer);
 		*line_buffer = NULL;
 		return (NULL);
 	}
+	// {
+
+	// }
 	line_length = i + 1;
 	line = malloc(sizeof(char) * (line_length + 1));
 	i = 0;
@@ -109,15 +93,19 @@ char	*extract_line(int fd, char **line_buffer)
 	}
 	line[line_length] = '\0';
 	i = 0;
-	while ((*line_buffer)[i + line_length] != '\0')
+	if ((*line_buffer[i] == '\0'))
 	{
-		(*line_buffer)[i] = (*line_buffer)[i + line_length];
-		i++;
-	}
-	while ((*line_buffer)[i] != '\0')
-	{
-		(*line_buffer)[i] = '\0';
-		i++;
+		while ((*line_buffer)[i + line_length] != '\0')
+		{
+			(*line_buffer)[i] = (*line_buffer)[i + line_length];
+			i++;
+		}
+		
+		while ((*line_buffer)[i] != '\0')
+		{
+			(*line_buffer)[i] = '\0';
+			i++;
+		}
 	}
 	return (line);
 }
