@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/02 20:31:49 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/06/02 20:31:49 by hsarhan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-// TODO: Protect malloc here
 void	*resize(char **arr, int old_len, int new_len)
 {
 	int		i;

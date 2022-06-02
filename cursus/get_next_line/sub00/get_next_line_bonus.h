@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 12:42:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/01 14:19:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/02 20:34:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@
 # define FALSE 0
 
 char	*get_next_line(int fd);
-void	resize(char **arr, int old_len, int new_len);
+void	*resize(char **arr, int old_len, int new_len);
 char	*extract_line(int fd, char **line_buffer);
-// void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif

@@ -1,19 +1,30 @@
-#include "get_next_line.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/02 20:31:16 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/06/02 20:31:16 by hsarhan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// TODO: Consider removing the term argument from this function
-// TODO: Protect malloc here
-void	resize(char **arr, int old_len, int new_len)
+#include "get_next_line_bonus.h"
+
+void	*resize(char **arr, int old_len, int new_len)
 {
 	int		i;
 	char	*new_arr;
 	
 	i = 0;
-	// if (new_len == 0)
-	// 	printf("NEW_LEN == 0\n");
 	new_arr = malloc(new_len * sizeof(char));
 	// new_arr = ft_calloc(new_len, sizeof(char));
-	// if (new_arr == NULL)
-	// 	return (NULL);
+	if (new_arr == NULL)
+	{
+		free(*arr);
+		return (NULL);
+	}
 	while (i < old_len && i < new_len && (*arr)[i] != '\0')
 	{
 		new_arr[i] = (*arr)[i];
@@ -24,8 +35,8 @@ void	resize(char **arr, int old_len, int new_len)
 	// int j = i;
 	while (i < new_len)
 		new_arr[i++] = '\0';
-	*arr = new_arr;
-	// return (arr)
+	// *arr = new_arr;
+	return (new_arr);
 }
 
 // void    ft_bzero(void *s, size_t n)
