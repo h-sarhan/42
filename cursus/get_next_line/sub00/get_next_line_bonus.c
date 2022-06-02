@@ -22,12 +22,12 @@ int	max(int a, int b)
 
 char	*get_next_line(int fd)
 {
-	static char	*line_buffer;
+	static char	*line_buffer[1000];
 	char		*line;
 	
 	if (fd < 0)
 		return (NULL);
-	line = extract_line(fd, &line_buffer);
+	line = extract_line(fd, &line_buffer[fd]);
 	
 	return (line);
 }
@@ -112,7 +112,7 @@ char	*extract_line(int fd, char **line_buffer)
 	line_length = i + 1;
 	// TODO: PROTECT CALLOC
 	// line = ft_calloc(line_length + 1, sizeof(char));
-	line = malloc(line_length + 1* sizeof(char));
+	line = malloc((line_length + 1) * sizeof(char));
 	i = 0;
 	
 	while (i < line_length)
