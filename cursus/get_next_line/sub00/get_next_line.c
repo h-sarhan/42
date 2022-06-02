@@ -12,79 +12,63 @@
 
 #include "get_next_line.h"
 
-
-int	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
-
 char	*get_next_line(int fd)
 {
 	static char	*line_buffer;
 	char		*line;
-	
+	int			bytes_read;
+
 	if (fd < 0)
 		return (NULL);
+	if (line_buffer == NULL)
+	{
+		line_buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+		if (line_buffer == NULL)
+			return (NULL);
+		bytes_read = read(fd, line_buffer, BUFFER_SIZE);
+		if (bytes_read == 0 || bytes_read == -1)
+		{
+			free(line_buffer);
+			line_buffer = NULL;
+			return (NULL);
+		}
+		line_buffer[bytes_read] = '\0';
+	}
 	line = extract_line(fd, &line_buffer);
-	
 	return (line);
 }
 
-
-char	*extract_line(int fd, char **line_buffer)
+int	read_into_buffer(char **buffer, int fd, int chars_read, int *max_size)
 {
-	int		i;
-	int		max_buffer_size;
-	int		chars_in_buffer;
-	int		bytes_read;
-	char	*line;
-	int		line_length;
-	
-	i = 0;
-	max_buffer_size = BUFFER_SIZE;
-	bytes_read = -1;
-	chars_in_buffer = 0;
-	
-	// IF LINE BUFFER IS EMPTY
-	// FILL IT AND NULL TERMINATE IT
-	// IF BYTES READ is 0 FREE LINE BUFFER AND RETURN NULL
-	if (*line_buffer == NULL)
+	int	bytes_read;
+
+	if (chars_read + max(BUFFER_SIZE, 10) >= *max_size)
 	{
-		*line_buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-		if (*line_buffer == NULL)
-			return (NULL);
-		bytes_read = read(fd, *line_buffer, BUFFER_SIZE);
-		chars_in_buffer += bytes_read;
-		if (bytes_read == 0 || bytes_read == -1)
-		{
-			free(*line_buffer);
-			*line_buffer = NULL;
-			return (NULL);
-		}
-		(*line_buffer)[bytes_read] = '\0';
+		*max_size += max(BUFFER_SIZE, 10);
+		*buffer = resize(buffer, chars_read, *max_size + 1);
+		if (*buffer == NULL)
+			return (-1);
 	}
-	// GO THROUGH BUFFER UNTIL WE REACH THE NEXT LINE
+	bytes_read = read(fd, &(*buffer)[chars_read], BUFFER_SIZE);
+	(*buffer)[chars_read + bytes_read] = '\0';
+	return (bytes_read);
+}
+
+int	go_to_next_line(int fd, char **line_buffer)
+{
+	int	i;
+	int	max_buffer_size;
+	int	bytes_read;
+
+	i = 0;
+	max_buffer_size = max(BUFFER_SIZE, ft_strlen(*line_buffer));
 	while ((*line_buffer)[i] != '\n')
 	{
-		// IF WE REACH END OF BUFFER WITHOUT FINDING A NEW LINE
-		// RESIZE BUFFER to be NUMBER OF CHARS READ + BUFFER_SIZE + 1 for '\0'
-		// READ `BUFFER_SIZE` CHARACTERS INTO THE RESIZED LINE BUFFER
 		if ((*line_buffer)[i] == '\0')
 		{
-			if (chars_in_buffer + max(BUFFER_SIZE, 10) >= max_buffer_size)
-			{
-				max_buffer_size += max(BUFFER_SIZE, 10);
-				*line_buffer = resize(line_buffer, i, max_buffer_size + 1);
-				if (*line_buffer == NULL)
-					return (NULL);
-			}
-			bytes_read = read(fd, &(*line_buffer)[i], BUFFER_SIZE);
-			chars_in_buffer += bytes_read;
-			(*line_buffer)[i + bytes_read] = '\0';
-			// If bytes read is less than buffer size
-			// we increment i until we reach a new line or the end of the file
+			bytes_read = read_into_buffer(line_buffer, fd, i, &max_buffer_size);
+			if (bytes_read == -1)
+				return (-1);
 			if (bytes_read < BUFFER_SIZE)
 			{
 				while ((*line_buffer)[i] != '\n' && (*line_buffer)[i] != '\0')
@@ -95,13 +79,14 @@ char	*extract_line(int fd, char **line_buffer)
 		else
 			i++;
 	}
-	if ((*line_buffer)[0] == '\0')
-	{
-		free(*line_buffer);
-		*line_buffer = NULL;
-		return (NULL);
-	}
-	line_length = i + 1;
+	return (i);
+}
+
+char	*create_line(char **line_buffer, int line_length)
+{
+	char	*line;
+	int		i;
+
 	line = malloc(line_length + 1 * sizeof(char));
 	if (line == NULL)
 	{
@@ -115,6 +100,26 @@ char	*extract_line(int fd, char **line_buffer)
 		i++;
 	}
 	line[line_length] = '\0';
+	return (line);
+}
+
+char	*extract_line(int fd, char **line_buffer)
+{
+	int		i;
+	char	*line;
+	int		line_length;
+
+	i = go_to_next_line(fd, line_buffer);
+	if (i == -1)
+		return (NULL);
+	if ((*line_buffer)[0] == '\0')
+	{
+		free(*line_buffer);
+		*line_buffer = NULL;
+		return (NULL);
+	}
+	line_length = i + 1;
+	line = create_line(line_buffer, line_length);
 	i = 0;
 	while ((*line_buffer)[i + line_length] != '\0')
 	{

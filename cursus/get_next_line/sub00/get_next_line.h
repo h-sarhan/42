@@ -30,5 +30,7 @@
 char	*get_next_line(int fd);
 void	*resize(char **arr, int old_len, int new_len);
 char	*extract_line(int fd, char **line_buffer);
+int		ft_strlen(char *str);
+int		max(int a, int b);
 
 #endif

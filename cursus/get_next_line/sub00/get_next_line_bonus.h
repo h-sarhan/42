@@ -1,17 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/28 12:42:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/02 20:34:35 by hsarhan          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -30,5 +19,7 @@
 char	*get_next_line(int fd);
 void	*resize(char **arr, int old_len, int new_len);
 char	*extract_line(int fd, char **line_buffer);
+int		ft_strlen(char *str);
+int		max(int a, int b);
 
 #endif
