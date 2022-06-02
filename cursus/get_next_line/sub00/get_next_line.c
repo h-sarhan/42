@@ -26,14 +26,16 @@ char	*get_next_line(int fd)
 char	*extract_line(int fd, char **line_buffer)
 {
 	int		i;
-	int		buffer_len;
+	int		max_buffer_size;
+	int		chars_in_buffer;
 	int		bytes_read;
 	char	*line;
 	int		line_length;
 	
 	i = 0;
-	buffer_len = 0;
+	max_buffer_size = BUFFER_SIZE;
 	bytes_read = -1;
+	chars_in_buffer = 0;
 	// printf("\nLINE BUFFER IS == |%s| \n", *line_buffer);
 	
 	// IF LINE BUFFER IS EMPTY
@@ -41,9 +43,11 @@ char	*extract_line(int fd, char **line_buffer)
 	// IF BYTES READ is 0 FREE LINE BUFFER AND RETURN NULL
 	if (*line_buffer == NULL)
 	{
-		*line_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		// TODO: PROTECT CALLOC
+		*line_buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 		bytes_read = read(fd, *line_buffer, BUFFER_SIZE);
-		if (bytes_read == 0)
+		chars_in_buffer += bytes_read;
+		if (bytes_read == 0 || bytes_read == -1)
 		{
 			free(*line_buffer);
 			*line_buffer = NULL;
@@ -59,22 +63,31 @@ char	*extract_line(int fd, char **line_buffer)
 		// READ `BUFFER_SIZE` CHARACTERS INTO THE RESIZED LINE BUFFER
 		if ((*line_buffer)[i] == '\0')
 		{
-			resize(line_buffer, i, (i + 1) + BUFFER_SIZE + 1);
+			// TODO: PROTECT RESIZE
+			if (chars_in_buffer + BUFFER_SIZE >= max_buffer_size)
+			{
+				max_buffer_size = (max_buffer_size) * 2;
+				resize(line_buffer, i, max_buffer_size + 1);
+			}
+			// resize(line_buffer, i, (i + 1) + BUFFER_SIZE + 1);
+			// resize(line_buffer, i, (i + 1) * 2 + 1);
 			bytes_read = read(fd, &(*line_buffer)[i], BUFFER_SIZE);
-			(*line_buffer)[i + bytes_read] = '\0';
+			chars_in_buffer += bytes_read;
+			// (*line_buffer)[i + bytes_read] = '\0';
 			// If bytes read is less than buffer size
 			// we increment i until we reach a new line or the end of the file
 			if (bytes_read < BUFFER_SIZE)
 			{
 				while ((*line_buffer)[i] != '\n' && (*line_buffer)[i] != '\0')
 					i++;
+				// i += bytes_read;
 				break ;
 			}
 		}
 		else
 			i++;
 	}
-	if ((*line_buffer)[i] == '\0' && (*line_buffer)[0] == '\0')
+	if ((*line_buffer)[0] == '\0')
 	{
 		free(*line_buffer);
 		*line_buffer = NULL;
@@ -84,8 +97,10 @@ char	*extract_line(int fd, char **line_buffer)
 
 	// }
 	line_length = i + 1;
+	// TODO: PROTECT CALLOC
 	line = ft_calloc(line_length + 1, sizeof(char));
 	i = 0;
+	
 	while (i < line_length)
 	{
 		line[i] = (*line_buffer)[i];
@@ -101,12 +116,7 @@ char	*extract_line(int fd, char **line_buffer)
 		(*line_buffer)[i] = (*line_buffer)[i + line_length];
 		i++;
 	}
-
-	while ((*line_buffer)[i] != '\0')
-	{
-		(*line_buffer)[i] = '\0';
-		i++;
-	}
+	(*line_buffer)[i] = '\0';
 	// }
 	return (line);
 }
