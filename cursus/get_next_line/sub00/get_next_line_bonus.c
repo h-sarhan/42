@@ -6,12 +6,16 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:28:24 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/03 11:29:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/03 12:58:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
+// Reads from a file and returns the first line
+// Repeated calls to the function return the next line
+// Uses a static buffer to store a line
+// Initializes the buffer if it is initially empty
 char	*get_next_line(int fd)
 {
 	static char	*line_buffer[1000];
@@ -22,7 +26,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (line_buffer[fd] == NULL)
 	{
-		line_buffer[fd] = malloc((BUFFER_SIZE + 1) * sizeof(char));
+		line_buffer[fd] = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (line_buffer[fd] == NULL)
 			return (NULL);
 		bytes_read = read(fd, line_buffer[fd], BUFFER_SIZE);
@@ -38,22 +42,41 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	read_into_buffer(char **buffer, int fd, int chars_read, int *max_size)
+// Reads from the line buffer to find a line, extracts it from the line buffer,
+// and returns it. This function also removes the line from the line buffer
+char	*extract_line(int fd, char **line_buffer)
 {
-	int	bytes_read;
+	int		i;
+	char	*line;
+	int		line_length;
 
-	if (chars_read + max(BUFFER_SIZE, 10) >= *max_size)
+	i = go_to_next_line(fd, line_buffer);
+	if (i == -1)
+		return (NULL);
+	if ((*line_buffer)[0] == '\0')
 	{
-		*max_size += max(BUFFER_SIZE, 10);
-		*buffer = resize(buffer, chars_read, *max_size + 1);
-		if (*buffer == NULL)
-			return (-1);
+		free(*line_buffer);
+		*line_buffer = NULL;
+		return (NULL);
 	}
-	bytes_read = read(fd, &(*buffer)[chars_read], BUFFER_SIZE);
-	(*buffer)[chars_read + bytes_read] = '\0';
-	return (bytes_read);
+	line_length = i + 1;
+	line = create_line(line_buffer, line_length);
+	if (line == NULL)
+		return (NULL);
+	i = 0;
+	while ((*line_buffer)[i + line_length] != '\0')
+	{
+		(*line_buffer)[i] = (*line_buffer)[i + line_length];
+		i++;
+	}
+	(*line_buffer)[i] = '\0';
+	return (line);
 }
 
+// Iterates through the line buffer until it finds a new line.
+// If we reach the end of the line buffer before finding a new line,
+// we keep reading BUFFER_SIZE characters until we find a new line 
+// or we reach the end of the file
 int	go_to_next_line(int fd, char **line_buffer)
 {
 	int	i;
@@ -82,12 +105,33 @@ int	go_to_next_line(int fd, char **line_buffer)
 	return (i);
 }
 
+// Reads BUFFER_SIZE characters into the line buffer
+// If the number of characters to be read is greater than what can be held in
+// the buffer, the buffer will be resized to fit the characters.
+int	read_into_buffer(char **line_buffer, int fd, int chars_read, int *max_size)
+{
+	int	bytes_read;
+
+	if (chars_read + max(BUFFER_SIZE, 10) >= *max_size)
+	{
+		*max_size += max(BUFFER_SIZE, 10);
+		*line_buffer = resize(line_buffer, chars_read, *max_size + 1);
+		if (*line_buffer == NULL)
+			return (-1);
+	}
+	bytes_read = read(fd, &(*line_buffer)[chars_read], BUFFER_SIZE);
+	(*line_buffer)[chars_read + bytes_read] = '\0';
+	return (bytes_read);
+}
+
+// This creates a new null terminated line from the characters in the 
+// line buffer. Similar to substring.
 char	*create_line(char **line_buffer, int line_length)
 {
 	char	*line;
 	int		i;
 
-	line = malloc(line_length + 1 * sizeof(char));
+	line = malloc(sizeof(char) * (line_length + 1));
 	if (line == NULL)
 	{
 		free(*line_buffer);
@@ -103,39 +147,15 @@ char	*create_line(char **line_buffer, int line_length)
 	return (line);
 }
 
-char	*extract_line(int fd, char **line_buffer)
-{
-	int		i;
-	char	*line;
-	int		line_length;
-
-	i = go_to_next_line(fd, line_buffer);
-	if (i == -1)
-		return (NULL);
-	if ((*line_buffer)[0] == '\0')
-	{
-		free(*line_buffer);
-		*line_buffer = NULL;
-		return (NULL);
-	}
-	line_length = i + 1;
-	line = create_line(line_buffer, line_length);
-	i = 0;
-	while ((*line_buffer)[i + line_length] != '\0')
-	{
-		(*line_buffer)[i] = (*line_buffer)[i + line_length];
-		i++;
-	}
-	(*line_buffer)[i] = '\0';
-	return (line);
-}
-
+// #include <fcntl.h>
+// #include <stdio.h>
 // int	main(int argc, char **argv)
 // {
 // 	char *line;
 // 	int fd = open(argv[1], O_RDONLY);
 // 	int	num_lines = atoi(argv[2]);
 // 	int i = 0;
+// 	(void) argc;
 // 	while (i < num_lines)
 // 	{
 // 		line = get_next_line(fd);

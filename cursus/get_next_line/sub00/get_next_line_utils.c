@@ -6,12 +6,14 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 20:31:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/02 20:31:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/03 12:42:21 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+// Resizes a character array by mallocing a new array with a new size
+// and copying all the old characters into it. The new array is null terminated.
 void	*resize(char **arr, int old_len, int new_len)
 {
 	int		i;
@@ -35,6 +37,7 @@ void	*resize(char **arr, int old_len, int new_len)
 	return (new_arr);
 }
 
+// you know what this does
 int	ft_strlen(char *str)
 {
 	int	i;
@@ -45,6 +48,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
+// Returns the maximum of the two int arguments
 int	max(int a, int b)
 {
 	if (a > b)
