@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 12:43:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/03 12:52:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/03 13:22:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,28 +146,3 @@ char	*create_line(char **line_buffer, int line_length)
 	line[line_length] = '\0';
 	return (line);
 }
-
-// #include <fcntl.h>
-// #include <stdio.h>
-// int	main(int argc, char **argv)
-// {
-// 	char *line;
-// 	int fd = open(argv[1], O_RDONLY);
-// 	int	num_lines = atoi(argv[2]);
-// 	int i = 0;
-// 	(void) argc;
-// 	while (i < num_lines)
-// 	{
-// 		line = get_next_line(fd);
-// 		if (line == NULL) 
-// 			printf("#%d NULL\n", i + 1);
-// 		else
-// 		{
-// 			printf("#%d %s", i + 1, line);
-// 			// printf("%s", line);
-// 			free(line);
-// 		}
-// 		i++;
-// 	}
-// 	close(fd);
-// }

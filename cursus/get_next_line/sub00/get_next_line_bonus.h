@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 11:28:28 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/03 12:53:37 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/03 13:20:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
-# endif
 # define STDOUT 1
 # define TRUE 1
 # define FALSE 0
