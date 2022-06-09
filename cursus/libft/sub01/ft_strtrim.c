@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
+/*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:39:27 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/16 15:04:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/08 20:26:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,14 @@ char	*ft_strtrim(char const *s1, char const *set)
 	trimmed[i] = '\0';
 	return (trimmed);
 }
+
+// #include <stdio.h>
+// int	main()
+// {
+// 	char	str[] = "    ,,,,,,         hello, nada,,,,,,,    ,,,    , ,, ,,";
+	
+// 	char* trimmed_str = ft_strtrim(str, ", ");
+	
+// 	printf("My output:\n|%s|\n", trimmed_str);
+// 	printf("Correct output:\n|%s|\n", "hello, nada");
+// }
