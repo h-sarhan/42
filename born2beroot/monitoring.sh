@@ -1,12 +1,13 @@
+
 USED_STORAGE=$(df | tail -n +2 | awk '{print $3}' | xargs printf "%d + ")
 USED_STORAGE_LEN=$(($(echo $USED_STORAGE | wc -c) - 2))
 USED_STORAGE=$(echo $USED_STORAGE | cut -b -$USED_STORAGE_LEN | bc)
-USED_STORAGE=$(echo "$USED_STORAGE * 1024" | bc | numfmt --to=si)
+USED_STORAGE=$(echo "$USED_STORAGE * 1000" | bc | numfmt --to=si)
 
 TOTAL_STORAGE=$(df | tail -n +2 | awk '{print $2}' | xargs printf "%d + ")
 TOTAL_STORAGE_LEN=$(($(echo $TOTAL_STORAGE | wc -c) - 2))
 TOTAL_STORAGE=$(echo $TOTAL_STORAGE | cut -b -$TOTAL_STORAGE_LEN | bc)
-TOTAL_STORAGE=$(echo "$TOTAL_STORAGE * 1024" | bc | numfmt --to=si)
+TOTAL_STORAGE=$(echo "$TOTAL_STORAGE * 1000" | bc | numfmt --to=si)
 
 STORAGE_PCT=$(echo "scale=4; ($USED_STORAGE / $TOTAL_STORAGE) * 100" | bc)
 
@@ -14,10 +15,10 @@ VCPUS=$(lscpu | grep ^CPU\(s\): | grep -Eo '[0-9]+')
 CPUS=$(lscpu | grep Socket\(s\): | grep -Eo '[0-9]+')
 
 TOTAL_MEM=$(cat /proc/meminfo | grep MemTotal | grep -Eo '[0-9]+')
-TOTAL_MEM_BYTES=$(echo "$TOTAL_MEM * 1024" | bc)
+TOTAL_MEM_BYTES=$(echo "$TOTAL_MEM * 1000" | bc)
 
 FREE_MEM=$(cat /proc/meminfo | grep MemFree | grep -Eo '[0-9]+')
-FREE_MEM_BYTES=$(echo "$FREE_MEM * 1024" | bc)
+FREE_MEM_BYTES=$(echo "$FREE_MEM * 100" | bc)
 USED_MEM_BYTES=$(echo "$TOTAL_MEM_BYTES - $FREE_MEM_BYTES" | bc)
 
 MEM_PCT=$(echo "scale=4; ($USED_MEM_BYTES / $TOTAL_MEM_BYTES) * 100" | bc)
@@ -44,7 +45,7 @@ MESSAGE=$(echo -n "${MESSAGE}\t#VCPU: " $VCPUS "\n")
 
 MESSAGE=$(echo -n "${MESSAGE}\t#Memory Usage: " "$(numfmt --to=si $USED_MEM_BYTES)/$(numfmt --to=si $TOTAL_MEM_BYTES)")
 MESSAGE=$(echo -n "${MESSAGE} ($(printf "%.2f"  $MEM_PCT)%)\n")
-MESSAGE=$(echo -n "${MESSAGE}\t#Disk Usage: " "$USED_STORAGE/$TOTAL_STORAGE" "($(printf "%.2f" $STORAGE_PCT)%)\n")
+MESSAGE=$(echo -n "${MESSAGE}\t#Disk Usage: " "$USED_STORAGE/$TOTAL_STORAGE" "($(printf "%.3f" $STORAGE_PCT)%)\n")
 MESSAGE=$(echo -n "${MESSAGE}\t#CPU load: " "$CPU_USAGE%\n")
 MESSAGE=$(echo -n "${MESSAGE}\t#Last boot: " "$REBOOT\n")
 
