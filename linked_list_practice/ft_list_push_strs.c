@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 22:46:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/14 22:51:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/15 09:25:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list *ft_list_push_strs(int size, char **strs)
 	i = 0;
 	while (i < size)
 	{
-		ft_list_push_back(&list, strs[i]);
+		ft_list_push_front(&list, strs[i]);
 		i++;
 	}
 	return (list);

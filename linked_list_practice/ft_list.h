@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 21:37:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/14 22:46:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/15 09:51:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,8 @@ void	ft_list_push_front(t_list **begin_list, void *data);
 t_list	*ft_list_last(t_list *begin_list);
 void	ft_list_push_back(t_list **begin_list, void *data);
 t_list	*ft_list_push_strs(int size, char **strs);
+void	ft_list_clear(t_list *begin_list, void (*free_fct)(void *));
+t_list	*ft_list_at(t_list *begin_list, unsigned int nbr);
+void	ft_list_reverse(t_list **begin_list);
 
 #endif
