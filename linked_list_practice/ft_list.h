@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 21:37:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/15 11:48:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/15 11:58:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	ft_list_sort(t_list **begin_list, int (*cmp)());
 void	ft_list_reverse_fun(t_list *begin_list);
 void	swap_list(t_list *l1, t_list *l2);
 void	ft_sorted_list_insert(t_list **begin_list, void *data, int (*cmp)());
+void	ft_sorted_list_merge(t_list **begin_list1, t_list *begin_list2, int (*cmp)());
 
 #endif
