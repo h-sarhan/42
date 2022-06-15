@@ -1,5 +1,16 @@
 #include "ft_list.h"
 #include <printf.h>
+#include <string.h>
+
+void	print_str(void *p)
+{
+	char	*str;
+
+	str = p;
+	printf("%s\n", str);
+}
+
+
 
 int	main()
 {
@@ -41,13 +52,19 @@ int	main()
 	// }
 	// printf("NULL\n");
 
-	char	*strs[] = {"abc", "def", "ghi", "gyug", "jytfytgv"};
-	t_list	*lst = ft_list_push_strs(5, strs);
-	ft_list_reverse(&lst);
-	while (lst != NULL)
-	{
-		printf("[%s]->", lst->data);
-		lst = lst->next;
-	}
-	printf("NULL\n");
+	// char	*strs[] = {"abc", "def", "ghi", "gyug", "jytfytgv"};
+	// t_list	*lst = ft_list_push_strs(5, strs);
+	// ft_list_reverse(&lst);
+	// while (lst != NULL)
+	// {
+	// 	printf("[%s]->", lst->data);
+	// 	lst = lst->next;
+	// }
+	// printf("NULL\n");
+
+	// char	*strs[] = {"abc", "def", "ghi", "gyug", "jytfytgv", "abc"};
+	// t_list	*lst = ft_list_push_strs(6, strs);
+	// ft_list_foreach_if(lst, print_str, "abc", strcmp);
+
+
 }
