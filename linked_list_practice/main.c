@@ -26,6 +26,7 @@ void print_int(void *p)
 
 int	main()
 {
+	// INSERT INTO SORTED LIST
 	int	arr[] = {64, 132, 4, -19, 132, 22, 1, -89880};
 	t_list *list;
 
@@ -36,7 +37,38 @@ int	main()
 		ft_list_push_back(&list, &arr[i]);
 		i++;
 	}
+	int ins = 90;
 	ft_list_sort(&list, comp_int);
+	ft_sorted_list_insert(&list, &ins, comp_int);
 	ft_list_foreach(list, print_int);
+
+
+	// REVRSE
+	// int	arr[] = {64, 132, 4, -19, 132, 22, 1, -89880};
+	// t_list *list;
+
+	// list = NULL;
+	// int i = 0;
+	// while (i < 8)
+	// {
+	// 	ft_list_push_back(&list, &arr[i]);
+	// 	i++;
+	// }
+	// ft_list_reverse(&list);
+	// ft_list_foreach(list, print_int);
+
+	// SORT
+	// int	arr[] = {64, 132, 4, -19, 132, 22, 1, -89880};
+	// t_list *list;
+
+	// list = NULL;
+	// int i = 0;
+	// while (i < 8)
+	// {
+	// 	ft_list_push_back(&list, &arr[i]);
+	// 	i++;
+	// }
+	// ft_list_sort(&list, comp_int);
+	// ft_list_foreach(list, print_int);
 }
 
