@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
+/*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:01:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/14 20:32:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/15 16:15:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**ft_split(char const *s, char c)
 	int		word_start;
 	int		word_count;
 
-	words = malloc(sizeof(char *) * (count_words(s, c) + 1));
+	words = ft_calloc((count_words(s, c) + 1), sizeof(char *));
 	if (words == NULL)
 		return (NULL);
 	i = 0;
