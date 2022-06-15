@@ -10,61 +10,33 @@ void	print_str(void *p)
 	printf("%s\n", str);
 }
 
+int	comp_int(void *num1, void *num2)
+{
+	if (*(int *)num1 > *(int *)num2)
+		return (1);
+	else if (*(int *)num1 == *(int *)num2)
+		return (0);
+	return (-1);
+}
 
+void print_int(void *p)
+{
+	printf("%d\n", *(int *)p);
+}
 
 int	main()
 {
-	// t_list	*list;
-	// int	i;
-	// int	nums[5];
+	int	arr[] = {64, 132, 4, -19, 132, 22, 1, -89880};
+	t_list *list;
 
-	// list = NULL;
-	// i = 0;
-	// while (i < 5)
-	// {
-	// 	nums[i] = i + 1;
-	// 	i++;
-	// }
-	// i = 0;
-	// while (i < 5)
-	// {
-	// 	ft_list_push_front(&list, &nums[i]);
-	// 	i++;
-	// }
-	// t_list	*list2;
-	// list2 = list;
-	// while (list2 != NULL)
-	// {
-	// 	printf("%d->", *(int *)list2->data);
-	// 	list2 = list2->next;
-	// }
-	// printf("NULL\n");
-	// printf("Size of list is %d\n", ft_list_size(list));
-
-	// char *strs[] = {"hi", "world", "lkhnlkjn", "oimo"};
-
-	// t_list	*str_list = ft_list_push_strs(4, strs);
-	// while (str_list != NULL)
-	// {
-
-	// 	printf("[%s]->", (char *)str_list->data);
-	// 	str_list = str_list->next;
-	// }
-	// printf("NULL\n");
-
-	// char	*strs[] = {"abc", "def", "ghi", "gyug", "jytfytgv"};
-	// t_list	*lst = ft_list_push_strs(5, strs);
-	// ft_list_reverse(&lst);
-	// while (lst != NULL)
-	// {
-	// 	printf("[%s]->", lst->data);
-	// 	lst = lst->next;
-	// }
-	// printf("NULL\n");
-
-	// char	*strs[] = {"abc", "def", "ghi", "gyug", "jytfytgv", "abc"};
-	// t_list	*lst = ft_list_push_strs(6, strs);
-	// ft_list_foreach_if(lst, print_str, "abc", strcmp);
-
-
+	list = NULL;
+	int i = 0;
+	while (i < 8)
+	{
+		ft_list_push_back(&list, &arr[i]);
+		i++;
+	}
+	ft_list_sort(&list, comp_int);
+	ft_list_foreach(list, print_int);
 }
+
