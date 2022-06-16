@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/16 11:24:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/16 11:28:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ char	*get_full_path(char *bin, char **env)
 	char	*path;
 	char	**paths;
 
-	i = -1;
+	i = 0;
 	bin = ft_strjoin("/", bin);
-	while (env[++i] != NULL)
-		if (ft_strncmp(env[i], "PATH=", ft_strlen("PATH=")) == 0)
-			break ;
+	while (env[i] != NULL && ft_strncmp(env[i], "PATH=", 5) != 0)
+		i++;
 	paths = ft_split(ft_strchr(env[i], '=') + 1, ':');
 	i = 0;
 	while (paths[i] != NULL)
