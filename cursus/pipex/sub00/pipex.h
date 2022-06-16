@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/16 11:00:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/17 00:08:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define WRITE 1
 char	*ft_strjoinfree(char *s1, char *s2, int f);
 void	free_split_array(char **arr);
+void	ft_free(void *ptr);
 
 
 #endif

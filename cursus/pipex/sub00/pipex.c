@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/16 19:28:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/17 00:08:37 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ char	*get_full_path(char *bin, char **env)
 	paths = ft_split(ft_strchr(env[i], '=') + 1, ':');
 	i = 0;
 	bin = ft_strjoinfree("/", bin, 2);
-	while (paths[i] != NULL)
+	while (paths != NULL && paths[i] != NULL)
 	{
 		path = ft_strjoin(paths[i], bin);
-		if (access(path, X_OK) != -1)
+		if (path == NULL || access(path, X_OK) != -1)
 			break ;
-		free(path);
+		ft_free(path);
 		i++;
 	}
-	if (paths[i] == NULL)
+	if (paths == NULL || paths[i] == NULL)
 		path = NULL;
-	free(bin);
+	ft_free(bin);
 	free_split_array(paths);
 	return (path);
 }
@@ -47,6 +47,8 @@ int	main(int argc, char **argv, char **env)
 	char	*infile;
 	char	**cmd_1_args;
 	char	**cmd_2_args;
+	
+	(void)argc; // For compiler to shut up
 	
 	infile = argv[1];
 	cmd_1_args = ft_split(argv[2], ' ');
