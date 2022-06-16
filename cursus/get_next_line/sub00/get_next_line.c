@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 12:43:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/03 13:22:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/16 17:14:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,3 +146,16 @@ char	*create_line(char **line_buffer, int line_length)
 	line[line_length] = '\0';
 	return (line);
 }
+
+// #include <fcntl.h>
+// #include <stdio.h>
+// int	main()
+// {
+// 	int i = 0;
+// 	int fd = open("text.txt", O_RDONLY);
+// 	while (i < 10)
+// 	{
+// 		printf("%s", get_next_line(fd));
+// 		i++;
+// 	}
+// }
