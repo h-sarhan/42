@@ -6,20 +6,21 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/15 13:59:03 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/16 11:00:53 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LIBFT_SRCS := $(wildcard libft/*.c)
 PRINTF_SRCS := $(wildcard printf/*.c)
-SRCS = pipex.c
+SRCS = pipex.c utils.c
 
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)
 OBJS := $(SRCS:%.c=%.o)
 
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall
+# CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -g3
 NAME = pipex
 
 all: $(NAME)

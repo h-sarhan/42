@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/15 15:46:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/16 11:00:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,16 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <sys/wait.h>
+# include <stdio.h>
+# include <sys/errno.h>
 # include "printf/ft_printf.h"
 # include "libft/libft.h"
 
 # define READ 0
 # define WRITE 1
+char	*ft_strjoinfree(char *s1, char *s2, int f);
+void	free_split_array(char **arr);
+
 
 #endif
