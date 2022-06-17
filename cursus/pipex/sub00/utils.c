@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:50:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/17 14:14:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/17 18:20:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,31 @@ void	ft_free(void *mem)
 {
 	if (mem != NULL)
 		free(mem);
+}
+
+void	dup_fd(int fd_1, int fd_2)
+{
+	int	dup_ret;
+
+	if (fd_1 != -1)
+	{
+		dup_ret = dup2(fd_1, fd_2);
+		if (dup_ret == -1)
+		{
+			perror("pipex");
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+
+void	close_fd(int fd)
+{
+	int	close_ret;
+
+	close_ret = close(fd);
+	if (close_ret == -1)
+	{
+		perror("pipex");
+		exit(EXIT_FAILURE);
+	}
 }
