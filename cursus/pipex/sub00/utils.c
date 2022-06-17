@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:50:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/17 00:09:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/17 06:56:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	free_split_array(char **arr)
 	ft_free(arr);
 }
 
-void	ft_free(void *ptr)
+void	ft_free(void *mem)
 {
-	if (ptr != NULL)
-		free(ptr);
+	if (mem != NULL)
+		free(mem);
 }

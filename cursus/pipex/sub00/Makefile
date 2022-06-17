@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/16 23:49:59 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/17 07:37:40 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)
 OBJS := $(SRCS:%.c=%.o)
 
 LIBFT = libft.a
-PRINTF = libprintf.a
+PRINTF = libftprintf.a
 
 CC = gcc
 
@@ -52,10 +52,10 @@ $(NAME): $(OBJS) $(PRINTF) $(LIBFT)
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(PRINTF): $(PRINTF_OBJS)
-	ar -rc $(PRINTF) $(PRINTF_OBJS)
+	@ar -rc $(PRINTF) $(PRINTF_OBJS)
 
 $(LIBFT): $(LIBFT_OBJS)
-	ar -rc $(LIBFT) $(LIBFT_OBJS)
+	@ar -rc $(LIBFT) $(LIBFT_OBJS)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $^ -o $@
@@ -64,9 +64,9 @@ norm:
 	norminette $(SRCS) $(LIBFT_SRCS) $(PRINTF_SRCS)
 
 clean:
-	rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS)
+	@rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS)
 
 fclean: clean
-	rm -f $(NAME) $(LIBFT) $(PRINTF)
+	@rm -f $(NAME) $(LIBFT) $(PRINTF)
 	
 re: fclean $(NAME)
