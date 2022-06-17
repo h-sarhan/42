@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
+/*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:23:07 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/16 14:52:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/17 14:16:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/errno.h>
+
 
 # define SIZET_MAX 18446744073709551615UL 
 # define INT_MIN -2147483648 

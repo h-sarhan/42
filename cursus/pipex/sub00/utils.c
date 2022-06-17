@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:50:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/17 06:56:32 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/17 14:14:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ char	*ft_strjoinfree(char *s1, char *s2, int f)
 {
 	char	*joined;
 	
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
 	joined = ft_strjoin(s1, s2);
 	if (f == 1)
 		ft_free(s1);

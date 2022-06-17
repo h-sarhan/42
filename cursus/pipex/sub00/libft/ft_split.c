@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:01:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/15 16:15:59 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/17 14:53:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,24 @@ static int	count_words(char const *str, char sep)
 	return (num_words);
 }
 
-static char	*create_word(char const *str, int word_start, int word_end)
+static char	*create_word(char const *str, int start, int end, char **words,
+	int wc)
 {
 	char	*word;
-
-	word = malloc(sizeof(char) * (word_end - word_start + 2));
+	int		i;
+	word = ft_calloc(end - start + 2, sizeof(char));
 	if (word == NULL)
+	{
+		i = 0;
+		while (i < wc)
+		{
+			free(words[i]);
+			i++;
+		}
+		free(words);
 		return (NULL);
-	ft_strlcpy(word, &str[word_start], word_end - word_start + 2);
+	}
+	ft_strlcpy(word, &str[start], end - start + 2);
 	return (word);
 }
 
@@ -48,13 +58,13 @@ char	**ft_split(char const *s, char c)
 	char	**words;
 	int		i;
 	int		word_start;
-	int		word_count;
+	int		wc;
 
-	words = ft_calloc((count_words(s, c) + 1), sizeof(char *));
+	words = ft_calloc(count_words(s, c) + 1, sizeof(char *));
 	if (words == NULL)
 		return (NULL);
 	i = 0;
-	word_count = 0;
+	wc = 0;
 	while (s[i] != '\0')
 	{
 		while (s[i] == c && s[i] != '\0')
@@ -64,10 +74,10 @@ char	**ft_split(char const *s, char c)
 		word_start = i;
 		while (s[i] != c && s[i] != '\0')
 			i++;
-		words[word_count] = create_word(s, word_start, i - 1);
-		if (words[word_count++] == NULL)
+		words[wc] = create_word(s, word_start, i - 1, words, wc - 1);
+		if (words[wc++] == NULL)
 			return (NULL);
 	}
-	words[word_count] = NULL;
+	words[wc] = NULL;
 	return (words);
 }
