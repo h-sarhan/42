@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/17 18:25:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/17 21:37:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 
 # define READ 0
 # define WRITE 1
+# define STDOUT 1
+# define STDIN 0
+
 char	*ft_strjoinfree(char *s1, char *s2, int f);
 void	free_split_array(char **arr);
 void	ft_free(void *mem);

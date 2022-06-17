@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/17 18:36:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/17 21:40:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 5)
 	{
 		ft_putendl_fd("Wrong number of arguments", 2);
-		exit(EXIT_SUCCESS);
+		exit(EXIT_FAILURE);
 	}
 	cmd_1_args = ft_split(argv[2], ' ');
 	malloc_check(cmd_1_args);
@@ -65,7 +65,9 @@ int	main(int argc, char **argv, char **env)
 
 	infile = argv[1];
 	int	in_fd = open(infile, O_RDONLY);	
-	fd_check(in_fd, infile);
+	// TODO: Write a function file_check that 
+	// uses access instead of trying to create a file descriptor
+	fd_check(in_fd, infile); 
 
 	int	pipe_fds[2];
 	pipe_check(pipe(pipe_fds));
@@ -79,11 +81,11 @@ int	main(int argc, char **argv, char **env)
 		if (in_fd == -1)
 		{
 			// ft_printf("IN FD == -1");
-			dup_fd(devnull_fd, 0);
+			dup_fd(devnull_fd, STDIN);
 		}
 		else
-			dup_fd(in_fd, 0);
-		dup_fd(pipe_fds[WRITE], 1);
+			dup_fd(in_fd, STDIN);
+		dup_fd(pipe_fds[WRITE], STDOUT);
 		execve(cmd_1_args[0], cmd_1_args, NULL);
 		// if execve fails do the stuff below
 		close_fd(pipe_fds[WRITE]);
@@ -101,10 +103,11 @@ int	main(int argc, char **argv, char **env)
 		if (pid == 0)
 		{
 			close_fd(pipe_fds[WRITE]); // this could fail
-			dup_fd(pipe_fds[READ], 0); // this could fail
+			dup_fd(pipe_fds[READ], STDIN); // this could fail
 			int outfile = open(argv[4], O_WRONLY | O_CREAT, 0644); // this could fail
+			// TODO: USE FILE_CHECK INSTEAD (when I write it)
 			fd_check(outfile, argv[4]);
-			dup_fd(outfile, 1); // this could fail
+			dup_fd(outfile, STDOUT); // this could fail
 			execve(cmd_2_args[0], cmd_2_args, NULL);
 			// if execve fails do the below
 			close_fd(pipe_fds[READ]); // this could fail
