@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 07:54:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 10:56:37 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ char	*ft_strjoinfree(char *s1, char *s2, int f);
 void	free_split_array(char **arr);
 void	ft_free(void *mem);
 void	malloc_check(void *mem);
-void	fd_check(int fd, char *file_name);
+int		fd_check(int fd, char *file_name, int cmd_valid);
 void	pipe_check(int pipe_ret);
 void	fork_check(int pid);
 void	close_check(int close_ret);
 void	dup_fd(int fd_1, int fd_2);
 void	close_fd(int fd);
-void	command_check(char *cmd_path, char *cmdname);
+int		command_check(char **cmd_args, char *cmdname);
 
 
 
