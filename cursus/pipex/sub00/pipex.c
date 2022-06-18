@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 17:18:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 22:41:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,9 @@ int main(int argc, char **argv, char **env)
 			waitpid(pid2, &w_status, 0);
 		if (!cmd_2_valid)
 			exit(127);
-		exit((w_status >> 8) & 0x000000ff);
+		if (WIFEXITED(w_status))
+			exit(WEXITSTATUS(w_status));
+		exit(0);
 	}
 	// }
 }

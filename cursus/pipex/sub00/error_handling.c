@@ -6,11 +6,15 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:52:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 16:11:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 22:42:09 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+// TODO: CREATE FILE_CHECK FUNCTION TO CHECK FILE PERMISSIONS
+// if (errno == ENOACCESS) Permission denied
+// TODO: USE strerror with strjoinZ
 
 void	malloc_check(void *mem)
 {
