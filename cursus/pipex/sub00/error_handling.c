@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:52:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 13:47:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 16:11:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,13 @@ int command_check(char **cmd_args, char *arg_list, int *exit_code, int fd)
 		free_split_array(args);
 		if (fd != -1)
 		{
-			ft_putstr_fd("pipex: command not found: ", 2);
-			ft_putendl_fd(cmd_name, 2);
+			if (ft_strchr(cmd_name, '/') == NULL)
+			{
+				ft_putstr_fd("pipex: command not found: ", 2);
+				ft_putendl_fd(cmd_name, 2);
+			}
+			else
+				fd_check(-1, cmd_name);
 		}
 		ft_free(cmd_name);
 		if (exit_code != NULL)

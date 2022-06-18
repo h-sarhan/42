@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 15:05:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 16:44:27 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int main(int argc, char **argv, char **env)
 	int		w_status;
 	int		in_fd;
 	int		out_fd;
+	int		pipe_fds[2];
+	int		pid1;
 	int		pid2;
 
 	exit_code = 0;
@@ -93,11 +95,9 @@ int main(int argc, char **argv, char **env)
 	cmd_2_valid = command_check(cmd_2_args, argv[3], &exit_code, out_fd);
 
 
-	int pipe_fds[2];
 	pipe_check(pipe(pipe_fds));
 	devnull_fd = open("/dev/null", O_RDONLY);
 	fd_check(devnull_fd, "/dev/null");
-	int pid1;
 	pid1 = -1;
 	if (cmd_1_valid)
 	{
@@ -159,15 +159,13 @@ int main(int argc, char **argv, char **env)
 			close_fd(pipe_fds[READ]);
 			close_fd(out_fd);
 			close_fd(devnull_fd);
-			waitpid(pid1, &w_status, 0);
-			waitpid(pid2, &w_status, 0);
-			// if (cmd_2_valid && out_fd != -1)
+			if (pid1 != -1)
+				waitpid(pid1, &w_status, 0);
+			if (pid2 != -1)
+				waitpid(pid2, &w_status, 0);
 			free_split_array(cmd_1_args);
 			free_split_array(cmd_2_args);
-			if (exit_code != 0)
-				exit(exit_code);
-			else
-				exit((w_status >> 8) & 0x000000ff);
+			exit((w_status >> 8) & 0x000000ff);
 		}
 	}
 }
