@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/17 21:40:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 07:38:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	*get_full_path(char *bin, char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*infile;
 	char	**cmd_1_args;
 	char	**cmd_2_args;
 	int		devnull_fd;
@@ -63,11 +62,10 @@ int	main(int argc, char **argv, char **env)
 	cmd_2_args[0] = get_full_path(cmd_2_args[0], env);
 	malloc_check(cmd_2_args[0]);
 
-	infile = argv[1];
-	int	in_fd = open(infile, O_RDONLY);	
+	int	in_fd = open(argv[1], O_RDONLY);	
 	// TODO: Write a function file_check that 
 	// uses access instead of trying to create a file descriptor
-	fd_check(in_fd, infile); 
+	fd_check(in_fd, argv[1]); 
 
 	int	pipe_fds[2];
 	pipe_check(pipe(pipe_fds));
@@ -104,7 +102,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			close_fd(pipe_fds[WRITE]); // this could fail
 			dup_fd(pipe_fds[READ], STDIN); // this could fail
-			int outfile = open(argv[4], O_WRONLY | O_CREAT, 0644); // this could fail
+			int outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644); // this could fail
 			// TODO: USE FILE_CHECK INSTEAD (when I write it)
 			fd_check(outfile, argv[4]);
 			dup_fd(outfile, STDOUT); // this could fail
