@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 17:05:37 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 17:18:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,50 +131,50 @@ int main(int argc, char **argv, char **env)
 		free_split_array(cmd_2_args);
 		exit(1);
 	}
+	// else
+	// {
+	if (in_fd != -1)
+		close_fd(in_fd);
+
+	// fork_command function
+	pid2 = -1;
+	if (cmd_2_valid)
+	{
+		pid2 = fork();
+		fork_check(pid2);
+	}
+	if (pid2 == 0)
+	{
+		close_fd(pipe_fds[WRITE]);
+		dup_fd(pipe_fds[READ], STDIN);
+		dup_fd(out_fd, STDOUT);
+		if (cmd_2_valid && out_fd != -1)
+			execve(cmd_2_args[0], cmd_2_args, env);
+		// if execve fails do the below
+		// cleanup
+		close_fd(pipe_fds[READ]);
+		close_fd(out_fd);
+		close_fd(devnull_fd);
+		free_split_array(cmd_1_args);
+		free_split_array(cmd_2_args);
+		exit(1);
+	}
 	else
 	{
-		if (in_fd != -1)
-			close_fd(in_fd);
-
-		// fork_command function
-		pid2 = -1;
-		if (cmd_2_valid)
-		{
-			pid2 = fork();
-			fork_check(pid2);
-		}
-		if (pid2 == 0)
-		{
-			close_fd(pipe_fds[WRITE]);
-			dup_fd(pipe_fds[READ], STDIN);
-			dup_fd(out_fd, STDOUT);
-			if (cmd_2_valid && out_fd != -1)
-				execve(cmd_2_args[0], cmd_2_args, env);
-			// if execve fails do the below
-			// cleanup
-			close_fd(pipe_fds[READ]);
-			close_fd(out_fd);
-			close_fd(devnull_fd);
-			free_split_array(cmd_1_args);
-			free_split_array(cmd_2_args);
-			exit(1);
-		}
-		else
-		{
-			// cleanup
-			close_fd(pipe_fds[WRITE]);
-			close_fd(pipe_fds[READ]);
-			close_fd(out_fd);
-			close_fd(devnull_fd);
-			if (pid1 != -1)
-				waitpid(pid1, &w_status, 0);
-			if (pid2 != -1)
-				waitpid(pid2, &w_status, 0);
-			free_split_array(cmd_1_args);
-			free_split_array(cmd_2_args);
-			if (!cmd_2_valid)
-				exit(127);
-			exit((w_status >> 8) & 0x000000ff);
-		}
+		// cleanup
+		close_fd(pipe_fds[WRITE]);
+		close_fd(pipe_fds[READ]);
+		close_fd(out_fd);
+		close_fd(devnull_fd);
+		free_split_array(cmd_1_args);
+		free_split_array(cmd_2_args);
+		if (pid1 != -1)
+			waitpid(pid1, &w_status, 0);
+		if (pid2 != -1)
+			waitpid(pid2, &w_status, 0);
+		if (!cmd_2_valid)
+			exit(127);
+		exit((w_status >> 8) & 0x000000ff);
 	}
+	// }
 }
