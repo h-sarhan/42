@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/17 21:37:51 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 07:54:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	fork_check(int pid);
 void	close_check(int close_ret);
 void	dup_fd(int fd_1, int fd_2);
 void	close_fd(int fd);
+void	command_check(char *cmd_path, char *cmdname);
+
 
 
 #endif

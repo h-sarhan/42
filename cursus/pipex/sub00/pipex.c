@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 07:38:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 08:09:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ int	main(int argc, char **argv, char **env)
 	malloc_check(cmd_1_args);
 	cmd_1_args[0] = get_full_path(cmd_1_args[0], env);
 	malloc_check(cmd_1_args[0]);
+	command_check(cmd_1_args[0], argv[2]);
 	cmd_2_args = ft_split(argv[3], ' ');
 	malloc_check(cmd_2_args);
 	cmd_2_args[0] = get_full_path(cmd_2_args[0], env);
 	malloc_check(cmd_2_args[0]);
+	command_check(cmd_2_args[0], argv[3]);
 
 	int	in_fd = open(argv[1], O_RDONLY);	
-	// TODO: Write a function file_check that 
-	// uses access instead of trying to create a file descriptor
 	fd_check(in_fd, argv[1]); 
 
 	int	pipe_fds[2];

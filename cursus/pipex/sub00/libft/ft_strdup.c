@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsarhan <hassanAsarhan@outlook.com>        +#+  +:+       +#+        */
+/*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:58:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/05/16 16:22:30 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 07:58:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strdup(const char *s1)
 	size_t	i;
 
 	len = ft_strlen(s1);
-	copy = malloc(sizeof(char) * (len + 1));
+	copy = ft_calloc((len + 1), sizeof(char));
 	if (copy == NULL)
 		return (NULL);
 	i = 0;
