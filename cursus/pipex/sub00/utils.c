@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:50:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/17 18:20:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 23:04:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,20 @@ void	close_fd(int fd)
 	{
 		perror("pipex");
 		exit(EXIT_FAILURE);
+	}
+}
+
+void	trim_args(char **args)
+{
+	int		i;
+	char	*trimmed_arg;
+	
+	i = 0;
+	while (args[i] != NULL)
+	{
+		trimmed_arg = ft_strtrim(args[i], "\"\'");
+		free(args[i]);
+		args[i] = trimmed_arg;
+		i++;
 	}
 }

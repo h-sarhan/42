@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 22:41:51 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 23:17:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char *get_full_path(char *bin, char **env)
 	return (path);
 }
 
+// TODO: HANDLE ARGUMENTS IN QUOTATION MARKS
 int main(int argc, char **argv, char **env)
 {
 	char	**cmd_1_args;
@@ -79,6 +80,7 @@ int main(int argc, char **argv, char **env)
 		malloc_check(cmd_1_args[0]);
 	}
 	cmd_1_valid = command_check(cmd_1_args, argv[2], NULL, in_fd);
+	// trim_args(cmd_1_args);
 
 	// checking outfile
 	// check_file function
@@ -95,6 +97,7 @@ int main(int argc, char **argv, char **env)
 		malloc_check(cmd_2_args[0]);
 	}
 	cmd_2_valid = command_check(cmd_2_args, argv[3], NULL, out_fd);
+	// trim_args(cmd_2_args);
 
 	// Create pipe function
 	pipe_check(pipe(pipe_fds));
@@ -148,6 +151,9 @@ int main(int argc, char **argv, char **env)
 		close_fd(pipe_fds[WRITE]);
 		dup_fd(pipe_fds[READ], STDIN);
 		dup_fd(out_fd, STDOUT);
+		// ft_putendl_fd(cmd_2_args[0], 2);
+		// ft_putendl_fd(cmd_2_args[1], 2);
+		// ft_putendl_fd(cmd_2_args[2], 2);
 		if (cmd_2_valid && out_fd != -1)
 			execve(cmd_2_args[0], cmd_2_args, env);
 		// if execve fails do the below

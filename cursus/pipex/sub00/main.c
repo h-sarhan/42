@@ -1,7 +1,6 @@
-#include <stdio.h>
+#include <unistd.h>
 
 int	main()
 {
-	printf("hello\n");
+	execlp("awk", "awk", "{count++} END {print count}", NULL);
 }
-

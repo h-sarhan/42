@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 13:46:59 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/18 23:01:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	close_check(int close_ret);
 void	dup_fd(int fd_1, int fd_2);
 void	close_fd(int fd);
 int		command_check(char **cmd_args, char *cmdname, int *exit_code, int fd);
+void	trim_args(char **args);
 
 
 
