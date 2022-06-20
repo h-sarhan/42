@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/12 11:01:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 12:12:42 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/06/20 11:47:32 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/06/20 12:24:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
-static int	count_words(char const *str, char sep)
+static int	skip_to_end_quote(const char *str, char quote);
+
+static int	count_args(char const *str, char sep)
 {
 	int	i;
 	int	num_words;
@@ -21,8 +23,10 @@ static int	count_words(char const *str, char sep)
 	num_words = 0;
 	while (str[i] != '\0')
 	{
-		while (str[i] == sep && str[i] != '\0')
+		while (str[i] == sep && str[i] != '\'' && str[i] != '\"')
 			i++;
+		if (str[i] == '\'' || str[i] == '\"')
+			i += skip_to_end_quote(&str[i], str[i]);
 		if (str[i] == '\0')
 			break ;
 		num_words++;
@@ -30,6 +34,16 @@ static int	count_words(char const *str, char sep)
 			i++;
 	}
 	return (num_words);
+}
+
+static int	skip_to_end_quote(const char *str, char quote)
+{
+	int	i;
+
+	i = 1;
+	while (str[i] != quote && str[i] != '\0')
+		i++;
+	return (i);
 }
 
 static char	*create_word(char const *str, int start, int end)
@@ -43,25 +57,27 @@ static char	*create_word(char const *str, int start, int end)
 	return (word);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_args(char const *s, char c)
 {
 	char	**words;
 	int		i;
 	int		word_start;
 	int		wc;
 
-	words = ft_calloc(count_words(s, c) + 1, sizeof(char *));
+	words = ft_calloc(count_args(s, c) + 1, sizeof(char *));
 	if (words == NULL)
 		return (NULL);
 	i = 0;
 	wc = 0;
 	while (s[i] != '\0')
 	{
-		while (s[i] == c && s[i] != '\0')
+		while (s[i] == c && s[i] != '\'' && s[i] != '\"')
 			i++;
 		if (s[i] == '\0')
 			break ;
 		word_start = i;
+		if (s[i] == '\'' || s[i] == '\"')
+			i += skip_to_end_quote(&s[i], s[i]);
 		while (s[i] != c && s[i] != '\0')
 			i++;
 		words[wc] = create_word(s, word_start, i - 1);
@@ -71,3 +87,13 @@ char	**ft_split(char const *s, char c)
 	words[wc] = NULL;
 	return (words);
 }
+
+// int	main()
+// { 
+// 	char **args  = ft_split_args("wc \"word1 word2\" word3", ' ');
+// 	// ft_printf("%d\n", count_args("     kuygkuygb    iluhulyh    \'\"jhgvjhgvgh    \"\'   ", ' '));
+// 	ft_printf("%s\n", args[0]);
+// 	ft_printf("%s\n", args[1]);
+// 	ft_printf("%s\n", args[2]);
+// 	ft_printf("%s\n", args[3]);
+// }

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 11:16:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 12:24:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int main(int argc, char **argv, char **env)
 		ft_putendl_fd("Wrong number of arguments", 2);
 		exit(EXIT_FAILURE);
 	}
-	
+
 	in_fd = open_file(argv[1], 0);
 
 	// checking command 1
@@ -82,7 +82,7 @@ int main(int argc, char **argv, char **env)
 	// trim_args(cmd_1_args);
 
 	out_fd = open_file(argv[4], 1);
-	
+
 	// checking command 2
 	// check command_function
 	cmd_2_args = ft_split(argv[3], ' ');
@@ -99,7 +99,7 @@ int main(int argc, char **argv, char **env)
 	pipe_check(pipe(pipe_fds));
 	devnull_fd = open_file("/dev/null", 0);
 	// fd_check(devnull_fd, "/dev/null");
-	
+
 	// fork_command function
 	pid1 = -1;
 	if (cmd_1_valid)
@@ -177,3 +177,4 @@ int main(int argc, char **argv, char **env)
 		exit(WEXITSTATUS(w_status));
 	exit(0);
 }
+
