@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 13:31:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 14:36:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,22 @@ char *get_full_path(char *bin, char **env)
 	return (path);
 }
 
-// TODO: HANDLE ARGUMENTS IN QUOTATION MARKS
-// TODO: CREATE FILE_CHECK FUNCTION TO CHECK FILE PERMISSIONS
-// if (errno == ENOACCESS) Permission denied
-// TODO: USE strerror with strjoin
+char	**get_args(char *arg, char **env)
+{
+	char	**cmd_args;
+
+	cmd_args = split_args(arg, ' ');
+	malloc_check(cmd_args);
+	if (access(cmd_args[0], X_OK) == -1)
+	{
+		cmd_args[0] = get_full_path(cmd_args[0], env);
+		malloc_check(cmd_args[0]);
+	}
+	// cmd_valid = command_check(cmd_args, argv[2], NULL, in_fd);
+	trim_args(cmd_args);
+	return (cmd_args);
+}
+
 // TODO: REWRITE EVERYTHING
 // TODO: REMOVE UNECESSARY INCLUDES
 int main(int argc, char **argv, char **env)
@@ -66,40 +78,13 @@ int main(int argc, char **argv, char **env)
 		ft_putendl_fd("Wrong number of arguments", 2);
 		exit(EXIT_FAILURE);
 	}
-
 	in_fd = open_file(argv[1], 0);
 
-	// checking command 1
-	// check command_function
-	cmd_1_args = split_args(argv[2], ' ');
-	malloc_check(cmd_1_args);
-	if (access(cmd_1_args[0], X_OK) == -1)
-	{
-		cmd_1_args[0] = get_full_path(cmd_1_args[0], env);
-		malloc_check(cmd_1_args[0]);
-	}
-	cmd_1_valid = command_check(cmd_1_args, argv[2], NULL, in_fd);
-	trim_args(cmd_1_args);
-
-	out_fd = open_file(argv[4], 1);
-
-	// checking command 2
-	// check command_function
-	cmd_2_args = split_args(argv[3], ' ');
-	malloc_check(cmd_2_args);
-	if (access(cmd_2_args[0], X_OK) == -1)
-	{
-		cmd_2_args[0] = get_full_path(cmd_2_args[0], env);
-		malloc_check(cmd_2_args[0]);
-	}
-	cmd_2_valid = command_check(cmd_2_args, argv[3], NULL, out_fd);
-
-	trim_args(cmd_2_args);
-
-	// Create pipe function
-	pipe_check(pipe(pipe_fds));
+	cmd_1_args = get_args(argv[2], env); // checking command 1
+	cmd_1_valid = command_check(cmd_1_args, argv[2], in_fd);
+	
+	ft_pipe(pipe_fds);
 	devnull_fd = open_file("/dev/null", 0);
-	// fd_check(devnull_fd, "/dev/null");
 
 	// fork_command function
 	pid1 = -1;
@@ -108,12 +93,9 @@ int main(int argc, char **argv, char **env)
 		pid1 = fork();
 		fork_check(pid1);
 	}
-
-	// fork command function
 	if (pid1 == 0)
 	{
 		close_fd(pipe_fds[READ]);
-		close_fd(out_fd);
 		if (in_fd == -1)
 			dup_fd(devnull_fd, STDIN);
 		else
@@ -127,13 +109,17 @@ int main(int argc, char **argv, char **env)
 			close_fd(in_fd);
 		close_fd(devnull_fd);
 		free_split_array(cmd_1_args);
-		free_split_array(cmd_2_args);
+		// free_split_array(cmd_2_args);
 		exit(1);
 	}
-	// else
-	// {
 	if (in_fd != -1)
 		close_fd(in_fd);
+
+	out_fd = open_file(argv[4], 1);
+
+	// checking command 2
+	cmd_2_args = get_args(argv[3], env);
+	cmd_2_valid = command_check(cmd_2_args, argv[3], out_fd);
 
 	// fork_command function
 	pid2 = -1;
@@ -142,20 +128,19 @@ int main(int argc, char **argv, char **env)
 		pid2 = fork();
 		fork_check(pid2);
 	}
+
 	if (pid2 == 0)
 	{
 		close_fd(pipe_fds[WRITE]);
 		dup_fd(pipe_fds[READ], STDIN);
 		dup_fd(out_fd, STDOUT);
-		// ft_putendl_fd(cmd_2_args[0], 2);
-		// ft_putendl_fd(cmd_2_args[1], 2);
-		// ft_putendl_fd(cmd_2_args[2], 2);
-		if (cmd_2_valid && out_fd != -1)
+		if (out_fd != -1)
 			execve(cmd_2_args[0], cmd_2_args, env);
 		// if execve fails do the below
 		// cleanup
 		close_fd(pipe_fds[READ]);
-		close_fd(out_fd);
+		if (out_fd != -1)
+			close_fd(out_fd);
 		close_fd(devnull_fd);
 		free_split_array(cmd_1_args);
 		free_split_array(cmd_2_args);
@@ -164,7 +149,8 @@ int main(int argc, char **argv, char **env)
 	// cleanup
 	close_fd(pipe_fds[WRITE]);
 	close_fd(pipe_fds[READ]);
-	close_fd(out_fd);
+	if (out_fd != -1)
+		close_fd(out_fd);
 	close_fd(devnull_fd);
 	free_split_array(cmd_1_args);
 	free_split_array(cmd_2_args);
@@ -172,10 +158,10 @@ int main(int argc, char **argv, char **env)
 		waitpid(pid1, &w_status, 0);
 	if (pid2 != -1)
 		waitpid(pid2, &w_status, 0);
+	if (out_fd == -1)
+		exit(1);
 	if (!cmd_2_valid)
 		exit(127);
-	if (WIFEXITED(w_status))
-		exit(WEXITSTATUS(w_status));
-	exit(0);
+	exit(WEXITSTATUS(w_status));
 }
 

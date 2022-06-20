@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:52:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 13:55:09 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 14:35:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	malloc_check(void *mem)
 
 int	open_file(char *file_path, int outfile)
 {
-	char	*str;
 	int		mode;
 	int		fd;
 	
@@ -39,23 +38,19 @@ int	open_file(char *file_path, int outfile)
 		fd = open(file_path, O_RDONLY);
 	if (fd == -1)
 	{
-		str = ft_strjoin("pipex: ", file_path);
-		str = ft_strjoinfree(str, ": ", 1);
-		str = ft_strjoinfree(str, strerror(errno), 1);
-		ft_putendl_fd(str, 2);
-		ft_free(str);
+		print_error_string(strerror(errno), file_path);
 		return (-1);
 	}
 	return (fd);
 }
 
-int command_check(char **cmd_args, char *arg_list, int *exit_code, int fd)
+int command_check(char **cmd_args, char *arg_list, int fd)
 {
 	char	**args;
 	char	*cmd_name;
 	int		i;
 
-	if (cmd_args[0] == NULL && errno == ENOENT)
+	if (cmd_args[0] == NULL)
 	{
 		args = ft_split(arg_list, ' ');
 		malloc_check(args);
@@ -63,18 +58,8 @@ int command_check(char **cmd_args, char *arg_list, int *exit_code, int fd)
 		malloc_check(cmd_name);
 		free_split_array(args);
 		if (fd != -1)
-		{
-			if (ft_strchr(cmd_name, '/') == NULL)
-			{
-				ft_putstr_fd("pipex: command not found: ", 2);
-				ft_putendl_fd(cmd_name, 2);
-			}
-			// else
-			// 	fd_check(-1, cmd_name);
-		}
+			print_error_string("command not found", cmd_name);
 		ft_free(cmd_name);
-		if (exit_code != NULL)
-			*exit_code = 127;
 		i = 0;
 		while (cmd_args[++i] != NULL)
 			ft_free(cmd_args[i]);
@@ -83,13 +68,27 @@ int command_check(char **cmd_args, char *arg_list, int *exit_code, int fd)
 	return (1);
 }
 
-void	pipe_check(int pipe_ret)
+void	ft_pipe(int *pipe_fds)
 {
+	int	pipe_ret;
+
+	pipe_ret = pipe(pipe_fds);
 	if (pipe_ret == -1)
 	{
 		perror("pipex");
 		exit(EXIT_FAILURE);
 	}
+}
+
+void	print_error_string(char *error_str, char *file_name)
+{
+	char	*str;
+	
+	str = ft_strjoin("pipex: ", file_name);
+	str = ft_strjoinfree(str, ": ", 1);
+	str = ft_strjoinfree(str, error_str, 1);
+	ft_putendl_fd(str, 2);
+	ft_free(str);
 }
 
 void	fork_check(int pid)
