@@ -5,6 +5,8 @@ YELLOW="\033[0;33m"
 RESET="\033[0m"
 ERROR="\033[0;31m"
 
+
+
 run_test() {
 	echo -e "${PURPLE}${1}${RESET}"
 	echo "./pipex ${2} ${3} ${4} ${5}"
