@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:01:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/17 14:53:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 08:59:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,30 @@ static int	count_words(char const *str, char sep)
 	return (num_words);
 }
 
-static char	*create_word(char const *str, int start, int end, char **words,
-	int wc)
+static char	*create_word(char const *str, int start, int end)
 {
 	char	*word;
 	int		i;
+
 	word = ft_calloc(end - start + 2, sizeof(char));
 	if (word == NULL)
-	{
-		i = 0;
-		while (i < wc)
-		{
-			free(words[i]);
-			i++;
-		}
-		free(words);
 		return (NULL);
-	}
 	ft_strlcpy(word, &str[start], end - start + 2);
 	return (word);
+}
+
+static void	*clear_words(char **words, int end)
+{
+	int	i;
+
+	i = 0;
+	while (i < end)
+	{
+		free(words[i]);
+		i++;
+	}
+	free(words);
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
@@ -74,9 +79,9 @@ char	**ft_split(char const *s, char c)
 		word_start = i;
 		while (s[i] != c && s[i] != '\0')
 			i++;
-		words[wc] = create_word(s, word_start, i - 1, words, wc - 1);
+		words[wc] = create_word(s, word_start, i - 1);
 		if (words[wc++] == NULL)
-			return (NULL);
+			return (clear_words(words, wc - 1));
 	}
 	words[wc] = NULL;
 	return (words);
