@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/20 12:13:10 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/20 16:48:03 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ PRINTF_SRCS =  conversion.c count_digits.c ft_printf.c \
 				
 PRINTF_SRCS := $(addprefix printf/, $(PRINTF_SRCS))
 
-SRCS = pipex.c utils.c error_handling.c split_args.c
+SRCS = pipex.c utils.c error_handling.c split_args.c sys_calls.c
 
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)

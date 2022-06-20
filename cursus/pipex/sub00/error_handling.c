@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:52:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 14:35:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 16:47:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,7 @@ void	malloc_check(void *mem)
 	}
 }
 
-int	open_file(char *file_path, int outfile)
-{
-	int		mode;
-	int		fd;
-	
-	fd = 1;
-	mode = R_OK;
-	if (outfile == 1)
-		mode = W_OK;
-	if (outfile != 1 && access(file_path, mode) == -1)
-		fd = -1;
-	else if (outfile == 1)
-		fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else
-		fd = open(file_path, O_RDONLY);
-	if (fd == -1)
-	{
-		print_error_string(strerror(errno), file_path);
-		return (-1);
-	}
-	return (fd);
-}
-
-int command_check(char **cmd_args, char *arg_list, int fd)
+int	command_check(char **cmd_args, char *arg_list, int fd)
 {
 	char	**args;
 	char	*cmd_name;
@@ -83,7 +60,7 @@ void	ft_pipe(int *pipe_fds)
 void	print_error_string(char *error_str, char *file_name)
 {
 	char	*str;
-	
+
 	str = ft_strjoin("pipex: ", file_name);
 	str = ft_strjoinfree(str, ": ", 1);
 	str = ft_strjoinfree(str, error_str, 1);
@@ -91,11 +68,19 @@ void	print_error_string(char *error_str, char *file_name)
 	ft_free(str);
 }
 
-void	fork_check(int pid)
+int	ft_fork(int command_valid)
 {
-	if (pid == -1)
+	int	pid;
+
+	if (command_valid)
 	{
-		perror("pipex");
-		exit(EXIT_FAILURE);
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("pipex");
+			exit(EXIT_FAILURE);
+		}
+		return (pid);
 	}
+	return (-1);
 }

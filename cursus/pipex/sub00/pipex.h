@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 14:34:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 15:49:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
-#include <string.h>
+# include <string.h>
 # include <sys/wait.h>
 # include <stdio.h>
 # include <sys/errno.h>
@@ -34,7 +34,6 @@ void	free_split_array(char **arr);
 void	ft_free(void *mem);
 void	malloc_check(void *mem);
 void	pipe_check(int pipe_ret);
-void	fork_check(int pid);
 void	close_check(int close_ret);
 void	dup_fd(int fd_1, int fd_2);
 void	close_fd(int fd);
@@ -44,6 +43,8 @@ void	trim_args(char **args);
 char	**split_args(char const *s, char c);
 void	print_error_string(char *error_str, char *file_name);
 void	ft_pipe(int *pipe_fds);
+int		ft_fork();
+
 
 
 #endif

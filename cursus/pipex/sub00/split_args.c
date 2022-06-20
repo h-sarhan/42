@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:47:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 13:19:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 16:45:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ char	**split_args(char const *s, char c)
 	int		wc;
 
 	words = ft_calloc(count_args(s, c) + 1, sizeof(char *));
-	if (words == NULL)
-		return (NULL);
+	malloc_check(words);
 	i = 0;
 	wc = 0;
 	while (s[i] != '\0')
@@ -81,19 +80,8 @@ char	**split_args(char const *s, char c)
 		while (s[i] != c && s[i] != '\0')
 			i++;
 		words[wc] = create_word(s, word_start, i - 1);
-		if (words[wc++] == NULL)
-			return (NULL);
+		malloc_check(words[wc++]);
 	}
 	words[wc] = NULL;
 	return (words);
 }
-
-// int	main()
-// { 
-// 	char **args  = split_args("wc \"word1 word2\" word3", ' ');
-// 	// ft_printf("%d\n", count_args("     kuygkuygb    iluhulyh    \'\"jhgvjhgvgh    \"\'   ", ' '));
-// 	ft_printf("%s\n", args[0]);
-// 	ft_printf("%s\n", args[1]);
-// 	ft_printf("%s\n", args[2]);
-// 	ft_printf("%s\n", args[3]);
-// }
