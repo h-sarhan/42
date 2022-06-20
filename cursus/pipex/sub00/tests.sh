@@ -42,7 +42,7 @@ run_test() {
 	echo -e "${YELLOW}Bash error${RESET}"
 	cat bash_err
 	echo
-	rm correct_ret bash_err my_err my_ret correct_out my_out
+	rm -f correct_ret bash_err my_err my_ret correct_out my_out
 }
 make
 
@@ -84,3 +84,4 @@ run_test "Test with readonly outfile and invalid infile" "infiled" "grep a1" "wc
 
 rm -f readonlyfile
 rm -f nonreadablefile
+rm -f outfile
