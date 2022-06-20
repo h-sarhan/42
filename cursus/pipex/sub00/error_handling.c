@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:52:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 09:12:17 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 11:15:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,31 @@ void	malloc_check(void *mem)
 	}
 }
 
-int	fd_check(int fd, char *file_name)
+int	open_file(char *file_path, int outfile)
 {
+	char	*str;
+	int		mode;
+	int		fd;
+	
+	fd = 1;
+	mode = R_OK;
+	if (outfile == 1)
+		mode = W_OK;
+	if (outfile != 1 && access(file_path, mode) == -1)
+		fd = -1;
+	else if (outfile == 1)
+		fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		fd = open(file_path, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("pipex: no such file or directory: ", 2);
-		ft_putendl_fd(file_name, 2);
-		return (0);
+		str = ft_strjoin("pipex: ", strerror(errno));
+		str = ft_strjoinfree(str, file_path, 1);
+		ft_putendl_fd(str, 2);
+		ft_free(str);
+		return (-1);
 	}
-	return (1);
+	return (fd);
 }
 
 int command_check(char **cmd_args, char *arg_list, int *exit_code, int fd)
@@ -56,8 +72,8 @@ int command_check(char **cmd_args, char *arg_list, int *exit_code, int fd)
 				ft_putstr_fd("pipex: command not found: ", 2);
 				ft_putendl_fd(cmd_name, 2);
 			}
-			else
-				fd_check(-1, cmd_name);
+			// else
+			// 	fd_check(-1, cmd_name);
 		}
 		ft_free(cmd_name);
 		if (exit_code != NULL)

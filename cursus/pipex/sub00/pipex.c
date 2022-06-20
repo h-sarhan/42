@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 09:12:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 11:16:27 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ char *get_full_path(char *bin, char **env)
 // TODO: USE strerror with strjoin
 // TODO: REWRITE EVERYTHING
 // TODO: REMOVE UNECESSARY INCLUDES
-
 int main(int argc, char **argv, char **env)
 {
 	char	**cmd_1_args;
@@ -68,14 +67,8 @@ int main(int argc, char **argv, char **env)
 		exit(EXIT_FAILURE);
 	}
 	
-	// checking infile
-	// check_file function
-	if (access(argv[1], R_OK) == -1)
-		in_fd = -1;
-	else
-		in_fd = open(argv[1], O_RDONLY);
-	fd_check(in_fd, argv[1]);
-	
+	in_fd = open_file(argv[1], 0);
+
 	// checking command 1
 	// check command_function
 	cmd_1_args = ft_split(argv[2], ' ');
@@ -88,10 +81,7 @@ int main(int argc, char **argv, char **env)
 	cmd_1_valid = command_check(cmd_1_args, argv[2], NULL, in_fd);
 	// trim_args(cmd_1_args);
 
-	// checking outfile
-	// check_file function
-	out_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	fd_check(out_fd, argv[4]);
+	out_fd = open_file(argv[4], 1);
 	
 	// checking command 2
 	// check command_function
@@ -107,8 +97,8 @@ int main(int argc, char **argv, char **env)
 
 	// Create pipe function
 	pipe_check(pipe(pipe_fds));
-	devnull_fd = open("/dev/null", O_RDONLY);
-	fd_check(devnull_fd, "/dev/null");
+	devnull_fd = open_file("/dev/null", 0);
+	// fd_check(devnull_fd, "/dev/null");
 	
 	// fork_command function
 	pid1 = -1;
@@ -117,7 +107,6 @@ int main(int argc, char **argv, char **env)
 		pid1 = fork();
 		fork_check(pid1);
 	}
-
 
 	// fork command function
 	if (pid1 == 0)
