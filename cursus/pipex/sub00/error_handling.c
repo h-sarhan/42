@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:52:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 09:08:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 09:12:17 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // TODO: CREATE FILE_CHECK FUNCTION TO CHECK FILE PERMISSIONS
 // if (errno == ENOACCESS) Permission denied
-// TODO: USE strerror with strjoin
+// TODO: USE strerror with strjoinZ
 
 void	malloc_check(void *mem)
 {
