@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 08:51:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 09:02:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ char *get_full_path(char *bin, char **env)
 }
 
 // TODO: HANDLE ARGUMENTS IN QUOTATION MARKS
+// TODO: CREATE FILE_CHECK FUNCTION TO CHECK FILE PERMISSIONS
+// if (errno == ENOACCESS) Permission denied
+// TODO: USE strerror with strjoin
+// TODO: REWRITE EVERYTHING
+// TODO: REMOVE UNECESSARY INCLUDES
+
 int main(int argc, char **argv, char **env)
 {
 	char	**cmd_1_args;
@@ -165,24 +171,20 @@ int main(int argc, char **argv, char **env)
 		free_split_array(cmd_2_args);
 		exit(1);
 	}
-	else
-	{
-		// cleanup
-		close_fd(pipe_fds[WRITE]);
-		close_fd(pipe_fds[READ]);
-		close_fd(out_fd);
-		close_fd(devnull_fd);
-		free_split_array(cmd_1_args);
-		free_split_array(cmd_2_args);
-		if (pid1 != -1)
-			waitpid(pid1, &w_status, 0);
-		if (pid2 != -1)
-			waitpid(pid2, &w_status, 0);
-		if (!cmd_2_valid)
-			exit(127);
-		if (WIFEXITED(w_status))
-			exit(WEXITSTATUS(w_status));
-		exit(0);
-	}
-	// }
+	// cleanup
+	close_fd(pipe_fds[WRITE]);
+	close_fd(pipe_fds[READ]);
+	close_fd(out_fd);
+	close_fd(devnull_fd);
+	free_split_array(cmd_1_args);
+	free_split_array(cmd_2_args);
+	if (pid1 != -1)
+		waitpid(pid1, &w_status, 0);
+	if (pid2 != -1)
+		waitpid(pid2, &w_status, 0);
+	if (!cmd_2_valid)
+		exit(127);
+	if (WIFEXITED(w_status))
+		exit(WEXITSTATUS(w_status));
+	exit(0);
 }

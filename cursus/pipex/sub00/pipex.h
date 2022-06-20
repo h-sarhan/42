@@ -6,14 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 23:01:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 09:02:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-// TODO: REMOVE UNECESSARY INCLUDES
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>

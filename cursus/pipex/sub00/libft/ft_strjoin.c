@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 21:08:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/18 07:59:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 09:04:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	len1;
 	size_t	len2;
 	size_t	i;
-	
+
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	len1 = ft_strlen(s1);
