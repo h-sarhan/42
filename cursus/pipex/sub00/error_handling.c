@@ -6,15 +6,11 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:52:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 11:15:02 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 13:55:09 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-// TODO: CREATE FILE_CHECK FUNCTION TO CHECK FILE PERMISSIONS
-// if (errno == ENOACCESS) Permission denied
-// TODO: USE strerror with strjoinZ
 
 void	malloc_check(void *mem)
 {
@@ -43,8 +39,9 @@ int	open_file(char *file_path, int outfile)
 		fd = open(file_path, O_RDONLY);
 	if (fd == -1)
 	{
-		str = ft_strjoin("pipex: ", strerror(errno));
-		str = ft_strjoinfree(str, file_path, 1);
+		str = ft_strjoin("pipex: ", file_path);
+		str = ft_strjoinfree(str, ": ", 1);
+		str = ft_strjoinfree(str, strerror(errno), 1);
 		ft_putendl_fd(str, 2);
 		ft_free(str);
 		return (-1);

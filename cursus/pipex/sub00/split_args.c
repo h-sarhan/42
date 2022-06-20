@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:47:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 12:24:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 13:19:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	*create_word(char const *str, int start, int end)
 	return (word);
 }
 
-char	**ft_split_args(char const *s, char c)
+char	**split_args(char const *s, char c)
 {
 	char	**words;
 	int		i;
@@ -90,7 +90,7 @@ char	**ft_split_args(char const *s, char c)
 
 // int	main()
 // { 
-// 	char **args  = ft_split_args("wc \"word1 word2\" word3", ' ');
+// 	char **args  = split_args("wc \"word1 word2\" word3", ' ');
 // 	// ft_printf("%d\n", count_args("     kuygkuygb    iluhulyh    \'\"jhgvjhgvgh    \"\'   ", ' '));
 // 	ft_printf("%s\n", args[0]);
 // 	ft_printf("%s\n", args[1]);

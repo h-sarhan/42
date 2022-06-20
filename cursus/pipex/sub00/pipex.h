@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 11:11:01 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 13:19:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	close_fd(int fd);
 int		command_check(char **cmd_args, char *cmdname, int *exit_code, int fd);
 int		open_file(char *file_path, int outfile);
 void	trim_args(char **args);
+char	**split_args(char const *s, char c);
 
 
 

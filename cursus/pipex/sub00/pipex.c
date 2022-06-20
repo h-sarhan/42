@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 12:48:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 13:31:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int main(int argc, char **argv, char **env)
 
 	// checking command 1
 	// check command_function
-	cmd_1_args = ft_split(argv[2], ' ');
+	cmd_1_args = split_args(argv[2], ' ');
 	malloc_check(cmd_1_args);
 	if (access(cmd_1_args[0], X_OK) == -1)
 	{
@@ -79,13 +79,13 @@ int main(int argc, char **argv, char **env)
 		malloc_check(cmd_1_args[0]);
 	}
 	cmd_1_valid = command_check(cmd_1_args, argv[2], NULL, in_fd);
-	// trim_args(cmd_1_args);
+	trim_args(cmd_1_args);
 
 	out_fd = open_file(argv[4], 1);
 
 	// checking command 2
 	// check command_function
-	cmd_2_args = ft_split(argv[3], ' ');
+	cmd_2_args = split_args(argv[3], ' ');
 	malloc_check(cmd_2_args);
 	if (access(cmd_2_args[0], X_OK) == -1)
 	{
@@ -93,7 +93,8 @@ int main(int argc, char **argv, char **env)
 		malloc_check(cmd_2_args[0]);
 	}
 	cmd_2_valid = command_check(cmd_2_args, argv[3], NULL, out_fd);
-	// trim_args(cmd_2_args);
+
+	trim_args(cmd_2_args);
 
 	// Create pipe function
 	pipe_check(pipe(pipe_fds));

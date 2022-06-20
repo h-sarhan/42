@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:50:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 12:47:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 13:34:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,21 @@ void	trim_args(char **args)
 {
 	int		i;
 	char	*trimmed_arg;
-	
+	char	*quote;
+
 	i = 0;
 	while (args[i] != NULL)
 	{
-		trimmed_arg = ft_strtrim(args[i], "\"\'");
-		free(args[i]);
-		args[i] = trimmed_arg;
+		if (args[i][0] == '\'' || args[i][0] == '\"')
+		{
+			quote = malloc(2);
+			quote[0] = args[i][0];
+			quote[1] = '\0';
+			trimmed_arg = ft_strtrim(args[i], quote);
+			free(args[i]);
+			free(quote);
+			args[i] = trimmed_arg;
+		}
 		i++;
 	}
 }
