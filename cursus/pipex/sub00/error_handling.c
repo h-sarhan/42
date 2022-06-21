@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:52:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 13:48:43 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 22:28:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ft_pipe(int *pipe_fds)
 	}
 }
 
+// Wrapper arounf fork that handles errors
 int	ft_fork(int command_valid)
 {
 	int	pid;
@@ -77,7 +78,7 @@ int	ft_fork(int command_valid)
 	return (-1);
 }
 
-// Helper function that
+// Helper function that prints error messages
 void	print_error_string(char *error_str, char *file_name)
 {
 	char	*str;
