@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/21 10:58:12 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/21 22:50:52 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,14 @@ PRINTF_SRCS := $(addprefix printf/, $(PRINTF_SRCS))
 
 SRCS = pipex.c utils.c utils2.c error_handling.c split_args.c
 
+BONUS_SRCS = bonus/pipex_bonus.c bonus/utils_bonus.c bonus/utils2_bonus.c \
+			 bonus/error_handling_bonus.c bonus/split_args_bonus.c
+
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)
+
 OBJS := $(SRCS:%.c=%.o)
+BONUS_OBJS := $(BONUS_SRCS:%.c=%.o)
 
 LIBFT = libft.a
 PRINTF = libftprintf.a
@@ -58,13 +63,18 @@ $(LIBFT): $(LIBFT_OBJS)
 %.o : %.c
 	$(CC) $(CFLAGS) -c $^ -o $@
 
+bonus: $(BONUS_OBJS) $(PRINTF) $(LIBFT)
+	$(CC) $(CFLAGS) $^ -o $(NAME)
+
 norm:
-	norminette $(SRCS) $(LIBFT_SRCS) $(PRINTF_SRCS)
+	norminette $(SRCS) $(BONUS_SRCS) $(LIBFT_SRCS) $(PRINTF_SRCS)
 
 clean:
-	@rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS)
+	@rm -f $(OBJS) $(BONUS_OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS)
 
 fclean: clean
 	@rm -f $(NAME) $(LIBFT) $(PRINTF)
 	
 re: fclean $(NAME)
+
+.PHONY: bonus norm clean fclean re all
