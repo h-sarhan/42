@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 23:27:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 09:59:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,11 @@ void	trim_args(char **args);
 char	**split_args(char const *s, char c);
 void	print_error_string(char *error_str, char *file_name);
 void	ft_pipe(int *pipe_fds);
-// int		ft_fork(int cmd_valid);
-int		ft_fork();
+int		ft_fork(int cmd_valid);
 void	check_arg_count(int argc);
 void	wait_and_exit(int *pids, int out_fd, int cmd_2_valid);
-void	run_command(int *pipe_fds, int fd, char **cmd_args, char **env);
+void	run_command(int *pipe_fds, int *fds, char **cmd_args, char **env);
 char	*get_full_path(char *bin, char **env);
-
-
-
-
 
 
 

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:46:59 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 16:53:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 10:02:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,22 @@ int	open_file(char *file_path, int outfile)
 	return (fd);
 }
 
-void	run_command(int *pipe_fds, int fd, char **cmd_args, char **env)
+void	run_command(int *pipe_fds, int *fds, char **cmd_args, char **env)
 {
 	int	null_fd;
 
 	null_fd = open_file("/dev/null", 0);
 	close_fd(pipe_fds[READ]);
-	if (fd == -1)
+	close_fd(fds[1]);
+	if (fds[0] == -1)
 		dup_fd(null_fd, STDIN);
 	else
-		dup_fd(fd, STDIN);
+		dup_fd(fds[0], STDIN);
 	dup_fd(pipe_fds[WRITE], STDOUT);
-	execve(cmd_args[0], cmd_args, env);
+	if (fds[0] != -1)
+		execve(cmd_args[0], cmd_args, env);
 	close_fd(pipe_fds[WRITE]);
-	if (fd != -1)
-		close_fd(fd);
+	close_fd(fds[0]);
 	close_fd(null_fd);
 	free_split_array(cmd_args);
 	exit(1);
