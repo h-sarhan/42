@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 10:03:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 10:42:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,25 @@
 char	**get_args(char *arg, char **env)
 {
 	char	**cmd_args;
+	int		i;
 
 	cmd_args = split_args(arg, ' ');
 	malloc_check(cmd_args);
 	if (access(cmd_args[0], X_OK) == -1)
 	{
+		i = 0;
+		while (env[i] != NULL && ft_strncmp(env[i], "PATH=", 5) != 0)
+			i++;
+		if (env[i] == NULL)
+		{
+			env = ft_split("PATH=/usr/bin:/bin:/usr/sbin:/sbin", ' ');
+			malloc_check(env);
+			i = -1;
+		}
 		cmd_args[0] = get_full_path(cmd_args[0], env);
 		malloc_check(cmd_args[0]);
+		if (i == -1)
+			free_split_array(env);
 	}
 	trim_args(cmd_args);
 	return (cmd_args);
@@ -74,10 +86,10 @@ int	main(int argc, char **argv, char **env)
 	int		pids[2];
 
 	check_arg_count(argc);
+	fds[1] = open_file(argv[4], 1);
 	fds[0] = open_file(argv[1], 0);
 	cmd_args[0] = get_args(argv[2], env);
 	cmd_valid[0] = command_check(cmd_args[0], argv[2], fds[0]);
-	fds[1] = open_file(argv[4], 1);
 	cmd_args[1] = get_args(argv[3], env);
 	cmd_valid[1] = command_check(cmd_args[1], argv[3], fds[1]);
 	ft_pipe(pipe_fds);

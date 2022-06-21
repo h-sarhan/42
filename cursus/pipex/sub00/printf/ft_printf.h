@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 00:39:42 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/16 23:16:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 10:47:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FT_PRINTF_H
 
 # include "../libft/libft.h"
-# include <stdio.h>
 # include <stdarg.h>
 
 # define STDOUT 1

@@ -1,5 +1,10 @@
 {
 	"files.associations": {
-		"pipex.h": "c"
+		"pipex.h": "c",
+		"string.h": "c",
+		"wait.h": "c",
+		"ft_printf.h": "c",
+		"libft.h": "c",
+		"errno.h": "c"
 	}
 }

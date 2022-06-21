@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/20 16:48:03 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/21 10:48:45 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,9 +41,7 @@ PRINTF = libftprintf.a
 
 CC = gcc
 
-# TODO: Remove this before submitting
 CFLAGS = -Werror -Wextra -Wall -g3
-# CFLAGS = -Werror -Wextra -Wall 
 NAME = pipex
 
 all: $(NAME)
