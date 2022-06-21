@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:50:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 09:59:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 11:01:52 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ void	trim_args(char **args)
 	{
 		if (args[i][0] == '\'' || args[i][0] == '\"')
 		{
-			quote = malloc(2);
+			quote = ft_calloc(2, sizeof(char));
+			malloc_check(quote);
 			quote[0] = args[i][0];
 			quote[1] = '\0';
 			trimmed_arg = ft_strtrim(args[i], quote);
-			free(args[i]);
-			free(quote);
+			malloc_check(trimmed_arg);
+			ft_free(args[i]);
+			ft_free(quote);
 			args[i] = trimmed_arg;
 		}
 		i++;
