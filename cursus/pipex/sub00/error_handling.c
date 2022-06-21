@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:52:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 10:53:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 13:48:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+// Checks if a memory allocation fails and prints an error message
 void	malloc_check(void *mem)
 {
 	if (mem == NULL && errno == ENOMEM)
@@ -21,6 +22,7 @@ void	malloc_check(void *mem)
 	}
 }
 
+// Checks if a command is accessible and prints an error message if it is not
 int	command_check(char **cmd_args, char *arg_list, int fd)
 {
 	char	**args;
@@ -45,6 +47,7 @@ int	command_check(char **cmd_args, char *arg_list, int fd)
 	return (1);
 }
 
+// Wrapper around pipe() that handles errors
 void	ft_pipe(int *pipe_fds)
 {
 	int	pipe_ret;
@@ -55,17 +58,6 @@ void	ft_pipe(int *pipe_fds)
 		perror("pipex");
 		exit(EXIT_FAILURE);
 	}
-}
-
-void	print_error_string(char *error_str, char *file_name)
-{
-	char	*str;
-
-	str = ft_strjoin("pipex: ", file_name);
-	str = ft_strjoinfree(str, ": ", 1);
-	str = ft_strjoinfree(str, error_str, 1);
-	ft_putendl_fd(str, 2);
-	ft_free(str);
 }
 
 int	ft_fork(int command_valid)
@@ -83,4 +75,16 @@ int	ft_fork(int command_valid)
 		return (pid);
 	}
 	return (-1);
+}
+
+// Helper function that
+void	print_error_string(char *error_str, char *file_name)
+{
+	char	*str;
+
+	str = ft_strjoin("pipex: ", file_name);
+	str = ft_strjoinfree(str, ": ", 1);
+	str = ft_strjoinfree(str, error_str, 1);
+	ft_putendl_fd(str, 2);
+	ft_free(str);
 }

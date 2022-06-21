@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 10:56:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 13:30:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_free(void *mem);
 void	dup_fd(int fd_1, int fd_2);
 void	close_fd(int fd);
 int		open_file(char *file_path, int outfile);
-void	run_command(int *pipe_fds, int *fds, char **cmd_args, char **env);
+char	**get_args(char *arg, char **env);
 
 // error_handling.c
 void	malloc_check(void *mem);

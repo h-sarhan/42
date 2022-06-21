@@ -6,18 +6,20 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:46:59 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 10:53:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 13:37:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+// Wrapper around free to avoid freeing NULL
 void	ft_free(void *mem)
 {
 	if (mem != NULL)
 		free(mem);
 }
 
+// Wrapper around dup2 that handles errors when duping file desriptors
 void	dup_fd(int fd_1, int fd_2)
 {
 	int	dup_ret;
@@ -33,6 +35,7 @@ void	dup_fd(int fd_1, int fd_2)
 	}
 }
 
+// Wrapper around close that handles errors when closing file descriptors
 void	close_fd(int fd)
 {
 	int	close_ret;
@@ -48,6 +51,8 @@ void	close_fd(int fd)
 	}
 }
 
+// Opens a file either for writing or reading and handles errors.
+// Returns a file descriptor
 int	open_file(char *file_path, int outfile)
 {
 	int		mode;
@@ -57,7 +62,7 @@ int	open_file(char *file_path, int outfile)
 	mode = R_OK;
 	if (outfile == 1)
 		mode = W_OK;
-	if (outfile != 1 && access(file_path, mode) == -1)
+	if (outfile == 0 && access(file_path, mode) == -1)
 		fd = -1;
 	else if (outfile == 1)
 		fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -71,23 +76,33 @@ int	open_file(char *file_path, int outfile)
 	return (fd);
 }
 
-void	run_command(int *pipe_fds, int *fds, char **cmd_args, char **env)
+// Splits cmd1 or cmd2 into arguments that can be used by execve.
+// Also expands the binary of a command into its full path.
+// If the PATH variable cannot be found in the environment variables
+// then a default PATH compatible with most UNIX based systems will be used
+char	**get_args(char *arg, char **env)
 {
-	int	null_fd;
+	char	**cmd_args;
+	int		i;
 
-	null_fd = open_file("/dev/null", 0);
-	close_fd(pipe_fds[READ]);
-	close_fd(fds[1]);
-	if (fds[0] == -1)
-		dup_fd(null_fd, STDIN);
-	else
-		dup_fd(fds[0], STDIN);
-	dup_fd(pipe_fds[WRITE], STDOUT);
-	if (fds[0] != -1)
-		execve(cmd_args[0], cmd_args, env);
-	close_fd(pipe_fds[WRITE]);
-	close_fd(fds[0]);
-	close_fd(null_fd);
-	free_split_array(cmd_args);
-	exit(1);
+	cmd_args = split_args(arg, ' ');
+	malloc_check(cmd_args);
+	if (access(cmd_args[0], X_OK) == -1)
+	{
+		i = 0;
+		while (env[i] != NULL && ft_strncmp(env[i], "PATH=", 5) != 0)
+			i++;
+		if (env[i] == NULL)
+		{
+			env = ft_split("PATH=/usr/bin:/bin:/usr/sbin:/sbin", ' ');
+			malloc_check(env);
+			i = -1;
+		}
+		cmd_args[0] = get_full_path(cmd_args[0], env);
+		malloc_check(cmd_args[0]);
+		if (i == -1)
+			free_split_array(env);
+	}
+	trim_args(cmd_args);
+	return (cmd_args);
 }

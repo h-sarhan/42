@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:47:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 16:45:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 13:48:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static char	*create_word(char const *str, int start, int end)
 	return (word);
 }
 
+// Same as ft_split except that we always treat whatever is inside
+// quotation marks as one word
 char	**split_args(char const *s, char c)
 {
 	char	**words;

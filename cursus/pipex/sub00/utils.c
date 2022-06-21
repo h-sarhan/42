@@ -6,12 +6,14 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:50:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 11:01:52 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 13:44:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+// This is ft_strjoin but with an additional argument
+// to specify which input strings to free
 char	*ft_strjoinfree(char *s1, char *s2, int f)
 {
 	char	*joined;
@@ -29,6 +31,7 @@ char	*ft_strjoinfree(char *s1, char *s2, int f)
 	return (joined);
 }
 
+// Frees an array created by ft_split (or split_args)
 void	free_split_array(char **arr)
 {
 	int	i;
@@ -44,6 +47,7 @@ void	free_split_array(char **arr)
 	ft_free(arr);
 }
 
+// Trims the quotation marks from an argument
 void	trim_args(char **args)
 {
 	int		i;
@@ -69,6 +73,8 @@ void	trim_args(char **args)
 	}
 }
 
+// Tries to get the full path of a command
+// Returns NULL on failure
 char	*get_full_path(char *bin, char **env)
 {
 	int		i;
@@ -98,6 +104,7 @@ char	*get_full_path(char *bin, char **env)
 	return (path);
 }
 
+// Prints an error message and exits if the number of arguments is incorrect
 void	check_arg_count(int argc)
 {
 	if (argc != 5)

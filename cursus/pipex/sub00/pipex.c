@@ -6,53 +6,54 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 10:42:47 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/21 14:05:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**get_args(char *arg, char **env)
+// Runs the command to the left of the pipe.
+// If the infile file descriptor is invalid then it will be replaced
+// with the "/dev/null" file descriptor which will return the EOF character
+// when it is read from.
+void	run_command(int *pipe_fds, int *fds, char ***cmd_args, char **env)
 {
-	char	**cmd_args;
-	int		i;
+	int	null_fd;
 
-	cmd_args = split_args(arg, ' ');
-	malloc_check(cmd_args);
-	if (access(cmd_args[0], X_OK) == -1)
-	{
-		i = 0;
-		while (env[i] != NULL && ft_strncmp(env[i], "PATH=", 5) != 0)
-			i++;
-		if (env[i] == NULL)
-		{
-			env = ft_split("PATH=/usr/bin:/bin:/usr/sbin:/sbin", ' ');
-			malloc_check(env);
-			i = -1;
-		}
-		cmd_args[0] = get_full_path(cmd_args[0], env);
-		malloc_check(cmd_args[0]);
-		if (i == -1)
-			free_split_array(env);
-	}
-	trim_args(cmd_args);
-	return (cmd_args);
+	null_fd = open_file("/dev/null", 0);
+	close_fd(pipe_fds[READ]);
+	close_fd(fds[1]);
+	if (fds[0] == -1)
+		dup_fd(null_fd, STDIN);
+	else
+		dup_fd(fds[0], STDIN);
+	dup_fd(pipe_fds[WRITE], STDOUT);
+	if (fds[0] != -1)
+		execve(cmd_args[0][0], cmd_args[0], env);
+	close_fd(pipe_fds[WRITE]);
+	close_fd(fds[0]);
+	close_fd(null_fd);
+	free_split_array(cmd_args[0]);
+	free_split_array(cmd_args[1]);
+	exit(1);
 }
 
-void	run_command2(int *pipe_fds, int *fds, char **cmd_args, char **env)
+// Runs the command to the right of the pipe
+void	run_command2(int *pipe_fds, int *fds, char ***cmd_args, char **env)
 {
 	close_fd(pipe_fds[WRITE]);
 	dup_fd(pipe_fds[READ], STDIN);
 	close_fd(fds[0]);
 	dup_fd(fds[1], STDOUT);
 	if (fds[1] != -1)
-		execve(cmd_args[0], cmd_args, env);
+		execve(cmd_args[1][0], cmd_args[1], env);
 	close_fd(pipe_fds[READ]);
 	close_fd(fds[1]);
-	free_split_array(cmd_args);
+	free_split_array(cmd_args[1]);
 	exit(1);
 }
 
+// Closes file descrtiptors and frees allocated memory
 void	pipex_cleanup(int *pipe_fds, int *fds, char ***cmd_args)
 {
 	close_fd(pipe_fds[WRITE]);
@@ -62,6 +63,8 @@ void	pipex_cleanup(int *pipe_fds, int *fds, char ***cmd_args)
 	free_split_array(cmd_args[1]);
 }
 
+// Waits for the given pids and exits the program 
+// with an appropriate exit code
 void	wait_and_exit(int *pids, int out_fd, int cmd_2_valid)
 {
 	int	w_status;
@@ -77,6 +80,8 @@ void	wait_and_exit(int *pids, int out_fd, int cmd_2_valid)
 	exit(WEXITSTATUS(w_status));
 }
 
+// Replicates the behaviour of 
+// `< infile cmd1 | cmd2 > outfile` in bash
 int	main(int argc, char **argv, char **env)
 {
 	char	**cmd_args[2];
@@ -95,11 +100,11 @@ int	main(int argc, char **argv, char **env)
 	ft_pipe(pipe_fds);
 	pids[0] = ft_fork(cmd_valid[0]);
 	if (pids[0] == 0)
-		run_command(pipe_fds, fds, cmd_args[0], env);
+		run_command(pipe_fds, fds, cmd_args, env);
 	free_split_array(cmd_args[0]);
 	pids[1] = ft_fork(cmd_valid[1]);
 	if (pids[1] == 0)
-		run_command2(pipe_fds, fds, cmd_args[1], env);
+		run_command2(pipe_fds, fds, cmd_args, env);
 	pipex_cleanup(pipe_fds, fds, cmd_args);
 	wait_and_exit(pids, fds[1], cmd_valid[1]);
 }
