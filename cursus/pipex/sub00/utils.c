@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:50:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/20 16:51:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/20 23:32:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,33 @@ void	trim_args(char **args)
 	}
 }
 
-void	wait_and_exit(int *pids, int out_fd, int cmd_2_valid)
+char	*get_full_path(char *bin, char **env)
 {
-	int	w_status;
+	int		i;
+	char	*path;
+	char	**paths;
 
-	if (pids[0] != -1)
-		waitpid(pids[0], &w_status, 0);
-	if (pids[1] != -1)
-		waitpid(pids[1], &w_status, 0);
-	if (out_fd == -1)
-		exit(1);
-	if (!cmd_2_valid)
-		exit(127);
-	exit(WEXITSTATUS(w_status));
+	i = 0;
+	while (env[i] != NULL && ft_strncmp(env[i], "PATH=", 5) != 0)
+		i++;
+	if (env[i] == NULL)
+		return (NULL);
+	paths = ft_split(ft_strchr(env[i], '=') + 1, ':');
+	i = 0;
+	bin = ft_strjoinfree("/", bin, 2);
+	while (bin != NULL && paths != NULL && paths[i] != NULL)
+	{
+		path = ft_strjoin(paths[i], bin);
+		if (path == NULL || access(path, X_OK) != -1)
+			break ;
+		ft_free(path);
+		i++;
+	}
+	if (bin == NULL || paths == NULL || paths[i] == NULL)
+		path = NULL;
+	ft_free(bin);
+	free_split_array(paths);
+	return (path);
 }
 
 void	check_arg_count(int argc)
