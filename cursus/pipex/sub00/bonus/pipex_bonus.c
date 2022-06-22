@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 10:37:02 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 10:50:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ int	main(int argc, char **argv, char **env)
 	int			pipe_fds[2];
 	int			i;
 
-	(void)argc;
-	// TODO: CHECK ARGS WITH MULTIPLE PIPES
-	// FOR NOW ASSUME PERFECT INPUT
-	// check_arg_count(argc);
+	check_arg_count(argc);
+
+	// fill command list
 	commands = NULL;
 	fds[0] = open_file(argv[1], 0);
 	cmd = create_command(argv[2], env);
@@ -84,6 +83,10 @@ int	main(int argc, char **argv, char **env)
 	cmd->valid = command_check(cmd->cmd_args, argv[argc - 2], fds[1]);
 	ft_lstadd_back(&commands, ft_lstnew(cmd));
 
+	// check commands function here
+	// check_commands(command_list);
+
+	// handle first command
 	ft_pipe(pipe_fds);
 	cmd = commands->content;
  	cmd->pid = ft_fork(cmd->valid);
@@ -92,6 +95,8 @@ int	main(int argc, char **argv, char **env)
 	if (cmd->pid == 0)
 		run_first_cmd(cmd, pipe_fds, fds, env);
 	commands = commands->next;
+
+	// handle middle commands
 	while (commands->next != NULL)
 	{
 		close_fd(pipe_fds[WRITE]);
@@ -104,6 +109,8 @@ int	main(int argc, char **argv, char **env)
 			run_middle_cmd(cmd, pipe_fds, fds, env);
 		commands = commands->next;
 	}
+
+	// handle last command
 	cmd = commands->content;
 	cmd->in_fd = pipe_fds[READ];
 	cmd->out_fd = fds[1];
