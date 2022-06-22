@@ -1,0 +1,82 @@
+============================================================================
+
+
+      BASIC TEST
+      NUMBER 3
+      < input grep Hello | ls -la src/ > output
+
+
+ - Bash output file:
+total 28
+drwxr-xr-x  6 root root  204 Jun 22 06:22 .
+drwxr-xr-x 12 root root  408 Jun 22 12:51 ..
+-rw-r--r--  1 root root 4657 Jun 22 06:22 main.c
+-rw-r--r--  1 root root  833 Jun 22 06:22 runTest.c
+-rw-r--r--  1 root root 8492 Jun 22 06:22 test.c
+-rw-r--r--  1 root root  427 Jun 22 06:22 utils.c
+\EOF
+
+ - Pipex output file:
+total 28
+drwxr-xr-x  6 root root  204 Jun 22 06:22 .
+drwxr-xr-x 11 root root  374 Jun 22 12:51 ..
+-rw-r--r--  1 root root 4657 Jun 22 06:22 main.c
+-rw-r--r--  1 root root  833 Jun 22 06:22 runTest.c
+-rw-r--r--  1 root root 8492 Jun 22 06:22 test.c
+-rw-r--r--  1 root root  427 Jun 22 06:22 utils.c
+\EOF
+
+ - Bash standard stream: None
+
+ - Pipex standard stream: None
+
+ - Bash exit code value: 0
+
+ - Pipex exit code value: 0
+
+File permissions of output files match
+
+
+============================================================================
+
+
+      ERROR TEST
+      NUMBER 3
+      < input fizzBuzz | ls -la src/ > output
+
+
+ - Bash output file:
+total 28
+drwxr-xr-x  6 root root  204 Jun 22 06:22 .
+drwxr-xr-x 13 root root  442 Jun 22 12:51 ..
+-rw-r--r--  1 root root 4657 Jun 22 06:22 main.c
+-rw-r--r--  1 root root  833 Jun 22 06:22 runTest.c
+-rw-r--r--  1 root root 8492 Jun 22 06:22 test.c
+-rw-r--r--  1 root root  427 Jun 22 06:22 utils.c
+\EOF
+
+ - Pipex output file:
+total 28
+drwxr-xr-x  6 root root  204 Jun 22 06:22 .
+drwxr-xr-x 12 root root  408 Jun 22 12:51 ..
+-rw-r--r--  1 root root 4657 Jun 22 06:22 main.c
+-rw-r--r--  1 root root  833 Jun 22 06:22 runTest.c
+-rw-r--r--  1 root root 8492 Jun 22 06:22 test.c
+-rw-r--r--  1 root root  427 Jun 22 06:22 utils.c
+\EOF
+
+ - Bash standard stream:
+pipex: fizzBuzz: command not found
+\EOF
+
+ - Pipex standard stream:
+pipex: fizzBuzz: command not found
+\EOF
+
+ - Bash exit code value: 0
+
+ - Pipex exit code value: 0
+
+File permissions of output files match
+
+

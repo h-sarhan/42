@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/22 11:31:22 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/22 12:02:22 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ PRINTF_SRCS := $(addprefix printf/, $(PRINTF_SRCS))
 SRCS = pipex.c utils.c utils2.c error_handling.c split_args.c
 
 BONUS_SRCS = bonus/pipex_bonus.c bonus/utils_bonus.c bonus/utils2_bonus.c \
-			 bonus/error_handling_bonus.c bonus/split_args_bonus.c bonus/command_bonus.c
+			 bonus/error_handling_bonus.c bonus/split_args_bonus.c bonus/command_bonus.c \
+			 bonus/main_bonus.c bonus/run_commands_bonus.c
 
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)

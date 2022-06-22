@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 11:37:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 19:47:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,14 @@ void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list)
 	int			last_cmd_valid;
 	int			w_status;
 
-	(void)pipe_fds;
 	close_fd(pipe_fds[WRITE]);
 	close_fd(pipe_fds[READ]);
 	close_fd(fds[0]);
 	close_fd(fds[1]);
 	last_cmd = ft_lstlast(command_list)->content;
 	last_cmd_valid = last_cmd->valid;
-	
 	ft_lstiter(command_list, wait_cmd);
-	w_status = *last_cmd->w_status;
+	w_status = last_cmd->w_status;
 	ft_lstclear(&command_list, free_cmd);
 	if (fds[1] == -1)
 		exit(1);
@@ -74,47 +72,30 @@ t_list	*create_command_list(int argc, char **argv, int *fds, char **env)
 	return (command_list);
 }
 
-// TODO: Check leaks with errors
-// Replicates the behaviour of 
-// `< infile cmd1 | cmd2 > outfile` in bash
-int	main(int argc, char **argv, char **env)
+void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds, char **env)
 {
-	t_list		*command_list;
-	t_command	*cmd;
-	t_list		*first;
-	int			fds[2];
-	int			pipe_fds[2];
-
-	check_arg_count(argc);
-	fds[0] = open_file(argv[1], 0);
-	fds[1] = open_file(argv[argc - 1], 1);
-	command_list = create_command_list(argc, argv, fds, env);
-	first = command_list;
-	ft_pipe(pipe_fds);
-	cmd = command_list->content;
- 	cmd->pid = ft_fork(cmd->valid);
+	cmd->pid = ft_fork(cmd->valid);
 	cmd->in_fd = fds[0];
 	cmd->out_fd = pipe_fds[WRITE];
 	if (cmd->pid == 0)
 		run_first_cmd(cmd, pipe_fds, fds, env);
-	command_list = command_list->next;
-	while (command_list->next != NULL)
+}
+
+t_list	*handle_mid_cmds(t_list *cmd_list, int *pipe_fds, int *fds, char **env)
+{
+	t_command	*cmd;
+
+	while (cmd_list->next != NULL)
 	{
 		close_fd(pipe_fds[WRITE]);
-		cmd = command_list->content;
+		cmd = cmd_list->content;
 		cmd->in_fd = pipe_fds[READ];
 		ft_pipe(pipe_fds);
 		cmd->out_fd = pipe_fds[WRITE];
 		cmd->pid = ft_fork(cmd->valid);
 		if (cmd->pid == 0)
 			run_middle_cmd(cmd, pipe_fds, fds, env);
-		command_list = command_list->next;
+		cmd_list = cmd_list->next;
 	}
-	cmd = command_list->content;
-	cmd->in_fd = pipe_fds[READ];
-	cmd->out_fd = fds[1];
-	cmd->pid = ft_fork(cmd->valid);
-	if (cmd->pid == 0)
-		run_last_cmd(cmd, pipe_fds, fds, env);
-	wait_and_exit(pipe_fds, fds, first);
+	return (cmd_list);
 }
