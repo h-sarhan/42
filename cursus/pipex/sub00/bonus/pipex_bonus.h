@@ -6,22 +6,20 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 22:48:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 06:14:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_BONUS_H
 # define PIPEX_BONUS_H
 
-# include <unistd.h>
+# include "../printf/ft_printf.h"
+# include "../libft/libft.h"
 # include <stdio.h>
-# include <stdlib.h>
 # include <fcntl.h>
 # include <string.h>
 # include <sys/wait.h>
 # include <sys/errno.h>
-# include "../printf/ft_printf.h"
-# include "../libft/libft.h"
 
 # define READ 0
 # define WRITE 1
@@ -51,5 +49,20 @@ int		ft_fork(int cmd_valid);
 
 // split_args.c
 char	**split_args(char const *s, char c);
+
+struct s_command {
+	char	**cmd_args;
+	int		pid;
+	int		valid;
+};
+
+typedef struct s_command t_command;
+
+// command.c
+t_command	*create_command(char *cmd_str, char **env);
+void		run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env);
+void		run_middle_cmd(t_command *cmd);
+void		run_last_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env);
+void		free_cmd(void *cmd);
 
 #endif

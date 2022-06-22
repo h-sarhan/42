@@ -44,7 +44,6 @@ run_test() {
 	echo
 	rm -f correct_ret bash_err my_err my_ret correct_out my_out
 }
-make
 
 echo -e "${BLUE}TEST 1${RESET}"
 run_test "Test with valid parameters" "infile" "grep a1" "wc -w" "outfile" 
