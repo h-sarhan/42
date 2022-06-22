@@ -6,25 +6,25 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 10:50:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 11:37:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
 // Closes file descrtiptors and frees allocated memory
-void	pipex_cleanup(int *pipe_fds, int *fds, t_list *commands)
+void	pipex_cleanup(int *pipe_fds, int *fds, t_list *command_list)
 {
 	close_fd(pipe_fds[WRITE]);
 	close_fd(pipe_fds[READ]);
 	close_fd(fds[1]);
 	close_fd(fds[0]);
-	ft_lstclear(&commands, free_cmd);
+	ft_lstclear(&command_list, free_cmd);
 }
 
 // Waits for the given pids and exits the program 
 // with an appropriate exit code
-void	wait_and_exit(int *pipe_fds, int *fds, t_list *commands)
+void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list)
 {
 	t_command	*last_cmd;
 	int			last_cmd_valid;
@@ -35,12 +35,12 @@ void	wait_and_exit(int *pipe_fds, int *fds, t_list *commands)
 	close_fd(pipe_fds[READ]);
 	close_fd(fds[0]);
 	close_fd(fds[1]);
-	last_cmd = ft_lstlast(commands)->content;
+	last_cmd = ft_lstlast(command_list)->content;
 	last_cmd_valid = last_cmd->valid;
 	
-	ft_lstiter(commands, wait_cmd);
+	ft_lstiter(command_list, wait_cmd);
 	w_status = *last_cmd->w_status;
-	ft_lstclear(&commands, free_cmd);
+	ft_lstclear(&command_list, free_cmd);
 	if (fds[1] == -1)
 		exit(1);
 	if (!last_cmd_valid)
@@ -48,70 +48,69 @@ void	wait_and_exit(int *pipe_fds, int *fds, t_list *commands)
 	exit(WEXITSTATUS(w_status));
 }
 
+t_list	*create_command_list(int argc, char **argv, int *fds, char **env)
+{
+	t_list		*command_list;
+	t_command	*cmd;
+	int			i;
+	t_list		*cmd_el;
+
+	command_list = NULL;
+	i = 2;
+	while (i < argc - 1)
+	{
+		cmd = create_command(argv[i], env);
+		if (i == 2)
+			cmd->valid = command_check(cmd->cmd_args, argv[i], fds[0]);
+		else if (i == argc - 2)
+			cmd->valid = command_check(cmd->cmd_args, argv[i], fds[1]);
+		else
+			cmd->valid = command_check(cmd->cmd_args, argv[i], 0);
+		cmd_el = ft_lstnew(cmd);
+		malloc_check(cmd_el);
+		ft_lstadd_back(&command_list, cmd_el);
+		i++;
+	}
+	return (command_list);
+}
 
 // TODO: Check leaks with errors
 // Replicates the behaviour of 
 // `< infile cmd1 | cmd2 > outfile` in bash
 int	main(int argc, char **argv, char **env)
 {
-	t_list		*commands;
+	t_list		*command_list;
 	t_command	*cmd;
 	t_list		*first;
 	int			fds[2];
 	int			pipe_fds[2];
-	int			i;
 
 	check_arg_count(argc);
-
-	// fill command list
-	commands = NULL;
 	fds[0] = open_file(argv[1], 0);
-	cmd = create_command(argv[2], env);
-	cmd->valid = command_check(cmd->cmd_args, argv[2], fds[0]);
-	ft_lstadd_back(&commands, ft_lstnew(cmd));
-	first = commands;
-	i = 3;
-	while (i < argc - 2)
-	{
-		cmd = create_command(argv[i], env);
-		cmd->valid = command_check(cmd->cmd_args, argv[i], 0);
-		ft_lstadd_back(&commands, ft_lstnew(cmd));
-		i++;
-	}
 	fds[1] = open_file(argv[argc - 1], 1);
-	cmd = create_command(argv[argc - 2], env);
-	cmd->valid = command_check(cmd->cmd_args, argv[argc - 2], fds[1]);
-	ft_lstadd_back(&commands, ft_lstnew(cmd));
-
-	// check commands function here
-	// check_commands(command_list);
-
-	// handle first command
+	command_list = create_command_list(argc, argv, fds, env);
+	first = command_list;
 	ft_pipe(pipe_fds);
-	cmd = commands->content;
+	cmd = command_list->content;
  	cmd->pid = ft_fork(cmd->valid);
 	cmd->in_fd = fds[0];
 	cmd->out_fd = pipe_fds[WRITE];
 	if (cmd->pid == 0)
 		run_first_cmd(cmd, pipe_fds, fds, env);
-	commands = commands->next;
-
-	// handle middle commands
-	while (commands->next != NULL)
+	command_list = command_list->next;
+	while (command_list->next != NULL)
 	{
 		close_fd(pipe_fds[WRITE]);
-		cmd = commands->content;
+		cmd = command_list->content;
 		cmd->in_fd = pipe_fds[READ];
 		ft_pipe(pipe_fds);
 		cmd->out_fd = pipe_fds[WRITE];
 		cmd->pid = ft_fork(cmd->valid);
 		if (cmd->pid == 0)
 			run_middle_cmd(cmd, pipe_fds, fds, env);
-		commands = commands->next;
+		command_list = command_list->next;
 	}
-
-	// handle last command
-	cmd = commands->content;
+	cmd = command_list->content;
 	cmd->in_fd = pipe_fds[READ];
 	cmd->out_fd = fds[1];
 	cmd->pid = ft_fork(cmd->valid);

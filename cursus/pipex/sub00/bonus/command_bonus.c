@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:27:28 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 10:38:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 11:17:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ t_command	*create_command(char *cmd_str, char **env)
 	int			status;
 
 	cmd = ft_calloc(1, sizeof(t_command));
+	malloc_check(cmd);
 	cmd->cmd_args = get_args(cmd_str, env);
 	cmd->pid = -1;
 	cmd->valid = 0;
 	cmd->in_fd = -1;
 	cmd->out_fd = -1;
-	// cmd->pipe_fds[0] = 0;
-	// cmd->pipe_fds[1] = 0;
 	cmd->w_status = &status;
 	return (cmd);
 }

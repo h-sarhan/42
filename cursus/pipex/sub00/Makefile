@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/22 05:44:31 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/22 11:31:22 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,8 +63,8 @@ $(LIBFT): $(LIBFT_OBJS)
 %.o : %.c
 	$(CC) $(CFLAGS) -c $^ -o $@
 
-bonus: $(BONUS_OBJS) $(PRINTF) $(LIBFT)
-	$(CC) $(CFLAGS) $^ -o $(NAME)
+bonus: $(OBJS) $(BONUS_OBJS) $(PRINTF) $(LIBFT)
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(PRINTF) $(LIBFT) -o $(NAME)
 
 norm:
 	norminette $(SRCS) $(BONUS_SRCS) $(LIBFT_SRCS) $(PRINTF_SRCS)

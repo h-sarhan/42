@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 10:50:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 22:46:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 11:12:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*get_full_path(char *bin, char **env)
 // Prints an error message and exits if the number of arguments is incorrect
 void	check_arg_count(int argc)
 {
-	if (argc != 5)
+	if (argc < 5)
 	{
 		ft_putendl_fd("Wrong number of arguments", 2);
 		exit(EXIT_FAILURE);
