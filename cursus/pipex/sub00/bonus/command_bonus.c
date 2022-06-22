@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:27:28 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 06:35:08 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 07:31:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env)
 	exit(1);
 }
 
-void	run_middle_command(t_command *cmd, int *pipe_fds, int *fds, char **env)
+void	run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env)
 {
 	close_fd(fds[0]);
 	close_fd(fds[1]);

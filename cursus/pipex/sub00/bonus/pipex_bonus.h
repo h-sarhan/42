@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 06:14:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 06:48:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_command t_command;
 // command.c
 t_command	*create_command(char *cmd_str, char **env);
 void		run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env);
-void		run_middle_cmd(t_command *cmd);
+void		run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env);
 void		run_last_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env);
 void		free_cmd(void *cmd);
 
