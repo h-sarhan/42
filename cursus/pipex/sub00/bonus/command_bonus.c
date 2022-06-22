@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:27:28 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 09:50:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 10:38:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_command	*create_command(char *cmd_str, char **env)
 {
 	t_command	*cmd;
+	int			status;
 
 	cmd = ft_calloc(1, sizeof(t_command));
 	cmd->cmd_args = get_args(cmd_str, env);
@@ -24,7 +25,7 @@ t_command	*create_command(char *cmd_str, char **env)
 	cmd->out_fd = -1;
 	// cmd->pipe_fds[0] = 0;
 	// cmd->pipe_fds[1] = 0;
-	cmd->w_status = NULL;
+	cmd->w_status = &status;
 	return (cmd);
 }
 

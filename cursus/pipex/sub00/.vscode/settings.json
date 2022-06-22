@@ -16,5 +16,6 @@
 			"binaryPath": "/Users/hsarhan/42/cursus/pipex/sub00/pipex",
 			"binaryArgs": []
 		}
-	]
+	],
+	"C_Cpp.intelliSenseEngineFallback": "Enabled"
 }

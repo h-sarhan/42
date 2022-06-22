@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 09:59:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 10:37:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,20 @@ void	pipex_cleanup(int *pipe_fds, int *fds, t_list *commands)
 // with an appropriate exit code
 void	wait_and_exit(int *pipe_fds, int *fds, t_list *commands)
 {
-	int			w_status;
 	t_command	*last_cmd;
 	int			last_cmd_valid;
+	int			w_status;
 
 	(void)pipe_fds;
 	close_fd(pipe_fds[WRITE]);
+	close_fd(pipe_fds[READ]);
+	close_fd(fds[0]);
+	close_fd(fds[1]);
 	last_cmd = ft_lstlast(commands)->content;
 	last_cmd_valid = last_cmd->valid;
 	
 	ft_lstiter(commands, wait_cmd);
+	w_status = *last_cmd->w_status;
 	ft_lstclear(&commands, free_cmd);
 	if (fds[1] == -1)
 		exit(1);
@@ -79,6 +83,7 @@ int	main(int argc, char **argv, char **env)
 	cmd = create_command(argv[argc - 2], env);
 	cmd->valid = command_check(cmd->cmd_args, argv[argc - 2], fds[1]);
 	ft_lstadd_back(&commands, ft_lstnew(cmd));
+
 	ft_pipe(pipe_fds);
 	cmd = commands->content;
  	cmd->pid = ft_fork(cmd->valid);
