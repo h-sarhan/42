@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 09:13:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 09:59:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,14 @@ void	wait_and_exit(int *pipe_fds, int *fds, t_list *commands)
 	int			w_status;
 	t_command	*last_cmd;
 	int			last_cmd_valid;
-	// int			pids[2];
+
 	(void)pipe_fds;
-	// pids[0] = ((t_command *)commands->content)->pid;
-	// pids[1] = ((t_command *)ft_lstlast(commands)->content)->pid;
+	close_fd(pipe_fds[WRITE]);
 	last_cmd = ft_lstlast(commands)->content;
 	last_cmd_valid = last_cmd->valid;
-	// close_fd(pipe_fds[WRITE]);
-	// close_fd(pipe_fds[READ]);
-	// close_fd(fds[1]);
-	// close_fd(fds[0]);
+	
 	ft_lstiter(commands, wait_cmd);
 	ft_lstclear(&commands, free_cmd);
-	// pipex_cleanup(pipe_fds, fds, commands);
-	// if (pids[0] != -1)
-	// 	waitpid(pids[0], &w_status, 0);
-	// if (pids[1] != -1)
-	// 	waitpid(last_cmd->pid, &w_status, 0);
 	if (fds[1] == -1)
 		exit(1);
 	if (!last_cmd_valid)
@@ -65,7 +56,7 @@ int	main(int argc, char **argv, char **env)
 	int			fds[2];
 	int			pipe_fds[2];
 	int			i;
-	
+
 	(void)argc;
 	// TODO: CHECK ARGS WITH MULTIPLE PIPES
 	// FOR NOW ASSUME PERFECT INPUT
@@ -90,21 +81,27 @@ int	main(int argc, char **argv, char **env)
 	ft_lstadd_back(&commands, ft_lstnew(cmd));
 	ft_pipe(pipe_fds);
 	cmd = commands->content;
-	cmd->pid = ft_fork(cmd->valid);
+ 	cmd->pid = ft_fork(cmd->valid);
+	cmd->in_fd = fds[0];
+	cmd->out_fd = pipe_fds[WRITE];
 	if (cmd->pid == 0)
 		run_first_cmd(cmd, pipe_fds, fds, env);
 	commands = commands->next;
-
-	dup2(pipe_fds[READ], STDIN);
-	while (commands->next->next != NULL)
+	while (commands->next != NULL)
 	{
+		close_fd(pipe_fds[WRITE]);
+		cmd = commands->content;
+		cmd->in_fd = pipe_fds[READ];
 		ft_pipe(pipe_fds);
+		cmd->out_fd = pipe_fds[WRITE];
 		cmd->pid = ft_fork(cmd->valid);
 		if (cmd->pid == 0)
 			run_middle_cmd(cmd, pipe_fds, fds, env);
 		commands = commands->next;
 	}
-	cmd = commands->next->content;
+	cmd = commands->content;
+	cmd->in_fd = pipe_fds[READ];
+	cmd->out_fd = fds[1];
 	cmd->pid = ft_fork(cmd->valid);
 	if (cmd->pid == 0)
 		run_last_cmd(cmd, pipe_fds, fds, env);

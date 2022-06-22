@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:27:28 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 09:08:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 09:50:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_command	*create_command(char *cmd_str, char **env)
 	cmd->cmd_args = get_args(cmd_str, env);
 	cmd->pid = -1;
 	cmd->valid = 0;
+	cmd->in_fd = -1;
+	cmd->out_fd = -1;
 	// cmd->pipe_fds[0] = 0;
 	// cmd->pipe_fds[1] = 0;
 	cmd->w_status = NULL;
@@ -40,8 +42,8 @@ void	run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env)
 	if (fds[0] == -1)
 		dup_fd(null_fd, STDIN);
 	else
-		dup_fd(fds[0], STDIN);
-	dup_fd(pipe_fds[WRITE], STDOUT);
+		dup_fd(cmd->in_fd, STDIN);
+	dup_fd(cmd->out_fd, STDOUT);
 	if (fds[0] != -1)
 		execve(cmd->cmd_args[0], cmd->cmd_args, env);
 	close_fd(pipe_fds[WRITE]);
@@ -57,8 +59,8 @@ void	run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env)
 {
 	close_fd(fds[0]);
 	close_fd(fds[1]);
-	close(pipe_fds[READ]);
-	dup_fd(pipe_fds[WRITE], STDOUT);
+	dup_fd(cmd->in_fd, STDIN);
+	dup_fd(cmd->out_fd, STDOUT);
 	execve(cmd->cmd_args[0], cmd->cmd_args, env);
 	close_fd(pipe_fds[WRITE]);
 	// FREE COMMANDS HERE
@@ -72,8 +74,8 @@ void	run_last_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env)
 {
 	close_fd(pipe_fds[WRITE]);
 	close_fd(fds[0]);
-	// dup_fd(pipe_fds[READ], STDIN);
-	dup_fd(fds[1], STDOUT);
+	dup_fd(cmd->in_fd, STDIN);
+	dup_fd(cmd->out_fd, STDOUT);
 	if (fds[1] != -1)
 		execve(cmd->cmd_args[0], cmd->cmd_args, env);
 	close_fd(pipe_fds[READ]);

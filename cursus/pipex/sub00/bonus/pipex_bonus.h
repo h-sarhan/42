@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 08:32:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 09:43:52 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ struct s_command {
 	int		pid;
 	int		valid;
 	// int		pipe_fds[2];
+	int		in_fd;
+	int		out_fd;
 	int		*w_status;
 };
 
