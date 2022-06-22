@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:27:28 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 06:15:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/22 06:35:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,22 @@ void	run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env)
 	close_fd(pipe_fds[WRITE]);
 	close_fd(fds[0]);
 	close_fd(null_fd);
+	// FREE COMMANDS HERE
 	// free_split_array(cmd_args[0]);
+	// free_split_array(cmd_args[1]);
+	exit(1);
+}
+
+void	run_middle_command(t_command *cmd, int *pipe_fds, int *fds, char **env)
+{
+	close_fd(fds[0]);
+	close_fd(fds[1]);
+	dup_fd(pipe_fds[READ], STDIN);
+	dup_fd(pipe_fds[WRITE], STDOUT);
+	execve(cmd->cmd_args[0], cmd->cmd_args, env);
+	close_fd(pipe_fds[READ]);
+	close_fd(pipe_fds[WRITE]);
+	// FREE COMMANDS HERE
 	// free_split_array(cmd_args[1]);
 	exit(1);
 }
@@ -61,6 +76,7 @@ void	run_last_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env)
 		execve(cmd->cmd_args[0], cmd->cmd_args, env);
 	close_fd(pipe_fds[READ]);
 	close_fd(fds[1]);
+	// FREE COMMANDS HERE
 	// free_split_array(cmd_args[1]);
 	exit(1);
 }
@@ -68,7 +84,8 @@ void	run_last_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env)
 void	free_cmd(void *cmd)
 {
 	t_command	*command;
-	
+
 	command = cmd;
 	free_split_array(command->cmd_args);
+	free(command);
 }
