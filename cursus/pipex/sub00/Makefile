@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/23 15:38:09 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/23 15:43:53 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,4 +63,4 @@ fclean: clean
 	
 re: fclean $(NAME)
 
-.PHONY:  norm clean fclean re all
+.PHONY:  norm clean fclean re all bonus
