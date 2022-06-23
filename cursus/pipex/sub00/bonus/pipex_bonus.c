@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/23 14:16:47 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:42:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,29 @@ t_list	*create_command_list(int argc, char **argv, int *fds)
 	return (command_list);
 }
 
-void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds)
+void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds, t_list *cmds)
 {
 	cmd->pid = ft_fork(cmd->valid);
 	cmd->in_fd = fds[0];
 	cmd->out_fd = pipe_fds[WRITE];
 	if (cmd->pid == 0)
-		run_first_cmd(cmd, pipe_fds, fds);
+		run_first_cmd(cmd, pipe_fds, fds, cmds);
 }
 
-t_list	*handle_mid_cmds(t_list *cmd_list, int *pipe_fds, int *fds)
+t_list	*handle_mid_cmds(t_list *cmd_list, int *pipes, int *fds, t_list *cmds)
 {
 	t_command	*cmd;
 
 	while (cmd_list->next != NULL)
 	{
-		close_fd(pipe_fds[WRITE]);
+		close_fd(pipes[WRITE]);
 		cmd = cmd_list->content;
-		cmd->in_fd = pipe_fds[READ];
-		ft_pipe(pipe_fds);
-		cmd->out_fd = pipe_fds[WRITE];
+		cmd->in_fd = pipes[READ];
+		ft_pipe(pipes);
+		cmd->out_fd = pipes[WRITE];
 		cmd->pid = ft_fork(cmd->valid);
 		if (cmd->pid == 0)
-			run_middle_cmd(cmd, pipe_fds, fds);
+			run_middle_cmd(cmd, pipes, fds, cmds);
 		cmd_list = cmd_list->next;
 	}
 	return (cmd_list);

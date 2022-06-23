@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:00:11 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/23 14:13:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:42:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	main(int argc, char **argv)
 	command_list = create_command_list(argc, argv, fds);
 	first = command_list;
 	ft_pipe(pipe_fds);
-	handle_first_cmd(command_list->content, fds, pipe_fds);
+	handle_first_cmd(command_list->content, fds, pipe_fds, command_list);
 	command_list = command_list->next;
-	command_list = handle_mid_cmds(command_list, pipe_fds, fds);
+	command_list = handle_mid_cmds(command_list, pipe_fds, fds, command_list);
 	cmd = command_list->content;
 	cmd->in_fd = pipe_fds[READ];
 	cmd->out_fd = fds[1];
 	cmd->pid = ft_fork(cmd->valid);
 	if (cmd->pid == 0)
-		run_last_cmd(cmd, pipe_fds, fds);
+		run_last_cmd(cmd, pipe_fds, fds, command_list);
 	wait_and_exit(pipe_fds, fds, first);
 }
