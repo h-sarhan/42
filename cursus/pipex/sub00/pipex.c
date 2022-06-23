@@ -12,16 +12,6 @@
 
 #include "pipex.h"
 
-// void	wait_in_reverse(t_list *cmd_list)
-// {
-// 	t_command	*cmd;
-
-// 	cmd = cmd_list->content;
-// 	if (cmd_list->next != NULL)
-// 		wait_in_reverse(cmd_list->next);
-// 	wait_cmd(cmd);
-// }
-
 // Waits for the given pids and exits the program 
 // with an appropriate exit code
 void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list)
@@ -29,19 +19,14 @@ void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list)
 	t_command	*last_cmd;
 	int			last_cmd_valid;
 	int			w_status;
-	// t_command	*first_cmd;
 
 	close_fd(pipe_fds[READ]);
 	close_fd(fds[0]);
 	close_fd(fds[1]);
-	// first_cmd = command_list->content;
 	last_cmd = ft_lstlast(command_list)->content;
 	last_cmd_valid = last_cmd->valid;
 	ft_lstiter(command_list, wait_cmd);
-	// wait_in_reverse(command_list);
 	w_status = last_cmd->w_status;
-	// waitpid(first_cmd->pid, NULL, 0);
-	// waitpid(last_cmd->pid, &w_status, 0);
 	ft_lstclear(&command_list, free_cmd);
 	if (fds[1] == -1)
 		exit(1);
@@ -63,8 +48,6 @@ t_list	*create_command_list(int argc, char **argv, int *fds)
 	while (i < argc - 1)
 	{
 		cmd = create_command(argv[i]);
-		// ft_putstr_fd("CREATING COMMAND: ", 2);
-		// ft_putendl_fd(cmd->cmd_args[0], 2);
 		if (i == 2)
 			cmd->valid = command_check(cmd->cmd_args, argv[i], fds[0]);
 		else if (i == argc - 2)
@@ -87,8 +70,6 @@ void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds, t_list *cmds)
 	cmd->pid = ft_fork(cmd->valid);
 	if (cmd->pid == 0)
 		run_first_cmd(cmd, pipe_fds, fds, cmds);
-	// close_fd(cmd->out_fd);
-	// close_fd(pipe_fds[READ]);
 }
 
 // Creates a child process for all the middle commands and runs those commands
@@ -102,10 +83,7 @@ t_list	*handle_mid_cmds(t_list *cmd_list, int *pipes, int *fds, t_list *cmds)
 		cmd = cmd_list->content;
 		cmd->in_fd = pipes[READ];
 		ft_pipe(pipes);
-
 		cmd->out_fd = pipes[WRITE];
-		// ft_putstr_fd("RUNNING COMMAND: ", 2);
-		// ft_putendl_fd(cmd->cmd_args[0], 2);
 		cmd->pid = ft_fork(cmd->valid);
 		if (cmd->pid == 0)
 			run_middle_cmd(cmd, pipes, fds, cmds);
@@ -113,6 +91,5 @@ t_list	*handle_mid_cmds(t_list *cmd_list, int *pipes, int *fds, t_list *cmds)
 		close_fd(cmd->in_fd);
 	}
 	close_fd(pipes[WRITE]);
-	// close_fd(pipes[READ]);
 	return (cmd_list);
 }
