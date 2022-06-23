@@ -9,7 +9,7 @@
  - Bash output file:
 total 28
 drwxr-xr-x  6 root root  204 Jun 22 06:22 .
-drwxr-xr-x 12 root root  408 Jun 22 12:51 ..
+drwxr-xr-x 12 root root  408 Jun 23  2022 ..
 -rw-r--r--  1 root root 4657 Jun 22 06:22 main.c
 -rw-r--r--  1 root root  833 Jun 22 06:22 runTest.c
 -rw-r--r--  1 root root 8492 Jun 22 06:22 test.c
@@ -19,7 +19,7 @@ drwxr-xr-x 12 root root  408 Jun 22 12:51 ..
  - Pipex output file:
 total 28
 drwxr-xr-x  6 root root  204 Jun 22 06:22 .
-drwxr-xr-x 11 root root  374 Jun 22 12:51 ..
+drwxr-xr-x 11 root root  374 Jun 23  2022 ..
 -rw-r--r--  1 root root 4657 Jun 22 06:22 main.c
 -rw-r--r--  1 root root  833 Jun 22 06:22 runTest.c
 -rw-r--r--  1 root root 8492 Jun 22 06:22 test.c
@@ -48,7 +48,7 @@ File permissions of output files match
  - Bash output file:
 total 28
 drwxr-xr-x  6 root root  204 Jun 22 06:22 .
-drwxr-xr-x 13 root root  442 Jun 22 12:51 ..
+drwxr-xr-x 13 root root  442 Jun 23 10:34 ..
 -rw-r--r--  1 root root 4657 Jun 22 06:22 main.c
 -rw-r--r--  1 root root  833 Jun 22 06:22 runTest.c
 -rw-r--r--  1 root root 8492 Jun 22 06:22 test.c
@@ -58,7 +58,7 @@ drwxr-xr-x 13 root root  442 Jun 22 12:51 ..
  - Pipex output file:
 total 28
 drwxr-xr-x  6 root root  204 Jun 22 06:22 .
-drwxr-xr-x 12 root root  408 Jun 22 12:51 ..
+drwxr-xr-x 12 root root  408 Jun 23 10:34 ..
 -rw-r--r--  1 root root 4657 Jun 22 06:22 main.c
 -rw-r--r--  1 root root  833 Jun 22 06:22 runTest.c
 -rw-r--r--  1 root root 8492 Jun 22 06:22 test.c

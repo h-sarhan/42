@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:19 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 12:03:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:34:12 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <sys/errno.h>
+
+extern char **environ;
 
 # define READ 0
 # define WRITE 1
@@ -38,7 +40,7 @@ void	ft_free(void *mem);
 void	dup_fd(int fd_1, int fd_2);
 void	close_fd(int fd);
 int		open_file(char *file_path, int outfile);
-char	**get_args(char *arg, char **env);
+char	**get_args(char *arg);
 
 // error_handling.c
 void	malloc_check(void *mem);
@@ -62,19 +64,19 @@ struct s_command {
 typedef struct s_command t_command;
 
 // command.c
-t_command	*create_command(char *cmd_str, char **env);
-void		run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env);
-void		run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env);
-void		run_last_cmd(t_command *cmd, int *pipe_fds, int *fds, char **env);
+t_command	*create_command(char *cmd_str);
+void		run_first_cmd(t_command *cmd, int *pipe_fds, int *fds);
+void		run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds);
+void		run_last_cmd(t_command *cmd, int *pipe_fds, int *fds);
 void		wait_cmd(void *cmd);
 void		free_cmd(void *cmd);
 
 void	pipex_cleanup(int *pipe_fds, int *fds, t_list *command_list);
 void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list);
 
-t_list	*create_command_list(int argc, char **argv, int *fds, char **env);
-void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds, char **env);
-t_list	*handle_mid_cmds(t_list *cmd_list, int *pipe_fds, int *fds, char **env);
+t_list	*create_command_list(int argc, char **argv, int *fds);
+void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds);
+t_list	*handle_mid_cmds(t_list *cmd_list, int *pipe_fds, int *fds);
 
 
 #endif

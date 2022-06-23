@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/22 19:47:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:16:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list)
 	exit(WEXITSTATUS(w_status));
 }
 
-t_list	*create_command_list(int argc, char **argv, int *fds, char **env)
+t_list	*create_command_list(int argc, char **argv, int *fds)
 {
 	t_list		*command_list;
 	t_command	*cmd;
@@ -57,7 +57,7 @@ t_list	*create_command_list(int argc, char **argv, int *fds, char **env)
 	i = 2;
 	while (i < argc - 1)
 	{
-		cmd = create_command(argv[i], env);
+		cmd = create_command(argv[i]);
 		if (i == 2)
 			cmd->valid = command_check(cmd->cmd_args, argv[i], fds[0]);
 		else if (i == argc - 2)
@@ -72,16 +72,16 @@ t_list	*create_command_list(int argc, char **argv, int *fds, char **env)
 	return (command_list);
 }
 
-void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds, char **env)
+void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds)
 {
 	cmd->pid = ft_fork(cmd->valid);
 	cmd->in_fd = fds[0];
 	cmd->out_fd = pipe_fds[WRITE];
 	if (cmd->pid == 0)
-		run_first_cmd(cmd, pipe_fds, fds, env);
+		run_first_cmd(cmd, pipe_fds, fds);
 }
 
-t_list	*handle_mid_cmds(t_list *cmd_list, int *pipe_fds, int *fds, char **env)
+t_list	*handle_mid_cmds(t_list *cmd_list, int *pipe_fds, int *fds)
 {
 	t_command	*cmd;
 
@@ -94,7 +94,7 @@ t_list	*handle_mid_cmds(t_list *cmd_list, int *pipe_fds, int *fds, char **env)
 		cmd->out_fd = pipe_fds[WRITE];
 		cmd->pid = ft_fork(cmd->valid);
 		if (cmd->pid == 0)
-			run_middle_cmd(cmd, pipe_fds, fds, env);
+			run_middle_cmd(cmd, pipe_fds, fds);
 		cmd_list = cmd_list->next;
 	}
 	return (cmd_list);
