@@ -44,5 +44,8 @@ void	wait_cmd(void *cmd)
 	t_command	*command;
 
 	command = cmd;
+	// ft_putstr_fd("WAITING FOR CMD: ", 2);
+	// ft_putendl_fd(command->cmd_args[0], 2);
 	waitpid(command->pid, &command->w_status, 0);
 }
+

@@ -24,9 +24,15 @@ void	run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 	close_fd(pipe_fds[READ]);
 	close_fd(fds[1]);
 	if (fds[0] == -1)
+	{
 		dup_fd(null_fd, STDIN);
+		close_fd(cmd->in_fd);	
+	}
 	else
+	{
 		dup_fd(cmd->in_fd, STDIN);
+		close_fd(null_fd);	
+	}
 	dup_fd(cmd->out_fd, STDOUT);
 	if (fds[0] != -1)
 		execve(cmd->cmd_args[0], cmd->cmd_args, environ);
@@ -42,6 +48,7 @@ void	run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 {
 	close_fd(fds[0]);
 	close_fd(fds[1]);
+	close_fd(pipe_fds[READ]);
 	dup_fd(cmd->in_fd, STDIN);
 	dup_fd(cmd->out_fd, STDOUT);
 	execve(cmd->cmd_args[0], cmd->cmd_args, environ);
@@ -53,7 +60,7 @@ void	run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 // Runs the last command
 void	run_last_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 {
-	close_fd(pipe_fds[WRITE]);
+	// close_fd(pipe_fds[WRITE]);
 	close_fd(fds[0]);
 	dup_fd(cmd->in_fd, STDIN);
 	dup_fd(cmd->out_fd, STDOUT);

@@ -49,6 +49,9 @@ void	close_fd(int fd)
 			exit(EXIT_FAILURE);
 		}
 	}
+	// ft_putstr_fd("CLOSING FD: ", 2);
+	// ft_putnbr_fd(fd, 2);
+	// ft_putchar_fd('\n', 2);
 }
 
 // Opens a file either for writing or reading and handles errors.

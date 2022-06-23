@@ -29,6 +29,8 @@ int	main(int argc, char **argv)
 	first = command_list;
 	ft_pipe(pipe_fds);
 	handle_first_cmd(command_list->content, fds, pipe_fds, first);
+	// close_fd(pipe_fds[READ]);
+	// close_fd(pipe_fds[WRITE]);
 	command_list = command_list->next;
 	command_list = handle_mid_cmds(command_list, pipe_fds, fds, first);
 	cmd = command_list->content;

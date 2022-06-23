@@ -58,6 +58,11 @@ void	ft_pipe(int *pipe_fds)
 		perror("pipex");
 		exit(EXIT_FAILURE);
 	}
+	// ft_putendl_fd("CREATING FDS: ", 2);
+	// ft_putnbr_fd(pipe_fds[0], 2);
+	// ft_putstr_fd("    ", 2);
+	// ft_putnbr_fd(pipe_fds[1], 2);
+	// ft_putchar_fd('\n', 2);
 }
 
 // Wrapper around fork that handles errors

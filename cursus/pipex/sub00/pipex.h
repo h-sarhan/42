@@ -80,7 +80,6 @@ void		handle_first_cmd(t_command *cmd, int *fds, int *pipes,
 				t_list *cmds);
 t_list		*handle_mid_cmds(t_list *cmd_list, int *pipes,
 				int *fds, t_list *cmds);
-void		pipex_cleanup(int *pipe_fds, int *fds, t_list *command_list);
 void		wait_and_exit(int *pipe_fds, int *fds, t_list *command_list);
 
 #endif
