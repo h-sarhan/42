@@ -37,6 +37,7 @@ void	run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 	exit(1);
 }
 
+// Runs a command in the middle
 void	run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 {
 	close_fd(fds[0]);
@@ -49,7 +50,7 @@ void	run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 	exit(1);
 }
 
-// Runs the command to the right of the pipe
+// Runs the last command
 void	run_last_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 {
 	close_fd(pipe_fds[WRITE]);

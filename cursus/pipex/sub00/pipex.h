@@ -13,14 +13,12 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "printf/ft_printf.h"
 # include "libft/libft.h"
 # include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
 # include <sys/wait.h>
 # include <sys/errno.h>
-
 
 # define READ 0
 # define WRITE 1
@@ -31,8 +29,8 @@
 char		*ft_strjoinfree(char *s1, char *s2, int f);
 void		free_split_array(char **arr);
 void		trim_args(char **args);
-void		check_arg_count(int argc);
 char		*get_full_path(char *bin, char **env);
+void		check_arg_count(int argc);
 
 // utils2.c
 void		ft_free(void *mem);
@@ -51,7 +49,11 @@ int			ft_fork(int cmd_valid);
 // split_args.c
 char		**split_args(char const *s, char c);
 
+// Gloabal variable that stores environment variables
 extern char					**environ;
+
+// Struct that stores the arguments, process id, validity,
+// in_fd, out_fd, and wait status of each command
 struct s_command {
 	char	**cmd_args;
 	int		pid;
@@ -64,17 +66,21 @@ typedef struct s_command	t_command;
 
 // command.c
 t_command	*create_command(char *cmd_str);
+void		wait_cmd(void *cmd);
+void		free_cmd(void *cmd);
+
+// run_commands.c
 void		run_first_cmd(t_command *cmd, int *pipes, int *fds, t_list *cmds);
 void		run_middle_cmd(t_command *cmd, int *pipes, int *fds, t_list *cmds);
 void		run_last_cmd(t_command *cmd, int *pipes, int *fds, t_list *cmds);
-void		wait_cmd(void *cmd);
-void		free_cmd(void *cmd);
-void		pipex_cleanup(int *pipe_fds, int *fds, t_list *command_list);
-void		wait_and_exit(int *pipe_fds, int *fds, t_list *command_list);
+
+// pipex.c
 t_list		*create_command_list(int argc, char **argv, int *fds);
 void		handle_first_cmd(t_command *cmd, int *fds, int *pipes,
 				t_list *cmds);
 t_list		*handle_mid_cmds(t_list *cmd_list, int *pipes,
 				int *fds, t_list *cmds);
+void		pipex_cleanup(int *pipe_fds, int *fds, t_list *command_list);
+void		wait_and_exit(int *pipe_fds, int *fds, t_list *command_list);
 
 #endif

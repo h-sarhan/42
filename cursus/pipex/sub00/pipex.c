@@ -46,6 +46,7 @@ void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list)
 	exit(WEXITSTATUS(w_status));
 }
 
+// Creates a linked list of commands
 t_list	*create_command_list(int argc, char **argv, int *fds)
 {
 	t_list		*command_list;
@@ -72,6 +73,7 @@ t_list	*create_command_list(int argc, char **argv, int *fds)
 	return (command_list);
 }
 
+// Creates a child process for the first command and runs that command
 void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds, t_list *cmds)
 {
 	cmd->pid = ft_fork(cmd->valid);
@@ -81,6 +83,7 @@ void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds, t_list *cmds)
 		run_first_cmd(cmd, pipe_fds, fds, cmds);
 }
 
+// Creates a child process for all the middle commands and runs those commands
 t_list	*handle_mid_cmds(t_list *cmd_list, int *pipes, int *fds, t_list *cmds)
 {
 	t_command	*cmd;

@@ -12,7 +12,6 @@
 
 #include "pipex.h"
 
-// TODO: Check leaks with errors
 // Replicates the behaviour of 
 // `< infile cmd1 | cmd2 | cmd3 | ... | cmdN > outfile` in bash
 int	main(int argc, char **argv)

@@ -60,7 +60,7 @@ void	ft_pipe(int *pipe_fds)
 	}
 }
 
-// Wrapper arounf fork that handles errors
+// Wrapper around fork that handles errors
 int	ft_fork(int command_valid)
 {
 	int	pid;

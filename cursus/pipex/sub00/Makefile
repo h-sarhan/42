@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/23 14:59:37 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/23 15:38:09 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,24 +24,15 @@ LIBFT_SRCS =	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 				
 LIBFT_SRCS := $(addprefix libft/, $(LIBFT_SRCS))
 
-PRINTF_SRCS =  conversion.c count_digits.c ft_printf.c \
-				print_num_conversions.c print_numeric.c print_str_conversions.c \
-				print_utils.c
-				
-PRINTF_SRCS := $(addprefix printf/, $(PRINTF_SRCS))
-
-
 SRCS =  pipex.c utils.c utils2.c \
 		error_handling.c split_args.c command.c \
 		main.c run_commands.c
 
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
-PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)
 
 OBJS := $(SRCS:%.c=%.o)
 
 LIBFT = libft.a
-PRINTF = libftprintf.a
 
 CC = cc
 
@@ -50,11 +41,8 @@ NAME = pipex
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(PRINTF) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $^ -o $@
-
-$(PRINTF): $(PRINTF_OBJS)
-	@ar -rc $(PRINTF) $(PRINTF_OBJS)
 
 $(LIBFT): $(LIBFT_OBJS)
 	@ar -rc $(LIBFT) $(LIBFT_OBJS)
@@ -63,13 +51,15 @@ $(LIBFT): $(LIBFT_OBJS)
 	$(CC) $(CFLAGS) -c $^ -o $@
 
 norm:
-	norminette $(SRCS) $(LIBFT_SRCS) $(PRINTF_SRCS) libft/libft.h printf/ft_printf.h pipex.h
+	norminette $(SRCS) $(LIBFT_SRCS) libft/libft.h  pipex.h
+
+bonus: $(NAME)
 
 clean:
-	@rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS)
+	@rm -f $(OBJS) $(LIBFT_OBJS)
 
 fclean: clean
-	@rm -f $(NAME) $(LIBFT) $(PRINTF)
+	@rm -f $(NAME) $(LIBFT)
 	
 re: fclean $(NAME)
 

@@ -12,6 +12,7 @@
 
 #include "pipex.h"
 
+// Creates a command struct
 t_command	*create_command(char *cmd_str)
 {
 	t_command	*cmd;
@@ -27,6 +28,7 @@ t_command	*create_command(char *cmd_str)
 	return (cmd);
 }
 
+// Frees a command
 void	free_cmd(void *cmd)
 {
 	t_command	*command;
@@ -36,6 +38,7 @@ void	free_cmd(void *cmd)
 	free(command);
 }
 
+// Waits for a command's child process
 void	wait_cmd(void *cmd)
 {
 	t_command	*command;
