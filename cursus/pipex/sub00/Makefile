@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/22 12:02:22 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/23 14:59:37 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,24 +30,22 @@ PRINTF_SRCS =  conversion.c count_digits.c ft_printf.c \
 				
 PRINTF_SRCS := $(addprefix printf/, $(PRINTF_SRCS))
 
-SRCS = pipex.c utils.c utils2.c error_handling.c split_args.c
 
-BONUS_SRCS = bonus/pipex_bonus.c bonus/utils_bonus.c bonus/utils2_bonus.c \
-			 bonus/error_handling_bonus.c bonus/split_args_bonus.c bonus/command_bonus.c \
-			 bonus/main_bonus.c bonus/run_commands_bonus.c
+SRCS =  pipex.c utils.c utils2.c \
+		error_handling.c split_args.c command.c \
+		main.c run_commands.c
 
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)
 
 OBJS := $(SRCS:%.c=%.o)
-BONUS_OBJS := $(BONUS_SRCS:%.c=%.o)
 
 LIBFT = libft.a
 PRINTF = libftprintf.a
 
-CC = gcc
+CC = cc
 
-CFLAGS = -Werror -Wextra -Wall -g3
+CFLAGS = -Werror -Wextra -Wall
 NAME = pipex
 
 all: $(NAME)
@@ -64,18 +62,15 @@ $(LIBFT): $(LIBFT_OBJS)
 %.o : %.c
 	$(CC) $(CFLAGS) -c $^ -o $@
 
-bonus: $(OBJS) $(BONUS_OBJS) $(PRINTF) $(LIBFT)
-	$(CC) $(CFLAGS) $(BONUS_OBJS) $(PRINTF) $(LIBFT) -o $(NAME)
-
 norm:
-	norminette $(SRCS) $(BONUS_SRCS) $(LIBFT_SRCS) $(PRINTF_SRCS)
+	norminette $(SRCS) $(LIBFT_SRCS) $(PRINTF_SRCS) libft/libft.h printf/ft_printf.h pipex.h
 
 clean:
-	@rm -f $(OBJS) $(BONUS_OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS)
+	@rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS)
 
 fclean: clean
 	@rm -f $(NAME) $(LIBFT) $(PRINTF)
 	
 re: fclean $(NAME)
 
-.PHONY: bonus norm clean fclean re all
+.PHONY:  norm clean fclean re all

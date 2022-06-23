@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:23:07 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 10:48:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:59:49 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/errno.h>
-
 
 # define SIZET_MAX 18446744073709551615UL 
 # define INT_MIN -2147483648 

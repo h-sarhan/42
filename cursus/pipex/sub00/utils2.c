@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:46:59 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/21 13:37:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:33:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ int	open_file(char *file_path, int outfile)
 // Also expands the binary of a command into its full path.
 // If the PATH variable cannot be found in the environment variables
 // then a default PATH compatible with most UNIX based systems will be used
-char	**get_args(char *arg, char **env)
+char	**get_args(char *arg)
 {
 	char	**cmd_args;
 	int		i;
+	char	**env;
 
+	env = environ;
 	cmd_args = split_args(arg, ' ');
 	malloc_check(cmd_args);
 	if (access(cmd_args[0], X_OK) == -1)
