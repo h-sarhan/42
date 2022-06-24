@@ -24,6 +24,7 @@
 # define WRITE 1
 # define STDOUT 1
 # define STDIN 0
+# define BUFFER_SIZE 100
 
 // utils.c
 char		*ft_strjoinfree(char *s1, char *s2, int f);

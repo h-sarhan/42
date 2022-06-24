@@ -53,19 +53,21 @@ void	close_fd(int fd)
 
 // Opens a file either for writing or reading and handles errors.
 // Returns a file descriptor
-int	open_file(char *file_path, int outfile)
+int	open_file(char *file_path, int file_type)
 {
 	int		mode;
 	int		fd;
 
 	fd = 1;
 	mode = R_OK;
-	if (outfile == 1)
+	if (file_type == 1)
 		mode = W_OK;
-	if (outfile == 0 && access(file_path, mode) == -1)
+	if (file_type == 0 && access(file_path, mode) == -1)
 		fd = -1;
-	else if (outfile == 1)
+	else if (file_type == 1)
 		fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (file_type == 3)
+		fd = open(file_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
 		fd = open(file_path, O_RDONLY);
 	if (fd == -1)
