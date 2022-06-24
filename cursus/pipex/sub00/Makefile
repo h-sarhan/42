@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/23 19:36:57 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/24 10:09:23 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,16 +24,20 @@ LIBFT_SRCS =	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 				
 LIBFT_SRCS := $(addprefix libft/, $(LIBFT_SRCS))
 
+GNL_SRCS = get_next_line.c get_next_line_utils.c
+GNL_SRCS := $(addprefix get_next_line/, $(GNL_SRCS))
+
 SRCS =  pipex.c utils.c utils2.c \
 		error_handling.c split_args.c command.c \
 		main.c run_commands.c
 
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 
+GNL_OBJS := $(GNL_SRCS:%.c=%.o)
+
 OBJS := $(SRCS:%.c=%.o)
 
 LIBFT = libft.a
-
 CC = cc
 
 CFLAGS = -Werror -Wextra -Wall -g3
@@ -41,7 +45,7 @@ NAME = pipex
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT) $(GNL_OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(LIBFT): $(LIBFT_OBJS)
@@ -51,15 +55,15 @@ $(LIBFT): $(LIBFT_OBJS)
 	$(CC) $(CFLAGS) -c $^ -o $@
 
 norm:
-	norminette $(SRCS) $(LIBFT_SRCS) libft/libft.h  pipex.h
+	norminette $(SRCS) $(LIBFT_SRCS) $(GNL_SRCS) libft/libft.h  pipex.h  get_next_line.h
 
 bonus: $(NAME)
 
 clean:
-	@rm -f $(OBJS) $(LIBFT_OBJS)
+	@rm -f $(OBJS) $(LIBFT_OBJS) $(GNL_OBJS) $(LIBFT)
 
 fclean: clean
-	@rm -f $(NAME) $(LIBFT)
+	@rm -f $(NAME)
 	
 re: fclean $(NAME)
 
