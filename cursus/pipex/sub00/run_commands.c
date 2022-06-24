@@ -40,6 +40,8 @@ void	run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 	close_fd(pipe_fds[WRITE]);
 	close_fd(fds[0]);
 	close_fd(null_fd);
+	close_fd(STDOUT);
+	close_fd(STDIN);
 	exit(1);
 }
 
@@ -68,5 +70,6 @@ void	run_last_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 	ft_lstclear(&cmds, free_cmd);
 	close_fd(pipe_fds[READ]);
 	close_fd(fds[1]);
+	close_fd(STDIN);
 	exit(1);
 }
