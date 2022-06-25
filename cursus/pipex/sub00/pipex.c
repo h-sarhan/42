@@ -74,7 +74,8 @@ void	handle_first_cmd(t_cmd *cmd, int *fds, int *pipe_fds, t_list *cmds)
 		run_first_cmd(cmd, pipe_fds, fds, cmds);
 }
 
-// Creates a child process for each of the middle commands and runs those commands
+// Creates a child process for each of the middle commands and runs
+// those commands
 t_list	*handle_mid_cmds(t_list *cmd_list, int *pipes, int *fds, t_list *cmds)
 {
 	t_cmd	*cmd;
