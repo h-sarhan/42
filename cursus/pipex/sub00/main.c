@@ -16,40 +16,26 @@
 // `< infile cmd1 | cmd2 | cmd3 | ... | cmdN > outfile` in bash
 int	main(int argc, char **argv)
 {
-	t_list		*command_list;
-	t_command	*cmd;
-	t_list		*first;
-	int			fds[2];
-	int			pipe_fds[2];
+	t_list	*command_list;
+	t_cmd	*cmd;
+	t_list	*first;
+	int		fds[2];
+	int		pipe_fds[2];
 
 	if (argc >= 2 && ft_strncmp(argv[1], "here_doc", 8) == 0)
-	{
-		ft_pipe(pipe_fds);
-		cmd = handle_here_doc(argc, argv, pipe_fds);
-		fds[0] = open_file("/dev/null", 0);
-		fds[1] = open_file(argv[argc - 1], 3);
-		command_list = create_command_list(argc, argv, fds, 1);
-		free_cmd(command_list->content);
-		command_list->content = cmd;
-		first = command_list;
-	}
+		command_list = handle_here_doc(argc, argv, pipe_fds, fds);
 	else
 	{
 		check_arg_count(argc);
 		fds[0] = open_file(argv[1], 0);
 		fds[1] = open_file(argv[argc - 1], 1);
 		command_list = create_command_list(argc, argv, fds, 0);
-		first = command_list;
 		ft_pipe(pipe_fds);
-		handle_first_cmd(command_list->content, fds, pipe_fds, first);
+		handle_first_cmd(command_list->content, fds, pipe_fds, command_list);
 	}
+	first = command_list;
 	command_list = command_list->next;
 	command_list = handle_mid_cmds(command_list, pipe_fds, fds, first);
 	cmd = command_list->content;
-	cmd->in_fd = pipe_fds[READ];
-	cmd->out_fd = fds[1];
-	cmd->pid = ft_fork(cmd->valid);
-	if (cmd->pid == 0)
-		run_last_cmd(cmd, pipe_fds, fds, first);
-	wait_and_exit(pipe_fds, fds, first);
+	handle_last_cmd(cmd, fds, pipe_fds, first);
 }
