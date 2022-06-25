@@ -76,11 +76,14 @@ void		run_middle_cmd(t_command *cmd, int *pipes, int *fds, t_list *cmds);
 void		run_last_cmd(t_command *cmd, int *pipes, int *fds, t_list *cmds);
 
 // pipex.c
-t_list		*create_command_list(int argc, char **argv, int *fds);
+t_list		*create_command_list(int argc, char **argv, int *fds, int hd);
 void		handle_first_cmd(t_command *cmd, int *fds, int *pipes,
 				t_list *cmds);
 t_list		*handle_mid_cmds(t_list *cmd_list, int *pipes,
 				int *fds, t_list *cmds);
 void		wait_and_exit(int *pipe_fds, int *fds, t_list *command_list);
+
+// here_doc.c
+t_command	*handle_here_doc(int argc, char **argv, int *pipe_fds);
 
 #endif

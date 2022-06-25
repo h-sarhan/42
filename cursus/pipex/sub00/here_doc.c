@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 10:14:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/24 13:31:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/25 12:29:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ t_command	*run_heredoc_cmd(char **argv, char *buff, int *cmd_pipes)
 	write(heredoc_pipes[WRITE], buff, ft_strlen(buff));
 	cmd = create_command(argv[3]);
 	cmd->valid = command_check(cmd->cmd_args, argv[3], 1);
-	ft_pipe(cmd_pipes);
 	cmd->pid = ft_fork(1);
 	if (cmd->pid == 0)
 	{
@@ -88,7 +87,7 @@ t_command	*run_heredoc_cmd(char **argv, char *buff, int *cmd_pipes)
 	}
 	close_fd(heredoc_pipes[WRITE]);
 	close_fd(heredoc_pipes[READ]);
-	close_fd(cmd_pipes[WRITE]);
+	// close_fd(cmd_pipes[WRITE]);
 	return (cmd);
 }
 
@@ -120,26 +119,27 @@ t_command	*run_heredoc_cmd1(char **argv, int *cmd_pipes, char *buff,
 	return (cmd1);
 }
 
-void	handle_here_doc(int argc, char **argv)
+t_command	*handle_here_doc(int argc, char **argv, int *cmd_pipes)
 {
 	char		*limiter;
 	char		*buff;
-	int			cmd_pipes[2];
-	t_command	*cmds[2];
+	// t_command	*cmds[2];
+	t_command		*cmd;
 
-	if (argc != 6)
+	if (argc < 6)
 	{
 		ft_putstr_fd("Wrong number of arguments", 2);
 		exit(EXIT_FAILURE);
 	}
 	limiter = argv[2];
 	buff = read_from_stdin(limiter);
-	cmds[0] = run_heredoc_cmd(argv, buff, cmd_pipes);
-	cmds[1] = run_heredoc_cmd1(argv, cmd_pipes, buff, cmds[0]);
+	cmd = run_heredoc_cmd(argv, buff, cmd_pipes);
+	// cmds[1] = run_heredoc_cmd1(argv, cmd_pipes, buff, cmds[0]);
 	ft_free(buff);
-	wait_cmd(cmds[0]);
-	wait_cmd(cmds[1]);
-	free_cmd(cmds[0]);
-	free_cmd(cmds[1]);
-	exit(EXIT_SUCCESS);
+	return (cmd);
+	// wait_cmd(cmds[0]);
+	// wait_cmd(cmds[1]);
+	// free_cmd(cmds[0]);
+	// free_cmd(cmds[1]);
+	// exit(EXIT_SUCCESS);
 }
