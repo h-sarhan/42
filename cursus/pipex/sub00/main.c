@@ -22,13 +22,27 @@ int	main(int argc, char **argv)
 	int			fds[2];
 	int			pipe_fds[2];
 
-	check_arg_count(argc);
-	fds[0] = open_file(argv[1], 0);
-	fds[1] = open_file(argv[argc - 1], 1);
-	command_list = create_command_list(argc, argv, fds);
-	first = command_list;
-	ft_pipe(pipe_fds);
-	handle_first_cmd(command_list->content, fds, pipe_fds, first);
+	if (argc >= 2 && ft_strncmp(argv[1], "here_doc", 8) == 0)
+	{
+		ft_pipe(pipe_fds);
+		cmd = handle_here_doc(argc, argv, pipe_fds);
+		fds[0] = open_file("/dev/null", 0);
+		fds[1] = open_file(argv[argc - 1], 3);
+		command_list = create_command_list(argc, argv, fds, 1);
+		free_cmd(command_list->content);
+		command_list->content = cmd;
+		first = command_list;
+	}
+	else
+	{
+		check_arg_count(argc);
+		fds[0] = open_file(argv[1], 0);
+		fds[1] = open_file(argv[argc - 1], 1);
+		command_list = create_command_list(argc, argv, fds, 0);
+		first = command_list;
+		ft_pipe(pipe_fds);
+		handle_first_cmd(command_list->content, fds, pipe_fds, first);
+	}
 	command_list = command_list->next;
 	command_list = handle_mid_cmds(command_list, pipe_fds, fds, first);
 	cmd = command_list->content;
