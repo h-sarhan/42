@@ -47,7 +47,7 @@ void	free_split_array(char **arr)
 	ft_free(arr);
 }
 
-// Trims the quotation marks from an argument
+// Trims the quotation marks from a list of arguments
 void	trim_args(char **args)
 {
 	int		i;

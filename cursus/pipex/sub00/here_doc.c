@@ -6,12 +6,15 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 10:14:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/25 15:34:53 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/25 16:09:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+// Resizes an array by mallocing an array of new_len
+// and copies all elements of the old array into the new array
+// Finally, the old array is freed
 void	*resize(char **arr, int old_len, int new_len)
 {
 	int		i;
@@ -35,6 +38,8 @@ void	*resize(char **arr, int old_len, int new_len)
 	return (new_arr);
 }
 
+// Reads from STDIN into a buffer until a limiter is found
+// Then the buffer is returned
 char	*read_from_stdin(char *limiter)
 {
 	char	*buff;
@@ -63,6 +68,7 @@ char	*read_from_stdin(char *limiter)
 	return (buff);
 }
 
+// Runs the first command followed by a here_doc
 t_cmd	*run_heredoc_cmd(char **argv, char *buff, int *cmd_pipes)
 {
 	int		heredoc_pipes[2];
@@ -92,7 +98,7 @@ t_cmd	*run_heredoc_cmd(char **argv, char *buff, int *cmd_pipes)
 	return (cmd);
 }
 
-// t_cmd	*handle_here_doc(int argc, char **argv, int *cmd_pipes)
+// Handles here_doc behaviour
 t_list	*handle_here_doc(int argc, char **argv, int *cmd_pipes, int *fds)
 {
 	char	*limiter;

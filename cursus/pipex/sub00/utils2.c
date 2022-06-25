@@ -78,7 +78,7 @@ int	open_file(char *file_path, int file_type)
 	return (fd);
 }
 
-// Splits cmd1 or cmd2 into arguments that can be used by execve.
+// Splits command strings like "wc -w" into arguments that can be used by execve.
 // Also expands the binary of a command into its full path.
 // If the PATH variable cannot be found in the environment variables
 // then a default PATH compatible with most UNIX based systems will be used

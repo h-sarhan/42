@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-// Creates a command struct
+// Creates and returns a command struct
 t_cmd	*create_command(char *cmd_str)
 {
 	t_cmd	*cmd;
