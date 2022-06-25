@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    error_handling_b.sh                                :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ael-bekk <ael-bekk <ael-bekk@student.13    +#+  +:+       +#+         #
+#    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/17 11:22:13 by ael-bekk          #+#    #+#              #
-#    Updated: 2022/02/17 17:18:10 by ael-bekk         ###   ########.fr        #
+#    Updated: 2022/06/25 13:46:16 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,23 +23,23 @@ WHITE="\033[1;37m"
 RESET="\033[0m"
 
 
-echo "\n\n\n\n${GREEN}test error handling on multi pipe:${RESET}"
-echo "$RED$l2$RESET"
+echo -e "\n\n\n\n${GREEN}test error handling on multi pipe:${RESET}"
+echo -e "$RED$l2$RESET"
 
 make fclean -C ..
 
-echo "${YELLOW}[make] :${RESET} your pipex: ${PURPLE}Bonus${RESET}"
+echo -e "${YELLOW}[make] :${RESET} your pipex: ${PURPLE}Bonus${RESET}"
 make bonus -C ..
-echo "$RED$l2$RESET"
+echo -e "$RED$l2$RESET"
 
 if ! [ -f "$1" ]
 then
-	echo "${YELLOW}Error :${RESET} No such file or directory: ${PURPLE}pipex${RESET}\n" >&2 ; exit
+	echo -e "${YELLOW}Error :${RESET} No such file or directory: ${PURPLE}pipex${RESET}\n" >&2 ; exit
 fi
 
-echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvfsbvsdd asd asd\n afdsvdsvasdqpkqwd ew edfsb\nlim2\nfdbdfbdfbfsbdfbqckqwxqwx qw \n qfqwodeqm domw	m	\tefeqc eqew cewx ewc ewc ewc wc ew" > in_file
-echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \n" > in_file1
-echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvfsbvsdd asd asd\n afdsvdsvasdqpkqwd ew edfsb\n" > in_file2
+echo -e "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvfsbvsdd asd asd\n afdsvdsvasdqpkqwd ew edfsb\nlim2\nfdbdfbdfbfsbdfbqckqwxqwx qw \n qfqwodeqm domw	m	\tefeqc eqew cewx ewc ewc ewc wc ew" > in_file
+echo -e "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \n" > in_file1
+echo -e "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvfsbvsdd asd asd\n afdsvdsvasdqpkqwd ew edfsb\n" > in_file2
 
 	timeout() {
 	    ( $1 "$2" "$3" "$4" "$5" 2> my_error ) & pid=$!
@@ -103,20 +103,20 @@ echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd 
 
 
 
-echo "${PURPLE}==============>Test 1${RESET}"
+echo -e "${PURPLE}==============>Test 1${RESET}"
 printf "${WHITE}\t< non_exist_input cat /dev/random | head -n 5                          		       : ${RESET}"
 timeout "$1" "in_fsdile" "cat /dev/random" "head -n 5" "outfile"
 find_smae_err=`cat my_error | grep -a "no such file or directory\|No such file or directory" | wc -l`
 if [ "$status" = "finished" ] && [ "$find_smae_err" -eq "1" ] 
     then
-    echo "${GREEN}[OK]${RESET}\n"
+    echo -e "${GREEN}[OK]${RESET}\n"
 else
-    echo "${RED}[KO]${RESET}\n"
+    echo -e "${RED}[KO]${RESET}\n"
 fi
 sleep 0.7
 
 
-	echo "${PURPLE}==============>Test 2${RESET}"
+	echo -e "${PURPLE}==============>Test 2${RESET}"
 	printf "${WHITE}\t< exist_input catds /dev/random | ls | wc -l                           		   : ${RESET}"
 	timeout_1 "$1" "in_file" "catds /dev/random" "ls" "wc -l" "outfile"
 	find_smae_err=`cat my_error | grep -a "command not found\|Command not found" | wc -l`
@@ -124,15 +124,15 @@ sleep 0.7
 	different=`diff outfile outfile2`
 	if [ "$status" = "finished" ] && [ "$find_smae_err" -eq "1" ] && [ "$different" = "" ] 
 		then
-		echo "${GREEN}[OK]${RESET}\n"
+		echo -e "${GREEN}[OK]${RESET}\n"
 	else
-		echo "${RED}[KO]${RESET}\n"
+		echo -e "${RED}[KO]${RESET}\n"
 	fi
 	sleep 0.7
 
 
 
-	echo "${PURPLE}==============>Test 3${RESET}"
+	echo -e "${PURPLE}==============>Test 3${RESET}"
 	printf "${WHITE}\t< non_exist_input cat /dev/random | wc | ls                            		   : ${RESET}"
 	timeout_1 "$1" "sdfin_file" "cat /dev/random" "wc" "ls" "outfile"
 	find_smae_err=`cat my_error | grep -a "no such file or directory\|No such file or directory" | wc -l`
@@ -141,13 +141,13 @@ sleep 0.7
 	different=`diff outfile outfile2`
 	if [ "$different" = "" ] && [ "$find_smae_err" -eq "1" ] && [ "$find_smae_err2" -eq "0" ] && [ "$different" = "" ]
 	    then
-	    echo "${GREEN}[OK]${RESET}\n"
+	    echo -e "${GREEN}[OK]${RESET}\n"
 	else
-	    echo "${RED}[KO]${RESET}\n"
+	    echo -e "${RED}[KO]${RESET}\n"
 	fi
 	sleep 0.7
 
-	echo "${PURPLE}==============>Test 4${RESET}"
+	echo -e "${PURPLE}==============>Test 4${RESET}"
 	printf "${WHITE}\t< exist_input csfat | wc -cl  | wasdc   |  grep 0  | sort | cat       		   : ${RESET}"
 	timeout_2 "$1" "in_file" "cewfat" "wc -cl" "wwefc" "grep 0" "so/rt" "cat" "outfile"
 	find_smae_err=`cat my_error | grep -a "command not found\|Command not found" | wc -l`
@@ -157,22 +157,22 @@ sleep 0.7
 	different=`diff outfile outfile2`
 	if [ "$status" = "finished" ] && [ "$different" = "" ] && [ "$find_smae_err" -eq "2" ] && [ "$find_smae_err2" -eq "1" ]
 	    then
-	    echo "${GREEN}[OK]${RESET}\n"
+	    echo -e "${GREEN}[OK]${RESET}\n"
 	else
-	    echo "${RED}[KO]${RESET}\n"
+	    echo -e "${RED}[KO]${RESET}\n"
 	fi
 	sleep 0.7
 
 
-	echo "${PURPLE}==============>Test 5${RESET}"
+	echo -e "${PURPLE}==============>Test 5${RESET}"
 	printf "${WHITE}\t< non_exist_input sleep 12 | sleep | sleep 7 | sleep 8 | sleep 4 | sleep 5 | sleep 2   : ${RESET}"
 	SECONDS=0;
 	timeout2_1 "$1" "in_fiasfle" "sleep 12" "sleep 7" "sleep 8" "sleep 4" "sleep 5" "sleep 2" "outfile"
 	find_smae_err=`cat my_error | grep -a "no such file or directory\|No such file or directory" | wc -l`
 	if [ "$status" = "finished" ] && [ "$SECONDS" -eq "8" ] && [ "$find_smae_err" -eq "1" ]
 	    then
-	    echo "${GREEN}[OK]${RESET}\n"
+	    echo -e "${GREEN}[OK]${RESET}\n"
 	else
-	    echo "${RED}[KO]${RESET}\n"
+	    echo -e "${RED}[KO]${RESET}\n"
 	fi
 	sleep 0.7

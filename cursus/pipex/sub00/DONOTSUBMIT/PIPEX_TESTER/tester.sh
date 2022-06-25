@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    tester.sh                                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ael-bekk <ael-bekk <ael-bekk@student.13    +#+  +:+       +#+         #
+#    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/15 14:44:38 by ael-bekk          #+#    #+#              #
-#    Updated: 2022/02/17 16:10:43 by ael-bekk         ###   ########.fr        #
+#    Updated: 2022/06/25 13:45:48 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,8 +84,8 @@ then
     
     if [ "$all_clear" != "" ] || [ "$firstCharacter" != "-" ]
     then
-        echo $GREEN"usage: ./tester.sh [-aemph] [-a all_tests]"
-        echo  "                   [-e error_handling_tests] [-m multi_pipe_tests] [-p one_pipe_tests] [-h here_doc_tests]$RESET\n" >&2 ; exit
+        echo -e $GREEN"usage: ./tester.sh [-aemph] [-a all_tests]"
+        echo  -e "                   [-e error_handling_tests] [-m multi_pipe_tests] [-p one_pipe_tests] [-h here_doc_tests]$RESET\n" >&2 ; exit
     fi
  
     if [ "$err" != "" ] || [ "$all" != "" ]

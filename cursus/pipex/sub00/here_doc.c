@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 10:14:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/25 12:29:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/25 13:43:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ char	*read_from_stdin(char *limiter)
 			buff = resize(&buff, buffer_len, (buffer_len * 2) + 1);
 			buffer_len *= 2;
 		}
-		if (read(STDIN, &ch, 1) == 0)
+		if (read(STDIN, &ch, 1) < 1)
 			break ;
 		buff[i] = ch;
 		i++;
 	}
-	ft_strnstr(buff, limiter, ft_strlen(buff))[0] = '\0';
+	buff[i] = '\0';
+	if (ft_strnstr(buff, limiter, ft_strlen(buff)) != NULL)
+		ft_strnstr(buff, limiter, ft_strlen(buff))[1] = '\0';
 	return (buff);
 }
 
@@ -128,13 +130,16 @@ t_command	*handle_here_doc(int argc, char **argv, int *cmd_pipes)
 
 	if (argc < 6)
 	{
-		ft_putstr_fd("Wrong number of arguments", 2);
+		ft_putendl_fd("Wrong number of arguments", 2);
 		exit(EXIT_FAILURE);
 	}
 	limiter = argv[2];
+	limiter = ft_strjoinfree("\n", limiter, 0);
+	limiter = ft_strjoinfree(limiter, "\n", 1);
 	buff = read_from_stdin(limiter);
 	cmd = run_heredoc_cmd(argv, buff, cmd_pipes);
 	// cmds[1] = run_heredoc_cmd1(argv, cmd_pipes, buff, cmds[0]);
+	ft_free(limiter);
 	ft_free(buff);
 	return (cmd);
 	// wait_cmd(cmds[0]);

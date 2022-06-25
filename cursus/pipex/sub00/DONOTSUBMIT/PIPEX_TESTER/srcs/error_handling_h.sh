@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    error_handling_h.sh                                :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ael-bekk <ael-bekk <ael-bekk@student.13    +#+  +:+       +#+         #
+#    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/17 14:45:14 by ael-bekk          #+#    #+#              #
-#    Updated: 2022/02/17 17:20:04 by ael-bekk         ###   ########.fr        #
+#    Updated: 2022/06/25 13:46:23 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,24 +23,24 @@ WHITE="\033[1;37m"
 RESET="\033[0m"
 
 
-echo "\n\n\n\n${GREEN}test error handling on here_doc :${RESET}"
-echo "$RED$l2$RESET"
+echo -e "\n\n\n\n${GREEN}test error handling on here_doc :${RESET}"
+echo -e "$RED$l2$RESET"
 
 make fclean -C ..
 
-echo "${YELLOW}[make] :${RESET} your pipex (here_doc): ${PURPLE}Bonus${RESET}"
+echo -e "${YELLOW}[make] :${RESET} your pipex (here_doc): ${PURPLE}Bonus${RESET}"
 make bonus -C ..
-echo "$RED$l2$RESET"
+echo -e "$RED$l2$RESET"
 
 if ! [ -f "$1" ]
 then
-	echo "${YELLOW}Error :${RESET} No such file or directory: ${PURPLE}pipex${RESET}\n" >&2 ; exit
+	echo -e "${YELLOW}Error :${RESET} No such file or directory: ${PURPLE}pipex${RESET}\n" >&2 ; exit
 fi
 
-echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvf\n\nsbvsdd asd asd\n afdsvdsvasdqpkqwd ew edfsb\nlim2\nfdbdfbdfbfsbdfbqckqwxqwx qw \n qfqwodeqm domw	m	\tefeqc eqew cewx ewc ewc ewc wc ew" > in_file
-echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \n" > in_file1
-echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvfsbvsdd asd asd\n afdsvdsvasdqpkqwd ew edfsb\n" > in_file2
-echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvf\n" > in_file3
+echo -e "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvf\n\nsbvsdd asd asd\n afdsvdsvasdqpkqwd ew edfsb\nlim2\nfdbdfbdfbfsbdfbqckqwxqwx qw \n qfqwodeqm domw	m	\tefeqc eqew cewx ewc ewc ewc wc ew" > in_file
+echo -e "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \n" > in_file1
+echo -e "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvfsbvsdd asd asd\n afdsvdsvasdqpkqwd ew edfsb\n" > in_file2
+echo -e "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvf\n" > in_file3
 
 	timeout() {
 	    ( < in_file $1 "$2" "$3" "$4" "$5" "$6" 2> my_error ) 1> /dev/null & pid=$!
@@ -106,35 +106,35 @@ echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd 
 
 	printf "" > outfile
 	printf "" > outfile2
-	echo "${PURPLE}==============>Test 1${RESET}"
+	echo -e "${PURPLE}==============>Test 1${RESET}"
 	printf "${WHITE}\t'here_doc ' '' > cat /dev/random | head -n 5                           		   : ${RESET}"
 	timeout "$1" "here_doc " lim "cat /dev/random" "head -n 5" "outfile"
     find_smae_err=`cat my_error | grep -a "no such file or directory\|No such file or directory" | wc -l`
     find_smae_err2=`cat my_error | grep -a "command not found\|Command not found" | wc -l`
 	if [ "$status" = "finished" ] && [ "$find_smae_err" -eq "1" ] && [ "$find_smae_err2" -eq "0" ] 
 	    then
-	    echo "${GREEN}[OK]${RESET}\n"
+	    echo -e "${GREEN}[OK]${RESET}\n"
 	else
-	    echo "${RED}[KO]${RESET}\n"
+	    echo -e "${RED}[KO]${RESET}\n"
 	fi
 	sleep 0.7
 	printf "" > outfile
 
-	echo "${PURPLE}==============>Test 2${RESET}"
+	echo -e "${PURPLE}==============>Test 2${RESET}"
 	printf "${WHITE}\t'here_doc' 'lim' > cat /dev/random | wc | ls                           		   : ${RESET}"
 	timeout_1 "$1" here_doc "lim2" "cat /dev/random" "wc" "ls" "outfile"
 	ls > outfile2
 	different=`diff outfile outfile2`
 	if [ "$status" = "interrupted" ] && [ "$different" = "" ]
 	    then
-	    echo "${GREEN}[OK]${RESET}\n"
+	    echo -e "${GREEN}[OK]${RESET}\n"
 	else
-	    echo "${RED}[KO]${RESET}\n"
+	    echo -e "${RED}[KO]${RESET}\n"
 	fi
 	sleep 0.7
 
     printf "" > outfile
-	echo "${PURPLE}==============>Test 3${RESET}"
+	echo -e "${PURPLE}==============>Test 3${RESET}"
 	printf "${WHITE}\t'here_doc' '' > cat | head -n 7 | ls                                  	 	   : ${RESET}"
 	timeout_1 "$1" here_doc "" "cat" "head -n 7" "ls" "outfile"
     find_smae_err=`cat my_error`
@@ -142,9 +142,9 @@ echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd 
 	different=`diff outfile outfile2`
 	if [ "$status" = "finished" ] && [ "$different" = "" ] && [ "$find_smae_err" = "" ]
 	    then
-	    echo "${GREEN}[OK]${RESET}\n"
+	    echo -e "${GREEN}[OK]${RESET}\n"
 	else
-	    echo "${RED}[KO]${RESET}\n"
+	    echo -e "${RED}[KO]${RESET}\n"
 	fi
 	sleep 0.7
 	printf "" > outfile

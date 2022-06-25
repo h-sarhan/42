@@ -11,10 +11,10 @@
 			"program": "${workspaceFolder}/pipex",
 			"args": [
 				"here_doc",
-				"END",
+				"lim",
 				"cat",
 				"wc",
-				"outfile",
+				"outfile3",
 			],
 			"cwd": "${workspaceFolder}"
 		}

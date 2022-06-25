@@ -1,47 +1,27 @@
 
-# SECONDS=0;
-# (./pipex infile "sleep 1"  "sleep  7"  "sleep 8"  "sleep 4"  "sleep 5"  "sleep 2"  outfile 2> /dev/null) & pid=$!
-# ( sleep 10 && kill -HUP $pid ) 2>/dev/null & watcher=$!
-# if wait $pid 2>/dev/null; then
-# 	echo finished
-# 	echo "SECONDS==$SECONDS"
-# 	pkill -HUP -P $watcher
-# 	wait $watcher
-# else
-# 	echo interrupted
-# fi
+echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvfsbvsdd asd asd\n afdsvdsvasdqpkqwd ew edfsb\nlim2\nfdbdfbdfbfsbdfbqckqwxqwx qw \n qfqwodeqm domw	m	\tefeqc eqew cewx ewc ewc ewc wc ew" > in_file
+echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd " > in_file1
+echo "sgfefeqd qwdqwdddafasd s+64 65 30 9 2 92 ad asd lim asd as d asd\n asdasd \nlim\n a dasd sd \n asdasd asdasdsbvfsbvsdd asd asd\n afdsvdsvasdqpkqwd ew edfsb" > in_file2
 
-timeout() {
-    ( $1 "$2" "$3" "$4" "$5" ) 2> my_error & pid=$!
-    # ( infile < cafat | sdfwc -cl > outfile ) 2> my_error & pid=$!
-    ( sleep 10 && kill -HUP $pid ) 2>/dev/null & watcher=$!
-    if wait $pid 2>/dev/null; then
-		echo "my exit code" $?
-        status="finished"
-		echo $status
-        pkill -HUP -P $watcher
-        wait $watcher
-    else
-		echo "exit code" $?
-        status="interrupted"
-		echo $status
-    fi
-	# wait $pid
-}
-# infile < cafat | sdfwc -cl > outfile
-# echo "actual exit code" $?
-# timeout "./pipex" "infile" "cafat" "sdfwc -cl" "outfile"
-# find_smae_err=`cat my_error | grep -a "command not found\|Command not found" | wc -l`
-# echo $find_smae_err
+timeout_2() {
+	( < in_file $1 "$2" "$3" "$4" "$5" "$6" "$7"  "$8" "$9" &> /dev/null ) & pid=$!
+	( sleep 8 && kill -HUP $pid ) 2>/dev/null & watcher=$!
+	if wait $pid 2>/dev/null; then
+		status="finished"
+		pkill -HUP -P $watcher
+		wait $watcher
+	else
+		status="interrupted"
+	fi
+	}
 
-# timeout
-timeout "./pipex" "in_fisdle" "/bin/catsdc" "wcss -cl" "outfile"
-find_smae_err=`cat my_error | grep -a "no such file or directory\|No such file or directory" | wc -l`
-find_smae_err2=`cat my_error | grep "command not found\|Command not found" | wc -l`
-echo $status $find_smae_err $find_smae_err2
-if [ "$status" = "finished" ] && [ "$find_smae_err" -eq "1" ] && [ "$find_smae_err" -eq "1" ]
-    then
-    echo "${GREEN}[OK]${RESET}\n"
+
+timeout_2 "$1" here_doc lim "cat" "wc -cl" "grep 0" "sort" "cat" "outfile"
+< in_file1 cat | wc -cl |  grep 0  | sort | cat >> outfile2
+different=`diff outfile outfile2`
+if [ "$status" = "finished" ] && [ "$different" = "" ]
+	then
+	echo "${GREEN}[OK]${RESET}\n"
 else
-    echo "${RED}[KO]${RESET}\n"
+	echo "${RED}[KO]${RESET}\n"
 fi
