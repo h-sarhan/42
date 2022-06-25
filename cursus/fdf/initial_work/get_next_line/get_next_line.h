@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 12:42:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/25 20:39:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/25 20:59:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include "../libft/libft.h"
 
 # define STDOUT 1
 # define TRUE 1
@@ -29,7 +30,6 @@ int		read_into_buffer(char **buffer, int fd, int chars_read, int *max_size);
 char	*create_line(char **line_buffer, int line_length);
 
 // get_next_line_utils.c
-int		ft_strlen(char *str);
 void	*resize(char **arr, int old_len, int new_len);
 int		max(int a, int b);
 

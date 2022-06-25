@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 20:31:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/03 12:42:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/25 21:01:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,4 @@ void	*resize(char **arr, int old_len, int new_len)
 	while (i < new_len)
 		new_arr[i++] = '\0';
 	return (new_arr);
-}
-
-// you know what this does
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-// Returns the maximum of the two int arguments
-int	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
 }

@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/25 20:50:32 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/25 21:01:16 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ GNL_OBJS := $(GNL_SRCS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(PRINTF) $(GNL) $(SRCS)
+$(NAME):  $(OBJS)  $(PRINTF) $(GNL) $(LIBFT)
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(LIBFT): $(LIBFT_OBJS)
@@ -43,6 +43,9 @@ $(PRINTF): $(PRINTF_OBJS)
 
 $(GNL): $(GNL_OBJS)
 	ar -rcs $@ $^
+
+norm:
+	norminette $(LIBFT_SRCS) $(PRINTF_SRCS) $(GNL_SRCS) $(SRCS) libft/libft.h printf/ft_printf.h get_next_line/get_next_line.h
 
 clean:
 	rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS) $(GNL_OBJS) $(LIBFT) $(PRINTF) $(GNL)
