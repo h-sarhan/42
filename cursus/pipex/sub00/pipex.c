@@ -16,9 +16,9 @@
 // with an appropriate exit code
 void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list)
 {
-	t_command	*last_cmd;
-	int			last_cmd_valid;
-	int			w_status;
+	t_cmd	*last_cmd;
+	int		last_cmd_valid;
+	int		w_status;
 
 	close_fd(pipe_fds[READ]);
 	close_fd(fds[0]);
@@ -38,10 +38,10 @@ void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list)
 // Creates a linked list of commands
 t_list	*create_command_list(int argc, char **argv, int *fds, int hd)
 {
-	t_list		*command_list;
-	t_command	*cmd;
-	int			i;
-	t_list		*cmd_el;
+	t_list	*command_list;
+	t_cmd	*cmd;
+	int		i;
+	t_list	*cmd_el;
 
 	command_list = NULL;
 	i = 2;
@@ -65,7 +65,7 @@ t_list	*create_command_list(int argc, char **argv, int *fds, int hd)
 }
 
 // Creates a child process for the first command and runs that command
-void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds, t_list *cmds)
+void	handle_first_cmd(t_cmd *cmd, int *fds, int *pipe_fds, t_list *cmds)
 {
 	cmd->in_fd = fds[0];
 	cmd->out_fd = pipe_fds[WRITE];
@@ -77,7 +77,7 @@ void	handle_first_cmd(t_command *cmd, int *fds, int *pipe_fds, t_list *cmds)
 // Creates a child process for all the middle commands and runs those commands
 t_list	*handle_mid_cmds(t_list *cmd_list, int *pipes, int *fds, t_list *cmds)
 {
-	t_command	*cmd;
+	t_cmd	*cmd;
 
 	while (cmd_list->next != NULL)
 	{
@@ -94,4 +94,15 @@ t_list	*handle_mid_cmds(t_list *cmd_list, int *pipes, int *fds, t_list *cmds)
 	}
 	close_fd(pipes[WRITE]);
 	return (cmd_list);
+}
+
+// Creates a child process for the last command and runs that command
+void	handle_last_cmd(t_cmd *cmd, int *fds, int *pipe_fds, t_list *first)
+{
+	cmd->in_fd = pipe_fds[READ];
+	cmd->out_fd = fds[1];
+	cmd->pid = ft_fork(cmd->valid);
+	if (cmd->pid == 0)
+		run_last_cmd(cmd, pipe_fds, fds, first);
+	wait_and_exit(pipe_fds, fds, first);
 }

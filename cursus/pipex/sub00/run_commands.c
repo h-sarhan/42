@@ -16,7 +16,7 @@
 // If the infile file descriptor is invalid then it will be replaced
 // with the "/dev/null" file descriptor which will return the EOF character
 // when it is read from.
-void	run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
+void	run_first_cmd(t_cmd *cmd, int *pipe_fds, int *fds, t_list *cmds)
 {
 	int	null_fd;
 
@@ -46,7 +46,7 @@ void	run_first_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 }
 
 // Runs a command in the middle
-void	run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
+void	run_middle_cmd(t_cmd *cmd, int *pipe_fds, int *fds, t_list *cmds)
 {
 	close_fd(fds[0]);
 	close_fd(fds[1]);
@@ -60,7 +60,7 @@ void	run_middle_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
 }
 
 // Runs the last command
-void	run_last_cmd(t_command *cmd, int *pipe_fds, int *fds, t_list *cmds)
+void	run_last_cmd(t_cmd *cmd, int *pipe_fds, int *fds, t_list *cmds)
 {
 	close_fd(fds[0]);
 	dup_fd(cmd->in_fd, STDIN);

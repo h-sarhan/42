@@ -13,11 +13,11 @@
 #include "pipex.h"
 
 // Creates a command struct
-t_command	*create_command(char *cmd_str)
+t_cmd	*create_command(char *cmd_str)
 {
-	t_command	*cmd;
+	t_cmd	*cmd;
 
-	cmd = ft_calloc(1, sizeof(t_command));
+	cmd = ft_calloc(1, sizeof(t_cmd));
 	malloc_check(cmd);
 	cmd->cmd_args = get_args(cmd_str);
 	cmd->pid = -1;
@@ -31,7 +31,7 @@ t_command	*create_command(char *cmd_str)
 // Frees a command
 void	free_cmd(void *cmd)
 {
-	t_command	*command;
+	t_cmd	*command;
 
 	command = cmd;
 	free_split_array(command->cmd_args);
@@ -41,7 +41,7 @@ void	free_cmd(void *cmd)
 // Waits for a command's child process
 void	wait_cmd(void *cmd)
 {
-	t_command	*command;
+	t_cmd	*command;
 
 	command = cmd;
 	waitpid(command->pid, &command->w_status, 0);
