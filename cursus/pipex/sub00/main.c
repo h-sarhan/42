@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	int		fds[2];
 	int		pipe_fds[2];
 
-	if (argc >= 2 && ft_strncmp(argv[1], "here_doc", 8) == 0)
+	if (argc >= 2 && ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
 		command_list = handle_here_doc(argc, argv, pipe_fds, fds);
 	else
 	{
