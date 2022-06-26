@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/25 20:55:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/26 17:12:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,8 @@
 # include "printf/ft_printf.h"
 
 # include <fcntl.h>
+
+int	read_map(int argc, char **argv);
+
+
 #endif

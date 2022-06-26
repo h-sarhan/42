@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/25 21:01:16 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/26 17:12:01 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,12 +28,12 @@ OBJS := $(SRCS:%.c=%.o)
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)
 GNL_OBJS := $(GNL_SRCS:%.c=%.o)
-
+MLX = mlx/libmlx.dylib
 
 all: $(NAME)
 
-$(NAME):  $(OBJS)  $(PRINTF) $(GNL) $(LIBFT)
-	$(CC) $(CFLAGS) $^ -o $@
+$(NAME): $(MLX) $(GNL) $(LIBFT) $(PRINTF) $(OBJS)
+	$(CC) $(CFLAGS) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $^
 
 $(LIBFT): $(LIBFT_OBJS)
 	ar -rcs $@ $^
@@ -44,11 +44,18 @@ $(PRINTF): $(PRINTF_OBJS)
 $(GNL): $(GNL_OBJS)
 	ar -rcs $@ $^
 
+$(MLX):
+	make -C mlx
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c -Imlx $< -o $@
+
 norm:
 	norminette $(LIBFT_SRCS) $(PRINTF_SRCS) $(GNL_SRCS) $(SRCS) libft/libft.h printf/ft_printf.h get_next_line/get_next_line.h
 
 clean:
 	rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS) $(GNL_OBJS) $(LIBFT) $(PRINTF) $(GNL)
+	make -C mlx clean
 
 fclean: clean
 	rm -f $(NAME)
