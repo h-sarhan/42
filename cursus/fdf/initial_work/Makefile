@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/26 21:41:43 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/27 15:51:05 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,11 @@ OBJS := $(SRCS:%.c=%.o)
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)
 GNL_OBJS := $(GNL_SRCS:%.c=%.o)
-MLX_FLAGS =  -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 all: $(NAME)
 
 $(NAME): $(OBJS)  $(GNL) $(PRINTF)  $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(MLX_FLAGS) $(OBJS) $(GNL) $(PRINTF) $(LIBFT) -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(GNL) $(PRINTF) $(LIBFT) $(MLX_FLAGS) -o $@
 
 $(LIBFT): $(LIBFT_OBJS)
 	ar -rcs $@ $^
