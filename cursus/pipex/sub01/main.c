@@ -30,8 +30,9 @@ int	main(int argc, char **argv)
 		fds[0] = open_file(argv[1], 0);
 		fds[1] = open_file(argv[argc - 1], 1);
 		command_list = create_command_list(argc, argv, fds, 0);
+		cmd = command_list->content;
 		ft_pipe(pipe_fds);
-		handle_first_cmd(command_list->content, fds, pipe_fds, command_list);
+		handle_first_cmd(cmd, fds, pipe_fds, command_list);
 	}
 	first = command_list;
 	command_list = command_list->next;
@@ -40,13 +41,13 @@ int	main(int argc, char **argv)
 	handle_last_cmd(cmd, fds, pipe_fds, first);
 }
 
-//                                        
-// ▓▓▓▓▓▓▒▒▓▓▓▓▒▒▒▒                        
-// ▓▓▓▓▒▒▒▒▒▒▒▒░░▒▒         ██╗░░██╗       
-// ▓▓▒▒▒▒▓▓▒▒▓▓░░▒▒         ╚██╗██╔╝       
-//   ▓▓▒▒▓▓██▒▒▒▒           ░╚███╔╝░       
-//   ▒▒▒▒▒▒▒▒░░▓▓           ░██╔██╗░       
-//   ▒▒▒▒▓▓▓▓░░▒▒           ██╔╝╚██╗       
-//   ██▓▓▒▒▒▒░░▓▓           ╚═╝░░╚═╝       
-//   ▓▓▓▓▓▓▓▓▒▒▓▓                          
-//                                         
+//                                           
+//    ▓▓▓▓▓▓▒▒▓▓▓▓▒▒▒▒                        
+//    ▓▓▓▓▒▒▒▒▒▒▒▒░░▒▒         ██╗░░██╗       
+//    ▓▓▒▒▒▒▓▓▒▒▓▓░░▒▒         ╚██╗██╔╝       
+//      ▓▓▒▒▓▓██▒▒▒▒           ░╚███╔╝░       
+//      ▒▒▒▒▒▒▒▒░░▓▓           ░██╔██╗░       
+//      ▒▒▒▒▓▓▓▓░░▒▒           ██╔╝╚██╗       
+//      ██▓▓▒▒▒▒░░▓▓           ╚═╝░░╚═╝       
+//      ▓▓▓▓▓▓▓▓▒▒▓▓                          
+//                                            
