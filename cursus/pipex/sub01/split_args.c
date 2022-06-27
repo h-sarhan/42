@@ -39,11 +39,17 @@ static int	count_args(char const *str, char sep)
 static int	skip_to_end_quote(const char *str, char quote)
 {
 	int	i;
+	int	end;
 
 	i = 1;
-	while (str[i] != quote && str[i] != '\0')
+	end = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == quote)
+			end = i;
 		i++;
-	return (i);
+	}
+	return (end);
 }
 
 static char	*create_word(char const *str, int start, int end)
