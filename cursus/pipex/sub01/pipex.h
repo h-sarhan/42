@@ -50,6 +50,9 @@ int		ft_fork(int cmd_valid);
 // split_args.c
 char	**split_args(char const *s, char c);
 
+// escape_chars.c
+char	*escape_str(char *str);
+
 // Gloabal variable that stores environment variables
 extern char					**environ;
 
