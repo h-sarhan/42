@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/28 15:09:54 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/28 15:18:40 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ OBJS := $(SRCS:%.c=%.o)
 LIBFT = libft.a
 CC = cc
 
-CFLAGS = -Werror -Wextra -Wall -g3
+CFLAGS = -Werror -Wextra -Wall
 NAME = pipex
 
 all: $(NAME)
