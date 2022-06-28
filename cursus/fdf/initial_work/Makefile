@@ -6,14 +6,14 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/28 16:23:58 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/28 17:43:20 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CFLAGS = -Wall -Wextra -g3
-CC = gcc
+CC = cc
 
-NAME = fdf
+NAME = mlx/fdf
 LIBFT = libft.a
 PRINTF = libftprintf.a
 GNL = libgnl.a
@@ -32,8 +32,8 @@ MLX = mlx/libmlx.dylib
 
 all: $(NAME)
 
-$(NAME): $(MLX $(GNL) $(LIBFT) $(PRINTF) $(OBJS)
-	$(CC) $(CFLAGS) -L. -lmlx -framework OpenGL -framework AppKit $^ -o $@
+$(NAME): $(MLX) $(GNL) $(LIBFT) $(PRINTF) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(GNL) $(LIBFT) $(PRINTF) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $@
 
 $(LIBFT): $(LIBFT_OBJS)
 	ar -rcs $@ $^

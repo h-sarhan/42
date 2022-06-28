@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/27 18:36:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:37:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,26 @@ typedef struct s_data {
 
 void	project_point(t_point *p, int x, int y, int z)
 {
-	// int	cf1_x;
-	// int	cf1_z;
+	int	cf1_x;
+	int	cf1_z;
 
-	// cf1_x = CF1 * x;
-	// cf1_z = CF1 * z;
-	// p->x = CF2 * cf1_x - CF2 * cf1_z;
-	// p->y = cf1_x + CF3 * y + cf1_z;
-	// p->x = sq
+	cf1_x = CF1 * x;
+	cf1_z = CF1 * z;
+	p->x = CF2 * cf1_x - CF2 * cf1_z;
+	p->y = cf1_x + CF3 * y + cf1_z;
 }
 
-t_point	**read_map(char *map_path)
+t_point	***something(int line_len, int fd, char *line)
+{
+	
+}
+
+t_point	***read_map(char *map_path)
 {
 	int		fd;
 	char	*line;
+	// char	**lines;
+	char	**tokens;
 
 	// RETURN A 2D ARRAY OF POINTS
 	// Read a line from the map
@@ -56,15 +62,21 @@ t_point	**read_map(char *map_path)
 	// point->p_y = projected y
 	// will have to malloc the 2D points array
 	// will have to free each line
+
 	fd = open(map_path, O_RDONLY);
 	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		ft_printf("%s", line);
-		free(line);
-		line = get_next_line(fd);
-	}
-	ft_printf("\n");
+	tokens = ft_split(line, ' ');
+	int i = 0;
+	while (tokens[i] != NULL)
+		i++;
+	
+	// while (line != NULL)
+	// {
+	// 	ft_printf("%s", line);
+	// 	free(line);
+	// 	line = get_next_line(fd);
+	// }
+	// ft_printf("\n");
 }
 
 
@@ -76,29 +88,67 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_line(t_data *img, int x1, int y1, int x2, int y2)
-{
-	int	x;
-	int	y;
-	int	dx;
-	int	dy;
-	int	p;
+// TODO: FIX THIS
+// void	draw_line(t_data *img, int x1, int y1, int x2, int y2)
+// {
+// 	int	x;
+// 	int	y;
+// 	int	dx;
+// 	int	dy;
+// 	int	p;
+// 	x = x1;
+// 	y = y1;
+// 	dx = x2 - x1;
+// 	dy = y2 - y1;
+// 	p = 2 * dx - dy;
+// 	while (x < x2)
+// 	{
+// 		my_mlx_pixel_put(img, x, y, 0x00FF0000);
+// 		x++;
+// 		if (p < 0)
+// 			p += 2 * dy;
+// 		else
+// 		{
+// 			p += 2 * dy - 2 * dx;
+// 			y++;
+// 		}
+// 	}
+// }
 
-	x = x1;
-	y = y1;
-	dx = x2 - x1;
-	dy = y2 - y1;
-	p = 2 * dx - dy;
-	while (x < x2)
+
+void	draw_line(t_data *img, int x0, int y0, int x1, int y1)
+{
+	int	dx;
+	int	sx;
+	int	dy;
+	int	sy;
+	int	error;
+	int	e2;
+	
+    dx = abs(x1 - x0);
+    sx = x0 < x1 ? 1 : -1;
+    dy = -abs(y1 - y0);
+    sy = y0 < y1 ? 1 : -1;
+    error = dx + dy;
+    while (1)
 	{
-		my_mlx_pixel_put(img, x, y, 0x00FF0000);
-		x++;
-		if (p < 0)
-			p += 2 * dy;
-		else
+		my_mlx_pixel_put(img, x0, y0, 0x00FF0000);
+        if (x0 == x1 && y0 == y1)
+			break;
+        e2 = 2 * error;
+        if (e2 >= dy)
 		{
-			p += 2 * dy - 2 * dx;
-			y++;
+            if (x0 == x1)
+				break ;
+            error = error + dy;
+            x0 = x0 + sx;
+		}
+        if (e2 <= dx)
+		{
+            if (y0 == y1)
+				break ;
+            error = error + dx;
+            y0 = y0 + sy;
 		}
 	}
 }
@@ -122,10 +172,7 @@ int	main(void)
 	printf("p1.y == %d\n", p1.y);
 	printf("p2.x == %d\n", p2.x);
 	printf("p2.y == %d\n", p2.y);
-	if (p1.x > p2.x)
-		draw_line(&img, p2.x, p2.y, p1.x, p1.y);
-	else
-		draw_line(&img, p1.x, p1.y, p2.x, p2.y);
+	draw_line(&img, p1.x, p1.y, p2.x, p2.y);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
