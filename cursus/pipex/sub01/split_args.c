@@ -12,6 +12,50 @@
 
 #include "pipex.h"
 
+// Counts characters that wont be escaped
+static int	count_chars(char *str)
+{
+	int		i;
+	int		num_chars;
+
+	i = 0;
+	num_chars = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\\' && ft_strchr("\"\'\\", str[i + 1]))
+			i += 2;
+		else
+			i++;
+		num_chars++;
+	}
+	return (num_chars);
+}
+
+// Escapes quotes in a string
+static char	*escape_quotes(char *str)
+{
+	int		i;
+	char	*escaped_str;
+	int		j;
+
+	escaped_str = ft_calloc(count_chars(str) + 1, sizeof(char));
+	malloc_check(escaped_str);
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\\' && ft_strchr("\"\'\\", str[i + 1]))
+		{
+			escaped_str[j++] = str[i + 1];
+			i += 2;
+		}
+		else
+			escaped_str[j++] = str[i++];
+	}
+	free(str);
+	return (escaped_str);
+}
+
 // Increments i until we reach the end quote
 static int	skip_to_end_quote(const char *str, char quote)
 {
@@ -26,8 +70,6 @@ static int	skip_to_end_quote(const char *str, char quote)
 	}
 	return (i);
 }
-
-
 
 // Counts the arguments in a string
 static int	count_args(char const *str, char sep)
@@ -76,7 +118,7 @@ char	**split_args(char const *s, char c)
 			i += skip_to_end_quote(&s[i], s[i]);
 		while (s[i] != c && s[i] != '\0')
 			i++;
-		words[wc] = escape_str(ft_substr(s, word_start, i - word_start));
+		words[wc] = escape_quotes(ft_substr(s, word_start, i - word_start));
 		malloc_check(words[wc++]);
 	}
 	words[wc] = NULL;

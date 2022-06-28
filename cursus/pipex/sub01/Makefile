@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 13:49:07 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/28 13:57:22 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/28 14:51:18 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIBFT_SRCS := $(addprefix libft/, $(LIBFT_SRCS))
 
 SRCS =  pipex.c utils.c utils2.c \
 		error_handling.c split_args.c command.c \
-		main.c run_commands.c here_doc.c escape_chars.c
+		main.c run_commands.c here_doc.c
 
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 
