@@ -12,8 +12,66 @@
 
 #include "pipex.h"
 
-static int	skip_to_end_quote(const char *str, char quote);
+// Increments i until we reach the end quote
+static int	skip_to_end_quote(const char *str, char quote)
+{
+	int	i;
 
+	i = 1;
+	while (str[i] != '\0')
+	{
+		if (str[i] == quote && str[i - 1] != '\\')
+			break ;
+		i++;
+	}
+	return (i);
+}
+
+// Counts characters that wont be escaped
+static int	count_chars(char *str)
+{
+	int		i;
+	int		num_chars;
+
+	i = 0;
+	num_chars = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\\')
+			i += 2;
+		else
+			i++;
+		num_chars++;
+	}
+	return (num_chars);
+}
+
+// Escapes characters in a string
+static char	*escape_str(char *str)
+{
+	int		i;
+	char	*escaped_str;
+	int		j;
+
+	escaped_str = ft_calloc(count_chars(str) + 1, sizeof(char));
+	malloc_check(escaped_str);
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\\')
+		{
+			escaped_str[j++] = str[i + 1];
+			i += 2;
+		}
+		else
+			escaped_str[j++] = str[i++];
+	}
+	free(str);
+	return (escaped_str);
+}
+
+// Counts the arguments in a string
 static int	count_args(char const *str, char sep)
 {
 	int	i;
@@ -36,33 +94,6 @@ static int	count_args(char const *str, char sep)
 	return (num_words);
 }
 
-static int	skip_to_end_quote(const char *str, char quote)
-{
-	int	i;
-	int	end;
-
-	i = 1;
-	end = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == quote)
-			end = i;
-		i++;
-	}
-	return (end);
-}
-
-static char	*create_word(char const *str, int start, int end)
-{
-	char	*word;
-
-	word = ft_calloc(end - start + 2, sizeof(char));
-	if (word == NULL)
-		return (NULL);
-	ft_strlcpy(word, &str[start], end - start + 2);
-	return (word);
-}
-
 // Same as ft_split except that we always treat whatever is inside
 // quotation marks as one word
 char	**split_args(char const *s, char c)
@@ -83,11 +114,11 @@ char	**split_args(char const *s, char c)
 		if (s[i] == '\0')
 			break ;
 		word_start = i;
-		if (s[i] == '\'' || s[i] == '\"')
+		if ((s[i] == '\'' || s[i] == '\"') && (i == 0 || s[i - 1] != '\\'))
 			i += skip_to_end_quote(&s[i], s[i]);
 		while (s[i] != c && s[i] != '\0')
 			i++;
-		words[wc] = create_word(s, word_start, i - 1);
+		words[wc] = escape_str(ft_substr(s, word_start, i - word_start));
 		malloc_check(words[wc++]);
 	}
 	words[wc] = NULL;

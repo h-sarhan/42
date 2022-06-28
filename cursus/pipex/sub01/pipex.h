@@ -39,6 +39,7 @@ void	dup_fd(int fd_1, int fd_2);
 void	close_fd(int fd);
 int		open_file(char *file_path, int outfile);
 char	**get_args(char *arg);
+
 // error_handling.c
 void	malloc_check(void *mem);
 int		command_check(char **cmd_args, char *arg_list, int fd);
