@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 10:14:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/25 16:09:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/29 10:34:00 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ char	*read_from_stdin(char *limiter)
 }
 
 // Runs the first command followed by a here_doc
-t_cmd	*run_heredoc_cmd(char **argv, char *buff, int *cmd_pipes)
+t_cmd	*run_heredoc_cmd(char **argv, char *buff, int *cmd_pipes, char **env)
 {
 	int		heredoc_pipes[2];
 	t_cmd	*cmd;
 
 	ft_pipe(heredoc_pipes);
 	write(heredoc_pipes[WRITE], buff, ft_strlen(buff));
-	cmd = create_command(argv[3]);
+	cmd = create_command(argv[3], env);
 	cmd->valid = command_check(cmd->cmd_args, argv[3], 1);
 	cmd->pid = ft_fork(1);
 	if (cmd->pid == 0)
@@ -86,7 +86,7 @@ t_cmd	*run_heredoc_cmd(char **argv, char *buff, int *cmd_pipes)
 		dup_fd(heredoc_pipes[READ], STDIN);
 		dup_fd(cmd_pipes[WRITE], STDOUT);
 		if (cmd->valid)
-			execve(cmd->cmd_args[0], cmd->cmd_args, environ);
+			execve(cmd->cmd_args[0], cmd->cmd_args, env);
 		close_fd(heredoc_pipes[READ]);
 		close_fd(cmd_pipes[WRITE]);
 		free_cmd(cmd);
@@ -99,18 +99,17 @@ t_cmd	*run_heredoc_cmd(char **argv, char *buff, int *cmd_pipes)
 }
 
 // Handles here_doc behaviour
-t_list	*handle_here_doc(int argc, char **argv, int *cmd_pipes, int *fds)
+t_list	*handle_here_doc(char **argv, int *cmd_pipes, int *fds, char **env)
 {
 	char	*limiter;
 	char	*buff;
 	t_cmd	*cmd;
 	t_list	*cmds;
+	int		argc;
 
-	if (argc < 6)
-	{
-		ft_putendl_fd("Wrong number of arguments", 2);
-		exit(EXIT_FAILURE);
-	}
+	argc = 0;
+	while (argv[argc] != NULL)
+		argc++;
 	ft_pipe(cmd_pipes);
 	fds[0] = -1;
 	fds[1] = open_file(argv[argc - 1], 3);
@@ -118,8 +117,8 @@ t_list	*handle_here_doc(int argc, char **argv, int *cmd_pipes, int *fds)
 	limiter = ft_strjoinfree("\n", limiter, 0);
 	limiter = ft_strjoinfree(limiter, "\n", 1);
 	buff = read_from_stdin(limiter);
-	cmd = run_heredoc_cmd(argv, buff, cmd_pipes);
-	cmds = create_command_list(argc, argv, fds, 1);
+	cmd = run_heredoc_cmd(argv, buff, cmd_pipes, env);
+	cmds = create_command_list(argc, argv, fds, env);
 	free_cmd(cmds->content);
 	cmds->content = cmd;
 	ft_free(limiter);

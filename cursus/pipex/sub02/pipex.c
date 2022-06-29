@@ -36,7 +36,7 @@ void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list)
 }
 
 // Creates a linked list of commands
-t_list	*create_command_list(int argc, char **argv, int *fds, int hd)
+t_list	*create_command_list(int argc, char **argv, int *fds, char **env)
 {
 	t_list	*command_list;
 	t_cmd	*cmd;
@@ -45,11 +45,11 @@ t_list	*create_command_list(int argc, char **argv, int *fds, int hd)
 
 	command_list = NULL;
 	i = 2;
-	if (hd == 1)
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
 		i = 3;
 	while (i < argc - 1)
 	{
-		cmd = create_command(argv[i]);
+		cmd = create_command(argv[i], env);
 		if (i == 2)
 			cmd->valid = command_check(cmd->cmd_args, argv[i], fds[0]);
 		else if (i == argc - 2)

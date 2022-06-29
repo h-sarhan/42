@@ -83,13 +83,11 @@ int	open_file(char *file_path, int file_type)
 // Also expands the binary of a command into its full path.
 // If the PATH variable cannot be found in the environment variables
 // then a default PATH compatible with most UNIX based systems will be used
-char	**get_args(char *arg)
+char	**get_args(char *arg, char **env)
 {
 	char	**cmd_args;
 	int		i;
-	char	**env;
 
-	env = environ;
 	cmd_args = split_args(arg, ' ');
 	malloc_check(cmd_args);
 	if (access(cmd_args[0], X_OK) == -1)

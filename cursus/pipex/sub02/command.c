@@ -13,18 +13,19 @@
 #include "pipex.h"
 
 // Creates and returns a command struct
-t_cmd	*create_command(char *cmd_str)
+t_cmd	*create_command(char *cmd_str, char **env)
 {
 	t_cmd	*cmd;
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	malloc_check(cmd);
-	cmd->cmd_args = get_args(cmd_str);
+	cmd->cmd_args = get_args(cmd_str, env);
 	cmd->pid = -1;
 	cmd->valid = 0;
 	cmd->in_fd = -1;
 	cmd->out_fd = -1;
 	cmd->w_status = 0;
+	cmd->env = env;
 	return (cmd);
 }
 

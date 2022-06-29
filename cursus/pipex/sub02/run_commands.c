@@ -35,7 +35,7 @@ void	run_first_cmd(t_cmd *cmd, int *pipe_fds, int *fds, t_list *cmds)
 	}
 	dup_fd(cmd->out_fd, STDOUT);
 	if (fds[0] != -1)
-		execve(cmd->cmd_args[0], cmd->cmd_args, environ);
+		execve(cmd->cmd_args[0], cmd->cmd_args, cmd->env);
 	ft_lstclear(&cmds, free_cmd);
 	close_fd(pipe_fds[WRITE]);
 	close_fd(fds[0]);
@@ -53,7 +53,7 @@ void	run_middle_cmd(t_cmd *cmd, int *pipe_fds, int *fds, t_list *cmds)
 	close_fd(pipe_fds[READ]);
 	dup_fd(cmd->in_fd, STDIN);
 	dup_fd(cmd->out_fd, STDOUT);
-	execve(cmd->cmd_args[0], cmd->cmd_args, environ);
+	execve(cmd->cmd_args[0], cmd->cmd_args, cmd->env);
 	ft_lstclear(&cmds, free_cmd);
 	close_fd(pipe_fds[WRITE]);
 	exit(1);
@@ -66,7 +66,7 @@ void	run_last_cmd(t_cmd *cmd, int *pipe_fds, int *fds, t_list *cmds)
 	dup_fd(cmd->in_fd, STDIN);
 	dup_fd(cmd->out_fd, STDOUT);
 	if (fds[1] != -1)
-		execve(cmd->cmd_args[0], cmd->cmd_args, environ);
+		execve(cmd->cmd_args[0], cmd->cmd_args, cmd->env);
 	ft_lstclear(&cmds, free_cmd);
 	close_fd(pipe_fds[READ]);
 	close_fd(fds[1]);

@@ -104,12 +104,30 @@ char	*get_full_path(char *bin, char **env)
 	return (path);
 }
 
-// Prints an error message and exits if the number of arguments is incorrect
-void	check_arg_count(int argc)
+// Prints an error message and exits if the number of arguments is invalid
+// or if any of the arguments are empty
+void	check_args(int argc, char **argv)
 {
+	int	i;
+
 	if (argc < 5)
 	{
 		ft_putendl_fd("Wrong number of arguments", 2);
 		exit(EXIT_FAILURE);
+	}
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0 && argc < 6)
+	{
+		ft_putendl_fd("Wrong number of arguments", 2);
+		exit(EXIT_FAILURE);
+	}
+	i = 0;
+	while (argv[i] != NULL)
+	{
+		if (argv[i][0] == '\0')
+		{
+			ft_putendl_fd("Invalid argument", 2);
+			exit(EXIT_FAILURE);
+		}
+		i++;
 	}
 }
