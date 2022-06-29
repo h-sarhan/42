@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/27 18:36:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/30 00:52:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,36 @@
 # define CF2 1.73205080757F // sqrt(3)
 # define CF3 0.81649658092F // 2 * sqrt(6)/6
 
+struct s_point
+{
+	int x;
+	int y;
+	int	z;
+};
 
+typedef struct s_point t_point;
+
+typedef struct s_data
+{
+	void *img;
+	char *addr;
+	int bits_per_pixel;
+	int line_length;
+	int endian;
+} t_data;
+
+struct s_map
+{
+	int		**z_values;
+	int		num_rows;
+	int		num_cols;
+	t_point	***points;
+};
+typedef struct s_map	t_map;
+
+
+void my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void draw_line(t_data *img, int x0, int y0, int x1, int y1);
 
 // void	read_map(char *map_path);
 
