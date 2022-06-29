@@ -9,7 +9,7 @@ run_test() {
 	echo -e "${PURPLE}${1}${RESET}"
 	echo "./pipex ${2} ${3} ${4} ${5}"
 	echo
-	../pipex "${2}" "${3}" "${4}" "${5}" 2> my_err
+	./pipex "${2}" "${3}" "${4}" "${5}" 2> my_err
 	echo $? > my_ret
 	cat "${5}" > my_out
 	(< ${2} ${3} | ${4} > ${5}) 2> bash_err

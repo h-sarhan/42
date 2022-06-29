@@ -36,8 +36,13 @@ int	command_check(char **cmd_args, char *arg_list, int fd)
 		cmd_name = ft_strdup(args[0]);
 		malloc_check(cmd_name);
 		free_split_array(args);
-		if (fd != -1)
-			print_error_string("command not found", cmd_name);
+		if (fd != -1 && access(cmd_name, X_OK) == -1)
+		{
+			if (errno == EACCES)
+				perror("pipex");
+			else
+				print_error_string("command not found", cmd_name);
+		}
 		ft_free(cmd_name);
 		i = 0;
 		while (cmd_args[++i] != NULL)
