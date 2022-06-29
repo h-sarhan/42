@@ -24,31 +24,6 @@
 # define WRITE 1
 # define STDOUT 1
 # define STDIN 0
-# define BUFFER_SIZE 100
-
-// utils.c
-char	*ft_strjoinfree(char *s1, char *s2, int f);
-void	free_split_array(char **arr);
-void	trim_args(char **args);
-char	*get_full_path(char *bin, char **env);
-void	check_args(int argc, char **argv);
-
-// utils2.c
-void	ft_free(void *mem);
-void	dup_fd(int fd_1, int fd_2);
-void	close_fd(int fd);
-int		open_file(char *file_path, int outfile);
-char	**get_args(char *arg, char **env);
-
-// error_handling.c
-void	malloc_check(void *mem);
-int		command_check(char **cmd_args, char *arg_list, int fd);
-void	print_error_string(char *error_str, char *file_name);
-void	ft_pipe(int *pipe_fds);
-int		ft_fork(int cmd_valid);
-
-// split_args.c
-char	**split_args(char const *s, char c);
 
 // Struct that stores the arguments, process id, validity,
 // in_fd, out_fd, and wait status of each command
@@ -62,6 +37,30 @@ struct s_command {
 	char	**env;
 };
 typedef struct s_command	t_cmd;
+
+// utils.c
+char	*ft_strjoinfree(char *s1, char *s2, int f);
+void	free_split_array(char **arr);
+char	**trim_args(char **args);
+char	*get_full_path(char *bin, char **env);
+void	check_args(int argc, char **argv);
+
+// utils2.c
+void	ft_free(void *mem);
+void	dup_fd(int fd_1, int fd_2, t_list *first, t_cmd *cmd);
+void	close_fd(int fd, t_list *first);
+int		open_file(char *file_path, int outfile);
+char	**get_args(char *arg, char **env);
+
+// error_handling.c
+void	close_fds(int fd1, int fd2, t_list *first);
+int		command_check(char **cmd_args, char *arg_list, int fd);
+void	print_error_string(char *error_str, char *file_name);
+void	ft_pipe(int *pipe_fds, t_list *first);
+int		ft_fork(int cmd_valid, t_list *first);
+
+// split_args.c
+char	**split_args(char const *s, char c);
 
 // command.c
 t_cmd	*create_command(char *cmd_str, char **env);

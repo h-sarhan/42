@@ -48,7 +48,7 @@ void	free_split_array(char **arr)
 }
 
 // Trims the quotation marks from a list of arguments
-void	trim_args(char **args)
+char	**trim_args(char **args)
 {
 	int		i;
 	char	*trimmed_arg;
@@ -60,17 +60,20 @@ void	trim_args(char **args)
 		if (args[i][0] == '\'' || args[i][0] == '\"')
 		{
 			quote = ft_calloc(2, sizeof(char));
-			malloc_check(quote);
+			if (quote == NULL)
+				return (NULL);
 			quote[0] = args[i][0];
 			quote[1] = '\0';
 			trimmed_arg = ft_strtrim(args[i], quote);
-			malloc_check(trimmed_arg);
 			ft_free(args[i]);
 			ft_free(quote);
+			if (trimmed_arg == NULL)
+				return (NULL);
 			args[i] = trimmed_arg;
 		}
 		i++;
 	}
+	return (args);
 }
 
 // Tries to get the full path of a command

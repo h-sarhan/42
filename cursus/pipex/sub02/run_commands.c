@@ -21,55 +21,55 @@ void	run_first_cmd(t_cmd *cmd, int *pipe_fds, int *fds, t_list *cmds)
 	int	null_fd;
 
 	null_fd = open_file("/dev/null", 0);
-	close_fd(pipe_fds[READ]);
-	close_fd(fds[1]);
+	close_fd(pipe_fds[READ], cmds);
+	close_fd(fds[1], cmds);
 	if (fds[0] == -1)
 	{
-		dup_fd(null_fd, STDIN);
-		close_fd(cmd->in_fd);
+		dup_fd(null_fd, STDIN, cmds, NULL);
+		close_fd(cmd->in_fd, cmds);
 	}
 	else
 	{
-		dup_fd(cmd->in_fd, STDIN);
-		close_fd(null_fd);
+		dup_fd(cmd->in_fd, STDIN, cmds, NULL);
+		close_fd(null_fd, cmds);
 	}
-	dup_fd(cmd->out_fd, STDOUT);
+	dup_fd(cmd->out_fd, STDOUT, cmds, NULL);
 	if (fds[0] != -1)
 		execve(cmd->cmd_args[0], cmd->cmd_args, cmd->env);
+	close_fd(pipe_fds[WRITE], cmds);
+	close_fd(fds[0], cmds);
+	close_fd(null_fd, cmds);
+	close_fd(STDOUT, cmds);
+	close_fd(STDIN, cmds);
 	ft_lstclear(&cmds, free_cmd);
-	close_fd(pipe_fds[WRITE]);
-	close_fd(fds[0]);
-	close_fd(null_fd);
-	close_fd(STDOUT);
-	close_fd(STDIN);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 // Runs a command in the middle
 void	run_middle_cmd(t_cmd *cmd, int *pipe_fds, int *fds, t_list *cmds)
 {
-	close_fd(fds[0]);
-	close_fd(fds[1]);
-	close_fd(pipe_fds[READ]);
-	dup_fd(cmd->in_fd, STDIN);
-	dup_fd(cmd->out_fd, STDOUT);
+	close_fd(fds[0], cmds);
+	close_fd(fds[1], cmds);
+	close_fd(pipe_fds[READ], cmds);
+	dup_fd(cmd->in_fd, STDIN, cmds, NULL);
+	dup_fd(cmd->out_fd, STDOUT, cmds, NULL);
 	execve(cmd->cmd_args[0], cmd->cmd_args, cmd->env);
+	close_fd(pipe_fds[WRITE], cmds);
 	ft_lstclear(&cmds, free_cmd);
-	close_fd(pipe_fds[WRITE]);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 // Runs the last command
 void	run_last_cmd(t_cmd *cmd, int *pipe_fds, int *fds, t_list *cmds)
 {
-	close_fd(fds[0]);
-	dup_fd(cmd->in_fd, STDIN);
-	dup_fd(cmd->out_fd, STDOUT);
+	close_fd(fds[0], cmds);
+	dup_fd(cmd->in_fd, STDIN, cmds, NULL);
+	dup_fd(cmd->out_fd, STDOUT, cmds, NULL);
 	if (fds[1] != -1)
 		execve(cmd->cmd_args[0], cmd->cmd_args, cmd->env);
+	close_fd(pipe_fds[READ], cmds);
+	close_fd(fds[1], cmds);
+	close_fd(STDIN, cmds);
 	ft_lstclear(&cmds, free_cmd);
-	close_fd(pipe_fds[READ]);
-	close_fd(fds[1]);
-	close_fd(STDIN);
-	exit(1);
+	exit(EXIT_FAILURE);
 }

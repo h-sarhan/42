@@ -12,14 +12,11 @@
 
 #include "pipex.h"
 
-// Checks if a memory allocation fails and prints an error message
-void	malloc_check(void *mem)
+// Closes 2 fds
+void	close_fds(int fd1, int fd2, t_list *first)
 {
-	if (mem == NULL && errno == ENOMEM)
-	{
-		perror("pipex");
-		exit(EXIT_FAILURE);
-	}
+	close_fd(fd1, first);
+	close_fd(fd2, first);
 }
 
 // Checks if a command is accessible and prints an error message if it is not
@@ -32,9 +29,9 @@ int	command_check(char **cmd_args, char *arg_list, int fd)
 	if (cmd_args[0] == NULL)
 	{
 		args = ft_split(arg_list, ' ');
-		malloc_check(args);
 		cmd_name = ft_strdup(args[0]);
-		malloc_check(cmd_name);
+		if (args == NULL || cmd_name == NULL)
+			return (0);
 		free_split_array(args);
 		if (fd != -1 && access(cmd_name, X_OK) == -1 && errno == EACCES)
 			perror("pipex");
@@ -52,7 +49,7 @@ int	command_check(char **cmd_args, char *arg_list, int fd)
 }
 
 // Wrapper around pipe() that handles errors
-void	ft_pipe(int *pipe_fds)
+void	ft_pipe(int *pipe_fds, t_list *first)
 {
 	int	pipe_ret;
 
@@ -60,12 +57,13 @@ void	ft_pipe(int *pipe_fds)
 	if (pipe_ret == -1)
 	{
 		perror("pipex");
+		ft_lstclear(&first, free_cmd);
 		exit(EXIT_FAILURE);
 	}
 }
 
 // Wrapper around fork() that handles errors
-int	ft_fork(int command_valid)
+int	ft_fork(int command_valid, t_list *first)
 {
 	int	pid;
 
@@ -75,6 +73,7 @@ int	ft_fork(int command_valid)
 		if (pid == -1)
 		{
 			perror("pipex");
+			ft_lstclear(&first, free_cmd);
 			exit(EXIT_FAILURE);
 		}
 		return (pid);
@@ -90,6 +89,8 @@ void	print_error_string(char *error_str, char *file_name)
 	str = ft_strjoin("pipex: ", file_name);
 	str = ft_strjoinfree(str, ": ", 1);
 	str = ft_strjoinfree(str, error_str, 1);
+	if (str == NULL)
+		exit(EXIT_FAILURE);
 	ft_putendl_fd(str, 2);
 	ft_free(str);
 }

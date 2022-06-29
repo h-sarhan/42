@@ -38,8 +38,11 @@ static char	*escape_quotes(char *str)
 	char	*escaped_str;
 	int		j;
 
+	if (str == NULL)
+		return (NULL);
 	escaped_str = ft_calloc(count_chars(str) + 1, sizeof(char));
-	malloc_check(escaped_str);
+	if (escaped_str == NULL)
+		exit(EXIT_FAILURE);
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
@@ -104,7 +107,8 @@ char	**split_args(char const *s, char c)
 	int		wc;
 
 	words = ft_calloc(count_args(s, c) + 1, sizeof(char *));
-	malloc_check(words);
+	if (words == NULL)
+		return (NULL);
 	i = 0;
 	wc = 0;
 	while (s[i] != '\0')
@@ -118,8 +122,7 @@ char	**split_args(char const *s, char c)
 			i += skip_to_end_quote(&s[i], s[i]);
 		while (s[i] != c && s[i] != '\0')
 			i++;
-		words[wc] = escape_quotes(ft_substr(s, word_start, i - word_start));
-		malloc_check(words[wc++]);
+		words[wc++] = escape_quotes(ft_substr(s, word_start, i - word_start));
 	}
 	words[wc] = NULL;
 	return (words);

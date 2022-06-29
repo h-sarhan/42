@@ -20,7 +20,7 @@ void	ft_free(void *mem)
 }
 
 // Wrapper around dup2 that handles errors when duping file desriptors
-void	dup_fd(int fd_1, int fd_2)
+void	dup_fd(int fd_1, int fd_2, t_list *first, t_cmd *cmd)
 {
 	int	dup_ret;
 
@@ -30,13 +30,15 @@ void	dup_fd(int fd_1, int fd_2)
 		if (dup_ret == -1)
 		{
 			perror("pipex");
+			ft_lstclear(&first, free_cmd);
+			ft_free(cmd);
 			exit(EXIT_FAILURE);
 		}
 	}
 }
 
 // Wrapper around close that handles errors when closing file descriptors
-void	close_fd(int fd)
+void	close_fd(int fd, t_list *first)
 {
 	int	close_ret;
 
@@ -46,6 +48,7 @@ void	close_fd(int fd)
 		if (close_ret == -1)
 		{
 			perror("pipex");
+			ft_lstclear(&first, free_cmd);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -89,7 +92,8 @@ char	**get_args(char *arg, char **env)
 	int		i;
 
 	cmd_args = split_args(arg, ' ');
-	malloc_check(cmd_args);
+	if (cmd_args == NULL)
+		return (NULL);
 	if (access(cmd_args[0], X_OK) == -1)
 	{
 		i = 0;
@@ -98,14 +102,13 @@ char	**get_args(char *arg, char **env)
 		if (env[i] == NULL)
 		{
 			env = ft_split("PATH=/usr/bin:/bin:/usr/sbin:/sbin", ' ');
-			malloc_check(env);
+			if (env == NULL)
+				return (NULL);
 			i = -1;
 		}
 		cmd_args[0] = get_full_path(cmd_args[0], env);
-		malloc_check(cmd_args[0]);
 		if (i == -1)
 			free_split_array(env);
 	}
-	trim_args(cmd_args);
-	return (cmd_args);
+	return (trim_args(cmd_args));
 }

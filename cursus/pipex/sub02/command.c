@@ -18,7 +18,8 @@ t_cmd	*create_command(char *cmd_str, char **env)
 	t_cmd	*cmd;
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
-	malloc_check(cmd);
+	if (cmd == NULL)
+		return (NULL);
 	cmd->cmd_args = get_args(cmd_str, env);
 	cmd->pid = -1;
 	cmd->valid = 0;
