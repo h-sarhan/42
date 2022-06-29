@@ -30,8 +30,12 @@ void	wait_and_exit(int *pipe_fds, int *fds, t_list *command_list)
 	ft_lstclear(&command_list, free_cmd);
 	if (fds[1] == -1)
 		exit(1);
-	if (!last_cmd_valid)
+	if (last_cmd_valid != 1)
+	{
+		if (last_cmd_valid == EACCES)
+			exit(126);
 		exit(127);
+	}
 	exit(WEXITSTATUS(w_status));
 }
 
