@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 08:33:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:08:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,22 @@
 
 struct s_point
 {
-	float x;
-	float y;
-	float	z;
+	int	x;
+	int	y;
+	int	z;
 };
 
 typedef struct s_point t_point;
 
-typedef struct s_data
+struct	s_data
 {
 	void *img;
 	char *addr;
 	int bits_per_pixel;
 	int line_length;
 	int endian;
-} t_data;
+};
+typedef struct s_data	t_data;
 
 struct s_map
 {
@@ -59,10 +60,7 @@ struct s_map
 typedef struct s_map	t_map;
 
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void draw_line(t_data *img, int x0, int y0, int x1, int y1, int color);
-
-// void	read_map(char *map_path);
-
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	draw_line(t_data *img, int x0, int y0, int x1, int y1, int color);
 
 #endif

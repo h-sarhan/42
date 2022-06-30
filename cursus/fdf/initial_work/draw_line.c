@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 06:47:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/30 11:35:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void draw_line_high(t_data *img, int x0, int y0, int x1, int y1, int color)
 
 void draw_line(t_data *img, int x0, int y0, int x1, int y1, int color)
 {
-	printf("Drawing from (%d,%d) to (%d,%d)\n", x0, y0, x1, y1);
+	// printf("Drawing from (%d,%d) to (%d,%d)\n", x0, y0, x1, y1);
 	if (abs(y1 - y0) < abs(x1 - x0))
 	{
 		if (x0 > x1)

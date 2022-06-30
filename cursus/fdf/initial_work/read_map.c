@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 09:56:32 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/30 14:07:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,32 @@ void project_point(t_point *p, int x, int y, int z, int scale, int translate)
 	float	alpha;
 
 	beta = 45 * (M_PI / 180.0f);
-	alpha = asin(tan(30 * (M_PI / 180.0f)));
-	
-	p->x = x;
-	p->y = y;
-	p->z = z;
-	// rotZ(p, x * scale, y * scale, z * scale, beta);
-	// rotX(p, p->x, p->y, p->z, alpha + 30 * (M_PI / 180.0f));
+	alpha = asin(tan(30 * (M_PI / 180.0f)));   
+	p->x = x * scale;
+	p->y = y * scale;
+	p->z = z * scale;
 	rotZ(p, p->x, p->y, p->z, beta);
-	// rotY(p, p->x, p->y, p->z, 10 * (M_PI / 180.0f));
 	rotX(p, p->x, p->y, p->z, alpha + 30 * (M_PI / 180.0f));
-	// rotX(p, p->x, p->y, p->z, 30 * (M_PI / 180.0f));
-	// // rotX(p, p->x, p->y, p->z, 90 * (M_PI / 180.0f));
-	// p->x += translate;
-	// p->y += translate;
+}
+
+void	free_split_array(char **arr)
+{
+	int	i;
+
+	if (arr == NULL)
+		return ;
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+void	free_lines(void *split_array)
+{
+	free_split_array(split_array);
 }
 
 t_map	*read_map(char *map_path)
@@ -61,10 +73,11 @@ t_map	*read_map(char *map_path)
 	char	*line;
 	char	**tokens;
 	t_list	*lines;
+	t_list	*first;
 	int		num_rows;
 	int		**z_values;
 	t_map	*map;
-	
+
 	fd = open(map_path, O_RDONLY);
 	line = get_next_line(fd);
 	tokens = ft_split(line, ' ');
@@ -72,8 +85,8 @@ t_map	*read_map(char *map_path)
 	while (tokens[i] != NULL)
 		i++;
 	int num_cols = i;
+	free_split_array(tokens);	
 	lines = NULL;
-
 	num_rows = 0;
 	while (line != NULL)
 	{
@@ -81,21 +94,24 @@ t_map	*read_map(char *map_path)
 		num_rows++;
 		line = get_next_line(fd);
 	}
+	first = lines;
 	z_values = ft_calloc(num_rows + 1, sizeof(int *));
+	z_values[num_rows] = NULL;
 	i = 0;
 	int j = 0;
 	while (i < num_rows)
 	{
 		z_values[i] = ft_calloc(num_cols + 1, sizeof(int));
+		line = lines->content;
+		tokens = ft_split(line, ' ');
 		j = 0;
 		while (j < num_cols)
 		{
-			line = lines->content;
-			tokens = ft_split(line, ' ');
 			z_values[i][j] = atoi(tokens[j]);
 			j++;
 		}
 		lines = lines->next;
+		free_split_array(tokens);
 		i++;
 	}
 	map = ft_calloc(1, sizeof(t_map));
@@ -106,7 +122,7 @@ t_map	*read_map(char *map_path)
 	map->min_yval = INT_MAX;
 	map->max_xval = INT_MIN;
 	map->max_yval = INT_MIN;
-	// printf("SEG\n");
+	ft_lstclear(&first, free);
 	return (map);
 }
 
@@ -123,13 +139,6 @@ void	remap_points(t_map *map, int translate, int scale)
 	int i = 0;
 	int j = 0;
 
-	printf("MAX_XVAL%d\n", map->max_xval);
-	printf("MIN_XVAL%d\n", map->min_xval);
-	printf("MAX_YVAL%d\n", map->max_yval);
-	printf("MIN_YVAL%d\n", map->min_yval);
-	printf("SCALE == %d\n", scale);
-	// if (map->min_xval < 0 || map->min_yval < 0)
-	// {
 	while (i < map->num_rows)
 	{
 		j = 0;
@@ -139,79 +148,21 @@ void	remap_points(t_map *map, int translate, int scale)
 				map->points[i][j]->x -= map->min_xval;
 			if (map->min_yval < 0)
 				map->points[i][j]->y -= map->min_yval;
-			map->points[i][j]->x *= scale;
-			map->points[i][j]->y *= scale;
-			if (map->points[i][j]->x < 0)
-			{
-				printf("THIS SHOULD NOT HAPPEN\n");
-				printf("POINT x==%d\n", map->points[i][j]->x);
-				printf("POINT y==%d\n", map->points[i][j]->y);
-			}
-			if (map->points[i][j]->y < 0)
-				printf("THIS SHOULD NOT HAPPEN\n");
-			// map->points[i][j]->x += translate;
-			// map->points[i][j]->y += translate;
 			j++;
 		}
 		i++;
 	}
-	// }
-	// map->max_xval += translate;
-	// map->max_yval += translate;
 	if (map->min_xval < 0)
 	{
-		map->max_xval += map->min_xval;
+		map->max_xval -= map->min_xval;
 		map->min_xval = 0;
 	}
 	if (map->min_yval < 0)
 	{
-		map->max_yval += map->min_yval;
+		map->max_yval -= map->min_yval;
 		map->min_yval = 0;
 	}
-	map->max_xval *= scale;
-	map->max_yval *= scale;
 }
-
-// void	remap_points_old(t_map *map, int translate, float scale)
-// {
-// 	int new_x;
-// 	int new_y;
-// 	// float scale;
-
-// 	// scale = 1;
-// 	// scale = 10.0f;
-// 	// map->num_cols *= scale;
-// 	// map->num_rows *= scale;
-// 	while (map->max_xval * scale >= SCREEN_W || map->max_yval * scale >= SCREEN_H)
-// 	{
-// 		// map->num_cols /= 2;
-// 		// map->num_rows /= 2;
-// 		scale -= 0.2f;;
-// 	}
-// 	new_x = map->max_xval * scale;
-// 	new_y = map->max_yval * scale;
-// 	int in_xrange = map->max_xval - map->min_xval;
-// 	int out_xrange = (new_x) - translate;
-// 	int in_yrange = map->max_yval - map->min_yval;
-// 	int out_yrange = (new_y) - translate;
-
-// 	int i = 0;
-// 	int j = 0;
-// 	while (i < map->num_rows)
-// 	{
-// 		j = 0;
-// 		while (j < map->num_cols)
-// 		{
-// 			map->points[i][j]->x = (map->points[i][j]->x - map->min_xval) * out_xrange / in_xrange + translate;
-// 			map->points[i][j]->y = (map->points[i][j]->y - map->min_yval) * out_yrange / in_yrange + translate;
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	map->max_xval = new_x;
-// 	map->max_yval = new_y;
-// // output = (input - input_start)*output_range / input_range + output_start;
-// }
 
 void	create_points(t_map *map, int scale, int translate)
 {
@@ -229,7 +180,6 @@ void	create_points(t_map *map, int scale, int translate)
 		while (j < map->num_cols)
 		{
 			points[i][j] = ft_calloc(1, sizeof(t_point));
-			// project_point(points[i][j], i, (map->num_cols - j), map->z_values[i][j], scale, translate);
 			project_point(points[i][j],  i, map->num_cols - j, map->z_values[i][j], scale, translate);
 			if (points[i][j]->x < map->min_xval)
 				map->min_xval = points[i][j]->x;	
@@ -247,6 +197,35 @@ void	create_points(t_map *map, int scale, int translate)
 	remap_points(map, translate, scale);
 }
 
+void	free_map(t_map *map)
+{
+	int **zs = map->z_values;
+	int i = 0;
+	while (i < map->num_rows)
+	{
+		free(zs[i]);
+		i++;
+	}
+	free(zs);
+	map->z_values = NULL;
+	i = 0;
+	int j = 0;
+	while (i < map->num_rows)
+	{
+		j = 0;
+		while (j < map->num_cols)
+		{
+			free(map->points[i][j]);
+			j++;
+		}
+		free(map->points[i]);
+		i++;
+	}
+	free(map->points);
+	free(map);
+}
+
+#include <time.h>
 int main(int argc, char **argv)
 {
 	void *mlx;
@@ -254,30 +233,46 @@ int main(int argc, char **argv)
 	t_data img;
 
 	mlx = mlx_init();
+	clock_t t;
+    t = clock();
 	t_map	*map = read_map(argv[1]);
+    t = clock() - t;
+    double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+	printf("read_map() took %f seconds to execute \n", time_taken);
+	
 	int scale = atoi(argv[2]);
-	// printf("SEG\n");
 	int i = 0;
 	int j = 0;
 	
-	create_points(map, scale, 20);
-	mlx_win = mlx_new_window(mlx, SCREEN_W, SCREEN_H, "fdf");
-	img.img = mlx_new_image(mlx, SCREEN_W, SCREEN_H);
+	t = clock();
+	create_points(map, scale, 0);
+    t = clock() - t;
+    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+	printf("create_points() took %f seconds to execute \n", time_taken);
+	
+	int translate = 20;
+	mlx_win = mlx_new_window(mlx, map->max_xval + translate + 1, map->max_yval + translate + 1, "fdf");
+	img.img = mlx_new_image(mlx, map->max_xval + translate + 1, map->max_yval + translate + 1);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	t = clock();
 	t_point ***points = map->points;
 	while (i < map->num_rows)
 	{
 		j = 0;
 		while (j < map->num_cols)
 		{
-			if (j + 1 < map->num_cols && i != map->num_rows - 1)
-				draw_line(&img, points[i][j]->x, points[i][j]->y, points[i][j + 1]->x, points[i][j + 1]->y, 0x00FFFFFF);
-			if (i + 1 < map->num_rows && j != 0)
-				draw_line(&img, points[i][j]->x, points[i][j]->y, points[i + 1][j]->x, points[i + 1][j]->y, 0x00FFFFFF);
+			if (j + 1 < map->num_cols)
+				draw_line(&img, translate + points[i][j]->x, translate +  points[i][j]->y, translate +  points[i][j + 1]->x, translate +  points[i][j + 1]->y, 0x00FFFFFF);
+			if (i + 1 < map->num_rows)
+				draw_line(&img, translate + points[i][j]->x, translate +  points[i][j]->y, translate +  points[i + 1][j]->x, translate +  points[i + 1][j]->y, 0x00FFFFFF);
 			j++;
 		}
 		i++;
 	}
+    t = clock() - t;
+    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+	printf("draw_points() took %f seconds to execute \n", time_taken);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
+	free_map(map);
 }
