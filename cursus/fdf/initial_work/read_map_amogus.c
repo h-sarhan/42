@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 17:52:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/30 18:08:27 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ void project_point(t_point *p, int x, int y, int z, int scale, int translate)
 	p->x = x * scale;
 	p->y = y * scale;
 	p->z = z * scale;
-	rotZ(p, p->x, p->y, p->z, beta);
-	rotX(p, p->x, p->y, p->z, alpha + 30 * (M_PI / 180.0f));
+	rotX(p, p->x, p->y, p->z, beta);
+	rotZ(p, p->x, p->y, p->z, alpha + 15 * (M_PI / 180.0f));
+	// rotZ(p, p->x, p->y, p->z, alpha);
 }
 
 void	free_split_array(char **arr)
@@ -84,7 +85,7 @@ t_map	*read_map(char *map_path)
 	int i = 0;
 	while (tokens[i] != NULL)
 		i++;
-	int num_cols = i;
+	int num_cols = 27;
 	free_split_array(tokens);	
 	lines = NULL;
 	num_rows = 0;
@@ -94,6 +95,7 @@ t_map	*read_map(char *map_path)
 		num_rows++;
 		line = get_next_line(fd);
 	}
+	num_rows = 29;
 	first = lines;
 	z_values = ft_calloc(num_rows + 1, sizeof(int *));
 	z_values[num_rows] = NULL;
@@ -181,6 +183,7 @@ void	create_points(t_map *map, int scale, int translate)
 		{
 			points[i][j] = ft_calloc(1, sizeof(t_point));
 			project_point(points[i][j],  i, map->num_cols - j, map->z_values[i][j], scale, translate);
+			// project_point(points[i][j],  i,  j, map->z_values[i][j], scale, translate);
 			if (points[i][j]->x < map->min_xval)
 				map->min_xval = points[i][j]->x;	
 			if (points[i][j]->y < map->min_yval)
