@@ -6,11 +6,12 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 17:52:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/30 18:57:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
 
 void	rotX(t_point *p, float x, float y, float z, float rot)
 {
