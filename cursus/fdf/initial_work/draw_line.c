@@ -6,15 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 11:35:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/30 22:30:01 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-
-
-void draw_line_low(t_data *img, int x0, int y0, int x1, int y1, int color)
+void draw_line_low(t_data *img, int x0, int y0, int x1, int y1, unsigned int color)
 {
 	int dx;
 	int dy;
@@ -36,6 +34,8 @@ void draw_line_low(t_data *img, int x0, int y0, int x1, int y1, int color)
 	x = x0;
 	while (x <= x1)
 	{
+		// if ((color >> 24) < 60)
+		// 	color += (1 << 24) * 1;
 		my_mlx_pixel_put(img, x, y,color);
 		if (d > 0)
 		{
@@ -48,7 +48,7 @@ void draw_line_low(t_data *img, int x0, int y0, int x1, int y1, int color)
 	}
 }
 
-void draw_line_high(t_data *img, int x0, int y0, int x1, int y1, int color)
+void draw_line_high(t_data *img, int x0, int y0, int x1, int y1, unsigned int color)
 {
 	int dx;
 	int dy;
@@ -70,6 +70,9 @@ void draw_line_high(t_data *img, int x0, int y0, int x1, int y1, int color)
 	y = y0;
 	while (y <= y1)
 	{
+		// if ((color >> 24) < 100)
+		// 	color += (1 << 24) * 1;
+		
 		my_mlx_pixel_put(img, x, y, color);
 		if (d > 0)
 		{
@@ -83,8 +86,9 @@ void draw_line_high(t_data *img, int x0, int y0, int x1, int y1, int color)
 }
 
 
-
-void draw_line(t_data *img, int x0, int y0, int x1, int y1, int color)
+// TODO: INTERPOLATE COLOR MAYBE
+// TODO: MAKE THIS ACCEPT TWO POINTS
+void draw_line(t_data *img, int x0, int y0, int x1, int y1, unsigned int color)
 {
 	// printf("Drawing from (%d,%d) to (%d,%d)\n", x0, y0, x1, y1);
 	if (abs(y1 - y0) < abs(x1 - x0))

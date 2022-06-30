@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/30 13:08:06 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/30 22:10:19 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ GNL = libgnl.a
 MLX = mlx_linux/mlx_Linux
 
 # TODO: REMOVE WILDCARDS LATER
-SRCS = read_map.c draw_line.c
+SRCS = read_map.c draw_line.c hextoi.c
 LIBFT_SRCS := $(wildcard libft/*.c)
 PRINTF_SRCS := $(wildcard printf/*.c)
 GNL_SRCS := $(wildcard get_next_line/*.c)
@@ -34,8 +34,9 @@ MLX_OBJS := $(MLX_SRCS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(GNL) $(LIBFT) $(PRINTF) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(GNL)  $(PRINTF) $(LIBFT) -lm  -o $@
+MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11  -lz
+$(NAME): $(GNL) $(LIBFT) $(PRINTF) $(OBJS) $(MLX)
+	$(CC) $(CFLAGS) $(OBJS) $(GNL)  $(PRINTF) $(LIBFT) $(MLX_FLAGS) -lm  -o $@
 
 $(LIBFT): $(LIBFT_OBJS)
 	ar -rcs $@ $^

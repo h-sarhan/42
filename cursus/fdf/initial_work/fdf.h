@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 19:16:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/30 22:23:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@
 
 struct s_point
 {
-	int	x;
-	int	y;
-	int	z;
+	int				x;
+	int				y;
+	int				z;
+	unsigned int	color;
 };
 
 typedef struct s_point t_point;
@@ -48,19 +49,20 @@ typedef struct s_data	t_data;
 
 struct s_map
 {
-	int		**z_values;
-	int		num_rows;
-	int		num_cols;
-	t_point	***points;
-	int		min_xval;
-	int		max_xval;
-	int		min_yval;
-	int		max_yval;
+	// int				**z_values;
+	int				num_rows;
+	int				num_cols;
+	t_point			***points;
+	int				min_xval;
+	int				max_xval;
+	int				min_yval;
+	int				max_yval;
 };
 typedef struct s_map	t_map;
 
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	draw_line(t_data *img, int x0, int y0, int x1, int y1, int color);
+void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
+unsigned int	hextoi(char *str);
+void			draw_line(t_data *img, int x0, int y0, int x1, int y1, unsigned int color);
 
 #endif

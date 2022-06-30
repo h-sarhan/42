@@ -6,11 +6,11 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 18:57:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 19:15:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/30 22:05:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "fdf.h"
+#include "fdf.h"
 
 static int is_space(char c)
 {
@@ -41,9 +41,4 @@ unsigned int hextoi(char *str)
 			num += str[i++] - 'A' + 10;
 	}
 	return (num);
-}
-#include <stdio.h>
-int main()
-{
-	printf("%d", hextoi("0X000000A1"));
 }

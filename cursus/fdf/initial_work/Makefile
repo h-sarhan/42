@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/29 17:49:05 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/06/30 22:10:25 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ PRINTF = libftprintf.a
 GNL = libgnl.a
 
 # TODO: REMOVE WILDCARDS LATER
-SRCS = read_map.c draw_line.c
+SRCS = read_map.c draw_line.c hextoi.c
 LIBFT_SRCS := $(wildcard libft/*.c)
 PRINTF_SRCS := $(wildcard printf/*.c)
 GNL_SRCS := $(wildcard get_next_line/*.c)
