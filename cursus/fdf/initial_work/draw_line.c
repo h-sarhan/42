@@ -6,13 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 22:30:01 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/01 14:05:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void draw_line_low(t_data *img, int x0, int y0, int x1, int y1, unsigned int color)
+void draw_line_low(t_data *img, t_point *p1, t_point *p2)
 {
 	int dx;
 	int dy;
@@ -20,9 +20,10 @@ void draw_line_low(t_data *img, int x0, int y0, int x1, int y1, unsigned int col
 	int d;
 	int y;
 	int x;
+	unsigned int color;
 
-	dx = x1 - x0;
-	dy = y1 - y0;
+	dx = p2->x - p1->x;
+	dy = p2->y - p1->y;
 	yi = 1;
 	if (dy < 0)
 	{
@@ -30,13 +31,15 @@ void draw_line_low(t_data *img, int x0, int y0, int x1, int y1, unsigned int col
 		dy = -dy;
 	}
 	d = (2 * dy) - dx;
-	y = y0;
-	x = x0;
-	while (x <= x1)
+	y = p1->y;
+	x = p1->x;
+	if (p1->color == 0x00FFFFFF)
+		color = p2->color;
+	else
+		color = p1->color;
+	while (x <= p2->x)
 	{
-		// if ((color >> 24) < 60)
-		// 	color += (1 << 24) * 1;
-		my_mlx_pixel_put(img, x, y,color);
+		my_mlx_pixel_put(img, x, y, color);
 		if (d > 0)
 		{
 			y = y + yi;
@@ -48,7 +51,7 @@ void draw_line_low(t_data *img, int x0, int y0, int x1, int y1, unsigned int col
 	}
 }
 
-void draw_line_high(t_data *img, int x0, int y0, int x1, int y1, unsigned int color)
+void draw_line_high(t_data *img, t_point *p1, t_point *p2)
 {
 	int dx;
 	int dy;
@@ -56,9 +59,10 @@ void draw_line_high(t_data *img, int x0, int y0, int x1, int y1, unsigned int co
 	int d;
 	int y;
 	int x;
+	unsigned int color;
 
-	dx = x1 - x0;
-	dy = y1 - y0;
+	dx = p2->x - p1->x;
+	dy = p2->y - p1->y;
 	xi = 1;
 	if (dx < 0)
 	{
@@ -66,13 +70,14 @@ void draw_line_high(t_data *img, int x0, int y0, int x1, int y1, unsigned int co
 		dx = -dx;
 	}
 	d = (2 * dx) - dy;
-	x = x0;
-	y = y0;
-	while (y <= y1)
+	x = p1->x;
+	y = p1->y;
+	if (p1->color == 0x00FFFFFF)
+		color = p2->color;
+	else
+		color = p1->color;
+	while (y <= p2->y)
 	{
-		// if ((color >> 24) < 100)
-		// 	color += (1 << 24) * 1;
-		
 		my_mlx_pixel_put(img, x, y, color);
 		if (d > 0)
 		{
@@ -86,23 +91,22 @@ void draw_line_high(t_data *img, int x0, int y0, int x1, int y1, unsigned int co
 }
 
 
-// TODO: INTERPOLATE COLOR MAYBE
 // TODO: MAKE THIS ACCEPT TWO POINTS
-void draw_line(t_data *img, int x0, int y0, int x1, int y1, unsigned int color)
+void draw_line(t_data *img, t_point *p1, t_point *p2)
 {
 	// printf("Drawing from (%d,%d) to (%d,%d)\n", x0, y0, x1, y1);
-	if (abs(y1 - y0) < abs(x1 - x0))
+	if (abs(p2->y - p1->y) < abs(p2->x - p1->x))
 	{
-		if (x0 > x1)
-			draw_line_low(img, x1, y1, x0, y0, color);
+		if (p1->x > p2->x)
+			draw_line_low(img, p2, p1);
 		else
-			draw_line_low(img, x0, y0, x1, y1, color);
+			draw_line_low(img, p1, p2);
 	}
 	else
 	{
-		if (y0 > y1)
-			draw_line_high(img, x1, y1, x0, y0, color);
+		if (p1->y > p2->y)
+			draw_line_high(img, p2, p1);
 		else
-			draw_line_high(img, x0, y0, x1, y1, color);
+			draw_line_high(img, p1, p2);
 	} 
 }

@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/06/30 22:10:25 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/01 13:01:00 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,11 @@ $(NAME): $(MLX) $(GNL) $(LIBFT) $(PRINTF) $(OBJS)
 $(LIBFT): $(LIBFT_OBJS)
 	ar -rcs $@ $^
 
+upscale: $(MLX) $(GNL) $(LIBFT) $(PRINTF) upscale.o 
+	$(CC) $(CFLAGS) upscale.o  $(GNL) $(LIBFT) $(PRINTF) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $@
+	
+
+
 $(PRINTF): $(PRINTF_OBJS)
 	ar -rcs $@ $^
 
@@ -54,10 +59,10 @@ norm:
 	norminette $(LIBFT_SRCS) $(PRINTF_SRCS) $(GNL_SRCS) $(SRCS) libft/libft.h printf/ft_printf.h get_next_line/get_next_line.h
 
 clean:
-	rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS) $(GNL_OBJS) $(LIBFT) $(PRINTF) $(GNL)
+	rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS) $(GNL_OBJS) $(LIBFT) $(PRINTF) $(GNL) upscale.o
 	make -C mlx clean
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) upscale
 
 re: fclean $(NAME)

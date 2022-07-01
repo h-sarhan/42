@@ -6,11 +6,12 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 18:08:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/06/30 22:24:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
 
 void	rotX(t_point *p, float x, float y, float z, float rot)
 {
@@ -43,9 +44,8 @@ void project_point(t_point *p, int x, int y, int z, int scale, int translate)
 	p->x = x * scale;
 	p->y = y * scale;
 	p->z = z * scale;
-	rotX(p, p->x, p->y, p->z, beta);
-	rotZ(p, p->x, p->y, p->z, alpha + 15 * (M_PI / 180.0f));
-	// rotZ(p, p->x, p->y, p->z, alpha);
+	rotZ(p, p->x, p->y, p->z, beta);
+	rotX(p, p->x, p->y, p->z, alpha + 30 * (M_PI / 180.0f));
 }
 
 void	free_split_array(char **arr)
@@ -68,7 +68,7 @@ void	free_lines(void *split_array)
 	free_split_array(split_array);
 }
 
-t_map	*read_map(char *map_path)
+t_map	*read_map(char *map_path, int scale)
 {
 	int		fd;
 	char	*line;
@@ -76,16 +76,20 @@ t_map	*read_map(char *map_path)
 	t_list	*lines;
 	t_list	*first;
 	int		num_rows;
-	int		**z_values;
 	t_map	*map;
 
+	map = ft_calloc(1, sizeof(t_map));
+	map->min_xval = INT_MAX;
+	map->min_yval = INT_MAX;
+	map->max_xval = INT_MIN;
+	map->max_yval = INT_MIN;
 	fd = open(map_path, O_RDONLY);
 	line = get_next_line(fd);
 	tokens = ft_split(line, ' ');
 	int i = 0;
 	while (tokens[i] != NULL)
 		i++;
-	int num_cols = 27;
+	int num_cols = i;
 	free_split_array(tokens);	
 	lines = NULL;
 	num_rows = 0;
@@ -95,35 +99,44 @@ t_map	*read_map(char *map_path)
 		num_rows++;
 		line = get_next_line(fd);
 	}
-	num_rows = 29;
 	first = lines;
-	z_values = ft_calloc(num_rows + 1, sizeof(int *));
-	z_values[num_rows] = NULL;
 	i = 0;
 	int j = 0;
-	while (i < num_rows)
+	t_point ***points = ft_calloc(num_rows + 1, sizeof(t_point **));
+	while (i < num_rows && lines != NULL)
 	{
-		z_values[i] = ft_calloc(num_cols + 1, sizeof(int));
+		points[i] = ft_calloc(num_cols + 1, sizeof(t_point *));
 		line = lines->content;
 		tokens = ft_split(line, ' ');
 		j = 0;
-		while (j < num_cols)
+		while (j < num_cols && tokens[j] != NULL)
 		{
-			z_values[i][j] = atoi(tokens[j]);
+			points[i][j] = ft_calloc(1, sizeof(t_point));
+			if (ft_strchr(tokens[j], ',') != NULL)
+				points[i][j]->color = hextoi(ft_strchr(tokens[j], ',') + 1);
+			else
+				points[i][j]->color = 0x00FFFFFF;
+			
+			
+			project_point(points[i][j],  i, num_cols - j, atoi(tokens[j]), scale, 0);
+			if (points[i][j]->x < map->min_xval)
+				map->min_xval = points[i][j]->x;	
+			if (points[i][j]->y < map->min_yval)
+				map->min_yval = points[i][j]->y;	
+			if (points[i][j]->x > map->max_xval)
+				map->max_xval = points[i][j]->x;	
+			if (points[i][j]->y > map->max_yval)
+				map->max_yval = points[i][j]->y;
 			j++;
 		}
 		lines = lines->next;
 		free_split_array(tokens);
 		i++;
 	}
-	map = ft_calloc(1, sizeof(t_map));
-	map->z_values = z_values;
+	map->points = points;
 	map->num_cols = num_cols;
 	map->num_rows = num_rows;
-	map->min_xval = INT_MAX;
-	map->min_yval = INT_MAX;
-	map->max_xval = INT_MIN;
-	map->max_yval = INT_MIN;
+	remap_points(map, 0, scale);
 	ft_lstclear(&first, free);
 	return (map);
 }
@@ -166,51 +179,10 @@ void	remap_points(t_map *map, int translate, int scale)
 	}
 }
 
-void	create_points(t_map *map, int scale, int translate)
-{
-	t_point	***points;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	points = ft_calloc(map->num_rows + 1, sizeof(t_point **));
-	while (i < map->num_rows)
-	{
-		j = 0;
-		points[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
-		while (j < map->num_cols)
-		{
-			points[i][j] = ft_calloc(1, sizeof(t_point));
-			project_point(points[i][j],  i, map->num_cols - j, map->z_values[i][j], scale, translate);
-			// project_point(points[i][j],  i,  j, map->z_values[i][j], scale, translate);
-			if (points[i][j]->x < map->min_xval)
-				map->min_xval = points[i][j]->x;	
-			if (points[i][j]->y < map->min_yval)
-				map->min_yval = points[i][j]->y;	
-			if (points[i][j]->x > map->max_xval)
-				map->max_xval = points[i][j]->x;	
-			if (points[i][j]->y > map->max_yval)
-				map->max_yval = points[i][j]->y;	
-			j++;
-		}
-		i++;
-	}
-	map->points = points;
-	remap_points(map, translate, scale);
-}
 
 void	free_map(t_map *map)
 {
-	int **zs = map->z_values;
 	int i = 0;
-	while (i < map->num_rows)
-	{
-		free(zs[i]);
-		i++;
-	}
-	free(zs);
-	map->z_values = NULL;
 	i = 0;
 	int j = 0;
 	while (i < map->num_rows)
@@ -238,20 +210,15 @@ int main(int argc, char **argv)
 	mlx = mlx_init();
 	clock_t t;
     t = clock();
-	t_map	*map = read_map(argv[1]);
+	int scale = atoi(argv[2]);
+	t_map	*map = read_map(argv[1], scale);
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 	printf("read_map() took %f seconds to execute \n", time_taken);
 	
-	int scale = atoi(argv[2]);
 	int i = 0;
 	int j = 0;
 	
-	t = clock();
-	create_points(map, scale, 0);
-    t = clock() - t;
-    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-	printf("create_points() took %f seconds to execute \n", time_taken);
 	
 	int translate = 20;
 	mlx_win = mlx_new_window(mlx, map->max_xval + translate + 1, map->max_yval + translate + 1, "fdf");
@@ -265,9 +232,9 @@ int main(int argc, char **argv)
 		while (j < map->num_cols)
 		{
 			if (j + 1 < map->num_cols)
-				draw_line(&img, translate + points[i][j]->x, translate +  points[i][j]->y, translate +  points[i][j + 1]->x, translate +  points[i][j + 1]->y, 0x00FFFFFF);
+				draw_line(&img, translate + points[i][j]->x, translate +  points[i][j]->y, translate +  points[i][j + 1]->x, translate +  points[i][j + 1]->y, points[i][j]->color);
 			if (i + 1 < map->num_rows)
-				draw_line(&img, translate + points[i][j]->x, translate +  points[i][j]->y, translate +  points[i + 1][j]->x, translate +  points[i + 1][j]->y, 0x00FFFFFF);
+				draw_line(&img, translate + points[i][j]->x, translate +  points[i][j]->y, translate +  points[i + 1][j]->x, translate +  points[i + 1][j]->y, points[i][j]->color);
 			j++;
 		}
 		i++;
