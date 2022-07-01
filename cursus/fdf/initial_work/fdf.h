@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/01 13:57:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/01 16:17:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # define CF1 0.40824829046F // sqrt(6)/6
 # define CF2 1.73205080757F // sqrt(3)
 # define CF3 0.81649658092F // 2 * sqrt(6)/6
+# define ON_DESTROY 17
+# define KEY_Q 12
+# define KEY_ESC 53
 
 struct s_point
 {
@@ -58,6 +61,16 @@ struct s_map
 	int				max_yval;
 };
 typedef struct s_map	t_map;
+
+struct s_vars
+{
+	void	*mlx;
+	void	*win;
+	t_map	*map;
+	void	*img;
+};
+
+typedef struct s_vars t_vars;
 
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);

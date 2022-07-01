@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_map.c                                         :+:      :+:    :+:   */
+/*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/01 14:05:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:53:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ t_map *read_map(char *map_path, int scale)
 	map->points = points;
 	map->num_cols = num_cols;
 	map->num_rows = num_rows;
-	remap_points(map, 0, scale);
+	remap_points(map, 0, 0);
 	ft_lstclear(&first, free);
 	return (map);
 }
@@ -147,7 +147,7 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void remap_points(t_map *map, int translate, int scale)
+void remap_points(t_map *map, int new_x, int new_y)
 {
 	int i = 0;
 	int j = 0;
@@ -197,6 +197,26 @@ void free_map(t_map *map)
 	free(map);
 }
 
+int	close_window(int key_code, void *params)
+{
+	// ft_putstr_fd("PRINTING KEY CODE ", 1);
+	// ft_putnbr_fd(key_code, 1);
+	// ft_putendl_fd("", 1);
+	t_vars	*vars = params;
+	if (key_code == KEY_Q || key_code == KEY_ESC)
+	{
+		ft_putendl_fd("QUITTING PROGRAM!", 1);
+		free_map(vars->map);
+		mlx_clear_window(vars->mlx, vars->win);
+		mlx_destroy_window(vars->mlx, vars->win);
+		mlx_destroy_image(vars->mlx, vars->img);
+		free(vars);
+		exit(EXIT_SUCCESS);
+	}
+	return (0);
+}
+
+
 #include <time.h>
 int main(int argc, char **argv)
 {
@@ -220,6 +240,11 @@ int main(int argc, char **argv)
 	mlx_win = mlx_new_window(mlx, map->max_xval + translate + 1, map->max_yval + translate + 1, "fdf");
 	img.img = mlx_new_image(mlx, map->max_xval + translate + 1, map->max_yval + translate + 1);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	t_vars *vars = ft_calloc(1, sizeof(t_vars));
+	vars->mlx = mlx;
+	vars->win = mlx_win;
+	vars->map = map;
+	vars->img = img.img;
 	t = clock();
 	t_point ***points = map->points;
 	while (i < map->num_rows)
@@ -239,6 +264,8 @@ int main(int argc, char **argv)
 	time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
 	printf("draw_points() took %f seconds to execute \n", time_taken);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	mlx_hook(mlx_win, 2, 0, close_window, vars);
 	mlx_loop(mlx);
+	exit(EXIT_FAILURE);
 	free_map(map);
 }

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/01 14:05:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/01 16:22:01 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void draw_line_high(t_data *img, t_point *p1, t_point *p2)
 // TODO: MAKE THIS ACCEPT TWO POINTS
 void draw_line(t_data *img, t_point *p1, t_point *p2)
 {
-	// printf("Drawing from (%d,%d) to (%d,%d)\n", x0, y0, x1, y1);
+	// printf("Drawing from (%d,%d) to (%d,%d)\n", p1->x, p1->y, p1->x, p2->y);
 	if (abs(p2->y - p1->y) < abs(p2->x - p1->x))
 	{
 		if (p1->x > p2->x)

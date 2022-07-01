@@ -121,8 +121,8 @@ void printPoints(t_map *map)
             printf("%d", map->points[i][j]->z);
             write(fd, " ", 1);
             ft_putnbr_fd(map->points[i][j]->z, fd);
-			if (map->points[i][j]->z == 5 || map->points[i][j]->z == 7)
-				ft_putstr_fd(",0xbf1601", fd);
+			if (map->points[i][j]->z == 7 || map->points[i][j]->z == 5)
+				ft_putstr_fd(",0xbf1701", fd);
 			if (map->points[i][j]->z == 9)
 				ft_putstr_fd(",0x97c6db", fd);
             write(fd, " ", 1);
