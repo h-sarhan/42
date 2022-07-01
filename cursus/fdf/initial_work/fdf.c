@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/01 17:53:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/01 20:27:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,36 +101,43 @@ t_map *read_map(char *map_path, int scale)
 	first = lines;
 	i = 0;
 	int j = 0;
+	t_point ***projected_points = ft_calloc(num_rows + 1, sizeof(t_point **));
 	t_point ***points = ft_calloc(num_rows + 1, sizeof(t_point **));
 	while (i < num_rows && lines != NULL)
 	{
+		projected_points[i] = ft_calloc(num_cols + 1, sizeof(t_point *));
 		points[i] = ft_calloc(num_cols + 1, sizeof(t_point *));
 		line = lines->content;
 		tokens = ft_split(line, ' ');
 		j = 0;
 		while (j < num_cols && tokens[j] != NULL)
 		{
+			projected_points[i][j] = ft_calloc(1, sizeof(t_point));
 			points[i][j] = ft_calloc(1, sizeof(t_point));
 			if (ft_strchr(tokens[j], ',') != NULL)
-				points[i][j]->color = hextoi(ft_strchr(tokens[j], ',') + 1);
+				projected_points[i][j]->color = hextoi(ft_strchr(tokens[j], ',') + 1);
 			else
-				points[i][j]->color = 0x00FFFFFF;
-
-			project_point(points[i][j], i, num_cols - j, atoi(tokens[j]), scale, 0);
-			if (points[i][j]->x < map->min_xval)
-				map->min_xval = points[i][j]->x;
-			if (points[i][j]->y < map->min_yval)
-				map->min_yval = points[i][j]->y;
-			if (points[i][j]->x > map->max_xval)
-				map->max_xval = points[i][j]->x;
-			if (points[i][j]->y > map->max_yval)
-				map->max_yval = points[i][j]->y;
+				projected_points[i][j]->color = 0x00FFFFFF;
+	
+			points[i][j]->x = i;
+			points[i][j]->y = num_cols - j;
+			points[i][j]->z = atoi(tokens[j]);
+			project_point(projected_points[i][j], i, num_cols - j, atoi(tokens[j]), scale, 0);
+			if (projected_points[i][j]->x < map->min_xval)
+				map->min_xval = projected_points[i][j]->x;
+			if (projected_points[i][j]->y < map->min_yval)
+				map->min_yval = projected_points[i][j]->y;
+			if (projected_points[i][j]->x > map->max_xval)
+				map->max_xval = projected_points[i][j]->x;
+			if (projected_points[i][j]->y > map->max_yval)
+				map->max_yval = projected_points[i][j]->y;
 			j++;
 		}
 		lines = lines->next;
 		free_split_array(tokens);
 		i++;
 	}
+	map->projected_points = projected_points;
 	map->points = points;
 	map->num_cols = num_cols;
 	map->num_rows = num_rows;
@@ -158,9 +165,9 @@ void remap_points(t_map *map, int new_x, int new_y)
 		while (j < map->num_cols)
 		{
 			if (map->min_xval < 0)
-				map->points[i][j]->x -= map->min_xval;
+				map->projected_points[i][j]->x -= map->min_xval;
 			if (map->min_yval < 0)
-				map->points[i][j]->y -= map->min_yval;
+				map->projected_points[i][j]->y -= map->min_yval;
 			j++;
 		}
 		i++;
@@ -187,35 +194,61 @@ void free_map(t_map *map)
 		j = 0;
 		while (j < map->num_cols)
 		{
+			free(map->projected_points[i][j]);
 			free(map->points[i][j]);
 			j++;
 		}
+		free(map->projected_points[i]);
 		free(map->points[i]);
 		i++;
 	}
+	free(map->projected_points);
 	free(map->points);
 	free(map);
 }
 
-int	close_window(int key_code, void *params)
+
+int	close_window(void *params)
 {
-	// ft_putstr_fd("PRINTING KEY CODE ", 1);
-	// ft_putnbr_fd(key_code, 1);
-	// ft_putendl_fd("", 1);
 	t_vars	*vars = params;
-	if (key_code == KEY_Q || key_code == KEY_ESC)
-	{
-		ft_putendl_fd("QUITTING PROGRAM!", 1);
-		free_map(vars->map);
-		mlx_clear_window(vars->mlx, vars->win);
-		mlx_destroy_window(vars->mlx, vars->win);
-		mlx_destroy_image(vars->mlx, vars->img);
-		free(vars);
-		exit(EXIT_SUCCESS);
-	}
+	ft_putendl_fd("QUITTING PROGRAM!", 1);
+	free_map(vars->map);
+	mlx_clear_window(vars->mlx, vars->win);
+	mlx_destroy_window(vars->mlx, vars->win);
+	mlx_destroy_image(vars->mlx, vars->img);
+	free(vars);
+	exit(EXIT_SUCCESS);
 	return (0);
 }
 
+int	handle_keypress(int key_code, void *params)
+{
+	ft_putstr_fd("PRINTING KEY CODE ", 1);
+	ft_putnbr_fd(key_code, 1);
+	ft_putendl_fd("", 1);
+	t_vars	*vars = params;
+	if (key_code == KEY_Q || key_code == KEY_ESC)
+	{
+		close_window(vars);
+	}
+	return (0);
+}
+// if (key_code == 124)
+// {
+// 	// right arrow
+// 	int i = 0;
+// 	int j = 0;
+// 	while (i < vars->map->num_rows)
+// 	{
+// 		j = 0;
+// 		while (j < vars->map->num_cols)
+// 		{
+// 			// rotZ();
+// 			j++;
+// 		}
+// 	}
+// 	// rotZ();
+// }
 
 #include <time.h>
 int main(int argc, char **argv)
@@ -246,7 +279,7 @@ int main(int argc, char **argv)
 	vars->map = map;
 	vars->img = img.img;
 	t = clock();
-	t_point ***points = map->points;
+	t_point ***points = map->projected_points;
 	while (i < map->num_rows)
 	{
 		j = 0;
@@ -264,8 +297,9 @@ int main(int argc, char **argv)
 	time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
 	printf("draw_points() took %f seconds to execute \n", time_taken);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_hook(mlx_win, 2, 0, close_window, vars);
+	mlx_hook(mlx_win, 17, 0, close_window, vars);
+	mlx_hook(mlx_win, 2, 0, handle_keypress, vars);
 	mlx_loop(mlx);
 	exit(EXIT_FAILURE);
-	free_map(map);
+	// free_map(map);
 }

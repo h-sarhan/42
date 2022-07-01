@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/01 16:17:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/01 20:13:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ struct s_map
 {
 	int				num_rows;
 	int				num_cols;
+	t_point			***projected_points;
 	t_point			***points;
 	int				min_xval;
 	int				max_xval;
@@ -77,5 +78,12 @@ void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 unsigned int	hextoi(char *str);
 void			draw_line(t_data *img, t_point *p1, t_point *p2);
 void			remap_points(t_map *map, int translate, int scale);
+int				create_trgb(unsigned int t, unsigned int r, unsigned int g, unsigned int b);
+int				get_t(int trgb);
+int				get_r(int trgb);
+int				get_g(int trgb);
+int				get_b(int trgb);
+int				add_color(int color1, int color2);
+int				color_mix(int c1, int c2, float mix);
 
 #endif

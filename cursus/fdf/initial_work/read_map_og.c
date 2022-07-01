@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_map.c                                         :+:      :+:    :+:   */
+/*   read_map_og.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/06/30 22:24:53 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/01 18:44:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_map	*read_map(char *map_path, int scale)
 		free_split_array(tokens);
 		i++;
 	}
-	map->points = points;
+	map->projected_points = points;
 	map->num_cols = num_cols;
 	map->num_rows = num_rows;
 	remap_points(map, 0, scale);
@@ -160,9 +160,9 @@ void	remap_points(t_map *map, int translate, int scale)
 		while (j < map->num_cols)
 		{
 			if (map->min_xval < 0)
-				map->points[i][j]->x -= map->min_xval;
+				map->projected_points[i][j]->x -= map->min_xval;
 			if (map->min_yval < 0)
-				map->points[i][j]->y -= map->min_yval;
+				map->projected_points[i][j]->y -= map->min_yval;
 			j++;
 		}
 		i++;
@@ -190,13 +190,13 @@ void	free_map(t_map *map)
 		j = 0;
 		while (j < map->num_cols)
 		{
-			free(map->points[i][j]);
+			free(map->projected_points[i][j]);
 			j++;
 		}
-		free(map->points[i]);
+		free(map->projected_points[i]);
 		i++;
 	}
-	free(map->points);
+	free(map->projected_points);
 	free(map);
 }
 
@@ -225,7 +225,7 @@ int main(int argc, char **argv)
 	img.img = mlx_new_image(mlx, map->max_xval + translate + 1, map->max_yval + translate + 1);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	t = clock();
-	t_point ***points = map->points;
+	t_point ***points = map->projected_points;
 	while (i < map->num_rows)
 	{
 		j = 0;
