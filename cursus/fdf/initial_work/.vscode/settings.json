@@ -1,8 +1,0 @@
-{
-	"files.associations": {
-		"fdf.h": "c",
-		"get_next_line.h": "c",
-		"mlx_int.h": "c",
-		"algorithm": "c"
-	}
-}

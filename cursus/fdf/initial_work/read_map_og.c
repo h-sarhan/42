@@ -6,28 +6,27 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/01 18:44:30 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/02 16:25:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-
-void	rotX(t_point *p, float x, float y, float z, float rot)
+void rotX(t_point *p, float x, float y, float z, float rot)
 {
 	p->x = x;
 	p->y = cos(rot) * y - sin(rot) * z;
 	p->z = -sin(rot) * y + cos(rot) * z;
 }
 
-void	rotY(t_point *p, float x, float y, float z, float rot)
+void rotY(t_point *p, float x, float y, float z, float rot)
 {
 	p->x = x * cos(rot) + sin(cos(rot)) * z;
 	p->y = y;
 	p->z = -sin(rot) * x + cos(rot) * z;
 }
 
-void	rotZ(t_point *p, float x, float y, float z, float rot)
+void rotZ(t_point *p, float x, float y, float z, float rot)
 {
 	p->x = x * cos(rot) - sin(cos(rot)) * y;
 	p->y = x * sin(rot) + cos(rot) * y;
@@ -36,24 +35,24 @@ void	rotZ(t_point *p, float x, float y, float z, float rot)
 
 void project_point(t_point *p, int x, int y, int z, int scale, int translate)
 {
-	float	beta;
-	float	alpha;
+	float beta;
+	float alpha;
 
-	beta = 45 * (M_PI / 180.0f);
-	alpha = asin(tan(30 * (M_PI / 180.0f)));   
+	beta = 45 * (PI / 180.0f);
+	alpha = asin(tan(30 * (PI / 180.0f)));
 	p->x = x * scale;
 	p->y = y * scale;
 	p->z = z * scale;
 	rotZ(p, p->x, p->y, p->z, beta);
-	rotX(p, p->x, p->y, p->z, alpha + 30 * (M_PI / 180.0f));
+	rotX(p, p->x, p->y, p->z, alpha + 30 * (PI / 180.0f));
 }
 
-void	free_split_array(char **arr)
+void free_split_array(char **arr)
 {
-	int	i;
+	int i;
 
 	if (arr == NULL)
-		return ;
+		return;
 	i = 0;
 	while (arr[i] != NULL)
 	{
@@ -63,20 +62,20 @@ void	free_split_array(char **arr)
 	free(arr);
 }
 
-void	free_lines(void *split_array)
+void free_lines(void *split_array)
 {
 	free_split_array(split_array);
 }
 
-t_map	*read_map(char *map_path, int scale)
+t_map *read_map(char *map_path, int scale)
 {
-	int		fd;
-	char	*line;
-	char	**tokens;
-	t_list	*lines;
-	t_list	*first;
-	int		num_rows;
-	t_map	*map;
+	int fd;
+	char *line;
+	char **tokens;
+	t_list *lines;
+	t_list *first;
+	int num_rows;
+	t_map *map;
 
 	map = ft_calloc(1, sizeof(t_map));
 	map->min_xval = INT_MAX;
@@ -90,7 +89,7 @@ t_map	*read_map(char *map_path, int scale)
 	while (tokens[i] != NULL)
 		i++;
 	int num_cols = i;
-	free_split_array(tokens);	
+	free_split_array(tokens);
 	lines = NULL;
 	num_rows = 0;
 	while (line != NULL)
@@ -116,15 +115,14 @@ t_map	*read_map(char *map_path, int scale)
 				points[i][j]->color = hextoi(ft_strchr(tokens[j], ',') + 1);
 			else
 				points[i][j]->color = 0x00FFFFFF;
-			
-			
-			project_point(points[i][j],  i, num_cols - j, atoi(tokens[j]), scale, 0);
+
+			project_point(points[i][j], i, num_cols - j, atoi(tokens[j]), scale, 0);
 			if (points[i][j]->x < map->min_xval)
-				map->min_xval = points[i][j]->x;	
+				map->min_xval = points[i][j]->x;
 			if (points[i][j]->y < map->min_yval)
-				map->min_yval = points[i][j]->y;	
+				map->min_yval = points[i][j]->y;
 			if (points[i][j]->x > map->max_xval)
-				map->max_xval = points[i][j]->x;	
+				map->max_xval = points[i][j]->x;
 			if (points[i][j]->y > map->max_yval)
 				map->max_yval = points[i][j]->y;
 			j++;
@@ -149,7 +147,7 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	remap_points(t_map *map, int translate, int scale)
+void remap_points(t_map *map, int translate, int scale)
 {
 	int i = 0;
 	int j = 0;
@@ -179,8 +177,7 @@ void	remap_points(t_map *map, int translate, int scale)
 	}
 }
 
-
-void	free_map(t_map *map)
+void free_map(t_map *map)
 {
 	int i = 0;
 	i = 0;
@@ -209,17 +206,16 @@ int main(int argc, char **argv)
 
 	mlx = mlx_init();
 	clock_t t;
-    t = clock();
+	t = clock();
 	int scale = atoi(argv[2]);
-	t_map	*map = read_map(argv[1], scale);
-    t = clock() - t;
-    double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+	t_map *map = read_map(argv[1], scale);
+	t = clock() - t;
+	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
 	printf("read_map() took %f seconds to execute \n", time_taken);
-	
+
 	int i = 0;
 	int j = 0;
-	
-	
+
 	int translate = 20;
 	mlx_win = mlx_new_window(mlx, map->max_xval + translate + 1, map->max_yval + translate + 1, "fdf");
 	img.img = mlx_new_image(mlx, map->max_xval + translate + 1, map->max_yval + translate + 1);
@@ -232,15 +228,15 @@ int main(int argc, char **argv)
 		while (j < map->num_cols)
 		{
 			if (j + 1 < map->num_cols)
-				draw_line(&img, translate + points[i][j]->x, translate +  points[i][j]->y, translate +  points[i][j + 1]->x, translate +  points[i][j + 1]->y, points[i][j]->color);
+				draw_line(&img, translate + points[i][j]->x, translate + points[i][j]->y, translate + points[i][j + 1]->x, translate + points[i][j + 1]->y, points[i][j]->color);
 			if (i + 1 < map->num_rows)
-				draw_line(&img, translate + points[i][j]->x, translate +  points[i][j]->y, translate +  points[i + 1][j]->x, translate +  points[i + 1][j]->y, points[i][j]->color);
+				draw_line(&img, translate + points[i][j]->x, translate + points[i][j]->y, translate + points[i + 1][j]->x, translate + points[i + 1][j]->y, points[i][j]->color);
 			j++;
 		}
 		i++;
 	}
-    t = clock() - t;
-    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+	t = clock() - t;
+	time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
 	printf("draw_points() took %f seconds to execute \n", time_taken);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);

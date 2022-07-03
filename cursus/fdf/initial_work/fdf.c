@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/01 20:27:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/02 18:56:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ void project_point(t_point *p, int x, int y, int z, int scale, int translate)
 	float beta;
 	float alpha;
 
-	beta = 45 * (M_PI / 180.0f);
-	alpha = asin(tan(30 * (M_PI / 180.0f)));
+	beta = 45 * (PI / 180.0f);
+	alpha = asin(tan(30 * (PI / 180.0f)));
 	p->x = x * scale;
 	p->y = y * scale;
 	p->z = z * scale;
 	rotZ(p, p->x, p->y, p->z, beta);
-	rotX(p, p->x, p->y, p->z, alpha + 30 * (M_PI / 180.0f));
+	rotX(p, p->x, p->y, p->z, alpha + 30 * (PI / 180.0f));
 }
 
 void free_split_array(char **arr)
@@ -69,13 +69,13 @@ void free_lines(void *split_array)
 
 t_map *read_map(char *map_path, int scale)
 {
-	int fd;
-	char *line;
-	char **tokens;
-	t_list *lines;
-	t_list *first;
-	int num_rows;
-	t_map *map;
+	int		fd;
+	char	*line;
+	char	**tokens;
+	t_list	*lines;
+	t_list	*first;
+	int		num_rows;
+	t_map	*map;
 
 	map = ft_calloc(1, sizeof(t_map));
 	map->min_xval = INT_MAX;
@@ -118,7 +118,7 @@ t_map *read_map(char *map_path, int scale)
 				projected_points[i][j]->color = hextoi(ft_strchr(tokens[j], ',') + 1);
 			else
 				projected_points[i][j]->color = 0x00FFFFFF;
-	
+
 			points[i][j]->x = i;
 			points[i][j]->y = num_cols - j;
 			points[i][j]->z = atoi(tokens[j]);
@@ -207,10 +207,9 @@ void free_map(t_map *map)
 	free(map);
 }
 
-
-int	close_window(void *params)
+int close_window(void *params)
 {
-	t_vars	*vars = params;
+	t_vars *vars = params;
 	ft_putendl_fd("QUITTING PROGRAM!", 1);
 	free_map(vars->map);
 	mlx_clear_window(vars->mlx, vars->win);
@@ -221,34 +220,38 @@ int	close_window(void *params)
 	return (0);
 }
 
-int	handle_keypress(int key_code, void *params)
+int handle_keypress(int key_code, void *params)
 {
 	ft_putstr_fd("PRINTING KEY CODE ", 1);
 	ft_putnbr_fd(key_code, 1);
 	ft_putendl_fd("", 1);
-	t_vars	*vars = params;
-	if (key_code == KEY_Q || key_code == KEY_ESC)
+	t_vars *vars = params;
+	if (key_code == KEY_Q || key_code == KEY_ESC || key_code == 113 || key_code == 65307)
 	{
 		close_window(vars);
 	}
+	// if (key_code == 124 || key_code == 65363)
+	// {
+	// 	// right arrow
+	// 	int i = 0;
+	// 	int j = 0;
+	// 	t_point	***points = vars->map->points;
+	// 	t_point	***projected_points = vars->map->projected_points;
+	// 	while (points[i] != NULL)
+	// 	{
+	// 		j = 0;
+	// 		while (points[i][j] != NULL)
+	// 		{
+	// 			rotZ(points[i][j], points[i][j]->x, points[i][j]->y, points[i][j]->z, 10);
+	// 			// project_point(projected_points[i][j], points[])
+	// 			j++;
+	// 		}
+	// 	}
+		
+	// 	// rotZ();
+	// }
 	return (0);
 }
-// if (key_code == 124)
-// {
-// 	// right arrow
-// 	int i = 0;
-// 	int j = 0;
-// 	while (i < vars->map->num_rows)
-// 	{
-// 		j = 0;
-// 		while (j < vars->map->num_cols)
-// 		{
-// 			// rotZ();
-// 			j++;
-// 		}
-// 	}
-// 	// rotZ();
-// }
 
 #include <time.h>
 int main(int argc, char **argv)
@@ -298,7 +301,7 @@ int main(int argc, char **argv)
 	printf("draw_points() took %f seconds to execute \n", time_taken);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_hook(mlx_win, 17, 0, close_window, vars);
-	mlx_hook(mlx_win, 2, 0, handle_keypress, vars);
+	mlx_hook(mlx_win, 2, (1L << 0), handle_keypress, vars);
 	mlx_loop(mlx);
 	exit(EXIT_FAILURE);
 	// free_map(map);

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/01 20:13:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/02 16:23:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define ON_DESTROY 17
 # define KEY_Q 12
 # define KEY_ESC 53
+# define PI           3.14159265358979323846
 
 struct s_point
 {
