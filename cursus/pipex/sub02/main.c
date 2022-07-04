@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:01:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/04 12:03:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/04 13:10:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char **argv, char **env)
 	int		pipe_fds[2];
 
 	check_args(argc, argv);
+	fds[0] = -1;
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
 		command_list = handle_here_doc(argv, pipe_fds, fds, env);
 	else

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:02:08 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/04 12:03:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/04 12:09:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,8 @@ char	**get_args(char *arg, char **env)
 		while (env[i] != NULL && ft_strncmp(env[i], "PATH=", 5) != 0)
 			i++;
 		if (env[i] == NULL)
-		{
-			env = ft_split("PATH=/usr/bin:/bin:/usr/sbin:/sbin", ' ');
-			if (env == NULL)
-				return (NULL);
-			i = -1;
-		}
+			return (NULL);
 		cmd_args[0] = get_full_path(cmd_args[0], env);
-		if (i == -1)
-			free_split_array(env);
 	}
 	return (trim_args(cmd_args));
 }
