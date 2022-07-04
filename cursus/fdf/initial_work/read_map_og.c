@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/02 16:25:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/04 18:31:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ t_map *read_map(char *map_path, int scale)
 	t_map *map;
 
 	map = ft_calloc(1, sizeof(t_map));
-	map->min_xval = INT_MAX;
-	map->min_yval = INT_MAX;
-	map->max_xval = INT_MIN;
-	map->max_yval = INT_MIN;
+	map->min_x = INT_MAX;
+	map->min_y = INT_MAX;
+	map->max_x = INT_MIN;
+	map->max_y = INT_MIN;
 	fd = open(map_path, O_RDONLY);
 	line = get_next_line(fd);
 	tokens = ft_split(line, ' ');
@@ -117,14 +117,14 @@ t_map *read_map(char *map_path, int scale)
 				points[i][j]->color = 0x00FFFFFF;
 
 			project_point(points[i][j], i, num_cols - j, atoi(tokens[j]), scale, 0);
-			if (points[i][j]->x < map->min_xval)
-				map->min_xval = points[i][j]->x;
-			if (points[i][j]->y < map->min_yval)
-				map->min_yval = points[i][j]->y;
-			if (points[i][j]->x > map->max_xval)
-				map->max_xval = points[i][j]->x;
-			if (points[i][j]->y > map->max_yval)
-				map->max_yval = points[i][j]->y;
+			if (points[i][j]->x < map->min_x)
+				map->min_x = points[i][j]->x;
+			if (points[i][j]->y < map->min_y)
+				map->min_y = points[i][j]->y;
+			if (points[i][j]->x > map->max_x)
+				map->max_x = points[i][j]->x;
+			if (points[i][j]->y > map->max_y)
+				map->max_y = points[i][j]->y;
 			j++;
 		}
 		lines = lines->next;
@@ -142,6 +142,7 @@ t_map *read_map(char *map_path, int scale)
 void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char *dst;
+	
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
@@ -157,23 +158,23 @@ void remap_points(t_map *map, int translate, int scale)
 		j = 0;
 		while (j < map->num_cols)
 		{
-			if (map->min_xval < 0)
-				map->projected_points[i][j]->x -= map->min_xval;
-			if (map->min_yval < 0)
-				map->projected_points[i][j]->y -= map->min_yval;
+			if (map->min_x < 0)
+				map->projected_points[i][j]->x -= map->min_x;
+			if (map->min_y < 0)
+				map->projected_points[i][j]->y -= map->min_y;
 			j++;
 		}
 		i++;
 	}
-	if (map->min_xval < 0)
+	if (map->min_x < 0)
 	{
-		map->max_xval -= map->min_xval;
-		map->min_xval = 0;
+		map->max_x -= map->min_x;
+		map->min_x = 0;
 	}
-	if (map->min_yval < 0)
+	if (map->min_y < 0)
 	{
-		map->max_yval -= map->min_yval;
-		map->min_yval = 0;
+		map->max_y -= map->min_y;
+		map->min_y = 0;
 	}
 }
 
@@ -217,8 +218,8 @@ int main(int argc, char **argv)
 	int j = 0;
 
 	int translate = 20;
-	mlx_win = mlx_new_window(mlx, map->max_xval + translate + 1, map->max_yval + translate + 1, "fdf");
-	img.img = mlx_new_image(mlx, map->max_xval + translate + 1, map->max_yval + translate + 1);
+	mlx_win = mlx_new_window(mlx, map->max_x + translate + 1, map->max_y + translate + 1, "fdf");
+	img.img = mlx_new_image(mlx, map->max_x + translate + 1, map->max_y + translate + 1);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	t = clock();
 	t_point ***points = map->projected_points;

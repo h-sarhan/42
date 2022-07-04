@@ -12,10 +12,10 @@ t_map	*read_map(char *map_path, int scale)
 	t_map	*map;
 
 	map = ft_calloc(1, sizeof(t_map));
-	map->min_xval = INT_MAX;
-	map->min_yval = INT_MAX;
-	map->max_xval = INT_MIN;
-	map->max_yval = INT_MIN;
+	map->min_x = INT_MAX;
+	map->min_y = INT_MAX;
+	map->max_x = INT_MIN;
+	map->max_y = INT_MIN;
 	fd = open(map_path, O_RDONLY);
 	line = get_next_line(fd);
 	tokens = ft_split(line, ' ');
@@ -54,14 +54,14 @@ t_map	*read_map(char *map_path, int scale)
 			points[i][j]->y = num_cols - j;
 			points[i][j]->z = atoi(tokens[j]);
 			// project_point(points[i][j],  i, num_cols - j, atoi(tokens[j]), scale, 0);
-			if (points[i][j]->x < map->min_xval)
-				map->min_xval = points[i][j]->x;	
-			if (points[i][j]->y < map->min_yval)
-				map->min_yval = points[i][j]->y;	
-			if (points[i][j]->x > map->max_xval)
-				map->max_xval = points[i][j]->x;	
-			if (points[i][j]->y > map->max_yval)
-				map->max_yval = points[i][j]->y;
+			if (points[i][j]->x < map->min_x)
+				map->min_x = points[i][j]->x;	
+			if (points[i][j]->y < map->min_y)
+				map->min_y = points[i][j]->y;	
+			if (points[i][j]->x > map->max_x)
+				map->max_x = points[i][j]->x;	
+			if (points[i][j]->y > map->max_y)
+				map->max_y = points[i][j]->y;
 			j++;
 		}
 		lines = lines->next;
@@ -81,10 +81,10 @@ void makeBigger(t_map *map, int scale)
     int i = 0, j = 0;
     // Image *tmp = (Image*)malloc(sizeof(Image));
     t_map *tmp = ft_calloc(1, sizeof(t_map));
-	tmp->max_xval = map->max_xval * scale;
-	tmp->max_yval = map->max_yval * scale;
-	tmp->min_xval = map->min_xval * scale;
-	tmp->min_yval = map->min_yval * scale;
+	tmp->max_x = map->max_x * scale;
+	tmp->max_y = map->max_y * scale;
+	tmp->min_x = map->min_x * scale;
+	tmp->min_y = map->min_y * scale;
 	tmp->num_cols = map->num_cols * scale;
 	tmp->num_rows = map->num_rows * scale;
 
