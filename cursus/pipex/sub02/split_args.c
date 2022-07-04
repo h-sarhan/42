@@ -6,62 +6,11 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:02:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/04 12:41:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/04 13:26:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-// Escapes quotes in a string
-// I ended up not using this since interpreting backslash characters is not
-// even required by minishell
-// static char	*escape_quotes(char *str)
-// {
-// 	int		i;
-// 	char	*escaped_str;
-// 	int		j;
-
-// 	if (str == NULL)
-// 		return (NULL);
-// 	escaped_str = ft_calloc(count_chars(str) + 1, sizeof(char));
-// 	if (escaped_str == NULL)
-// 		exit(EXIT_FAILURE);
-// 	i = 0;
-// 	j = 0;
-// 	while (str[i] != '\0')
-// 	{
-// 		if (str[i] == '\\' && ft_strchr("\"\'\\", str[i + 1]))
-// 		{
-// 			escaped_str[j++] = str[i + 1];
-// 			i += 2;
-// 		}
-// 		else
-// 			escaped_str[j++] = str[i++];
-// 	}
-// 	free(str);
-// 	return (escaped_str);
-// }
-
-// Counts characters that wont be escaped
-// I ended up not using this since interpreting backslash characters is not
-// even required by minishell
-// static int	count_chars(char *str)
-// {
-// 	int		i;
-// 	int		num_chars;
-
-// 	i = 0;
-// 	num_chars = 0;
-// 	while (str[i] != '\0')
-// 	{
-// 		if (str[i] == '\\' && ft_strchr("\"\'\\", str[i + 1]))
-// 			i += 2;
-// 		else
-// 			i++;
-// 		num_chars++;
-// 	}
-// 	return (num_chars);
-// }
 
 // Increments i until we reach the end quote
 static int	skip_to_end_quote(const char *str, char quote)
@@ -131,3 +80,53 @@ char	**split_args(char const *s, char c)
 	words[wc] = NULL;
 	return (words);
 }
+
+// I ended up not using these two functions
+// since interpreting backslash characters is not even required by minishell
+
+// Escapes quotes in a string
+// static char	*escape_quotes(char *str)
+// {
+// 	int		i;
+// 	char	*escaped_str;
+// 	int		j;
+
+// 	if (str == NULL)
+// 		return (NULL);
+// 	escaped_str = ft_calloc(count_chars(str) + 1, sizeof(char));
+// 	if (escaped_str == NULL)
+// 		exit(EXIT_FAILURE);
+// 	i = 0;
+// 	j = 0;
+// 	while (str[i] != '\0')
+// 	{
+// 		if (str[i] == '\\' && ft_strchr("\"\'\\", str[i + 1]))
+// 		{
+// 			escaped_str[j++] = str[i + 1];
+// 			i += 2;
+// 		}
+// 		else
+// 			escaped_str[j++] = str[i++];
+// 	}
+// 	free(str);
+// 	return (escaped_str);
+// }
+
+// Counts characters that wont be escaped
+// static int	count_chars(char *str)
+// {
+// 	int		i;
+// 	int		num_chars;
+
+// 	i = 0;
+// 	num_chars = 0;
+// 	while (str[i] != '\0')
+// 	{
+// 		if (str[i] == '\\' && ft_strchr("\"\'\\", str[i + 1]))
+// 			i += 2;
+// 		else
+// 			i++;
+// 		num_chars++;
+// 	}
+// 	return (num_chars);
+// }
