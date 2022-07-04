@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/04 22:43:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/05 03:10:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+#include <time.h>
 void rotX(t_point *p, float rot)
 {
 	int	xyz[3];
@@ -55,16 +56,25 @@ void project_point(t_map *map, t_point *projected, t_point *orig, int scale, int
 
 	beta = 45 * (PI / 180.0f);
 	alpha = asin(tan(30 * (PI / 180.0f)));
-	// projected->x = orig->x - map->max_og_x;
-	// projected->y = orig->y - map->max_og_y;
-	// projected->z = orig->z - map->max_og_z;
 	// find_min_max(map, map->points_copy);
 	projected->x = orig->x;
 	projected->y = orig->y;
 	projected->z = orig->z;
+	// projected->x -= map->max_og_x / 2;
+	// projected->y -= map->max_og_y / 2;
+	// projected->z -= map->max_og_z / 2;
 	
 	rotZ(projected, beta);
+	// projected->x += map->max_og_x / 2;
+	// projected->y += map->max_og_y / 2;
+	// projected->z += map->max_og_z / 2;
+	// projected->x -= map->max_og_x;
+	// projected->y -= map->max_og_y;
+	// projected->z -= map->max_og_z;
 	rotX(projected, alpha + 30 * (PI / 180.0f));
+	// projected->x += map->max_og_x / 2;
+	// projected->y += map->max_og_y / 2;
+	// projected->z += map->max_og_z / 2;
 	// projected->x += map->max_og_x;
 	// projected->y += map->max_og_y;
 	// projected->z = orig->z + map->max_og_z;
@@ -97,9 +107,11 @@ void	project_points(t_map *map, int scale)
 	int	j;
 	t_point	***projected_points;
 	t_point	***points;
-	
+	clock_t t;
+	t = clock();
 	points = map->points_copy;
 	projected_points = map->projected_points;
+	// find_min_max(map, map->points_copy);
 	i = 0;
 	while (i < map->num_rows)
 	{
@@ -119,6 +131,9 @@ void	project_points(t_map *map, int scale)
 		}
 		i++;
 	}
+	t = clock() - t;
+	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
+	printf("project_points() took %f seconds to execute \n", time_taken);
 }
 
 void	rotate_points(t_map *map, int scale, float rot_x, float rot_y)
@@ -128,12 +143,14 @@ void	rotate_points(t_map *map, int scale, float rot_x, float rot_y)
 	t_point	***projected_points;
 	t_point	***points;
 	t_point	***points_copy;
-
+	clock_t t;
+	t = clock();
+	// t_map *map = read_map(argv[1], scale);
 	points = map->points;
 	points_copy = map->points_copy;
 	projected_points = map->projected_points;
 	// find_min_max(map, points);
-	printf("ORIGIN IS (%d, %d, %d)\n", map->max_og_x / 2, map->max_og_y / 2, map->max_og_z / 2);
+	// printf("ORIGIN IS (%d, %d, %d)\n", map->max_og_x / 2, map->max_og_y / 2, map->max_og_z / 2);
 	// my_mlx_pixel_put();
 	i = 0;
 	while (i < map->num_rows)
@@ -141,16 +158,29 @@ void	rotate_points(t_map *map, int scale, float rot_x, float rot_y)
 		j = 0;
 		while (j < map->num_cols)
 		{
+			// find_min_max(map, points);
 			// printf("point is (%d, %d, %d)\n", points_copy[i][j]->x, points_copy[i][j]->y, points_copy[i][j]->z);
 			points_copy[i][j]->x = points[i][j]->x;
 			points_copy[i][j]->y = points[i][j]->y;
 			points_copy[i][j]->z = points[i][j]->z;
 
-			// points_copy[i][j]->x = (map->max_og_x / 2);
-			// points_copy[i][j]->y = (map->max_og_y / 2);
-			// points_copy[i][j]->z = (map->max_og_z / 2);
+			points_copy[i][j]->x -= (map->max_og_x / 2);
+			points_copy[i][j]->y -= (map->max_og_y / 2);
+			points_copy[i][j]->z -= (map->max_og_z / 2);
  			rotY(points_copy[i][j], rot_y);
+			// points_copy[i][j]->x += (map->max_og_x / 2);
+			// points_copy[i][j]->y += (map->max_og_y / 2);
+			// points_copy[i][j]->z += (map->max_og_z / 2);
+			// points_copy[i][j]->x -= (map->max_og_x / 2);
+			// points_copy[i][j]->y -= (map->max_og_y / 2);
+			// points_copy[i][j]->z -= (map->max_og_z / 2);
+			// points_copy[i][j]->x += (map->max_og_x) / 2;
+			// points_copy[i][j]->y += (map->max_og_y) / 2;
+			// points_copy[i][j]->z += (map->max_og_z) / 2;
 			rotX(points_copy[i][j], rot_x);
+			points_copy[i][j]->x += (map->max_og_x / 2);
+			points_copy[i][j]->y += (map->max_og_y / 2);
+			points_copy[i][j]->z += (map->max_og_z / 2);
  			// rotZ(points_copy[i][j], 0);
 			// points_copy[i][j]->x += (map->max_og_x / 2);
 			// points_copy[i][j]->y += (map->max_og_y / 2);
@@ -163,6 +193,9 @@ void	rotate_points(t_map *map, int scale, float rot_x, float rot_y)
 		}
 		i++;
 	}
+	t = clock() - t;
+	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
+	printf("rotate_points() took %f seconds to execute \n", time_taken);
 }
 
 void	find_min_max(t_map *map, t_point ***points)
@@ -219,6 +252,7 @@ t_map *read_map(char *map_path, int scale)
 	int num_cols = i;
 	free_split_array(tokens);
 	lines = NULL;
+	first = lines;
 	num_rows = 0;
 	while (line != NULL)
 	{
@@ -267,8 +301,9 @@ t_map *read_map(char *map_path, int scale)
 	map->points_copy = points_copy;
 	map->num_cols = j;
 	map->num_rows = i;
+	find_min_max(map, map->points_copy);
 	project_points(map, scale);
-	remap_points(map, 0, 0);
+	// remap_points(map, 0, 0);
 	ft_lstclear(&first, free);
 	return (map);
 }
@@ -361,16 +396,16 @@ int handle_keypress(int key_code, void *params)
 	{
 		close_window(vars);
 	}
-	if (key_code == 123)
+	if (key_code == 123 || key_code == 65361)
 	{
 		// left arrow
 
 		mlx_destroy_image(vars->mlx, vars->img);
 		mlx_clear_window(vars->mlx, vars->win);
-		vars->map->rot_x--;
+		vars->map->rot_x -= 2;
 		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
 		project_points(vars->map, vars->scale);
-		remap_points(vars->map, 0, 0);
+		
 		vars->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
 		vars->data->img = vars->img;
 		vars->data->addr = mlx_get_data_addr(vars->data->img, &vars->data->bits_per_pixel, &vars->data->line_length, &vars->data->endian);
@@ -382,42 +417,37 @@ int handle_keypress(int key_code, void *params)
 
 		mlx_destroy_image(vars->mlx, vars->img);
 		mlx_clear_window(vars->mlx, vars->win);
-		vars->map->rot_x += 1;
+		vars->map->rot_x += 2;
 		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
 		project_points(vars->map, vars->scale);
-		remap_points(vars->map, 0, 0);
 		vars->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
 		vars->data->img = vars->img;
 		vars->data->addr = mlx_get_data_addr(vars->data->img, &vars->data->bits_per_pixel, &vars->data->line_length, &vars->data->endian);
 		draw_points(vars);
 	}
-	if (key_code == 126)
+	if (key_code == 126 || key_code == 65362)
 	{
 		// up arrow
 
 		mlx_destroy_image(vars->mlx, vars->img);
 		mlx_clear_window(vars->mlx, vars->win);
-		// vars->map->rot_y = 10;
-		vars->map->rot_y++;
+		vars->map->rot_y += 2;
 		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
 		project_points(vars->map, vars->scale);
-		remap_points(vars->map, 0, 0);
 		vars->data->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
 		vars->img = vars->data->img;
 		vars->data->addr = mlx_get_data_addr(vars->data->img, &vars->data->bits_per_pixel, &vars->data->line_length, &vars->data->endian);
 		draw_points(vars);
 	}
-	if (key_code == 125)
+	if (key_code == 125 || key_code == 65364)
 	{
 		// down arrow
 
 		mlx_destroy_image(vars->mlx, vars->img);
 		mlx_clear_window(vars->mlx, vars->win);
-		// vars->map->rot_y = 10;
-		vars->map->rot_y--;
+		vars->map->rot_y -= 2;
 		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
 		project_points(vars->map, vars->scale);
-		remap_points(vars->map, 0, 0);
 		vars->data->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
 		vars->img = vars->data->img;
 		vars->data->addr = mlx_get_data_addr(vars->data->img, &vars->data->bits_per_pixel, &vars->data->line_length, &vars->data->endian);
@@ -430,7 +460,7 @@ int handle_keypress(int key_code, void *params)
 #include <time.h>
 void	draw_points(t_vars *vars)
 {
-	// clock_t t = clock();
+	clock_t t = clock();
 	int i = 0;
 	int j = 0;
 	t_point ***points = vars->map->projected_points;
@@ -448,9 +478,9 @@ void	draw_points(t_vars *vars)
 		i++;
 	}
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
-	// t = clock() - t;
-	// double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
-	// printf("draw_points() took %f seconds to execute \n", time_taken);
+	t = clock() - t;
+	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
+	printf("draw_points() took %f seconds to execute \n", time_taken);
 }
 
 int main(int argc, char **argv)
@@ -459,9 +489,10 @@ int main(int argc, char **argv)
 	void *mlx_win;
 
 	mlx = mlx_init();
+	int scale = atoi(argv[2]);
+	// printf("SEG\n");
 	clock_t t;
 	t = clock();
-	int scale = atoi(argv[2]);
 	t_map *map = read_map(argv[1], scale);
 	t = clock() - t;
 	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
@@ -469,22 +500,22 @@ int main(int argc, char **argv)
 
 	t_data *data;
 	data = ft_calloc(1, sizeof(t_data));
-	int translateX = map->max_x / 2;
-	int translateY = map->max_y / 2;
-	mlx_win = mlx_new_window(mlx, map->max_x * 2 + 1 + translateX, map->max_y * 2 + 1 + translateY, "fdf");
-	data->img = mlx_new_image(mlx, map->max_x * 2 + 1 + translateX, map->max_y * 2 + 1 + translateY);
-	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
+	int translateX = 0;
+	int translateY = 0;
 	t_vars *vars = ft_calloc(1, sizeof(t_vars));
+	vars->win_x = (abs(map->max_x) + abs(map->min_x)) * 2 + 1;
+	vars->win_y = (abs(map->max_y) + abs(map->min_y)) * 2 + 1;
+	mlx_win = mlx_new_window(mlx,vars->win_x, vars->win_y, "fdf");
+	data->img = mlx_new_image(mlx, vars->win_x, vars->win_y);
+	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
 	vars->mlx = mlx;
 	vars->win = mlx_win;
 	vars->map = map;
 	vars->img = data->img;
 	vars->data = data;
 	vars->scale = scale;
-	vars->win_x = map->max_x * 2 + 1 + translateX;
-	vars->win_y = map->max_y * 2 + 1 + translateY;
-	vars->translateX = translateX;
-	vars->translateY = translateY;
+	vars->translateX = vars->win_x / 2;
+	vars->translateY = vars->win_y / 4;
 	map->rot_x = 0;
 	map->rot_y = 0;
 	draw_points(vars);
