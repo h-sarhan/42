@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/04 22:09:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/05 18:54:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,37 @@ void draw_line_low(t_data *img, t_point *p1, t_point *p2, t_vars *vars)
 	y = p1->y;
 	x = p1->x;
 	
-	while (x <= p2->x)
+	float color_div = 0;
+	float color1_diff = 0;
+	float color2_diff = 0;
+	// if (p2->x != p1->x)
+	// {
+	// 	color_div = 1.0f / (p2->x - p1->x);
+	// 	color1_diff = create_trgb(
+	// 				- get_t(p1->color) * color_div,
+	// 				- get_r(p1->color) * color_div,
+	// 				- get_g(p1->color) * color_div,
+	// 				- get_b(p1->color) * color_div
+	// 	);
+	// 	color2_diff = create_trgb(
+	// 				get_t(p2->color) * color_div,
+	// 				get_r(p2->color) * color_div,
+	// 				get_g(p2->color) * color_div,
+	// 				get_b(p2->color) * color_div
+	// 	);
+	// }
+	color = p1->color;
+	while (x < p2->x)
 	{
-		if (p2->x == p1->x)
-			color = p1->color;
+		if (p2->color == p1->color)
+			my_mlx_pixel_put(img, x, y, p1->color, vars);
 		else
+		{
+			// color = add_color(color, color1_diff);
+			// color = add_color(color, color2_diff);
 			color = color_mix(p1->color, p2->color, (float)(x - p1->x) / (p2->x - p1->x));
-		my_mlx_pixel_put(img, x, y,  color, vars);
+			my_mlx_pixel_put(img, x, y, color, vars);
+		}
 		if (d > 0)
 		{
 			y = y + yi;
@@ -76,13 +100,38 @@ void draw_line_high(t_data *img, t_point *p1, t_point *p2, t_vars *vars)
 	d = (2 * dx) - dy;
 	x = p1->x;
 	y = p1->y;
-	while (y <= p2->y)
+	float color_div = 0;
+	float color1_diff = 0;
+	float color2_diff = 0;
+	// if (p2->y != p1->y)
+	// {
+	// 	color_div = 1.0f / (p2->y - p1->y);
+	// 	color1_diff = create_trgb(
+	// 				- get_t(p1->color) * color_div,
+	// 				- get_r(p1->color) * color_div,
+	// 				- get_g(p1->color) * color_div,
+	// 				- get_b(p1->color) * color_div
+	// 	);
+	// 	color2_diff = create_trgb(
+	// 				get_t(p2->color) * color_div,
+	// 				get_r(p2->color) * color_div,
+	// 				get_g(p2->color) * color_div,
+	// 				get_b(p2->color) * color_div
+	// 	);
+	// }
+	color = p1->color;
+	while (y < p2->y)
 	{
-		if (p2->y == p1->y)
-			color = p1->color;
+		if (p2->color == p1->color)
+			// color = p1->color;
+			my_mlx_pixel_put(img, x, y, p1->color, vars);
 		else
+		{
+			// color = add_color(color, color1_diff);
+			// color = add_color(color, color2_diff);
 			color = color_mix(p1->color, p2->color, (float)(y - p1->y) / (p2->y - p1->y));
-		my_mlx_pixel_put(img, x, y, color, vars);
+			my_mlx_pixel_put(img, x, y, color, vars);
+		}
 		if (d > 0)
 		{
 			x = x + xi;

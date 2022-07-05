@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/05 03:10:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/05 19:21:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void project_point(t_map *map, t_point *projected, t_point *orig, int scale, int
 	// projected->y -= map->max_og_y;
 	// projected->z -= map->max_og_z;
 	rotX(projected, alpha + 30 * (PI / 180.0f));
+	// rotX(projected, alpha);
 	// projected->x += map->max_og_x / 2;
 	// projected->y += map->max_og_y / 2;
 	// projected->z += map->max_og_z / 2;
@@ -314,7 +315,7 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color, t_vars *vars)
 
 	x += vars->translateX;
 	y += vars->translateY;
-	if (x < 0 || y < 0 || x > vars->win_x || y > vars->win_y)
+	if (x < 0 || y < 0 || x >= vars->win_x || y >= vars->win_y)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
@@ -399,59 +400,60 @@ int handle_keypress(int key_code, void *params)
 	if (key_code == 123 || key_code == 65361)
 	{
 		// left arrow
-
-		mlx_destroy_image(vars->mlx, vars->img);
-		mlx_clear_window(vars->mlx, vars->win);
-		vars->map->rot_x -= 2;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-		project_points(vars->map, vars->scale);
-		
-		vars->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
-		vars->data->img = vars->img;
-		vars->data->addr = mlx_get_data_addr(vars->data->img, &vars->data->bits_per_pixel, &vars->data->line_length, &vars->data->endian);
-		draw_points(vars);
+		if (vars->drawing_frame == 0)
+		{
+			vars->drawing_frame = 1;
+			vars->map->rot_x -= 2;
+			rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
+			project_points(vars->map, vars->scale);
+			
+			draw_points(vars);
+			vars->drawing_frame = 0;
+		}
 	}
 	if (key_code == 124 || key_code == 65363)
 	{
 		// right arrow
 
-		mlx_destroy_image(vars->mlx, vars->img);
-		mlx_clear_window(vars->mlx, vars->win);
-		vars->map->rot_x += 2;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-		project_points(vars->map, vars->scale);
-		vars->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
-		vars->data->img = vars->img;
-		vars->data->addr = mlx_get_data_addr(vars->data->img, &vars->data->bits_per_pixel, &vars->data->line_length, &vars->data->endian);
-		draw_points(vars);
+		if (vars->drawing_frame == 0)
+		{
+			vars->drawing_frame = 1;
+			vars->map->rot_x += 2;
+			rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
+			project_points(vars->map, vars->scale);
+			draw_points(vars);
+			vars->drawing_frame = 0;
+		}
 	}
 	if (key_code == 126 || key_code == 65362)
 	{
 		// up arrow
 
-		mlx_destroy_image(vars->mlx, vars->img);
-		mlx_clear_window(vars->mlx, vars->win);
-		vars->map->rot_y += 2;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-		project_points(vars->map, vars->scale);
-		vars->data->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
-		vars->img = vars->data->img;
-		vars->data->addr = mlx_get_data_addr(vars->data->img, &vars->data->bits_per_pixel, &vars->data->line_length, &vars->data->endian);
-		draw_points(vars);
+		if (vars->drawing_frame == 0)
+		{
+			vars->drawing_frame = 1;
+			vars->map->rot_y += 2;
+			rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
+			project_points(vars->map, vars->scale);
+		
+			draw_points(vars);
+			vars->drawing_frame = 0;
+		}
 	}
 	if (key_code == 125 || key_code == 65364)
 	{
 		// down arrow
 
-		mlx_destroy_image(vars->mlx, vars->img);
-		mlx_clear_window(vars->mlx, vars->win);
-		vars->map->rot_y -= 2;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-		project_points(vars->map, vars->scale);
-		vars->data->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
-		vars->img = vars->data->img;
-		vars->data->addr = mlx_get_data_addr(vars->data->img, &vars->data->bits_per_pixel, &vars->data->line_length, &vars->data->endian);
-		draw_points(vars);
+		if (vars->drawing_frame == 0)
+		{
+			vars->drawing_frame = 1;
+			vars->map->rot_y -= 2;
+			rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
+			project_points(vars->map, vars->scale);
+			
+			draw_points(vars);
+			vars->drawing_frame = 0;
+		}
 	}
 	return (0);
 }
@@ -464,6 +466,11 @@ void	draw_points(t_vars *vars)
 	int i = 0;
 	int j = 0;
 	t_point ***points = vars->map->projected_points;
+	void *img_copy = vars->img;
+	vars->data->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
+	vars->img = vars->data->img;
+	vars->data->addr = mlx_get_data_addr(vars->data->img, &vars->data->bits_per_pixel, &vars->data->line_length, &vars->data->endian);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	while (i < vars->map->num_rows)
 	{
 		j = 0;
@@ -477,7 +484,8 @@ void	draw_points(t_vars *vars)
 		}
 		i++;
 	}
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
+	mlx_destroy_image(vars->mlx, img_copy);
+	// mlx_clear_window(vars->mlx, vars->win);
 	t = clock() - t;
 	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
 	printf("draw_points() took %f seconds to execute \n", time_taken);
@@ -503,8 +511,8 @@ int main(int argc, char **argv)
 	int translateX = 0;
 	int translateY = 0;
 	t_vars *vars = ft_calloc(1, sizeof(t_vars));
-	vars->win_x = (abs(map->max_x) + abs(map->min_x)) * 2 + 1;
-	vars->win_y = (abs(map->max_y) + abs(map->min_y)) * 2 + 1;
+	vars->win_x = (abs(map->max_x) + abs(map->min_x)) * 1.5 + 1;
+	vars->win_y = (abs(map->max_y) + abs(map->min_y)) * 1.5 + 1;
 	mlx_win = mlx_new_window(mlx,vars->win_x, vars->win_y, "fdf");
 	data->img = mlx_new_image(mlx, vars->win_x, vars->win_y);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
@@ -518,6 +526,7 @@ int main(int argc, char **argv)
 	vars->translateY = vars->win_y / 4;
 	map->rot_x = 0;
 	map->rot_y = 0;
+	vars->drawing_frame = 0;
 	draw_points(vars);
 	mlx_hook(mlx_win, 17, 0, close_window, vars);
 	mlx_hook(mlx_win, 2, (1L << 0), handle_keypress, vars);

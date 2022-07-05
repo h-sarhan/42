@@ -6,13 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 19:16:14 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/01 20:12:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/05 18:13:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int create_trgb(unsigned int t, unsigned int r, unsigned int g, unsigned int b)
+int create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
 }

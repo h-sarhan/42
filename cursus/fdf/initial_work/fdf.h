@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/04 21:47:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/05 18:13:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ struct s_vars
 	int		win_y;
 	int		translateX;
 	int		translateY;
+	int		drawing_frame;
 };
 
 typedef struct s_vars t_vars;
@@ -91,12 +92,13 @@ void			my_mlx_pixel_put(t_data *data, int x, int y, int color, t_vars *vars);
 unsigned int	hextoi(char *str);
 void			draw_line(t_data *img, t_point *p1, t_point *p2, t_vars *vars);
 void			remap_points(t_map *map, int translate, int scale);
-int				create_trgb(unsigned int t, unsigned int r, unsigned int g, unsigned int b);
+int				create_trgb(int t, int r, int g, int b);
 int				get_t(int trgb);
 int				get_r(int trgb);
 int				get_g(int trgb);
 int				get_b(int trgb);
 int				add_color(int color1, int color2);
+int				color_mix2(int color, int step, float t_diff, float r_diff, float g_diff, float b_diff);
 int				color_mix(int c1, int c2, float mix);
 void			draw_points(t_vars *vars);
 void			find_min_max(t_map *map, t_point ***points);
