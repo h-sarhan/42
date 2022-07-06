@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/06 19:37:43 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/06 21:10:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	project_points(t_map *map, int scale)
 	printf("project_points() took %f seconds to execute \n", time_taken);
 }
 
-void	rotate_points(t_map *map, int scale, float rot_x, float rot_y)
+void	rotate_points(t_map *map, int scale, float rot_x, float rot_y, float rot_z)
 {
 	int	i;
 	int	j;
@@ -170,6 +170,7 @@ void	rotate_points(t_map *map, int scale, float rot_x, float rot_y)
 			points_copy[i][j]->z -= (map->max_og_z / 2);
 			rotX(points_copy[i][j], rot_x);
  			rotY(points_copy[i][j], rot_y);
+ 			rotZ(points_copy[i][j], rot_z);
 			points_copy[i][j]->x += (map->max_og_x / 2);
 			points_copy[i][j]->y += (map->max_og_y / 2);
 			points_copy[i][j]->z += (map->max_og_z / 2);
@@ -372,71 +373,64 @@ int close_window(void *params)
 
 int handle_keypress(int key_code, void *params)
 {
-	// ft_putstr_fd("PRINTING KEY CODE ", 1);
-	// ft_putnbr_fd(key_code, 1);
-	// ft_putendl_fd("", 1);
+	ft_putstr_fd("PRINTING KEY CODE ", 1);
+	ft_putnbr_fd(key_code, 1);
+	ft_putendl_fd("", 1);
 	t_vars *vars = params;
-	if (key_code == KEY_Q || key_code == KEY_ESC || key_code == 113 || key_code == 65307)
+	if (key_code == KEY_ESC)
 	{
 		close_window(vars);
 	}
 	if (key_code == 123 || key_code == 65361)
 	{
 		// left arrow
-		if (vars->drawing_frame == 0)
-		{
-			vars->drawing_frame = 1;
-			vars->map->rot_x -= 2;
-			rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-			project_points(vars->map, vars->scale);
-			
-			draw_points(vars);
-			vars->drawing_frame = 0;
-		}
+		vars->map->rot_x -= 3;
+		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
+		project_points(vars->map, vars->scale);
+		
+		draw_points(vars);
 	}
 	if (key_code == 124 || key_code == 65363)
 	{
 		// right arrow
 
-		if (vars->drawing_frame == 0)
-		{
-			vars->drawing_frame = 1;
-			vars->map->rot_x += 2;
-			rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-			project_points(vars->map, vars->scale);
-			draw_points(vars);
-			vars->drawing_frame = 0;
-		}
+		vars->map->rot_x += 3;
+		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
+		project_points(vars->map, vars->scale);
+		draw_points(vars);
 	}
 	if (key_code == 126 || key_code == 65362)
 	{
 		// up arrow
-
-		if (vars->drawing_frame == 0)
-		{
-			vars->drawing_frame = 1;
-			vars->map->rot_y += 2;
-			rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-			project_points(vars->map, vars->scale);
-		
-			draw_points(vars);
-			vars->drawing_frame = 0;
-		}
+		vars->map->rot_y += 3;
+		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
+		project_points(vars->map, vars->scale);
+	
+		draw_points(vars);
 	}
 	if (key_code == 125 || key_code == 65364)
 	{
 		// down arrow
-
-		if (vars->drawing_frame == 0)
-		{
-			vars->drawing_frame = 1;
-			vars->map->rot_y -= 2;
-			rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-			project_points(vars->map, vars->scale);
-			
-			draw_points(vars);
-			vars->drawing_frame = 0;
-		}
+		vars->map->rot_y -= 3;
+		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
+		project_points(vars->map, vars->scale);
+		draw_points(vars);
+	}
+	if (key_code == 12)
+	{
+		// z key
+		vars->map->rot_z += 3;
+		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
+		project_points(vars->map, vars->scale);
+		draw_points(vars);
+	}
+	if (key_code == 14)
+	{
+		// x key
+		vars->map->rot_z -= 3;
+		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
+		project_points(vars->map, vars->scale);
+		draw_points(vars);
 	}
 	return (0);
 }
@@ -503,34 +497,17 @@ int	update_mouse_pos(void *params)
 		vars->m_prev_y = vars->m_y;
 		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 		printf("MOUSE AT POS (%d, %d)\n", vars->m_x, vars->m_y);
-		// if (vars->m_prev_x < vars->m_x)
-		// {
-		// 	vars->map->rot_x += 2;
-		// 	rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-		// 	project_points(vars->map, vars->scale);
-		// 	draw_points(vars);
-		// }
-		// else if (vars->m_prev_x > vars->m_x)
-		// {
-		// 	vars->map->rot_x -= 2;
-		// 	rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-		// 	project_points(vars->map, vars->scale);
-		// 	draw_points(vars);
-		// }
-		// else if (vars->m_prev_y < vars->m_y)
-		// {
-		// 	vars->map->rot_y -= 2;
-		// 	rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-		// 	project_points(vars->map, vars->scale);
-		// 	draw_points(vars);
-		// }
-		// else if (vars->m_prev_y > vars->m_y)
-		// {
-		// 	vars->map->rot_y += 2;
-		// 	rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f));
-		// 	project_points(vars->map, vars->scale);
-		// 	draw_points(vars);
-		// }
+		if (vars->m_prev_x < vars->m_x)
+			vars->map->rot_x += 2;
+		else if (vars->m_prev_x > vars->m_x)
+			vars->map->rot_x -= 2;
+		if (vars->m_prev_y < vars->m_y)
+			vars->map->rot_y += 2;
+		else if (vars->m_prev_y > vars->m_y)
+			vars->map->rot_y -= 2;
+		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI / 180.0f));
+		project_points(vars->map, vars->scale);
+		draw_points(vars);
 	}
 }
 	
@@ -548,6 +525,7 @@ int main(int argc, char **argv)
 	t_map *map = read_map(argv[1], scale);
 	map->rot_x = 0;
 	map->rot_y = 0;
+	map->rot_z = 0;
 	t = clock() - t;
 	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
 	printf("read_map() took %f seconds to execute \n", time_taken);

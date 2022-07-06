@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/06 16:28:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/06 21:05:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ struct s_map
 	t_point			***projected_points;
 	int				rot_x;
 	int				rot_y;
+	int				rot_z;
 	int				min_x;
 	int				max_x;
 	int				min_y;
@@ -93,17 +94,6 @@ struct s_vars
 };
 typedef struct s_vars t_vars;
 
-// struct s_mouse
-// {
-// 	int	prev_x;
-// 	int	prev_y;
-// 	int	x;
-// 	int	y;
-// 	int	down;
-// 	t_vars	*vars;
-// };
-
-// typedef	struct s_mouse t_mouse;
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color, t_vars *vars);
 unsigned int	hextoi(char *str);
