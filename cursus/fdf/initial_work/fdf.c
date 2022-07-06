@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/06 21:33:08 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 00:19:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -459,7 +459,6 @@ void	draw_points(t_vars *vars)
 	vars->data->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
 	vars->img = vars->data->img;
 	vars->data->addr = mlx_get_data_addr(vars->data->img, &vars->data->bits_per_pixel, &vars->data->line_length, &vars->data->endian);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	while (i < vars->map->num_rows)
 	{
 		j = 0;
@@ -473,6 +472,8 @@ void	draw_points(t_vars *vars)
 		}
 		i++;
 	}
+	// TODO: MOVE THIS ABOVE THE WHILE LOOP
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	mlx_destroy_image(vars->mlx, img_copy);
 	// mlx_clear_window(vars->mlx, vars->win);
 	t = clock() - t;
@@ -506,7 +507,8 @@ int	update_mouse_pos(void *params)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		// mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
 		printf("MOUSE AT POS (%d, %d)\n", vars->m_x, vars->m_y);
 		if (vars->m_prev_x < vars->m_x)
 			vars->map->rot_x += 2;
@@ -533,7 +535,8 @@ int main(int argc, char **argv)
 	// printf("SEG\n");
 	clock_t t;
 	t = clock();
-	t_map *map = read_map(argv[1], scale);
+	// t_map *map = read_map(argv[1], scale);
+	t_map *map = read_map_from_ppm(argv[1], scale);
 	map->rot_x = 0;
 	map->rot_y = 0;
 	map->rot_z = 0;
