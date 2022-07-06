@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/06 21:10:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/06 21:33:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,26 @@ void project_point(t_map *map, t_point *projected, t_point *orig, int scale, int
 	projected->x = orig->x;
 	projected->y = orig->y;
 	projected->z = orig->z;
-	// projected->x -= map->max_og_x / 2;
-	// projected->y -= map->max_og_y / 2;
-	// projected->z -= map->max_og_z / 2;
 	
 	rotZ(projected, beta);
-	// projected->x += map->max_og_x / 2;
-	// projected->y += map->max_og_y / 2;
-	// projected->z += map->max_og_z / 2;
-	// projected->x -= map->max_og_x;
-	// projected->y -= map->max_og_y;
-	// projected->z -= map->max_og_z;
 	rotX(projected, alpha + 30 * (PI / 180.0f));
-	// rotX(projected, alpha);
-	// projected->x += map->max_og_x / 2;
-	// projected->y += map->max_og_y / 2;
-	// projected->z += map->max_og_z / 2;
-	// projected->x += map->max_og_x;
-	// projected->y += map->max_og_y;
-	// projected->z = orig->z + map->max_og_z;
 }
 
+// void	scale_points(t_vars *vars, float scale)
+// {
+// 	int i = 0;
+// 	int j = 0;
+// 	while (i < vars->map->num_rows)
+// 	{
+// 		j = 0;
+// 		while (j < vars->map->num_cols)
+// 		{
+// 			var
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void free_split_array(char **arr)
 {
@@ -299,6 +298,8 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color, t_vars *vars)
 
 	x += vars->translateX;
 	y += vars->translateY;
+	x *= vars->scale;
+	y *= vars->scale;
 	if (x < 0 || y < 0 || x >= vars->win_x || y >= vars->win_y)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
@@ -378,60 +379,70 @@ int handle_keypress(int key_code, void *params)
 	ft_putendl_fd("", 1);
 	t_vars *vars = params;
 	if (key_code == KEY_ESC)
-	{
 		close_window(vars);
+	if (key_code == 13)
+	{
+		// w
+		vars->translateY -= 5;
+	}
+	if (key_code == 0)
+	{
+		// a
+		vars->translateX -= 5;
+	}
+	if (key_code == 1)
+	{
+		// s
+		vars->translateY += 5;
+	}
+	if (key_code == 2)
+	{
+		// d
+		vars->translateX += 5;
 	}
 	if (key_code == 123 || key_code == 65361)
 	{
 		// left arrow
 		vars->map->rot_x -= 3;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
-		project_points(vars->map, vars->scale);
-		
-		draw_points(vars);
 	}
 	if (key_code == 124 || key_code == 65363)
 	{
 		// right arrow
-
 		vars->map->rot_x += 3;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
-		project_points(vars->map, vars->scale);
-		draw_points(vars);
 	}
 	if (key_code == 126 || key_code == 65362)
 	{
 		// up arrow
 		vars->map->rot_y += 3;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
-		project_points(vars->map, vars->scale);
-	
-		draw_points(vars);
 	}
 	if (key_code == 125 || key_code == 65364)
 	{
 		// down arrow
 		vars->map->rot_y -= 3;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
-		project_points(vars->map, vars->scale);
-		draw_points(vars);
 	}
 	if (key_code == 12)
 	{
 		// z key
 		vars->map->rot_z += 3;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
-		project_points(vars->map, vars->scale);
-		draw_points(vars);
 	}
 	if (key_code == 14)
 	{
 		// x key
 		vars->map->rot_z -= 3;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
-		project_points(vars->map, vars->scale);
-		draw_points(vars);
 	}
+	if (key_code == 24)
+	{
+		// +
+		vars->scale += 0.1;
+	}
+	if (key_code == 27)
+	{
+		// +
+		vars->scale -= 0.1;
+	}
+	rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
+	project_points(vars->map, vars->scale);
+	draw_points(vars);
 	return (0);
 }
 
@@ -545,7 +556,7 @@ int main(int argc, char **argv)
 	vars->map = map;
 	vars->img = data->img;
 	vars->data = data;
-	vars->scale = scale;
+	vars->scale = 1;
 	vars->translateX = vars->win_x / 2;
 	vars->translateY = vars->win_y / 4;
 	vars->drawing_frame = 0;
@@ -556,6 +567,8 @@ int main(int argc, char **argv)
 	vars->m_x = -1;
 	vars->m_y = -1;
 	vars->m_down = 0;
+	vars->pan_x = 0;
+	vars->pan_y = 0;
 	mlx_hook(mlx_win, 17, 0, close_window, vars);
 	mlx_hook(mlx_win, 2, (1L << 0), handle_keypress, vars);
 	mlx_hook(mlx_win, 4, 0, handle_mouse_down, vars);

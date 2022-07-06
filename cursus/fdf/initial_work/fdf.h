@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/06 21:05:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/06 21:34:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@
 
 struct s_point
 {
-	int				x;
-	int				y;
-	int				z;
+	float				x;
+	float				y;
+	float				z;
 	int	color;
 };
 
@@ -80,7 +80,7 @@ struct s_vars
 	t_map	*map;
 	void	*img;
 	t_data	*data;
-	int		scale;
+	float		scale;
 	int		win_x;
 	int		win_y;
 	int		translateX;
@@ -91,6 +91,8 @@ struct s_vars
 	int	m_x;
 	int	m_y;
 	int	m_down;
+	int	pan_x;
+	int	pan_y;
 };
 typedef struct s_vars t_vars;
 
