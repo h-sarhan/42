@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/05 18:13:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/06 16:28:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ struct s_map
 };
 typedef struct s_map	t_map;
 
+
+
 struct s_vars
 {
 	void	*mlx;
@@ -83,10 +85,25 @@ struct s_vars
 	int		translateX;
 	int		translateY;
 	int		drawing_frame;
+	int	m_prev_x;
+	int	m_prev_y;
+	int	m_x;
+	int	m_y;
+	int	m_down;
 };
-
 typedef struct s_vars t_vars;
 
+// struct s_mouse
+// {
+// 	int	prev_x;
+// 	int	prev_y;
+// 	int	x;
+// 	int	y;
+// 	int	down;
+// 	t_vars	*vars;
+// };
+
+// typedef	struct s_mouse t_mouse;
 
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color, t_vars *vars);
 unsigned int	hextoi(char *str);

@@ -6,10 +6,11 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/05 19:21:46 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/06 19:16:23 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# CFLAGS = -Wall -Wextra -Ofast -fsanitize=address -static-libsan -g
 CFLAGS = -Wall -Wextra -Ofast
 CC = cc
 
