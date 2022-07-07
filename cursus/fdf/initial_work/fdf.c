@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 15:37:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 15:51:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void project_point(t_map *map, t_point *projected, t_point *orig, int scale, int
 		projected->x = orig->x;
 		projected->y = orig->y;
 		projected->z = orig->z;
-		
+
 		rotZ(projected, beta);
 		rotX(projected, alpha + 30 * (PI / 180.0f));
 	}
@@ -70,6 +70,12 @@ void project_point(t_map *map, t_point *projected, t_point *orig, int scale, int
 	{
 		projected->x = orig->x;
 		projected->y = orig->y;
+	}
+	else if (proj == 'c')
+	{
+		projected->x = orig->x + 0.5 * orig->z * cos(63.4 * (PI / 180.0f));
+		projected->y = orig->y + 0.5 * orig->z * sin(63.4 * (PI / 180.0f));
+		projected->z = 0;
 	}
 }
 
@@ -386,22 +392,22 @@ int handle_keypress(int key_code, void *params)
 	if (key_code == 13)
 	{
 		// w
-		vars->translateY -= 5;
+		vars->translateY -= 10;
 	}
 	if (key_code == 0)
 	{
 		// a
-		vars->translateX -= 5;
+		vars->translateX -= 10;
 	}
 	if (key_code == 1)
 	{
 		// s
-		vars->translateY += 5;
+		vars->translateY += 10;
 	}
 	if (key_code == 2)
 	{
 		// d
-		vars->translateX += 5;
+		vars->translateX += 10;
 	}
 	if (key_code == 123 && vars->proj != 'o')
 	{
@@ -455,7 +461,17 @@ int handle_keypress(int key_code, void *params)
 		}
 		else if (vars->proj == 'o')
 		{
+			vars->proj = 'c';
+			vars->map->rot_x = 0;
+			vars->map->rot_y = 0;
+			vars->map->rot_z = 0;
+		}
+		else if (vars->proj == 'c')
+		{
 			vars->proj = 'i';
+			vars->map->rot_x = 0;
+			vars->map->rot_y = 0;
+			vars->map->rot_z = 0;
 		}
 	}
 	// scale_points(vars);
