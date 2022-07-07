@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 21:23:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 21:31:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@
 # include <mlx.h>
 # include <math.h>
 
-# define SCREEN_W 1280
-# define SCREEN_H 720
-# define CF1 0.40824829046F // sqrt(6)/6
-# define CF2 1.73205080757F // sqrt(3)
-# define CF3 0.81649658092F // 2 * sqrt(6)/6
 # define ON_DESTROY 17
 # define KEY_Q 12
 # define KEY_ESC 53

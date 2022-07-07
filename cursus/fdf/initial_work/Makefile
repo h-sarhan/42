@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/07 20:57:09 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/07 21:34:59 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 CFLAGS = -Wall -Wextra -Ofast -g3
 CC = cc
 
-NAME = mlx/fdf
+NAME = fdf
 LIBFT = libft.a
 PRINTF = libftprintf.a
 GNL = libgnl.a
@@ -34,15 +34,10 @@ MLX = mlx/libmlx.dylib
 all: $(NAME)
 
 $(NAME): $(MLX) $(GNL) $(LIBFT) $(PRINTF) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(GNL) $(LIBFT) $(PRINTF) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(GNL) $(LIBFT) $(PRINTF) -L. -lmlx -framework OpenGL -framework AppKit -o $@
 
 $(LIBFT): $(LIBFT_OBJS)
 	ar -rcs $@ $^
-
-
-# TODO: REMOVE THIS BEFORE SUBMITTING
-# upscale: $(MLX) $(GNL) $(LIBFT) $(PRINTF) upscale.o 
-# 	$(CC) $(CFLAGS) upscale.o  $(GNL) $(LIBFT) $(PRINTF) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $@
 
 $(PRINTF): $(PRINTF_OBJS)
 	ar -rcs $@ $^
@@ -52,6 +47,7 @@ $(GNL): $(GNL_OBJS)
 
 $(MLX):
 	make -C mlx
+	mv ./mlx/libmlx.dylib .
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -Imlx $< -o $@
@@ -64,6 +60,6 @@ clean:
 	make -C mlx clean
 
 fclean: clean
-	rm -f $(NAME) upscale
+	rm -f $(NAME) upscale libmlx.dylib
 
 re: fclean $(NAME)
