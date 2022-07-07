@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/05 18:54:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 12:40:37 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,6 @@ void draw_line_low(t_data *img, t_point *p1, t_point *p2, t_vars *vars)
 	y = p1->y;
 	x = p1->x;
 	
-	float color_div = 0;
-	float color1_diff = 0;
-	float color2_diff = 0;
-	// if (p2->x != p1->x)
-	// {
-	// 	color_div = 1.0f / (p2->x - p1->x);
-	// 	color1_diff = create_trgb(
-	// 				- get_t(p1->color) * color_div,
-	// 				- get_r(p1->color) * color_div,
-	// 				- get_g(p1->color) * color_div,
-	// 				- get_b(p1->color) * color_div
-	// 	);
-	// 	color2_diff = create_trgb(
-	// 				get_t(p2->color) * color_div,
-	// 				get_r(p2->color) * color_div,
-	// 				get_g(p2->color) * color_div,
-	// 				get_b(p2->color) * color_div
-	// 	);
-	// }
 	color = p1->color;
 	while (x < p2->x)
 	{
@@ -100,25 +81,6 @@ void draw_line_high(t_data *img, t_point *p1, t_point *p2, t_vars *vars)
 	d = (2 * dx) - dy;
 	x = p1->x;
 	y = p1->y;
-	float color_div = 0;
-	float color1_diff = 0;
-	float color2_diff = 0;
-	// if (p2->y != p1->y)
-	// {
-	// 	color_div = 1.0f / (p2->y - p1->y);
-	// 	color1_diff = create_trgb(
-	// 				- get_t(p1->color) * color_div,
-	// 				- get_r(p1->color) * color_div,
-	// 				- get_g(p1->color) * color_div,
-	// 				- get_b(p1->color) * color_div
-	// 	);
-	// 	color2_diff = create_trgb(
-	// 				get_t(p2->color) * color_div,
-	// 				get_r(p2->color) * color_div,
-	// 				get_g(p2->color) * color_div,
-	// 				get_b(p2->color) * color_div
-	// 	);
-	// }
 	color = p1->color;
 	while (y < p2->y)
 	{
@@ -146,7 +108,7 @@ void draw_line_high(t_data *img, t_point *p1, t_point *p2, t_vars *vars)
 void draw_line(t_data *img, t_point *p1, t_point *p2, t_vars *vars)
 {
 	// printf("Drawing from (%d,%d) to (%d,%d)\n", p1->x, p1->y, p1->x, p2->y);
-	if (abs(p2->y - p1->y) < abs(p2->x - p1->x))
+	if (fabs(p2->y - p1->y) < fabs(p2->x - p1->x))
 	{
 		if (p1->x > p2->x)
 			draw_line_low(img, p2, p1, vars);

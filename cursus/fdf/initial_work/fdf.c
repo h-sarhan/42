@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 00:19:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 15:04:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,6 @@ void project_point(t_map *map, t_point *projected, t_point *orig, int scale, int
 	rotX(projected, alpha + 30 * (PI / 180.0f));
 }
 
-// void	scale_points(t_vars *vars, float scale)
-// {
-// 	int i = 0;
-// 	int j = 0;
-// 	while (i < vars->map->num_rows)
-// 	{
-// 		j = 0;
-// 		while (j < vars->map->num_cols)
-// 		{
-// 			var
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
 
 void free_split_array(char **arr)
 {
@@ -101,7 +86,7 @@ void free_lines(void *split_array)
 	free_split_array(split_array);
 }
 
-void	project_points(t_map *map, int scale)
+void	project_points(t_map *map, float scale)
 {
 	int	i;
 	int	j;
@@ -127,6 +112,9 @@ void	project_points(t_map *map, int scale)
 				map->max_x = projected_points[i][j]->x;
 			if (projected_points[i][j]->y > map->max_y)
 				map->max_y = projected_points[i][j]->y;
+			projected_points[i][j]->x *= scale;
+			projected_points[i][j]->y *= scale;
+			projected_points[i][j]->z *= scale;
 			j++;
 		}
 		i++;
@@ -163,7 +151,6 @@ void	rotate_points(t_map *map, int scale, float rot_x, float rot_y, float rot_z)
 			points_copy[i][j]->x = points[i][j]->x;
 			points_copy[i][j]->y = points[i][j]->y;
 			points_copy[i][j]->z = points[i][j]->z;
-
 			points_copy[i][j]->x -= (map->max_og_x / 2);
 			points_copy[i][j]->y -= (map->max_og_y / 2);
 			points_copy[i][j]->z -= (map->max_og_z / 2);
@@ -173,6 +160,10 @@ void	rotate_points(t_map *map, int scale, float rot_x, float rot_y, float rot_z)
 			points_copy[i][j]->x += (map->max_og_x / 2);
 			points_copy[i][j]->y += (map->max_og_y / 2);
 			points_copy[i][j]->z += (map->max_og_z / 2);
+			// points_copy[i][j]->x *= scale;
+			// points_copy[i][j]->y *= scale;
+			// points_copy[i][j]->z *= scale;
+			
 			j++;
 		}
 		i++;
@@ -210,7 +201,7 @@ void	find_min_max(t_map *map, t_point ***points)
 }
 
 // TODO: Changes this to use an array to count the number of rows
-t_map *read_map(char *map_path, int scale)
+t_map *read_map(char *map_path)
 {
 	int		fd;
 	char	*line;
@@ -219,6 +210,7 @@ t_map *read_map(char *map_path, int scale)
 	t_list	*first;
 	int		num_rows;
 	t_map	*map;
+	int scale = 1;
 
 	// TODO: Write create map function
 	map = ft_calloc(1, sizeof(t_map));
@@ -245,6 +237,8 @@ t_map *read_map(char *map_path, int scale)
 		line = get_next_line(fd);
 	}
 
+	while (scale * num_cols < 500 && scale * num_rows < 500)
+		scale++;
 	// Get original points
 	i = 0;
 	int j = 0;
@@ -286,7 +280,7 @@ t_map *read_map(char *map_path, int scale)
 	map->num_cols = j;
 	map->num_rows = i;
 	find_min_max(map, map->points_copy);
-	project_points(map, scale);
+	project_points(map, 1);
 	// remap_points(map, 0, 0);
 	ft_lstclear(&first, free);
 	return (map);
@@ -298,8 +292,8 @@ void my_mlx_pixel_put(t_data *data, int x, int y, int color, t_vars *vars)
 
 	x += vars->translateX;
 	y += vars->translateY;
-	x *= vars->scale;
-	y *= vars->scale;
+	// x *= vars->scale;
+	// y *= vars->scale;
 	if (x < 0 || y < 0 || x >= vars->win_x || y >= vars->win_y)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
@@ -372,6 +366,7 @@ int close_window(void *params)
 	return (0);
 }
 
+
 int handle_keypress(int key_code, void *params)
 {
 	ft_putstr_fd("PRINTING KEY CODE ", 1);
@@ -440,6 +435,7 @@ int handle_keypress(int key_code, void *params)
 		// +
 		vars->scale -= 0.1;
 	}
+	// scale_points(vars);
 	rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
 	project_points(vars->map, vars->scale);
 	draw_points(vars);
@@ -485,20 +481,26 @@ int handle_mouse_down(int key_code, int x, int y, void *params)
 {
 	(void)x;
 	(void)y;
-	t_vars *vars = params;
-	vars->m_down = 1;
+	if (key_code == 3)
+	{
+		t_vars *vars = params;
+		vars->m_down = 1;
+	}
 	
 }
 int handle_mouse_up(int key_code, int x, int y, void *params)
 {
 	(void)x;
 	(void)y;
-	t_vars *vars = params;
-	vars->m_down = 0;
+	if (key_code == 3)
+	{
+		t_vars *vars = params;
+		vars->m_down = 0;
+	}
 	
 }
 
-int	update_mouse_pos(void *params)
+int	mouse_rotate(void *params)
 {
 	t_vars	*vars = params;
 	// vars->m_x = x;
@@ -507,8 +509,8 @@ int	update_mouse_pos(void *params)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		// mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
-		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
+		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		// mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
 		printf("MOUSE AT POS (%d, %d)\n", vars->m_x, vars->m_y);
 		if (vars->m_prev_x < vars->m_x)
 			vars->map->rot_x += 2;
@@ -520,6 +522,7 @@ int	update_mouse_pos(void *params)
 			vars->map->rot_y -= 2;
 		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI / 180.0f));
 		project_points(vars->map, vars->scale);
+		// scale_points(vars);
 		draw_points(vars);
 	}
 }
@@ -531,12 +534,16 @@ int main(int argc, char **argv)
 	void *mlx_win;
 
 	mlx = mlx_init();
-	int scale = atoi(argv[2]);
+	// int scale = 5;
 	// printf("SEG\n");
 	clock_t t;
 	t = clock();
 	// t_map *map = read_map(argv[1], scale);
-	t_map *map = read_map_from_ppm(argv[1], scale);
+	t_map *map;
+	if (ft_strnstr(argv[1], ".ppm", ft_strlen(argv[1])) != NULL)
+		map = read_map_from_ppm(argv[1]);
+	else
+		map = read_map(argv[1]);
 	map->rot_x = 0;
 	map->rot_y = 0;
 	map->rot_z = 0;
@@ -563,8 +570,6 @@ int main(int argc, char **argv)
 	vars->translateX = vars->win_x / 2;
 	vars->translateY = vars->win_y / 4;
 	vars->drawing_frame = 0;
-	// t_mouse *mouse;
-	// mouse = ft_calloc(1, sizeof(t_mouse));
 	vars->m_prev_x = -1;
 	vars->m_prev_y = -1;
 	vars->m_x = -1;
@@ -576,7 +581,7 @@ int main(int argc, char **argv)
 	mlx_hook(mlx_win, 2, (1L << 0), handle_keypress, vars);
 	mlx_hook(mlx_win, 4, 0, handle_mouse_down, vars);
 	mlx_hook(mlx_win, 5, 0, handle_mouse_up, vars);
-	mlx_loop_hook(mlx, update_mouse_pos, vars);
+	mlx_loop_hook(mlx, mouse_rotate, vars);
 	draw_points(vars);
 	// mlx_mouse_hook(vars->win, handle_mouse, &vars);
 	mlx_loop(mlx);

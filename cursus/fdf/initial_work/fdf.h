@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 00:21:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 15:04:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,6 @@ int				color_mix(int c1, int c2, float mix);
 void			draw_points(t_vars *vars);
 void			find_min_max(t_map *map, t_point ***points);
 
-void	project_points(t_map *map, int scale);
-t_map			*read_map_from_ppm(char *map_path, int scale);
+void	project_points(t_map *map, float scale);
+t_map			*read_map_from_ppm(char *map_path);
 #endif
