@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/04 18:31:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 21:20:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ t_map *read_map(char *map_path, int scale)
 		free_split_array(tokens);
 		i++;
 	}
-	map->projected_points = points;
+	map->proj_points = points;
 	map->num_cols = num_cols;
 	map->num_rows = num_rows;
 	remap_points(map, 0, scale);
@@ -159,9 +159,9 @@ void remap_points(t_map *map, int translate, int scale)
 		while (j < map->num_cols)
 		{
 			if (map->min_x < 0)
-				map->projected_points[i][j]->x -= map->min_x;
+				map->proj_points[i][j]->x -= map->min_x;
 			if (map->min_y < 0)
-				map->projected_points[i][j]->y -= map->min_y;
+				map->proj_points[i][j]->y -= map->min_y;
 			j++;
 		}
 		i++;
@@ -188,13 +188,13 @@ void free_map(t_map *map)
 		j = 0;
 		while (j < map->num_cols)
 		{
-			free(map->projected_points[i][j]);
+			free(map->proj_points[i][j]);
 			j++;
 		}
-		free(map->projected_points[i]);
+		free(map->proj_points[i]);
 		i++;
 	}
-	free(map->projected_points);
+	free(map->proj_points);
 	free(map);
 }
 
@@ -222,7 +222,7 @@ int main(int argc, char **argv)
 	img.img = mlx_new_image(mlx, map->max_x + translate + 1, map->max_y + translate + 1);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	t = clock();
-	t_point ***points = map->projected_points;
+	t_point ***points = map->proj_points;
 	while (i < map->num_rows)
 	{
 		j = 0;

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 18:53:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 21:23:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@
 
 struct s_point
 {
-	float				x;
-	float				y;
-	float				z;
-	int	color;
+	float	x;
+	float	y;
+	float	z;
+	int		color;
 };
 
 typedef struct s_point t_point;
@@ -57,7 +57,7 @@ struct s_map
 	int				num_cols;
 	t_point			***points;
 	t_point			***points_copy;
-	t_point			***projected_points;
+	t_point			***proj_points;
 	int				rot_x;
 	int				rot_y;
 	int				rot_z;
@@ -113,6 +113,11 @@ int				color_mix2(int color, int step, float t_diff, float r_diff, float g_diff,
 int				color_mix(int c1, int c2, float mix);
 void			draw_points(t_vars *vars);
 void			find_min_max(t_map *map, t_point ***points);
+void			exit_msg(char *msg, int code);
+void			free_split_array(char **arr);
+t_map			*create_map(void);
+t_point			*create_point(float x, float y, float z, int color);
+
 
 void	project_points(t_map *map, float scale, char proj);
 t_map			*read_map_from_ppm(char *map_path);

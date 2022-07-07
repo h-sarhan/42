@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 19:59:43 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 21:20:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	project_points(t_map *map, float scale, char proj)
 	t_point	***points;
 
 	points = map->points_copy;
-	projected_points = map->projected_points;
+	projected_points = map->proj_points;
 	i = 0;
 	while (i < map->num_rows)
 	{
@@ -136,7 +136,7 @@ void	rotate_points(t_map *map, float rot_x, float rot_y, float rot_z)
 
 	points = map->points;
 	points_copy = map->points_copy;
-	projected_points = map->projected_points;
+	projected_points = map->proj_points;
 	i = 0;
 	while (i < map->num_rows)
 	{
@@ -264,7 +264,7 @@ t_map *read_map(char *map_path)
 		free_split_array(tokens);
 		i++;
 	}
-	map->projected_points = projected_points;
+	map->proj_points = projected_points;
 	map->points = points;
 	map->points_copy = points_copy;
 	map->num_cols = j;
@@ -298,15 +298,15 @@ void free_map(t_map *map)
 		j = 0;
 		while (j < map->num_cols)
 		{
-			free(map->projected_points[i][j]);
+			free(map->proj_points[i][j]);
 			free(map->points[i][j]);
 			j++;
 		}
-		free(map->projected_points[i]);
+		free(map->proj_points[i]);
 		free(map->points[i]);
 		i++;
 	}
-	free(map->projected_points);
+	free(map->proj_points);
 	free(map->points);
 	free(map);
 }
@@ -432,7 +432,7 @@ void	draw_points(t_vars *vars)
 {
 	int i = 0;
 	int j = 0;
-	t_point ***points = vars->map->projected_points;
+	t_point ***points = vars->map->proj_points;
 	void *img_copy = vars->img;
 	vars->data->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
 	vars->img = vars->data->img;

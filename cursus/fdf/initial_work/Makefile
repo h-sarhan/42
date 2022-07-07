@@ -6,12 +6,12 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/07 19:00:12 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/07 20:57:09 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # CFLAGS = -Wall -Wextra -Ofast -g3 -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls
-CFLAGS = -Wall -Wextra -Ofast -g3 
+CFLAGS = -Wall -Wextra -Ofast -g3
 CC = cc
 
 NAME = mlx/fdf
@@ -20,7 +20,7 @@ PRINTF = libftprintf.a
 GNL = libgnl.a
 
 # TODO: REMOVE WILDCARDS LATER
-SRCS = fdf.c draw_line.c hextoi.c colors.c read_ppm.c
+SRCS = fdf.c draw_line.c hextoi.c colors.c read_ppm.c error_handling.c map.c
 LIBFT_SRCS := $(wildcard libft/*.c)
 PRINTF_SRCS := $(wildcard printf/*.c)
 GNL_SRCS := $(wildcard get_next_line/*.c)

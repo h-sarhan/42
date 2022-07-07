@@ -6,73 +6,103 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 00:00:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 20:22:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 21:27:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_map *read_map_from_ppm(char *map_path)
+void	read_ppm_header(int fd, int *w, int *h)
+{
+	char			*header;
+	char			**tokens;
+
+	header = get_next_line(fd);
+	if (header == NULL || ft_strncmp(header, "P6\n", ft_strlen(header)) != 0)
+		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
+	free(header);
+	header = get_next_line(fd);
+	if (header == NULL)
+		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
+	tokens = ft_split(header, ' ');
+	free(header);
+	if (tokens == NULL)
+		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
+	*w = ft_atoi(tokens[0]);
+	*h = ft_atoi(tokens[1]);
+	free_split_array(tokens);
+	header = get_next_line(fd);
+	if (header == NULL)
+		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
+	free(header);
+}
+
+int	read_ppm_color(int fd)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = 0;
+	g = 0;
+	b = 0;
+	read(fd, &g, 1);
+	read(fd, &b, 1);
+	read(fd, &r, 1);
+	return (create_trgb(0, r, g, b));
+}
+
+void	fill_map(int fd, t_map *map, int scale)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map->num_rows)
+	{
+		map->points[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
+		map->points_copy[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
+		map->proj_points[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
+		if (map->points[i] == NULL || map->points_copy[i] == NULL
+			|| map->proj_points == NULL)
+			exit_msg("Error reading file", EXIT_FAILURE);
+		j = 0;
+		while (j < map->num_cols)
+		{
+			map->proj_points[i][j] = create_point(0, 0, 0, read_ppm_color(fd));
+			map->points[i][j] = create_point(i * scale,
+					(map->num_rows - j) * scale, 0, 0);
+			map->points_copy[i][j] = create_point(i * scale,
+					(map->num_rows - j) * scale, 0, 0);
+			j++;
+		}
+		i++;
+	}
+}
+
+t_map	*read_map_from_ppm(char *img_path)
 {
 	int		fd;
-	char	**tokens;
 	t_map	*map;
-	int scale = 1;
-	map = ft_calloc(1, sizeof(t_map));
-	map->min_x = INT_MAX;
-	map->min_y = INT_MAX;
-	map->max_x = INT_MIN;
-	map->max_y = INT_MIN;
+	int		scale;
 
-	fd = open(map_path, O_RDONLY);
-	int w, h;
-	char *header = get_next_line(fd);
-	if (ft_strncmp(header, "P6\n", ft_strlen(header)) != 0)
-	{
-		ft_printf("CANT READ THIS LOOL\n");
-	}
-	header = get_next_line(fd);
-	tokens = ft_split(header, ' ');
-	w = ft_atoi(tokens[0]);
-	h = ft_atoi(tokens[1]);
-	
-	while (w * scale < 400 && h * scale < 400)
+	fd = open(img_path, O_RDONLY);
+	if (fd == -1)
+		exit_msg("COULD NOT OPEN FILE\n", EXIT_FAILURE);
+	map = create_map();
+	if (map == NULL)
+		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
+	read_ppm_header(fd, &map->num_cols, &map->num_rows);
+	scale = 1;
+	while (map->num_cols * scale < 400 && map->num_rows * scale < 400)
 		scale++;
-	header = get_next_line(fd);
-	t_point ***points = ft_calloc(h + 1, sizeof(t_point **));
-	t_point ***points_copy = ft_calloc(h + 1, sizeof(t_point **));
-	t_point ***projected_points = ft_calloc(h + 1, sizeof(t_point **));
-	for (int i = 0; i < h; i++)
-	{
-		points[i] = ft_calloc(w + 1, sizeof(t_point *));
-		points_copy[i] = ft_calloc(w + 1, sizeof(t_point *));
-		projected_points[i] = ft_calloc(w + 1, sizeof(t_point *));
-		for (int j = 0; j < w; j++)
-		{
-			projected_points[i][j] = ft_calloc(1, sizeof(t_point));
-			points[i][j] = ft_calloc(1, sizeof(t_point));
-			points_copy[i][j] = ft_calloc(1, sizeof(t_point));
-			int r, g, b;
-			r = 0;
-			g = 0;
-			b = 0;
-			read(fd, &g, 1);
-			read(fd, &b, 1);
-			read(fd, &r, 1);
-			projected_points[i][j]->color = create_trgb(0, r, g, b);
-			points[i][j]->x = i;
-			points[i][j]->y = (h - j) * scale;
-			points[i][j]->z = 0;
-			points_copy[i][j]->x = i * scale;
-			points_copy[i][j]->y = (h - j) * scale;
-			points_copy[i][j]->z = 0;
-		}
-	}
-	map->projected_points = projected_points;
-	map->points = points;
-	map->points_copy = points_copy;
-	map->num_cols = w;
-	map->num_rows = h;
+	map->points = ft_calloc(map->num_rows + 1, sizeof(t_point **));
+	map->points_copy = ft_calloc(map->num_rows + 1, sizeof(t_point **));
+	map->proj_points = ft_calloc(map->num_rows + 1, sizeof(t_point **));
+	if (map->points == NULL || map->points_copy == NULL
+		|| map->proj_points == NULL)
+		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
+	fill_map(fd, map, scale);
 	find_min_max(map, map->points_copy);
 	project_points(map, scale, 'i');
 	return (map);

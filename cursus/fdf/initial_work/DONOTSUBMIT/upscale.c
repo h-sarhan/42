@@ -68,7 +68,7 @@ t_map	*read_map(char *map_path, int scale)
 		// free_split_array(tokens);
 		i++;
 	}
-	map->projected_points = points;
+	map->proj_points = points;
 	map->num_cols = num_cols;
 	map->num_rows = num_rows;
 	// remap_points(map, 0, scale);
@@ -88,15 +88,15 @@ void makeBigger(t_map *map, int scale)
 	tmp->num_cols = map->num_cols * scale;
 	tmp->num_rows = map->num_rows * scale;
 
-    tmp->projected_points = ft_calloc(tmp->num_rows + 1, sizeof(t_point **));
+    tmp->proj_points = ft_calloc(tmp->num_rows + 1, sizeof(t_point **));
     for (i = 0; i < tmp->num_rows; i++) {
-        tmp->projected_points[i] = ft_calloc(tmp->num_cols + 1, sizeof(t_point *));
+        tmp->proj_points[i] = ft_calloc(tmp->num_cols + 1, sizeof(t_point *));
         for (j = 0; j < tmp->num_cols; j++) {
-			tmp->projected_points[i][j] = ft_calloc(1, sizeof(t_point));
-            tmp->projected_points[i][j]->x = map->projected_points[i / scale][j / scale]->x;
-            tmp->projected_points[i][j]->y = map->projected_points[i / scale][j / scale]->y;
-            tmp->projected_points[i][j]->z = map->projected_points[i / scale][j / scale]->z;
-            tmp->projected_points[i][j]->color = map->projected_points[i / scale][j / scale]->color;
+			tmp->proj_points[i][j] = ft_calloc(1, sizeof(t_point));
+            tmp->proj_points[i][j]->x = map->proj_points[i / scale][j / scale]->x;
+            tmp->proj_points[i][j]->y = map->proj_points[i / scale][j / scale]->y;
+            tmp->proj_points[i][j]->z = map->proj_points[i / scale][j / scale]->z;
+            tmp->proj_points[i][j]->color = map->proj_points[i / scale][j / scale]->color;
         }
     }
 	// free_map(map);
@@ -106,7 +106,7 @@ void makeBigger(t_map *map, int scale)
 
     map->num_cols = tmp->num_cols;
     map->num_rows = tmp->num_rows;
-    map->projected_points = tmp->projected_points;
+    map->proj_points = tmp->proj_points;
     // free(tmp);
 }
 # include <fcntl.h>
@@ -118,12 +118,12 @@ void printPoints(t_map *map)
         for (int j = 0; j < map->num_cols; j++)
 		{
             // printf("(%d, %d)", map->points[i][j]->x, map->points[i][j]->y);
-            printf("%d", map->projected_points[i][j]->z);
+            printf("%d", map->proj_points[i][j]->z);
             write(fd, " ", 1);
-            ft_putnbr_fd(map->projected_points[i][j]->z, fd);
-			if (map->projected_points[i][j]->z == 7 || map->projected_points[i][j]->z == 5)
+            ft_putnbr_fd(map->proj_points[i][j]->z, fd);
+			if (map->proj_points[i][j]->z == 7 || map->proj_points[i][j]->z == 5)
 				ft_putstr_fd(",0xbf1701", fd);
-			if (map->projected_points[i][j]->z == 9)
+			if (map->proj_points[i][j]->z == 9)
 				ft_putstr_fd(",0x97c6db", fd);
             write(fd, " ", 1);
 		}
