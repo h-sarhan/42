@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 21:20:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 21:51:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,14 +275,16 @@ t_map *read_map(char *map_path)
 	return (map);
 }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color, t_vars *vars)
+void	my_mlx_pixel_put(int x, int y, int color, t_vars *vars)
 {
 	char *dst;
+	t_data	*data;
 
 	x += vars->translateX;
 	y += vars->translateY;
 	if (x < 0 || y < 0 || x >= vars->win_x || y >= vars->win_y)
 		return ;
+	data = vars->data;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }

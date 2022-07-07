@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 20:53:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 21:26:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 21:39:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_map	*create_map(void)
 t_point	*create_point(float x, float y, float z, int color)
 {
 	t_point	*point;
-	
+
 	point = ft_calloc(1, sizeof(t_point));
 	if (point == NULL)
 		exit_msg("ERROR CREATING POINT\n", EXIT_FAILURE);

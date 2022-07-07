@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 21:31:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 22:07:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ struct s_vars
 typedef struct s_vars t_vars;
 
 
-void			my_mlx_pixel_put(t_data *data, int x, int y, int color, t_vars *vars);
+void			my_mlx_pixel_put(int x, int y, int color, t_vars *vars);
 unsigned int	hextoi(char *str);
-void			draw_line(t_data *img, t_point *p1, t_point *p2, t_vars *vars);
+void			draw_line(t_point *p1, t_point *p2, t_vars *vars);
 void			remap_points(t_map *map, int translate, int scale);
 int				create_trgb(int t, int r, int g, int b);
 int				get_t(int trgb);
