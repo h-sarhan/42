@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 15:04:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 15:27:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,20 @@ struct s_vars
 	t_map	*map;
 	void	*img;
 	t_data	*data;
-	float		scale;
+	float	scale;
 	int		win_x;
 	int		win_y;
 	int		translateX;
 	int		translateY;
 	int		drawing_frame;
-	int	m_prev_x;
-	int	m_prev_y;
-	int	m_x;
-	int	m_y;
-	int	m_down;
-	int	pan_x;
-	int	pan_y;
+	int		m_prev_x;
+	int		m_prev_y;
+	int		m_x;
+	int		m_y;
+	int		m_down;
+	int		pan_x;
+	int		pan_y;
+	char	proj;
 };
 typedef struct s_vars t_vars;
 
@@ -112,6 +113,6 @@ int				color_mix(int c1, int c2, float mix);
 void			draw_points(t_vars *vars);
 void			find_min_max(t_map *map, t_point ***points);
 
-void	project_points(t_map *map, float scale);
+void	project_points(t_map *map, float scale, char proj);
 t_map			*read_map_from_ppm(char *map_path);
 #endif

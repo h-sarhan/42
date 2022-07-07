@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 00:00:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 15:06:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 15:38:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_map *read_map_from_ppm(char *map_path)
 	map->num_rows = h;
 	// edge_detect(map);
 	find_min_max(map, map->points_copy);
-	project_points(map, scale);
+	project_points(map, scale, 'i');
 	// remap_points(map, 0, 0);
 	// ft_lstclear(&first, free);
 	return (map);

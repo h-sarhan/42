@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 15:04:32 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 15:37:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,28 @@ void rotZ(t_point *p, float rot)
 	p->z = xyz[2];
 }
 
-void project_point(t_map *map, t_point *projected, t_point *orig, int scale, int translate)
+void project_point(t_map *map, t_point *projected, t_point *orig, int scale, int translate, char proj)
 {
 	float beta;
 	float alpha;
 
-	beta = 45 * (PI / 180.0f);
-	alpha = asin(tan(30 * (PI / 180.0f)));
-	// find_min_max(map, map->points_copy);
-	projected->x = orig->x;
-	projected->y = orig->y;
-	projected->z = orig->z;
-	
-	rotZ(projected, beta);
-	rotX(projected, alpha + 30 * (PI / 180.0f));
+	if (proj == 'i')
+	{
+		beta = 45 * (PI / 180.0f);
+		alpha = asin(tan(30 * (PI / 180.0f)));
+		// find_min_max(map, map->points_copy);
+		projected->x = orig->x;
+		projected->y = orig->y;
+		projected->z = orig->z;
+		
+		rotZ(projected, beta);
+		rotX(projected, alpha + 30 * (PI / 180.0f));
+	}
+	else if (proj == 'o')
+	{
+		projected->x = orig->x;
+		projected->y = orig->y;
+	}
 }
 
 
@@ -86,7 +94,7 @@ void free_lines(void *split_array)
 	free_split_array(split_array);
 }
 
-void	project_points(t_map *map, float scale)
+void	project_points(t_map *map, float scale, char proj)
 {
 	int	i;
 	int	j;
@@ -103,7 +111,7 @@ void	project_points(t_map *map, float scale)
 		j = 0;
 		while (j < map->num_cols)
 		{
-			project_point(map, projected_points[i][j], points[i][j], scale, 0);
+			project_point(map, projected_points[i][j], points[i][j], scale, 0, proj);
 			if (projected_points[i][j]->x < map->min_x)
 				map->min_x = projected_points[i][j]->x;
 			if (projected_points[i][j]->y < map->min_y)
@@ -280,7 +288,7 @@ t_map *read_map(char *map_path)
 	map->num_cols = j;
 	map->num_rows = i;
 	find_min_max(map, map->points_copy);
-	project_points(map, 1);
+	project_points(map, 1, 'i');
 	// remap_points(map, 0, 0);
 	ft_lstclear(&first, free);
 	return (map);
@@ -395,22 +403,22 @@ int handle_keypress(int key_code, void *params)
 		// d
 		vars->translateX += 5;
 	}
-	if (key_code == 123 || key_code == 65361)
+	if (key_code == 123 && vars->proj != 'o')
 	{
 		// left arrow
 		vars->map->rot_x -= 3;
 	}
-	if (key_code == 124 || key_code == 65363)
+	if (key_code == 124 && vars->proj != 'o')
 	{
 		// right arrow
 		vars->map->rot_x += 3;
 	}
-	if (key_code == 126 || key_code == 65362)
+	if (key_code == 126 && vars->proj != 'o')
 	{
 		// up arrow
 		vars->map->rot_y += 3;
 	}
-	if (key_code == 125 || key_code == 65364)
+	if (key_code == 125 && vars->proj != 'o')
 	{
 		// down arrow
 		vars->map->rot_y -= 3;
@@ -435,9 +443,24 @@ int handle_keypress(int key_code, void *params)
 		// +
 		vars->scale -= 0.1;
 	}
+	if (key_code == 35)
+	{
+		// p
+		if (vars->proj == 'i')
+		{
+			vars->proj = 'o';
+			vars->map->rot_x = 0;
+			vars->map->rot_y = 0;
+			vars->map->rot_z = 90;
+		}
+		else if (vars->proj == 'o')
+		{
+			vars->proj = 'i';
+		}
+	}
 	// scale_points(vars);
 	rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
-	project_points(vars->map, vars->scale);
+	project_points(vars->map, vars->scale, vars->proj);
 	draw_points(vars);
 	return (0);
 }
@@ -521,7 +544,7 @@ int	mouse_rotate(void *params)
 		else if (vars->m_prev_y > vars->m_y)
 			vars->map->rot_y -= 2;
 		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI / 180.0f));
-		project_points(vars->map, vars->scale);
+		project_points(vars->map, vars->scale, vars->proj);
 		// scale_points(vars);
 		draw_points(vars);
 	}
@@ -577,6 +600,7 @@ int main(int argc, char **argv)
 	vars->m_down = 0;
 	vars->pan_x = 0;
 	vars->pan_y = 0;
+	vars->proj = 'i';
 	mlx_hook(mlx_win, 17, 0, close_window, vars);
 	mlx_hook(mlx_win, 2, (1L << 0), handle_keypress, vars);
 	mlx_hook(mlx_win, 4, 0, handle_mouse_down, vars);
