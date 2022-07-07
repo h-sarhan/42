@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 22:28:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/08 01:12:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,13 @@ void	rotate_points(t_map *map, float rot_x, float rot_y, float rot_z)
 {
 	int		i;
 	int		j;
-	t_point	***projected_points;
+	// t_point	***projected_points;
 	t_point	***points;
 	t_point	***points_copy;
 
 	points = map->points;
 	points_copy = map->points_copy;
-	projected_points = map->proj_points;
+	// projected_points = map->proj_points;
 	i = 0;
 	while (i < map->num_rows)
 	{
@@ -223,7 +223,6 @@ t_map	*read_map(char *map_path)
 	num_cols = i;
 	free_split_array(tokens);
 	lines = NULL;
-	first = lines;
 	num_rows = 0;
 	while (line != NULL)
 	{
@@ -231,6 +230,7 @@ t_map	*read_map(char *map_path)
 		num_rows++;
 		line = get_next_line(fd);
 	}
+	first = lines;
 	while (scale * num_cols < 500 && scale * num_rows < 500)
 		scale++;
 	i = 0;
@@ -306,14 +306,17 @@ void	free_map(t_map *map)
 		{
 			free(map->proj_points[i][j]);
 			free(map->points[i][j]);
+			free(map->points_copy[i][j]);
 			j++;
 		}
 		free(map->proj_points[i]);
 		free(map->points[i]);
+		free(map->points_copy[i]);
 		i++;
 	}
 	free(map->proj_points);
 	free(map->points);
+	free(map->points_copy);
 	free(map);
 }
 
@@ -326,6 +329,8 @@ int	close_window(void *params)
 	free_map(vars->map);
 	mlx_clear_window(vars->mlx, vars->win);
 	mlx_destroy_image(vars->mlx, vars->img);
+	free(vars->data);
+	free(vars->mlx);
 	free(vars);
 	exit(EXIT_SUCCESS);
 	return (0);
@@ -335,72 +340,74 @@ int	handle_keypress(int key_code, void *params)
 {
 	t_vars	*vars;
 
+	// ft_printf("KEY CODE IS %d\n", key_code);
 	vars = params;
-	if (key_code == KEY_ESC)
+	if (key_code == KEY_ESC || key_code == 65307)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
+		return (0);
 	}
-	if (key_code == 13)
+	if (key_code == 13 || key_code == 119)
 	{
 		// w
 		vars->translateY -= 10;
 	}
-	if (key_code == 0)
+	if (key_code == 0 || key_code == 97)
 	{
 		// a
 		vars->translateX -= 10;
 	}
-	if (key_code == 1)
+	if (key_code == 1 || key_code == 115)
 	{
 		// s
 		vars->translateY += 10;
 	}
-	if (key_code == 2)
+	if (key_code == 2 || key_code == 100)
 	{
 		// d
 		vars->translateX += 10;
 	}
-	if (key_code == 123 && vars->proj != 'o')
+	if ((key_code == 123 || key_code == 65361) && vars->proj != 'o')
 	{
 		// left arrow
 		vars->map->rot_x -= 3;
 	}
-	if (key_code == 124 && vars->proj != 'o')
+	if ((key_code == 124 || key_code == 65363) && vars->proj != 'o')
 	{
 		// right arrow
 		vars->map->rot_x += 3;
 	}
-	if (key_code == 126 && vars->proj != 'o')
+	if ((key_code == 126 || key_code == 65362) && vars->proj != 'o')
 	{
 		// up arrow
 		vars->map->rot_y += 3;
 	}
-	if (key_code == 125 && vars->proj != 'o')
+	if ((key_code == 125 || key_code == 65364) && vars->proj != 'o')
 	{
 		// down arrow
 		vars->map->rot_y -= 3;
 	}
-	if (key_code == 12)
+	if (key_code == 12 || key_code == 113)
 	{
-		// z key
+		// q key
 		vars->map->rot_z += 3;
 	}
-	if (key_code == 14)
+	if (key_code == 14 || key_code == 101)
 	{
-		// x key
+		// e key
 		vars->map->rot_z -= 3;
 	}
-	if (key_code == 24)
+	if (key_code == 24 || key_code == 61)
 	{
 		// +
 		vars->scale += 0.1;
 	}
-	if (key_code == 27)
+	if (key_code == 27 || key_code == 45)
 	{
-		// +
+		// -
 		vars->scale -= 0.1;
 	}
-	if (key_code == 35)
+	if (key_code == 35 || key_code == 112)
 	{
 		// p
 		if (vars->proj == 'i')
@@ -498,7 +505,7 @@ int	mouse_rotate(void *params)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_prev_x < vars->m_x)
 			vars->map->rot_x += 2;
 		else if (vars->m_prev_x > vars->m_x)
@@ -568,8 +575,13 @@ int	main(int argc, char **argv)
 	mlx_hook(mlx_win, 2, (1L << 0), handle_keypress, vars);
 	mlx_hook(mlx_win, 4, 0, handle_mouse_down, vars);
 	mlx_hook(mlx_win, 5, 0, handle_mouse_up, vars);
-	mlx_loop_hook(mlx, mouse_rotate, vars);
 	mlx_hook(mlx_win, 17, 0, close_window, vars);
+	mlx_loop_hook(mlx, mouse_rotate, vars);
 	draw_points(vars);
 	mlx_loop(mlx);
+	free(data);
+	free_map(map);
+	mlx_destroy_image(vars->mlx, vars->img);
+	free(mlx);
+	free(vars);
 }

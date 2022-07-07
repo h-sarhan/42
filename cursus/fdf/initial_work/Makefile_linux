@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/07 00:19:56 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/08 00:35:42 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ GNL = libgnl.a
 MLX = mlx_linux/libmlx_Linux.a
 
 # TODO: REMOVE WILDCARDS LATER
-SRCS = fdf.c draw_line.c hextoi.c colors.c read_ppm.c
+SRCS = fdf.c draw_line.c hextoi.c colors.c read_ppm.c colors2.c error_handling.c map.c
 LIBFT_SRCS := $(wildcard libft/*.c)
 PRINTF_SRCS := $(wildcard printf/*.c)
 GNL_SRCS := $(wildcard get_next_line/*.c)
