@@ -6,11 +6,10 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/07 12:35:46 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/07 18:37:57 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# CFLAGS = -Wall -Wextra -Ofast -fsanitize=address -static-libsan -g
 CFLAGS = -Wall -Wextra -Ofast
 CC = cc
 
@@ -39,10 +38,10 @@ $(NAME): $(MLX) $(GNL) $(LIBFT) $(PRINTF) $(OBJS)
 $(LIBFT): $(LIBFT_OBJS)
 	ar -rcs $@ $^
 
-upscale: $(MLX) $(GNL) $(LIBFT) $(PRINTF) upscale.o 
-	$(CC) $(CFLAGS) upscale.o  $(GNL) $(LIBFT) $(PRINTF) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $@
-	
 
+# TODO: REMOVE THIS BEFORE SUBMITTING
+# upscale: $(MLX) $(GNL) $(LIBFT) $(PRINTF) upscale.o 
+# 	$(CC) $(CFLAGS) upscale.o  $(GNL) $(LIBFT) $(PRINTF) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $@
 
 $(PRINTF): $(PRINTF_OBJS)
 	ar -rcs $@ $^
