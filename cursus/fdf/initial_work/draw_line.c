@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 18:35:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 18:51:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	draw_line_high(t_data *img, t_point *p1, t_point *p2, t_vars *vars)
 		}
 		else
 			d = d + 2 * dxy[0];
-		y++;
+		xy[1]++;
 	}
 }
 

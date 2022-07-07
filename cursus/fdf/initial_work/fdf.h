@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 15:27:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 18:53:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ struct s_vars
 	int		pan_x;
 	int		pan_y;
 	char	proj;
+	int		done;
 };
 typedef struct s_vars t_vars;
 

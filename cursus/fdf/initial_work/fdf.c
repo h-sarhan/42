@@ -6,13 +6,12 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 15:51:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/07 19:59:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-#include <time.h>
 void rotX(t_point *p, float rot)
 {
 	int	xyz[3];
@@ -49,16 +48,15 @@ void rotZ(t_point *p, float rot)
 	p->z = xyz[2];
 }
 
-void project_point(t_map *map, t_point *projected, t_point *orig, int scale, int translate, char proj)
+void project_point(t_point *projected, t_point *orig, char proj)
 {
-	float beta;
-	float alpha;
+	float	beta;
+	float	alpha;
 
 	if (proj == 'i')
 	{
 		beta = 45 * (PI / 180.0f);
 		alpha = asin(tan(30 * (PI / 180.0f)));
-		// find_min_max(map, map->points_copy);
 		projected->x = orig->x;
 		projected->y = orig->y;
 		projected->z = orig->z;
@@ -82,7 +80,7 @@ void project_point(t_map *map, t_point *projected, t_point *orig, int scale, int
 
 void free_split_array(char **arr)
 {
-	int i;
+	int	i;
 
 	if (arr == NULL)
 		return;
@@ -95,29 +93,22 @@ void free_split_array(char **arr)
 	free(arr);
 }
 
-void free_lines(void *split_array)
-{
-	free_split_array(split_array);
-}
-
 void	project_points(t_map *map, float scale, char proj)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_point	***projected_points;
 	t_point	***points;
-	clock_t t;
-	t = clock();
+
 	points = map->points_copy;
 	projected_points = map->projected_points;
-	// find_min_max(map, map->points_copy);
 	i = 0;
 	while (i < map->num_rows)
 	{
 		j = 0;
 		while (j < map->num_cols)
 		{
-			project_point(map, projected_points[i][j], points[i][j], scale, 0, proj);
+			project_point(projected_points[i][j], points[i][j], proj);
 			if (projected_points[i][j]->x < map->min_x)
 				map->min_x = projected_points[i][j]->x;
 			if (projected_points[i][j]->y < map->min_y)
@@ -133,35 +124,25 @@ void	project_points(t_map *map, float scale, char proj)
 		}
 		i++;
 	}
-	t = clock() - t;
-	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
-	printf("project_points() took %f seconds to execute \n", time_taken);
 }
 
-void	rotate_points(t_map *map, int scale, float rot_x, float rot_y, float rot_z)
+void	rotate_points(t_map *map, float rot_x, float rot_y, float rot_z)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_point	***projected_points;
 	t_point	***points;
 	t_point	***points_copy;
-	clock_t t;
-	t = clock();
-	// t_map *map = read_map(argv[1], scale);
+
 	points = map->points;
 	points_copy = map->points_copy;
 	projected_points = map->projected_points;
-	// find_min_max(map, points);
-	// printf("ORIGIN IS (%d, %d, %d)\n", map->max_og_x / 2, map->max_og_y / 2, map->max_og_z / 2);
-	// my_mlx_pixel_put();
 	i = 0;
 	while (i < map->num_rows)
 	{
 		j = 0;
 		while (j < map->num_cols)
 		{
-			// find_min_max(map, points);
-			// printf("point is (%d, %d, %d)\n", points_copy[i][j]->x, points_copy[i][j]->y, points_copy[i][j]->z);
 			points_copy[i][j]->x = points[i][j]->x;
 			points_copy[i][j]->y = points[i][j]->y;
 			points_copy[i][j]->z = points[i][j]->z;
@@ -174,26 +155,24 @@ void	rotate_points(t_map *map, int scale, float rot_x, float rot_y, float rot_z)
 			points_copy[i][j]->x += (map->max_og_x / 2);
 			points_copy[i][j]->y += (map->max_og_y / 2);
 			points_copy[i][j]->z += (map->max_og_z / 2);
-			// points_copy[i][j]->x *= scale;
-			// points_copy[i][j]->y *= scale;
-			// points_copy[i][j]->z *= scale;
-			
 			j++;
 		}
 		i++;
 	}
-	t = clock() - t;
-	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
-	printf("rotate_points() took %f seconds to execute \n", time_taken);
 }
 
 void	find_min_max(t_map *map, t_point ***points)
 {
-	int i = 0;
-	int j = 0;
-	int max_x = INT_MIN;
-	int max_y = INT_MIN;
-	int max_z = INT_MIN;
+	int	i;
+	int	j;
+	int	max_x;
+	int	max_y;
+	int	max_z;
+
+	max_x = INT_MIN;
+	max_y = INT_MIN;
+	max_z = INT_MIN;
+	i = 0;
 	while (i < map->num_rows)
 	{
 		j = 0;
@@ -214,7 +193,6 @@ void	find_min_max(t_map *map, t_point ***points)
 	map->max_og_z = max_z;
 }
 
-// TODO: Changes this to use an array to count the number of rows
 t_map *read_map(char *map_path)
 {
 	int		fd;
@@ -224,9 +202,8 @@ t_map *read_map(char *map_path)
 	t_list	*first;
 	int		num_rows;
 	t_map	*map;
-	int scale = 1;
+	int		scale = 1;
 
-	// TODO: Write create map function
 	map = ft_calloc(1, sizeof(t_map));
 	map->min_x = INT_MAX;
 	map->min_y = INT_MAX;
@@ -253,7 +230,6 @@ t_map *read_map(char *map_path)
 
 	while (scale * num_cols < 500 && scale * num_rows < 500)
 		scale++;
-	// Get original points
 	i = 0;
 	int j = 0;
 	t_point ***points = ft_calloc(num_rows + 1, sizeof(t_point **));
@@ -295,60 +271,28 @@ t_map *read_map(char *map_path)
 	map->num_rows = i;
 	find_min_max(map, map->points_copy);
 	project_points(map, 1, 'i');
-	// remap_points(map, 0, 0);
 	ft_lstclear(&first, free);
 	return (map);
 }
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color, t_vars *vars)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color, t_vars *vars)
 {
 	char *dst;
 
 	x += vars->translateX;
 	y += vars->translateY;
-	// x *= vars->scale;
-	// y *= vars->scale;
 	if (x < 0 || y < 0 || x >= vars->win_x || y >= vars->win_y)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
-void remap_points(t_map *map, int new_x, int new_y)
-{
-	int i = 0;
-	int j = 0;
-
-	while (i < map->num_rows)
-	{
-		j = 0;
-		while (j < map->num_cols)
-		{
-			if (map->min_x < 0)
-				map->projected_points[i][j]->x -= map->min_x;
-			if (map->min_y < 0)
-				map->projected_points[i][j]->y -= map->min_y;
-			j++;
-		}
-		i++;
-	}
-	if (map->min_x < 0)
-	{
-		map->max_x -= map->min_x;
-		map->min_x = 0;
-	}
-	if (map->min_y < 0)
-	{
-		map->max_y -= map->min_y;
-		map->min_y = 0;
-	}
-}
-
 void free_map(t_map *map)
 {
-	int i = 0;
+	int	i;
+	int	j = 0;
+
 	i = 0;
-	int j = 0;
 	while (i < map->num_rows)
 	{
 		j = 0;
@@ -367,28 +311,29 @@ void free_map(t_map *map)
 	free(map);
 }
 
-int close_window(void *params)
+int	close_window(void *params)
 {
 	t_vars *vars = params;
 	ft_putendl_fd("QUITTING PROGRAM!", 1);
 	free_map(vars->map);
 	mlx_clear_window(vars->mlx, vars->win);
 	mlx_destroy_image(vars->mlx, vars->img);
-	mlx_destroy_window(vars->mlx, vars->win);
 	free(vars);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
 
 
-int handle_keypress(int key_code, void *params)
+int	handle_keypress(int key_code, void *params)
 {
-	ft_putstr_fd("PRINTING KEY CODE ", 1);
-	ft_putnbr_fd(key_code, 1);
-	ft_putendl_fd("", 1);
+	// ft_putstr_fd("PRINTING KEY CODE ", 1);
+	// ft_putnbr_fd(key_code, 1);
+	// ft_putendl_fd("", 1);
 	t_vars *vars = params;
 	if (key_code == KEY_ESC)
-		close_window(vars);
+	{
+		mlx_destroy_window(vars->mlx, vars->win);
+	}
 	if (key_code == 13)
 	{
 		// w
@@ -474,8 +419,7 @@ int handle_keypress(int key_code, void *params)
 			vars->map->rot_z = 0;
 		}
 	}
-	// scale_points(vars);
-	rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
+	rotate_points(vars->map, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI/ 180.0f));
 	project_points(vars->map, vars->scale, vars->proj);
 	draw_points(vars);
 	return (0);
@@ -486,7 +430,6 @@ int handle_keypress(int key_code, void *params)
 #include <time.h>
 void	draw_points(t_vars *vars)
 {
-	clock_t t = clock();
 	int i = 0;
 	int j = 0;
 	t_point ***points = vars->map->projected_points;
@@ -510,13 +453,9 @@ void	draw_points(t_vars *vars)
 	// TODO: MOVE THIS ABOVE THE WHILE LOOP
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	mlx_destroy_image(vars->mlx, img_copy);
-	// mlx_clear_window(vars->mlx, vars->win);
-	t = clock() - t;
-	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
-	printf("draw_points() took %f seconds to execute \n", time_taken);
 }
 
-int handle_mouse_down(int key_code, int x, int y, void *params)
+int	handle_mouse_down(int key_code, int x, int y, void *params)
 {
 	(void)x;
 	(void)y;
@@ -525,9 +464,10 @@ int handle_mouse_down(int key_code, int x, int y, void *params)
 		t_vars *vars = params;
 		vars->m_down = 1;
 	}
-	
+	return (0);
 }
-int handle_mouse_up(int key_code, int x, int y, void *params)
+
+int	handle_mouse_up(int key_code, int x, int y, void *params)
 {
 	(void)x;
 	(void)y;
@@ -536,21 +476,17 @@ int handle_mouse_up(int key_code, int x, int y, void *params)
 		t_vars *vars = params;
 		vars->m_down = 0;
 	}
-	
+	return (0);
 }
 
 int	mouse_rotate(void *params)
 {
 	t_vars	*vars = params;
-	// vars->m_x = x;
-	// vars->m_y = y;
 	if (vars->m_down == 1)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
 		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
-		// mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
-		printf("MOUSE AT POS (%d, %d)\n", vars->m_x, vars->m_y);
 		if (vars->m_prev_x < vars->m_x)
 			vars->map->rot_x += 2;
 		else if (vars->m_prev_x > vars->m_x)
@@ -559,41 +495,36 @@ int	mouse_rotate(void *params)
 			vars->map->rot_y += 2;
 		else if (vars->m_prev_y > vars->m_y)
 			vars->map->rot_y -= 2;
-		rotate_points(vars->map, vars->scale, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI / 180.0f));
+		rotate_points(vars->map, vars->map->rot_x * (PI / 180.0f), vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI / 180.0f));
 		project_points(vars->map, vars->scale, vars->proj);
-		// scale_points(vars);
 		draw_points(vars);
 	}
+	return (0);
 }
-	
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	void *mlx;
 	void *mlx_win;
 
 	mlx = mlx_init();
-	// int scale = 5;
-	// printf("SEG\n");
-	clock_t t;
-	t = clock();
-	// t_map *map = read_map(argv[1], scale);
 	t_map *map;
-	if (ft_strnstr(argv[1], ".ppm", ft_strlen(argv[1])) != NULL)
+	if (argc != 2)
+	{
+		ft_printf("WRONG NUMBER OF ARGUMENTS!!!!!!!!!!!!!!!!!!!!!!\n");
+		exit(EXIT_FAILURE);
+	}
+	if (ft_strnstr(argv[1], ".ppm", ft_strlen(argv[1])) != NULL
+		|| ft_strnstr(argv[1], ".PPM", ft_strlen(argv[1])) != NULL)
 		map = read_map_from_ppm(argv[1]);
 	else
 		map = read_map(argv[1]);
 	map->rot_x = 0;
 	map->rot_y = 0;
 	map->rot_z = 0;
-	t = clock() - t;
-	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
-	printf("read_map() took %f seconds to execute \n", time_taken);
 
 	t_data *data;
 	data = ft_calloc(1, sizeof(t_data));
-	int translateX = 0;
-	int translateY = 0;
 	t_vars *vars = ft_calloc(1, sizeof(t_vars));
 	vars->win_x = (abs(map->max_x) + abs(map->min_x)) * 2 + 1;
 	vars->win_y = (abs(map->max_y) + abs(map->min_y)) * 2 + 1;
@@ -617,14 +548,12 @@ int main(int argc, char **argv)
 	vars->pan_x = 0;
 	vars->pan_y = 0;
 	vars->proj = 'i';
-	mlx_hook(mlx_win, 17, 0, close_window, vars);
+	vars->done = 0;
 	mlx_hook(mlx_win, 2, (1L << 0), handle_keypress, vars);
 	mlx_hook(mlx_win, 4, 0, handle_mouse_down, vars);
 	mlx_hook(mlx_win, 5, 0, handle_mouse_up, vars);
 	mlx_loop_hook(mlx, mouse_rotate, vars);
+	mlx_hook(mlx_win, 17, 0, close_window, vars);
 	draw_points(vars);
-	// mlx_mouse_hook(vars->win, handle_mouse, &vars);
 	mlx_loop(mlx);
-	// exit(EXIT_FAILURE);
-	// free_map(map);
 }

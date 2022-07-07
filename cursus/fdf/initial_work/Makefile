@@ -6,11 +6,12 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/07 18:37:57 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/07 19:00:12 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Ofast
+# CFLAGS = -Wall -Wextra -Ofast -g3 -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls
+CFLAGS = -Wall -Wextra -Ofast -g3 
 CC = cc
 
 NAME = mlx/fdf
