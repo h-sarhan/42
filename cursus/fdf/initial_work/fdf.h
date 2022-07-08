@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 22:07:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/08 18:59:12 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ struct s_point
 	int		color;
 };
 
-typedef struct s_point t_point;
+typedef struct s_point t_vector;
 
 struct	s_data
 {
@@ -48,21 +48,23 @@ typedef struct s_data	t_data;
 
 struct s_map
 {
-	int				num_rows;
-	int				num_cols;
-	t_point			***points;
-	t_point			***points_copy;
-	t_point			***proj_points;
-	int				rot_x;
-	int				rot_y;
-	int				rot_z;
-	int				min_x;
-	int				max_x;
-	int				min_y;
-	int				max_y;
-	int				max_og_x;
-	int				max_og_y;
-	int				max_og_z;
+	int			num_rows;
+	int			num_cols;
+	t_vector	***points;
+	t_vector	***points_copy;
+	t_vector	***proj_points;
+	int			rot_x;
+	int			rot_y;
+	int			rot_z;
+	int			rot_test;
+	t_vector	**rot_acc;
+	int			min_x;
+	int			max_x;
+	int			min_y;
+	int			max_y;
+	int			max_og_x;
+	int			max_og_y;
+	int			max_og_z;
 };
 typedef struct s_map	t_map;
 
@@ -96,7 +98,7 @@ typedef struct s_vars t_vars;
 
 void			my_mlx_pixel_put(int x, int y, int color, t_vars *vars);
 unsigned int	hextoi(char *str);
-void			draw_line(t_point *p1, t_point *p2, t_vars *vars);
+void			draw_line(t_vector *p1, t_vector *p2, t_vars *vars);
 void			remap_points(t_map *map, int translate, int scale);
 int				create_trgb(int t, int r, int g, int b);
 int				get_t(int trgb);
@@ -107,13 +109,17 @@ int				add_color(int color1, int color2);
 int				color_mix2(int color, int step, float t_diff, float r_diff, float g_diff, float b_diff);
 int				color_mix(int c1, int c2, float mix);
 void			draw_points(t_vars *vars);
-void			find_min_max(t_map *map, t_point ***points);
+void			find_min_max(t_map *map, t_vector ***points);
 void			exit_msg(char *msg, int code);
 void			free_split_array(char **arr);
 t_map			*create_map(void);
-t_point			*create_point(float x, float y, float z, int color);
+void			rotate_points_around_axis(t_map *map, float rot, t_vector *axis);
+void			multiply_rot_matrix(t_vector **rot_acc, t_vector *ax, float rot);
+// void			multiply_rot_matrix(t_vector **rot_acc, t_vector *ax, float rot);
+t_vector		*create_point(float x, float y, float z, int color);
 
 
 void	project_points(t_map *map, float scale, char proj);
+
 t_map			*read_map_from_ppm(char *map_path);
 #endif

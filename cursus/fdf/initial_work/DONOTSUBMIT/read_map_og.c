@@ -6,34 +6,34 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 21:20:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/08 12:26:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void rotX(t_point *p, float x, float y, float z, float rot)
+void rotX(t_vector *p, float x, float y, float z, float rot)
 {
 	p->x = x;
 	p->y = cos(rot) * y - sin(rot) * z;
 	p->z = -sin(rot) * y + cos(rot) * z;
 }
 
-void rotY(t_point *p, float x, float y, float z, float rot)
+void rotY(t_vector *p, float x, float y, float z, float rot)
 {
 	p->x = x * cos(rot) + sin(cos(rot)) * z;
 	p->y = y;
 	p->z = -sin(rot) * x + cos(rot) * z;
 }
 
-void rotZ(t_point *p, float x, float y, float z, float rot)
+void rotZ(t_vector *p, float x, float y, float z, float rot)
 {
 	p->x = x * cos(rot) - sin(cos(rot)) * y;
 	p->y = x * sin(rot) + cos(rot) * y;
 	p->z = z;
 }
 
-void project_point(t_point *p, int x, int y, int z, int scale, int translate)
+void project_point(t_vector *p, int x, int y, int z, int scale, int translate)
 {
 	float beta;
 	float alpha;
@@ -101,16 +101,16 @@ t_map *read_map(char *map_path, int scale)
 	first = lines;
 	i = 0;
 	int j = 0;
-	t_point ***points = ft_calloc(num_rows + 1, sizeof(t_point **));
+	t_vector ***points = ft_calloc(num_rows + 1, sizeof(t_vector **));
 	while (i < num_rows && lines != NULL)
 	{
-		points[i] = ft_calloc(num_cols + 1, sizeof(t_point *));
+		points[i] = ft_calloc(num_cols + 1, sizeof(t_vector *));
 		line = lines->content;
 		tokens = ft_split(line, ' ');
 		j = 0;
 		while (j < num_cols && tokens[j] != NULL)
 		{
-			points[i][j] = ft_calloc(1, sizeof(t_point));
+			points[i][j] = ft_calloc(1, sizeof(t_vector));
 			if (ft_strchr(tokens[j], ',') != NULL)
 				points[i][j]->color = hextoi(ft_strchr(tokens[j], ',') + 1);
 			else
@@ -222,7 +222,7 @@ int main(int argc, char **argv)
 	img.img = mlx_new_image(mlx, map->max_x + translate + 1, map->max_y + translate + 1);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	t = clock();
-	t_point ***points = map->proj_points;
+	t_vector ***points = map->proj_points;
 	while (i < map->num_rows)
 	{
 		j = 0;

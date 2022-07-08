@@ -6,12 +6,12 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/07 21:37:37 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/08 14:03:22 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # CFLAGS = -Wall -Wextra -Ofast -g3 -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls
-CFLAGS = -Wall -Wextra -Ofast -g3
+CFLAGS = -Wall -Wextra -Ofast -g3 -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls
 CC = cc
 
 NAME = fdf
@@ -29,7 +29,7 @@ OBJS := $(SRCS:%.c=%.o)
 LIBFT_OBJS := $(LIBFT_SRCS:%.c=%.o)
 PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)
 GNL_OBJS := $(GNL_SRCS:%.c=%.o)
-MLX = mlx/libmlx.dylib
+MLX = libmlx.dylib
 
 all: $(NAME)
 
@@ -53,7 +53,7 @@ $(MLX):
 	$(CC) $(CFLAGS) -c -Imlx $< -o $@
 
 norm:
-	norminette $(LIBFT_SRCS) $(PRINTF_SRCS) $(GNL_SRCS) $(SRCS) libft/libft.h printf/ft_printf.h get_next_line/get_next_line.h
+	norminette $(LIBFT_SRCS) $(PRINTF_SRCS) $(GNL_SRCS) $(SRCS) libft/libft.h printf/ft_printf.h get_next_line/get_next_line.h fdf.h
 
 clean:
 	rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS) $(GNL_OBJS) $(LIBFT) $(PRINTF) $(GNL) upscale.o

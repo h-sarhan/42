@@ -35,16 +35,16 @@ t_map	*read_map(char *map_path, int scale)
 	first = lines;
 	i = 0;
 	int j = 0;
-	t_point ***points = ft_calloc(num_rows + 1, sizeof(t_point **));
+	t_vector ***points = ft_calloc(num_rows + 1, sizeof(t_vector **));
 	while (i < num_rows && lines != NULL)
 	{
-		points[i] = ft_calloc(num_cols + 1, sizeof(t_point *));
+		points[i] = ft_calloc(num_cols + 1, sizeof(t_vector *));
 		line = lines->content;
 		tokens = ft_split(line, ' ');
 		j = 0;
 		while (j < num_cols && tokens[j] != NULL)
 		{
-			points[i][j] = ft_calloc(1, sizeof(t_point));
+			points[i][j] = ft_calloc(1, sizeof(t_vector));
 			// if (ft_strchr(tokens[j], ',') != NULL)
 			// 	points[i][j]->color = hextoi(ft_strchr(tokens[j], ',') + 1);
 			// else
@@ -88,11 +88,11 @@ void makeBigger(t_map *map, int scale)
 	tmp->num_cols = map->num_cols * scale;
 	tmp->num_rows = map->num_rows * scale;
 
-    tmp->proj_points = ft_calloc(tmp->num_rows + 1, sizeof(t_point **));
+    tmp->proj_points = ft_calloc(tmp->num_rows + 1, sizeof(t_vector **));
     for (i = 0; i < tmp->num_rows; i++) {
-        tmp->proj_points[i] = ft_calloc(tmp->num_cols + 1, sizeof(t_point *));
+        tmp->proj_points[i] = ft_calloc(tmp->num_cols + 1, sizeof(t_vector *));
         for (j = 0; j < tmp->num_cols; j++) {
-			tmp->proj_points[i][j] = ft_calloc(1, sizeof(t_point));
+			tmp->proj_points[i][j] = ft_calloc(1, sizeof(t_vector));
             tmp->proj_points[i][j]->x = map->proj_points[i / scale][j / scale]->x;
             tmp->proj_points[i][j]->y = map->proj_points[i / scale][j / scale]->y;
             tmp->proj_points[i][j]->z = map->proj_points[i / scale][j / scale]->z;

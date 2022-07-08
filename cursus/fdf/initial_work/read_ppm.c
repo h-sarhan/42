@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 00:00:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 21:27:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/08 18:55:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	fill_map(int fd, t_map *map, int scale)
 	i = 0;
 	while (i < map->num_rows)
 	{
-		map->points[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
-		map->points_copy[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
-		map->proj_points[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
+		map->points[i] = ft_calloc(map->num_cols + 1, sizeof(t_vector *));
+		map->points_copy[i] = ft_calloc(map->num_cols + 1, sizeof(t_vector *));
+		map->proj_points[i] = ft_calloc(map->num_cols + 1, sizeof(t_vector *));
 		if (map->points[i] == NULL || map->points_copy[i] == NULL
 			|| map->proj_points == NULL)
 			exit_msg("Error reading file", EXIT_FAILURE);
@@ -96,14 +96,14 @@ t_map	*read_map_from_ppm(char *img_path)
 	scale = 1;
 	while (map->num_cols * scale < 400 && map->num_rows * scale < 400)
 		scale++;
-	map->points = ft_calloc(map->num_rows + 1, sizeof(t_point **));
-	map->points_copy = ft_calloc(map->num_rows + 1, sizeof(t_point **));
-	map->proj_points = ft_calloc(map->num_rows + 1, sizeof(t_point **));
+	map->points = ft_calloc(map->num_rows + 1, sizeof(t_vector **));
+	map->points_copy = ft_calloc(map->num_rows + 1, sizeof(t_vector **));
+	map->proj_points = ft_calloc(map->num_rows + 1, sizeof(t_vector **));
 	if (map->points == NULL || map->points_copy == NULL
 		|| map->proj_points == NULL)
 		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
 	fill_map(fd, map, scale);
 	find_min_max(map, map->points_copy);
-	project_points(map, scale, 'i');
+	project_points2(map, scale, 'i');
 	return (map);
 }

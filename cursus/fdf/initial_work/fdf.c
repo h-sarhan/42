@@ -6,15 +6,15 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 01:12:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/08 19:09:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	rotate_x(t_point *p, float rot)
+void	rotate_x(t_vector *p, float rot)
 {
-	int	xyz[3];
+	float	xyz[3];
 
 	xyz[0] = p->x;
 	xyz[1] = p->y;
@@ -24,9 +24,9 @@ void	rotate_x(t_point *p, float rot)
 	p->z = sin(rot) * xyz[1] + cos(rot) * xyz[2];
 }
 
-void	rotate_y(t_point *p, float rot)
+void	rotate_y(t_vector *p, float rot)
 {
-	int	xyz[3];
+	float	xyz[3];
 
 	xyz[0] = p->x;
 	xyz[1] = p->y;
@@ -36,9 +36,9 @@ void	rotate_y(t_point *p, float rot)
 	p->z = -sin(rot) * xyz[0] + cos(rot) * xyz[2];
 }
 
-void	rotate_z(t_point *p, float rot)
+void	rotate_z(t_vector *p, float rot)
 {
-	int	xyz[3];
+	float	xyz[3];
 
 	xyz[0] = p->x;
 	xyz[1] = p->y;
@@ -48,7 +48,25 @@ void	rotate_z(t_point *p, float rot)
 	p->z = xyz[2];
 }
 
-void	project_point(t_point *projected, t_point *orig, char proj)
+void	rotate_axis(t_map *map, t_vector *p)
+{
+	float		xyz[3];
+	t_vector	**rot_acc;
+
+	xyz[0] = p->x;
+	xyz[1] = p->y;
+	xyz[2] = p->z;
+	rot_acc = map->rot_acc;
+	if (rot_acc == NULL)
+	{
+		printf("OOOOOOPPPPPSies\n");
+	}
+	p->x = rot_acc[0]->x * xyz[0] + rot_acc[0]->y * xyz[1] + rot_acc[0]->z * xyz[2];
+	p->y = rot_acc[1]->x * xyz[0] + rot_acc[1]->y * xyz[1] + rot_acc[1]->z * xyz[2];
+	p->z = rot_acc[2]->x * xyz[0] + rot_acc[2]->y * xyz[1] + rot_acc[2]->z * xyz[2];
+}
+
+void	project_point(t_vector *projected, t_vector *orig, char proj)
 {
 	float	beta;
 	float	alpha;
@@ -91,12 +109,79 @@ void	free_split_array(char **arr)
 	free(arr);
 }
 
+void	project_points2(t_map *map, float scale, char proj)
+{
+	int		i;
+	int		j;
+	t_vector	***projected_points;
+	t_vector	***points;
+
+	points = map->points_copy;
+	projected_points = map->proj_points;
+	i = 0;
+	t_vector ax1;
+	ax1.x = 0;
+	ax1.y = 0;
+	ax1.z = 1;
+	while (i < map->num_rows)
+	{
+		j = 0;
+		while (j < map->num_cols)
+		{
+			projected_points[i][j]->x = points[i][j]->x; 
+			projected_points[i][j]->y = points[i][j]->y; 
+			projected_points[i][j]->z = points[i][j]->z; 
+			rotate_axis(map, projected_points[i][j]);
+			// project_point(projected_points[i][j], points[i][j], proj);
+			// if (projected_points[i][j]->x < map->min_x)
+			// 	map->min_x = projected_points[i][j]->x;
+			// if (projected_points[i][j]->y < map->min_y)
+			// 	map->min_y = projected_points[i][j]->y;
+			// if (projected_points[i][j]->x > map->max_x)
+			// 	map->max_x = projected_points[i][j]->x;
+			// if (projected_points[i][j]->y > map->max_y)
+			// 	map->max_y = projected_points[i][j]->y;
+			// projected_points[i][j]->x *= scale;
+			// projected_points[i][j]->y *= scale;
+			// projected_points[i][j]->z *= scale;
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	t_vector ax2;
+	ax2.x = 1;
+	ax2.y = 0;
+	ax2.z = 0;
+	while (i < map->num_rows)
+	{
+		j = 0;
+		while (j < map->num_cols)
+		{
+			// project_point(projected_points[i][j], points[i][j], proj);
+			rotate_axis(map, projected_points[i][j]);
+			if (projected_points[i][j]->x < map->min_x)
+				map->min_x = projected_points[i][j]->x;
+			if (projected_points[i][j]->y < map->min_y)
+				map->min_y = projected_points[i][j]->y;
+			if (projected_points[i][j]->x > map->max_x)
+				map->max_x = projected_points[i][j]->x;
+			if (projected_points[i][j]->y > map->max_y)
+				map->max_y = projected_points[i][j]->y;
+			projected_points[i][j]->x *= scale;
+			projected_points[i][j]->y *= scale;
+			projected_points[i][j]->z *= scale;
+			j++;
+		}
+		i++;
+	}
+}
 void	project_points(t_map *map, float scale, char proj)
 {
 	int		i;
 	int		j;
-	t_point	***projected_points;
-	t_point	***points;
+	t_vector	***projected_points;
+	t_vector	***points;
 
 	points = map->points_copy;
 	projected_points = map->proj_points;
@@ -128,13 +213,11 @@ void	rotate_points(t_map *map, float rot_x, float rot_y, float rot_z)
 {
 	int		i;
 	int		j;
-	// t_point	***projected_points;
-	t_point	***points;
-	t_point	***points_copy;
+	t_vector	***points;
+	t_vector	***points_copy;
 
 	points = map->points;
 	points_copy = map->points_copy;
-	// projected_points = map->proj_points;
 	i = 0;
 	while (i < map->num_rows)
 	{
@@ -159,7 +242,51 @@ void	rotate_points(t_map *map, float rot_x, float rot_y, float rot_z)
 	}
 }
 
-void	find_min_max(t_map *map, t_point ***points)
+void	rotate_points_around_axis(t_map *map, float rot, t_vector *axis)
+{
+	int			i;
+	int			j;
+	t_vector	***points;
+	t_vector	***points_copy;
+	float		len;
+
+	len = sqrt(pow(axis->x, 2) + pow(axis->y, 2) + pow(axis->z, 2));
+	points = map->points;
+	points_copy = map->points_copy;
+	if (len != 0)
+	{
+		axis->x /= len;
+		axis->y /= len;
+		axis->z /= len;
+	}
+	multiply_rot_matrix(map->rot_acc, axis, rot);
+	i = 0;
+	while (i < map->num_rows)
+	{
+		j = 0;
+		while (j < map->num_cols)
+		{
+			points_copy[i][j]->x = points[i][j]->x;
+			points_copy[i][j]->y = points[i][j]->y;
+			points_copy[i][j]->z = points[i][j]->z;
+			points_copy[i][j]->x -= (map->max_og_x / 2);
+			points_copy[i][j]->y -= (map->max_og_y / 2);
+			points_copy[i][j]->z -= (map->max_og_z / 2);
+			// rotate_x(points_copy[i][j], rot_x);
+			// rotate_y(points_copy[i][j], rot_y);
+			// rotate_z(points_copy[i][j], rot_z);
+			rotate_axis(map, points_copy[i][j]);
+			// printf("SEG\n");
+			points_copy[i][j]->x += (map->max_og_x / 2);
+			points_copy[i][j]->y += (map->max_og_y / 2);
+			points_copy[i][j]->z += (map->max_og_z / 2);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	find_min_max(t_map *map, t_vector ***points)
 {
 	int	i;
 	int	j;
@@ -204,13 +331,13 @@ t_map	*read_map(char *map_path)
 	int		i;
 	int		num_cols;
 	int		j;
-	t_point	***points;
-	t_point	***points_copy;
-	t_point	***proj_pts;
+	t_vector	***points;
+	t_vector	***points_copy;
+	t_vector	***proj_pts;
 
 	i = 0;
 	scale = 1;
-	map = ft_calloc(1, sizeof(t_map));
+	map = create_map();
 	map->min_x = INT_MAX;
 	map->min_y = INT_MAX;
 	map->max_x = INT_MIN;
@@ -235,22 +362,22 @@ t_map	*read_map(char *map_path)
 		scale++;
 	i = 0;
 	j = 0;
-	points = ft_calloc(num_rows + 1, sizeof(t_point **));
-	points_copy = ft_calloc(num_rows + 1, sizeof(t_point **));
-	proj_pts = ft_calloc(num_rows + 1, sizeof(t_point **));
+	points = ft_calloc(num_rows + 1, sizeof(t_vector **));
+	points_copy = ft_calloc(num_rows + 1, sizeof(t_vector **));
+	proj_pts = ft_calloc(num_rows + 1, sizeof(t_vector **));
 	while (i < num_rows && lines != NULL)
 	{
-		points[i] = ft_calloc(num_cols + 1, sizeof(t_point *));
-		points_copy[i] = ft_calloc(num_cols + 1, sizeof(t_point *));
-		proj_pts[i] = ft_calloc(num_cols + 1, sizeof(t_point *));
+		points[i] = ft_calloc(num_cols + 1, sizeof(t_vector *));
+		points_copy[i] = ft_calloc(num_cols + 1, sizeof(t_vector *));
+		proj_pts[i] = ft_calloc(num_cols + 1, sizeof(t_vector *));
 		line = lines->content;
 		tokens = ft_split(line, ' ');
 		j = 0;
 		while (j < num_cols && tokens[j] != NULL)
 		{
-			proj_pts[i][j] = ft_calloc(1, sizeof(t_point));
-			points[i][j] = ft_calloc(1, sizeof(t_point));
-			points_copy[i][j] = ft_calloc(1, sizeof(t_point));
+			proj_pts[i][j] = ft_calloc(1, sizeof(t_vector));
+			points[i][j] = ft_calloc(1, sizeof(t_vector));
+			points_copy[i][j] = ft_calloc(1, sizeof(t_vector));
 			if (ft_strchr(tokens[j], ',') != NULL)
 				proj_pts[i][j]->color = hextoi(ft_strchr(tokens[j], ',') + 1);
 			else
@@ -272,6 +399,19 @@ t_map	*read_map(char *map_path)
 	map->points_copy = points_copy;
 	map->num_cols = j;
 	map->num_rows = i;
+	
+	t_vector ax1;
+	ax1.x = 0;
+	ax1.y = 0;
+	ax1.z = 1;
+	t_vector ax2;
+	ax2.x = 1;
+	ax2.y = 0;
+	ax2.z = 0;
+	multiply_rot_matrix(map->rot_acc, &ax1, 45 * (PI / 180.0f));
+	
+	multiply_rot_matrix(map->rot_acc, &ax2, asin(tan(30 * (PI / 180.0f))) + 30 * (PI / 180.0f));
+	
 	find_min_max(map, map->points_copy);
 	project_points(map, 1, 'i');
 	ft_lstclear(&first, free);
@@ -352,6 +492,19 @@ int	handle_keypress(int key_code, void *params)
 		// w
 		vars->translateY -= 10;
 	}
+	// if (key_code == 31)
+	// {
+	// 	// O
+	// 	vars->map->rot_test++;
+	// 	t_vector axis;
+	// 	axis.x = 1;
+	// 	axis.y = 0;
+	// 	axis.z = 0;
+	// 	rotate_points_around_axis(vars->map, 1 * (PI/ 180.0f), &axis);
+	// 	project_points(vars->map, vars->scale, vars->proj);
+	// 	draw_points(vars);
+	// 	return (0);
+	// }
 	if (key_code == 0 || key_code == 97)
 	{
 		// a
@@ -443,7 +596,7 @@ void	draw_points(t_vars *vars)
 {
 	int		i;
 	int		j;
-	t_point	***points;
+	t_vector	***points;
 	void	*img_copy;
 
 	i = 0;
@@ -505,20 +658,50 @@ int	mouse_rotate(void *params)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
-		if (vars->m_prev_x < vars->m_x)
-			vars->map->rot_x += 2;
-		else if (vars->m_prev_x > vars->m_x)
-			vars->map->rot_x -= 2;
-		if (vars->m_prev_y < vars->m_y)
-			vars->map->rot_y += 2;
-		else if (vars->m_prev_y > vars->m_y)
-			vars->map->rot_y -= 2;
-		rotate_points(vars->map, vars->map->rot_x * (PI / 180.0f),
-			vars->map->rot_y * (PI / 180.0f),
-			vars->map->rot_z * (PI / 180.0f));
-		project_points(vars->map, vars->scale, vars->proj);
-		draw_points(vars);
+		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		if (vars->m_prev_x != vars->m_x || vars->m_prev_y != vars->m_y)
+		{
+			t_vector axis;
+			
+			axis.x = (vars->m_x - vars->m_prev_x);
+			axis.y = (vars->m_y - vars->m_prev_y);
+			axis.z = 0;
+			float beta = 45 * (PI / 180.0f);
+			float alpha = asin(tan(30 * (PI / 180.0f))) + 30 * (PI / 180.0f);
+			// // project_point();
+			// // rotate_z(&axis, beta);
+			// // rotate_x(&axis, alpha + 30 * (PI / 180.0f));
+			// t_vector	look;
+			// look.x = 0;
+			// look.y = 0;
+			// look.z = -1;
+			// // rotate_z(&look, beta);
+			// // rotate_x(&look, alpha + 30 * (PI / 180.0f));
+			// float xyz[3];
+			// xyz[0] = axis.x;
+			// xyz[1] = axis.y;
+			// xyz[2] = axis.z;
+			// axis.x = xyz[1] * look.z - xyz[2] * look.y;
+			// axis.y = -1 * (xyz[0] * look.z - xyz[2] * look.x);
+			// axis.z = xyz[0] * look.y - xyz[1] * look.x;
+			rotate_x(&axis, beta);
+			rotate_z(&axis, alpha);
+			t_vector p;
+			p.x = 0;
+			p.y = 0;
+			p.z = 0;
+			p.color = 0xFFFFFF;
+			axis.color = 0xFFFFFF;
+			rotate_points_around_axis(vars->map, 2 * (PI/ 180.0f), &axis);
+			project_points(vars->map, vars->scale, vars->proj);
+			axis.x *= 100;
+			axis.y *= 100;
+			axis.z *= 100;
+			draw_line(&p, &axis, vars);
+			// draw_points(vars);
+			// project_points(vars->map, vars->scale, vars->proj);
+			draw_points(vars);
+		}
 	}
 	return (0);
 }
@@ -547,6 +730,8 @@ int	main(int argc, char **argv)
 	map->rot_y = 0;
 	map->rot_z = 0;
 	vars = ft_calloc(1, sizeof(t_vars));
+	vars->map = map;
+	// project_points(map, v);
 	vars->win_x = (abs(map->max_x) + abs(map->min_x)) * 2 + 1;
 	vars->win_y = (abs(map->max_y) + abs(map->min_y)) * 2 + 1;
 	mlx_win = mlx_new_window(mlx, vars->win_x, vars->win_y, "fdf");
@@ -556,7 +741,6 @@ int	main(int argc, char **argv)
 			&data->line_length, &data->endian);
 	vars->mlx = mlx;
 	vars->win = mlx_win;
-	vars->map = map;
 	vars->img = data->img;
 	vars->data = data;
 	vars->scale = 1;

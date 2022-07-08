@@ -6,13 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 22:06:52 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/08 12:26:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_line_points_low(t_point **pts, t_vars *vars, int *dxy, int *dyi)
+void	draw_line_points_low(t_vector **pts, t_vars *vars, int *dxy, int *dyi)
 {
 	int	xy[2];
 	int	color;
@@ -40,13 +40,13 @@ void	draw_line_points_low(t_point **pts, t_vars *vars, int *dxy, int *dyi)
 	}
 }
 
-void	draw_line_low( t_point *p1, t_point *p2, t_vars *vars)
+void	draw_line_low( t_vector *p1, t_vector *p2, t_vars *vars)
 {
 	int		dxy[2];
 	int		dyi[2];
 	int		xy[2];
 	int		color;
-	t_point	*pts[2];
+	t_vector	*pts[2];
 
 	dxy[0] = p2->x - p1->x;
 	dxy[1] = p2->y - p1->y;
@@ -65,7 +65,7 @@ void	draw_line_low( t_point *p1, t_point *p2, t_vars *vars)
 	draw_line_points_low(pts, vars, dxy, dyi);
 }
 
-void	draw_line_points_high(t_point **pts, t_vars *vars, int *dxy, int *dxi)
+void	draw_line_points_high(t_vector **pts, t_vars *vars, int *dxy, int *dxi)
 {
 	int	xy[2];
 	int	color;
@@ -93,13 +93,13 @@ void	draw_line_points_high(t_point **pts, t_vars *vars, int *dxy, int *dxi)
 	}
 }
 
-void	draw_line_high(t_point *p1, t_point *p2, t_vars *vars)
+void	draw_line_high(t_vector *p1, t_vector *p2, t_vars *vars)
 {
 	int		dxy[2];
 	int		dxi[2];
 	int		xy[2];
 	int		color;
-	t_point	*pts[2];
+	t_vector	*pts[2];
 
 	dxy[0] = p2->x - p1->x;
 	dxy[1] = p2->y - p1->y;
@@ -118,7 +118,7 @@ void	draw_line_high(t_point *p1, t_point *p2, t_vars *vars)
 	draw_line_points_high(pts, vars, dxy, dxi);
 }
 
-void	draw_line(t_point *p1, t_point *p2, t_vars *vars)
+void	draw_line(t_vector *p1, t_vector *p2, t_vars *vars)
 {
 	if (fabs(p2->y - p1->y) < fabs(p2->x - p1->x))
 	{
