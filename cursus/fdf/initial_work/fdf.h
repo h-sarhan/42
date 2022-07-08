@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 19:18:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/08 19:42:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,35 @@
 # include <math.h>
 
 # define ON_DESTROY 17
-# define KEY_Q 12
-# define KEY_ESC 53
 # define PI           3.14159265358979323846F
+# define KEY_ESC 53
+# define L_KEY_ESC 65307
+# define KEY_W 13
+# define L_KEY_W 119
+# define KEY_A 0
+# define L_KEY_A 97
+# define KEY_S 1
+# define L_KEY_S 115
+# define KEY_D 2
+# define L_KEY_D 100
+# define KEY_LEFT 123
+# define L_KEY_LEFT 65361
+# define KEY_RIGHT 124
+# define L_KEY_RIGHT 65363
+# define KEY_UP 126
+# define L_KEY_UP 65362
+# define KEY_DOWN 125
+# define L_KEY_DOWN 65364
+# define KEY_Q 12
+# define L_KEY_Q 113
+# define KEY_E 14
+# define L_KEY_E 101
+# define KEY_PLUS 24
+# define L_KEY_PLUS 61
+# define KEY_MINUS 27
+# define L_KEY_MINUS 45
+# define KEY_P 35
+# define L_KEY_P 112
 
 struct s_point
 {
@@ -109,7 +135,18 @@ void			exit_msg(char *msg, int code);
 void			free_split_array(char **arr);
 t_map			*create_map(void);
 t_point			*create_point(float x, float y, float z, int color);
-void			project_points(t_map *map, float scale, char proj);
 t_map			*read_map_from_ppm(char *map_path);
+void			rotate_x(t_point *p, float rot);
+void			rotate_y(t_point *p, float rot);
+void			rotate_z(t_point *p, float rot);
+void			rotate_points(t_map *map, float r_x, float r_y, float r_z);
+void			project_point(t_point *projected, t_point *orig, char proj);
+void			project_points(t_map *map, float scale, char proj);
+void			free_map(t_map *map);
+int				handle_mouse_down(int key_code, int x, int y, void *params);
+int				handle_mouse_up(int key_code, int x, int y, void *params);
+int				mouse_rotate(void *params);
+int				close_window(void *params);
+int				handle_keypress(int key_code, t_vars *vars);
 
 #endif
