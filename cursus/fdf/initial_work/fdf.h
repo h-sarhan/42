@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 22:07:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/08 19:18:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ struct s_point
 	int		color;
 };
 
-typedef struct s_point t_point;
+typedef struct s_point	t_point;
 
 struct	s_data
 {
-	void *img;
-	char *addr;
-	int bits_per_pixel;
-	int line_length;
-	int endian;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
 };
 typedef struct s_data	t_data;
 
@@ -66,8 +66,6 @@ struct s_map
 };
 typedef struct s_map	t_map;
 
-
-
 struct s_vars
 {
 	void	*mlx;
@@ -78,8 +76,8 @@ struct s_vars
 	float	scale;
 	int		win_x;
 	int		win_y;
-	int		translateX;
-	int		translateY;
+	int		translate_x;
+	int		translate_y;
 	int		drawing_frame;
 	int		m_prev_x;
 	int		m_prev_y;
@@ -91,8 +89,8 @@ struct s_vars
 	char	proj;
 	int		done;
 };
-typedef struct s_vars t_vars;
 
+typedef struct s_vars	t_vars;
 
 void			my_mlx_pixel_put(int x, int y, int color, t_vars *vars);
 unsigned int	hextoi(char *str);
@@ -104,7 +102,6 @@ int				get_r(int trgb);
 int				get_g(int trgb);
 int				get_b(int trgb);
 int				add_color(int color1, int color2);
-int				color_mix2(int color, int step, float t_diff, float r_diff, float g_diff, float b_diff);
 int				color_mix(int c1, int c2, float mix);
 void			draw_points(t_vars *vars);
 void			find_min_max(t_map *map, t_point ***points);
@@ -112,8 +109,7 @@ void			exit_msg(char *msg, int code);
 void			free_split_array(char **arr);
 t_map			*create_map(void);
 t_point			*create_point(float x, float y, float z, int color);
-
-
-void	project_points(t_map *map, float scale, char proj);
+void			project_points(t_map *map, float scale, char proj);
 t_map			*read_map_from_ppm(char *map_path);
+
 #endif

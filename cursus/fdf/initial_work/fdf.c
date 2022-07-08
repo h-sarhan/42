@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 01:12:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/08 19:17:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,8 +283,8 @@ void	my_mlx_pixel_put(int x, int y, int color, t_vars *vars)
 	char	*dst;
 	t_data	*data;
 
-	x += vars->translateX;
-	y += vars->translateY;
+	x += vars->translate_x;
+	y += vars->translate_y;
 	if (x < 0 || y < 0 || x >= vars->win_x || y >= vars->win_y)
 		return ;
 	data = vars->data;
@@ -350,22 +350,22 @@ int	handle_keypress(int key_code, void *params)
 	if (key_code == 13 || key_code == 119)
 	{
 		// w
-		vars->translateY -= 10;
+		vars->translate_y -= 10;
 	}
 	if (key_code == 0 || key_code == 97)
 	{
 		// a
-		vars->translateX -= 10;
+		vars->translate_x -= 10;
 	}
 	if (key_code == 1 || key_code == 115)
 	{
 		// s
-		vars->translateY += 10;
+		vars->translate_y += 10;
 	}
 	if (key_code == 2 || key_code == 100)
 	{
 		// d
-		vars->translateX += 10;
+		vars->translate_x += 10;
 	}
 	if ((key_code == 123 || key_code == 65361) && vars->proj != 'o')
 	{
@@ -505,7 +505,7 @@ int	mouse_rotate(void *params)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
+		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_prev_x < vars->m_x)
 			vars->map->rot_x += 2;
 		else if (vars->m_prev_x > vars->m_x)
@@ -560,8 +560,8 @@ int	main(int argc, char **argv)
 	vars->img = data->img;
 	vars->data = data;
 	vars->scale = 1;
-	vars->translateX = vars->win_x / 2;
-	vars->translateY = vars->win_y / 4;
+	vars->translate_x = vars->win_x / 2;
+	vars->translate_y = vars->win_y / 4;
 	vars->drawing_frame = 0;
 	vars->m_prev_x = -1;
 	vars->m_prev_y = -1;
