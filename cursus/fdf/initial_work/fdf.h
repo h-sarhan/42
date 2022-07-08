@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 19:42:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/08 21:01:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,7 @@ int				handle_mouse_up(int key_code, int x, int y, void *params);
 int				mouse_rotate(void *params);
 int				close_window(void *params);
 int				handle_keypress(int key_code, t_vars *vars);
+t_map			*read_map(char *map_path);
+void			*create_new_image(t_vars *vars);
 
 #endif

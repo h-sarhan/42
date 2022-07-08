@@ -6,11 +6,10 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/08 20:32:39 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/08 21:14:25 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# CFLAGS = -Wall -Wextra -Ofast -g3 -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls
 CFLAGS = -Wall -Wextra -O3
 CC = cc
 
@@ -19,8 +18,11 @@ LIBFT = libft.a
 PRINTF = libftprintf.a
 GNL = libgnl.a
 
+SRCS = fdf.c draw_line.c hextoi.c colors.c read_ppm.c error_handling.c map.c \
+		colors2.c rotation.c projection.c window_management.c keyboard_input.c \
+		main.c
+
 # TODO: REMOVE WILDCARDS LATER
-SRCS = fdf.c draw_line.c hextoi.c colors.c read_ppm.c error_handling.c map.c colors2.c rotation.c projection.c window_management.c keyboard_input.c
 LIBFT_SRCS := $(wildcard libft/*.c)
 PRINTF_SRCS := $(wildcard printf/*.c)
 GNL_SRCS := $(wildcard get_next_line/*.c)
