@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 20:37:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/09 14:01:37 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	check_projection_keys(int key, t_vars *vars)
 int	handle_keypress(int key, t_vars *vars)
 {
 	if (key == KEY_ESC || key == L_KEY_ESC)
+	{
 		mlx_destroy_window(vars->mlx, vars->win);
+		return (0);
+	}
 	check_projection_keys(key, vars);
 	check_transformation_keys(key, vars);
 	if (key == KEY_LEFT || key == L_KEY_LEFT || key == KEY_RIGHT
