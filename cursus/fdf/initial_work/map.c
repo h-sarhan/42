@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 20:53:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 15:16:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/09 23:04:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ t_map	*create_map(void)
 	map->max_og_y = INT_MIN;
 	map->max_og_z = INT_MIN;
 	// TODO: PROTECT THIS
-	map->orientation = create_quaternion(0, 1, 0, 0);
-	rotate_y(map, 180);
+	map->look = ft_calloc(1, sizeof(t_point));
+	map->look->x = 0;
+	map->look->y = 0;
+	map->look->z = -1;
+	map->orientation = create_quaternion(0, 0, 0, 1);
+	// rotate_y(map, 180);
 	return (map);
 }
 

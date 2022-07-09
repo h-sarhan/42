@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 14:52:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/09 22:59:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,48 @@
 
 void	check_transformation_keys(int key, t_vars *vars)
 {
+	ft_printf("%d\n", key);
+	if (key == 111)
+	{
+		// t_point axis;
+		// axis.x = (vars->m_x - vars->m_prev_x);
+		// axis.y = -1 * (vars->m_y - vars->m_prev_y);
+		// axis.z = 0;
+		// float xyz[3];
+		// xyz[0] = axis.x;
+		// xyz[1] = axis.y;
+		// xyz[2] = axis.z;
+		// axis.x = xyz[1];
+		// axis.y = -1 * xyz[0];
+		// axis.z = xyz[2];
+		t_point m_direction;
+		m_direction.x = 1;
+		m_direction.y = 1;
+		m_direction.z = 0;
+		float len = sqrt(pow(m_direction.x, 2) + pow(m_direction.y, 2) + pow(m_direction.z, 2));
+		if (len != 0)
+		{
+			m_direction.x /= len;
+			m_direction.y /= len;
+			m_direction.z /= len;
+		}
+		t_point *axis;
+		axis = cross_product(vars->map->look, &m_direction);
+		// TODO: TRY GETTING CROSS PRODUCT OF AXIS AND ORIENTATION
+		len = sqrt(pow(axis->x, 2) + pow(axis->y, 2) + pow(axis->z, 2));
+		if (len != 0)
+		{
+			axis->x /= len;
+			axis->y /= len;
+			axis->z /= len;
+		}
+		t_quaternion *q_rot = create_quaternion_rotation(20 * (PI / 180.0f), axis);
+		
+		vars->map->orientation = rotate_quaternion(vars->map->orientation, q_rot);
+		rotate_points(vars->map);
+		project_points(vars->map, vars->scale, vars->proj);
+		draw_points(vars);
+	}
 	if ((key == KEY_LEFT || key == L_KEY_LEFT) && vars->proj != 'o')
 		// vars->map->rot_x -= 3;
 		rotate_x(vars->map, -3);

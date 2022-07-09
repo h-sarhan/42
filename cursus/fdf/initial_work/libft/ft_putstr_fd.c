@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:27:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 14:44:09 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/09 15:21:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	(void)write(fd, s, ft_strlen(s));
+	write(fd, s, ft_strlen(s));
 }
