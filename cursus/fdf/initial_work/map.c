@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 20:53:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 17:23:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/09 09:59:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	multiply_rot_matrix(t_vector **rot_acc, t_vector *ax, float rot)
 	m1[0].x = rot_acc[0]->x;
 	m1[0].y = rot_acc[0]->y;
 	m1[0].z = rot_acc[0]->z;
+	
 	m1[1].x = rot_acc[1]->x;
 	m1[1].y = rot_acc[1]->y;
 	m1[1].z = rot_acc[1]->z;
@@ -108,10 +109,24 @@ void	multiply_rot_matrix(t_vector **rot_acc, t_vector *ax, float rot)
 	rot_acc[0]->x = (m1[0].x * m2[0].x + m1[0].y * m2[1].x + m1[0].z * m2[2].x);
 	rot_acc[0]->y = (m1[0].x * m2[0].y + m1[0].y * m2[1].y + m1[0].z * m2[2].y);
 	rot_acc[0]->z = (m1[0].x * m2[0].z + m1[0].y * m2[1].z + m1[0].z * m2[2].z);
+	
+
+	
 	rot_acc[1]->x = (m1[1].x * m2[0].x + m1[1].y * m2[1].x + m1[1].z * m2[2].x);
 	rot_acc[1]->y = (m1[1].x * m2[0].y + m1[1].y * m2[1].y + m1[1].z * m2[2].y);
 	rot_acc[1]->z = (m1[1].x * m2[0].z + m1[1].y * m2[1].z + m1[1].z * m2[2].z);
 	rot_acc[2]->x = (m1[2].x * m2[0].x + m1[2].y * m2[1].x + m1[2].z * m2[2].x);
 	rot_acc[2]->y = (m1[2].x * m2[0].y + m1[2].y * m2[1].y + m1[2].z * m2[2].y);
 	rot_acc[2]->z = (m1[2].x * m2[0].z + m1[2].y * m2[1].z + m1[2].z * m2[2].z);
+	float xyz1[3];
+	xyz1[0] = rot_acc[0]->x;
+	xyz1[1] = rot_acc[0]->y;
+	xyz1[2] = rot_acc[0]->z;
+	float xyz2[3];
+	xyz2[0] = rot_acc[1]->x;
+	xyz2[1] = rot_acc[1]->y;
+	xyz2[2] = rot_acc[1]->z;
+	rot_acc[2]->z = xyz1[1] * xyz2[2] - xyz1[2] * xyz2[1];
+	rot_acc[2]->z = xyz1[2] * xyz2[0]- xyz1[0] * xyz2[2];
+	rot_acc[2]->z = xyz1[0] * xyz2[1] - xyz1[1] * xyz2[0];
 }

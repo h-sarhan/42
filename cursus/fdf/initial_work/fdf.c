@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 19:09:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/09 10:06:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,7 +358,7 @@ t_map	*read_map(char *map_path)
 		line = get_next_line(fd);
 	}
 	first = lines;
-	while (scale * num_cols < 500 && scale * num_rows < 500)
+	while (scale * num_cols < 300 && scale * num_rows < 300)
 		scale++;
 	i = 0;
 	j = 0;
@@ -400,17 +400,17 @@ t_map	*read_map(char *map_path)
 	map->num_cols = j;
 	map->num_rows = i;
 	
-	t_vector ax1;
-	ax1.x = 0;
-	ax1.y = 0;
-	ax1.z = 1;
-	t_vector ax2;
-	ax2.x = 1;
-	ax2.y = 0;
-	ax2.z = 0;
-	multiply_rot_matrix(map->rot_acc, &ax1, 45 * (PI / 180.0f));
+	// t_vector ax1;
+	// ax1.x = 0;
+	// ax1.y = 0;
+	// ax1.z = 1;
+	// t_vector ax2;
+	// ax2.x = 1;
+	// ax2.y = 0;
+	// ax2.z = 0;
+	// multiply_rot_matrix(map->rot_acc, &ax1, 45 * (PI / 180.0f));
 	
-	multiply_rot_matrix(map->rot_acc, &ax2, asin(tan(30 * (PI / 180.0f))) + 30 * (PI / 180.0f));
+	// multiply_rot_matrix(map->rot_acc, &ax2, asin(tan(30 * (PI / 180.0f))) + 30 * (PI / 180.0f));
 	
 	find_min_max(map, map->points_copy);
 	project_points(map, 1, 'i');
@@ -632,8 +632,11 @@ int	handle_mouse_down(int key_code, int x, int y, void *params)
 	(void)x;
 	(void)y;
 	vars = params;
-	if (key_code == 3)
+	// if (key_code == 3)
+	if (vars->m_down == 0)
 		vars->m_down = 1;
+	else if (vars->m_down == 1)
+		vars->m_down = 0;
 	return (0);
 }
 
@@ -658,7 +661,7 @@ int	mouse_rotate(void *params)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_prev_x != vars->m_x || vars->m_prev_y != vars->m_y)
 		{
 			t_vector axis;
@@ -684,13 +687,16 @@ int	mouse_rotate(void *params)
 			// axis.x = xyz[1] * look.z - xyz[2] * look.y;
 			// axis.y = -1 * (xyz[0] * look.z - xyz[2] * look.x);
 			// axis.z = xyz[0] * look.y - xyz[1] * look.x;
-			rotate_x(&axis, beta);
-			rotate_z(&axis, alpha);
+			// rotate_x(&axis, beta);
+			// rotate_z(&axis, alpha);
 			t_vector p;
 			p.x = 0;
 			p.y = 0;
 			p.z = 0;
 			p.color = 0xFFFFFF;
+			axis.x = 1;
+			axis.y = 0;
+			axis.z = 0;
 			axis.color = 0xFFFFFF;
 			rotate_points_around_axis(vars->map, 2 * (PI/ 180.0f), &axis);
 			project_points(vars->map, vars->scale, vars->proj);
@@ -744,8 +750,8 @@ int	main(int argc, char **argv)
 	vars->img = data->img;
 	vars->data = data;
 	vars->scale = 1;
-	vars->translateX = vars->win_x / 2;
-	vars->translateY = vars->win_y / 4;
+	vars->translateX = abs(map->min_x) + vars->win_x / 4;
+	vars->translateY = abs(map->min_y) + vars->win_y / 4;
 	vars->drawing_frame = 0;
 	vars->m_prev_x = -1;
 	vars->m_prev_y = -1;
@@ -757,8 +763,9 @@ int	main(int argc, char **argv)
 	vars->proj = 'i';
 	vars->done = 0;
 	mlx_hook(mlx_win, 2, (1L << 0), handle_keypress, vars);
-	mlx_hook(mlx_win, 4, 0, handle_mouse_down, vars);
-	mlx_hook(mlx_win, 5, 0, handle_mouse_up, vars);
+	// mlx_hook(mlx_win, 4, 0, handle_mouse_down, vars);
+	mlx_mouse_hook(mlx_win, handle_mouse_down, vars);
+	// mlx_hook(mlx_win, 5, 0, handle_mouse_up, vars);
 	mlx_hook(mlx_win, 17, 0, close_window, vars);
 	mlx_loop_hook(mlx, mouse_rotate, vars);
 	draw_points(vars);
