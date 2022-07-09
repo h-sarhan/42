@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 21:12:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/09 15:01:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ t_map	*read_map(char *map_path)
 
 	i = 0;
 	scale = 1;
-	map = ft_calloc(1, sizeof(t_map));
+	// map = ft_calloc(1, sizeof(t_map));
+	map = create_map();
 	map->min_x = INT_MAX;
 	map->min_y = INT_MAX;
 	map->max_x = INT_MIN;

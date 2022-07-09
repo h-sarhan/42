@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 21:01:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/09 14:51:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,15 @@ struct	s_data
 };
 typedef struct s_data	t_data;
 
+struct s_quaternion {
+	float	x;
+	float	y;
+	float	z;
+	float	w;
+};
+
+typedef struct s_quaternion	t_quaternion;
+
 struct s_map
 {
 	int				num_rows;
@@ -89,6 +98,7 @@ struct s_map
 	int				max_og_x;
 	int				max_og_y;
 	int				max_og_z;
+	t_quaternion	*orientation;
 };
 typedef struct s_map	t_map;
 
@@ -118,6 +128,7 @@ struct s_vars
 
 typedef struct s_vars	t_vars;
 
+
 void			my_mlx_pixel_put(int x, int y, int color, t_vars *vars);
 unsigned int	hextoi(char *str);
 void			draw_line(t_point *p1, t_point *p2, t_vars *vars);
@@ -136,10 +147,13 @@ void			free_split_array(char **arr);
 t_map			*create_map(void);
 t_point			*create_point(float x, float y, float z, int color);
 t_map			*read_map_from_ppm(char *map_path);
-void			rotate_x(t_point *p, float rot);
-void			rotate_y(t_point *p, float rot);
-void			rotate_z(t_point *p, float rot);
-void			rotate_points(t_map *map, float r_x, float r_y, float r_z);
+void			rotate_x(t_map *map, float rot);
+void			rotate_y(t_map *map, float rot);
+void			rotate_z(t_map *map, float rot);
+void			rotate_x_matrix(t_point *p, float rot);
+void			rotate_y_matrix(t_point *p, float rot);
+void			rotate_z_matrix(t_point *p, float rot);
+void			rotate_points(t_map *map);
 void			project_point(t_point *projected, t_point *orig, char proj);
 void			project_points(t_map *map, float scale, char proj);
 void			free_map(t_map *map);
@@ -150,5 +164,11 @@ int				close_window(void *params);
 int				handle_keypress(int key_code, t_vars *vars);
 t_map			*read_map(char *map_path);
 void			*create_new_image(t_vars *vars);
+t_quaternion	*create_quaternion(float x, float y, float z, float w);
+t_quaternion	*rotate_quaternion(t_quaternion *rot, t_quaternion *q);
+t_quaternion	*create_quaternion_rotation(float rot, t_point *axis);
+void			rotate_point(t_quaternion *q, t_point *p);
+
+
 
 #endif

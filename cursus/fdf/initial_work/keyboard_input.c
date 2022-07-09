@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 14:01:37 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/09 14:52:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,23 @@
 void	check_transformation_keys(int key, t_vars *vars)
 {
 	if ((key == KEY_LEFT || key == L_KEY_LEFT) && vars->proj != 'o')
-		vars->map->rot_x -= 3;
+		// vars->map->rot_x -= 3;
+		rotate_x(vars->map, -3);
 	if ((key == KEY_RIGHT || key == L_KEY_RIGHT) && vars->proj != 'o')
-		vars->map->rot_x += 3;
+		// vars->map->rot_x += 3;
+		rotate_x(vars->map, 3);
 	if ((key == KEY_UP || key == L_KEY_UP) && vars->proj != 'o')
-		vars->map->rot_y += 3;
+		rotate_y(vars->map, 3);
+		// vars->map->rot_y += 3;
 	if ((key == KEY_DOWN || key == L_KEY_DOWN) && vars->proj != 'o')
-		vars->map->rot_y -= 3;
+		rotate_y(vars->map, -3);
+		// vars->map->rot_y -= 3;
 	if (key == KEY_Q || key == L_KEY_Q)
-		vars->map->rot_z += 3;
+		rotate_z(vars->map, 3);
+		// vars->map->rot_z += 3;
 	if (key == KEY_E || key == L_KEY_E)
-		vars->map->rot_z -= 3;
+		rotate_z(vars->map, -3);
+		// vars->map->rot_z -= 3;
 	if (key == KEY_W || key == L_KEY_W)
 		vars->translate_y -= 10;
 	if (key == KEY_A || key == L_KEY_A)
@@ -86,8 +92,7 @@ int	handle_keypress(int key, t_vars *vars)
 		|| key == L_KEY_PLUS || key == KEY_MINUS || key == L_KEY_MINUS
 		|| key == KEY_P || key == L_KEY_P)
 	{
-		rotate_points(vars->map, vars->map->rot_x * (PI / 180.0f),
-			vars->map->rot_y * (PI / 180.0f), vars->map->rot_z * (PI / 180.0f));
+		rotate_points(vars->map);
 		project_points(vars->map, vars->scale, vars->proj);
 		draw_points(vars);
 	}

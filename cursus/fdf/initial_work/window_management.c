@@ -52,16 +52,18 @@ int	mouse_rotate(void *params)
 		// mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_prev_x < vars->m_x)
-			vars->map->rot_x += 2;
+			// vars->map->rot_x += 2;
+			rotate_x(vars->map, 2);
 		else if (vars->m_prev_x > vars->m_x)
-			vars->map->rot_x -= 2;
+			// vars->map->rot_x -= 2;
+			rotate_x(vars->map, -2);
 		if (vars->m_prev_y < vars->m_y)
-			vars->map->rot_y += 2;
+			// vars->map->rot_y += 2;
+			rotate_y(vars->map, 2);
 		else if (vars->m_prev_y > vars->m_y)
-			vars->map->rot_y -= 2;
-		rotate_points(vars->map, vars->map->rot_x * (PI / 180.0f),
-			vars->map->rot_y * (PI / 180.0f),
-			vars->map->rot_z * (PI / 180.0f));
+			rotate_y(vars->map, -2);
+			// vars->map->rot_y -= 2;
+		rotate_points(vars->map);
 		project_points(vars->map, vars->scale, vars->proj);
 		draw_points(vars);
 	}

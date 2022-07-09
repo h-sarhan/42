@@ -44,8 +44,6 @@ void	draw_line_low( t_point *p1, t_point *p2, t_vars *vars)
 {
 	int		dxy[2];
 	int		dyi[2];
-	int		xy[2];
-	int		color;
 	t_point	*pts[2];
 
 	dxy[0] = p2->x - p1->x;
@@ -57,9 +55,6 @@ void	draw_line_low( t_point *p1, t_point *p2, t_vars *vars)
 		dxy[1] = -dxy[1];
 	}
 	dyi[0] = (2 * dxy[1]) - dxy[0];
-	xy[1] = p1->y;
-	xy[0] = p1->x;
-	color = p1->color;
 	pts[0] = p1;
 	pts[1] = p2;
 	draw_line_points_low(pts, vars, dxy, dyi);
@@ -97,8 +92,6 @@ void	draw_line_high(t_point *p1, t_point *p2, t_vars *vars)
 {
 	int		dxy[2];
 	int		dxi[2];
-	int		xy[2];
-	int		color;
 	t_point	*pts[2];
 
 	dxy[0] = p2->x - p1->x;
@@ -110,9 +103,6 @@ void	draw_line_high(t_point *p1, t_point *p2, t_vars *vars)
 		dxy[0] = -dxy[0];
 	}
 	dxi[0] = (2 * dxy[0]) - dxy[1];
-	xy[0] = p1->x;
-	xy[1] = p1->y;
-	color = p1->color;
 	pts[0] = p1;
 	pts[1] = p2;
 	draw_line_points_high(pts, vars, dxy, dxi);
