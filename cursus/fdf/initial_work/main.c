@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:58:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 10:09:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/09 10:10:17 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_vars	*create_vars(void *mlx, t_map *map)
 	vars->img = vars->data->img;
 	vars->scale = 1;
 	vars->translate_x = abs(map->min_x) + vars->win_x / 4;
-	vars->translate_y = abs(map->min_y) +vars->win_y / 4;
+	vars->translate_y = abs(map->min_y) + vars->win_y / 4;
 	vars->m_prev_x = -1;
 	vars->m_prev_y = -1;
 	vars->m_x = -1;
