@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 20:58:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/10 22:17:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ int	handle_mouse_down(int key_code, int x, int y, void *params)
 	(void)x;
 	(void)y;
 	vars = params;
-	if (key_code == 3)
+	// if (key_code == 3)
+	if (vars->m_down == 0)
 		vars->m_down = 1;
+	else if (vars->m_down == 1)
+		vars->m_down = 0;
 	return (0);
 }
 
@@ -45,7 +48,8 @@ int	mouse_rotate(void *params)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
+		// mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_prev_x < vars->m_x)
 			vars->map->rot_x += 2;
 		else if (vars->m_prev_x > vars->m_x)
