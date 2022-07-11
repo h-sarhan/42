@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:58:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 17:14:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 18:43:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main(int argc, char **argv)
 	mlx_hook(vars->win, 17, 0, close_window, vars);
 	mlx_loop_hook(mlx, mouse_rotate, vars);
 	rotate_points(map);
-	project_points(map, 1, 'i');
+	project_points(map, 1, vars->proj);
 	draw_points(vars);
 	mlx_loop(mlx);
 	free(vars->data);

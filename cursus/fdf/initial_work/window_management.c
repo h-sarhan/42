@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 17:13:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 17:37:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	mouse_rotate(void *params)
 		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_x != vars->m_prev_x || vars->m_y != vars->m_prev_y)
 		{
-			mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+			// mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 			if (vars->m_prev_x < vars->m_x)
 				rotate_y(vars->map, -3);
 			else if (vars->m_prev_x > vars->m_x)
@@ -81,7 +81,6 @@ int	mouse_rotate(void *params)
 			draw_points(vars);
 		}
 	}
-	// if (vars->m)
 	return (0);
 }
 

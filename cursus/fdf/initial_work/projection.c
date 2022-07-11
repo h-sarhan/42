@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:21:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 17:07:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 18:52:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,12 @@ void	project_points(t_map *map, float scale, char proj)
 		{
 			project_point(map, projected_points[i][j], points[i][j], proj);
 			check_min_max(map, projected_points[i][j]);
-			projected_points[i][j]->x = points[i][j]->x - (map->max_og_x / 2.0f);
-			projected_points[i][j]->y = points[i][j]->y - (map->max_og_y / 2.0f);
-			projected_points[i][j]->z = points[i][j]->z - (map->max_og_z / 2.0f);
+			projected_points[i][j]->x -= (map->max_og_x / 2.0f);
+			projected_points[i][j]->y -= (map->max_og_y / 2.0f);
+			projected_points[i][j]->z -= (map->max_og_z / 2.0f);
+			// projected_points[i][j]->x = points[i][j]->x - (map->max_og_x / 2.0f);
+			// projected_points[i][j]->y = points[i][j]->y - (map->max_og_y / 2.0f);
+			// projected_points[i][j]->z = points[i][j]->z - (map->max_og_z / 2.0f);
 			projected_points[i][j]->x *= scale;
 			projected_points[i][j]->y *= scale;
 			projected_points[i][j]->z *= scale;

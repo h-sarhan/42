@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 16:17:02 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 18:52:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,18 @@ void	check_transformation_keys(int key, t_vars *vars)
 		project_points(vars->map, vars->scale, vars->proj);
 		draw_points(vars);
 	}
-	if ((key == KEY_LEFT || key == L_KEY_LEFT) && vars->proj != 'o')
-		// vars->map->rot_x -= 3;
-		rotate_y(vars->map, -5);
-	if ((key == KEY_RIGHT || key == L_KEY_RIGHT) && vars->proj != 'o')
-		// vars->map->rot_x += 5;
+	if ((key == KEY_LEFT || key == L_KEY_LEFT))
 		rotate_y(vars->map, 5);
-	if ((key == KEY_UP || key == L_KEY_UP) && vars->proj != 'o')
+	if ((key == KEY_RIGHT || key == L_KEY_RIGHT))
+		rotate_y(vars->map, -5);
+	if ((key == KEY_UP || key == L_KEY_UP))
 		rotate_x(vars->map, 5);
-		// vars->map->rot_y += 5;
-	if ((key == KEY_DOWN || key == L_KEY_DOWN) && vars->proj != 'o')
+	if ((key == KEY_DOWN || key == L_KEY_DOWN))
 		rotate_x(vars->map, -5);
-		// vars->map->rot_y -= 5;
 	if (key == KEY_Q || key == L_KEY_Q)
 		rotate_z(vars->map, 5);
-		// vars->map->rot_z += 5;
 	if (key == KEY_E || key == L_KEY_E)
 		rotate_z(vars->map, -5);
-		// vars->map->rot_z -= 3;
 	if (key == KEY_W || key == L_KEY_W)
 		vars->translate_y -= 10;
 	if (key == KEY_A || key == L_KEY_A)
@@ -92,12 +86,13 @@ void	check_projection_keys(int key, t_vars *vars)
 {
 	if (key == KEY_P || key == L_KEY_P)
 	{
+		ft_printf("SWAPPING PROJECTION\n");
 		if (vars->proj == 'i')
 		{
 			vars->proj = 'o';
 			vars->map->rot_x = 0;
 			vars->map->rot_y = 0;
-			vars->map->rot_z = 90;
+			vars->map->rot_z = 0;
 		}
 		else if (vars->proj == 'o')
 		{

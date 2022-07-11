@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 17:08:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 17:44:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ struct s_map
 	int				max_x;
 	int				min_y;
 	int				max_y;
-	int				max_og_x;
-	int				max_og_y;
-	int				max_og_z;
+	float				max_og_x;
+	float				max_og_y;
+	float				max_og_z;
 	t_quaternion	*orientation;
 };
 typedef struct s_map	t_map;
@@ -168,7 +168,7 @@ t_quaternion	*create_quaternion(float x, float y, float z, float w);
 t_quaternion	*rotate_quaternion(t_quaternion *rot, t_quaternion *q);
 t_quaternion	*create_quaternion_rotation(float rot, t_point *axis);
 void			rotate_point(t_quaternion *q, t_point *p);
-t_point	*cross_product(t_point *v1, t_point *v2);
+t_point			*cross_product(t_point *v1, t_point *v2);
 
 
 
