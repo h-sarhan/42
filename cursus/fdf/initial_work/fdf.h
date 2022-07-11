@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 21:01:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 07:31:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,13 @@ struct s_point
 };
 
 typedef struct s_point	t_point;
+
+struct s_mat3
+{
+	float	elms[3][3];
+};
+
+typedef struct s_mat3	t_mat3;
 
 struct	s_data
 {
@@ -150,5 +157,11 @@ int				close_window(void *params);
 int				handle_keypress(int key_code, t_vars *vars);
 t_map			*read_map(char *map_path);
 void			*create_new_image(t_vars *vars);
+t_mat3			*x_rotation_matrix(float rot);
+t_mat3			*y_rotation_matrix(float rot);
+t_mat3			*z_rotation_matrix(float rot);
+t_mat3			*mat_mul(t_mat3 *a, t_mat3 *b);
+t_point			*mat_point_product(t_mat3 *mat, t_point *p);
+
 
 #endif

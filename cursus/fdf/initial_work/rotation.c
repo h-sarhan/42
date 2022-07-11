@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:20:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/10 22:35:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 07:32:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,13 @@ void	rotate_points(t_map *map, float rot_x, float rot_y, float rot_z)
 	int		j;
 	t_point	***points;
 	t_point	***points_copy;
+	t_mat3	*rot;
 
 	points = map->points;
 	points_copy = map->points_copy;
 	i = 0;
+	rot = mat_mul(x_rotation_matrix(rot_x), y_rotation_matrix(rot_y));
+	rot = mat_mul(rot, z_rotation_matrix(rot_z));
 	while (i < map->num_rows)
 	{
 		j = -1;
@@ -66,13 +69,15 @@ void	rotate_points(t_map *map, float rot_x, float rot_y, float rot_z)
 			points_copy[i][j]->x = points[i][j]->x - (map->max_og_x / 2.0f);
 			points_copy[i][j]->y = points[i][j]->y - (map->max_og_y / 2.0f);
 			points_copy[i][j]->z = points[i][j]->z - (map->max_og_z / 2.0f);
-			rotate_x(points_copy[i][j], rot_x);
-			rotate_y(points_copy[i][j], rot_y);
-			rotate_z(points_copy[i][j], rot_z);
+			// rotate_x(points_copy[i][j], rot_x);
+			// rotate_y(points_copy[i][j], rot_y);
+			// rotate_z(points_copy[i][j], rot_z);
+			points_copy[i][j] = mat_point_product(rot, points_copy[i][j]);
 			points_copy[i][j]->x += (map->max_og_x / 2.0f);
 			points_copy[i][j]->y += (map->max_og_y / 2.0f);
 			points_copy[i][j]->z += (map->max_og_z / 2.0f);
 		}
 		i++;
 	}
+	free(rot);
 }
