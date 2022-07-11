@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:20:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 16:48:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 17:05:46 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,6 @@ void	rotate_points(t_map *map)
 			points_copy[i][j]->x = points[i][j]->x - (map->max_og_x / 2.0f);
 			points_copy[i][j]->y = points[i][j]->y - (map->max_og_y / 2.0f);
 			points_copy[i][j]->z = points[i][j]->z - (map->max_og_z / 2.0f);
-			// rotate_x(map);
-			// rotate_y(map);
-			// rotate_z(map);
 			rotate_point(map->orientation, points_copy[i][j]);
 			points_copy[i][j]->x += (map->max_og_x / 2.0f);
 			points_copy[i][j]->y += (map->max_og_y / 2.0f);
@@ -110,5 +107,4 @@ void	rotate_points(t_map *map)
 		}
 		i++;
 	}
-	// rotate_point(map->orientation, map->look);
 }

@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:21:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 16:51:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 17:07:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// TODO: THIS FUNCTION IS USELESS NOW
 void	project_point(t_map *map, t_point *projected, t_point *orig, char proj)
 {
 	float	beta;
@@ -24,10 +25,6 @@ void	project_point(t_map *map, t_point *projected, t_point *orig, char proj)
 		projected->x = orig->x;
 		projected->y = orig->y;
 		projected->z = orig->z;
-		// rotate_z(map, 45);
-		// rotate_x(map, alpha / (PI / 180.0f) + 30);
-		// rotate_z_matrix(projected, beta);
-		// rotate_x_matrix(projected, alpha + 30 * (PI / 180.0f));
 	}
 	else if (proj == 'o')
 	{
@@ -71,9 +68,15 @@ void	project_points(t_map *map, float scale, char proj)
 		{
 			project_point(map, projected_points[i][j], points[i][j], proj);
 			check_min_max(map, projected_points[i][j]);
+			projected_points[i][j]->x = points[i][j]->x - (map->max_og_x / 2.0f);
+			projected_points[i][j]->y = points[i][j]->y - (map->max_og_y / 2.0f);
+			projected_points[i][j]->z = points[i][j]->z - (map->max_og_z / 2.0f);
 			projected_points[i][j]->x *= scale;
 			projected_points[i][j]->y *= scale;
 			projected_points[i][j]->z *= scale;
+			projected_points[i][j]->x += (map->max_og_x / 2.0f);
+			projected_points[i][j]->y += (map->max_og_y / 2.0f);
+			projected_points[i][j]->z += (map->max_og_z / 2.0f);
 			j++;
 		}
 		i++;

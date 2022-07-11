@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 16:57:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 17:13:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@ int	handle_mouse_down(int key_code, int x, int y, void *params)
 	(void)x;
 	(void)y;
 	vars = params;
-	// if (key_code == 3)
-	// 	vars->m_down = 1;
-	if (vars->m_down == 1)
-	{
-		vars->m_down = 0;
-		// rotate_point(vars->map->orientation, vars->map->look);
-	}
-	else if (vars->m_down == 0)
-		vars->m_down = 1;
+	vars->m_key = key_code;
+	if (key_code == 4)
+		vars->scale += 0.15;
+	else if (key_code == 5)
+		vars->scale -= 0.15;
+	rotate_points(vars->map);
+	project_points(vars->map, vars->scale, vars->proj);
+	draw_points(vars);
 	return (0);
 }
 
@@ -38,8 +37,7 @@ int	handle_mouse_up(int key_code, int x, int y, void *params)
 	(void)x;
 	(void)y;
 	vars = params;
-	if (key_code == 3)
-		vars->m_down = 0;
+	vars->m_key = 0;
 	return (0);
 }
 
@@ -62,28 +60,28 @@ int	mouse_rotate(void *params)
 	t_vars	*vars;
 
 	vars = params;
-	if (vars->m_down == 1)
+	if (vars->m_key == 3)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		// mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
 		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_x != vars->m_prev_x || vars->m_y != vars->m_prev_y)
 		{
 			mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 			if (vars->m_prev_x < vars->m_x)
-				rotate_y(vars->map, -2);
+				rotate_y(vars->map, -3);
 			else if (vars->m_prev_x > vars->m_x)
-				rotate_y(vars->map, 2);
+				rotate_y(vars->map, 3);
 			if (vars->m_prev_y < vars->m_y)
-				rotate_x(vars->map, -2);
+				rotate_x(vars->map, -3);
 			else if (vars->m_prev_y > vars->m_y)
-				rotate_x(vars->map, 2);
+				rotate_x(vars->map, 3);
 			rotate_points(vars->map);
 			project_points(vars->map, vars->scale, vars->proj);
 			draw_points(vars);
 		}
 	}
+	// if (vars->m)
 	return (0);
 }
 

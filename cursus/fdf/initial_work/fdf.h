@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 16:49:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 17:08:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ struct s_vars
 	int		m_prev_y;
 	int		m_x;
 	int		m_y;
-	int		m_down;
+	int		m_key;
 	int		pan_x;
 	int		pan_y;
 	char	proj;
