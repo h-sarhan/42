@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 19:28:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 00:41:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_map	*read_map(char *map_path)
 	t_list	*first;
 	int		num_rows;
 	t_map	*map;
-	int		scale;
+	float		scale;
 	int		i;
 	int		num_cols;
 	int		j;
@@ -59,7 +59,7 @@ t_map	*read_map(char *map_path)
 	t_point	***proj_pts;
 
 	i = 0;
-	scale = 1;
+	scale = 0.1;
 	// map = ft_calloc(1, sizeof(t_map));
 	map = create_map();
 	map->min_x = INT_MAX;
@@ -83,7 +83,7 @@ t_map	*read_map(char *map_path)
 	}
 	first = lines;
 	while (scale * num_cols < 400 || scale * num_rows < 400)
-		scale++;
+		scale += 0.1;
 	i = 0;
 	j = 0;
 	points = ft_calloc(num_rows + 1, sizeof(t_point **));

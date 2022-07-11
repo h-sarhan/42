@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 17:37:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 21:19:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,26 @@ int	handle_mouse_down(int key_code, int x, int y, void *params)
 	(void)x;
 	(void)y;
 	vars = params;
-	vars->m_key = key_code;
-	if (key_code == 4)
-		vars->scale += 0.15;
-	else if (key_code == 5)
-		vars->scale -= 0.15;
-	rotate_points(vars->map);
-	project_points(vars->map, vars->scale, vars->proj);
-	draw_points(vars);
+	
+	// ! FOR LINUX ONLY
+	if (key_code == 4 || key_code == 5)
+	{
+		if (key_code == 4)
+			vars->scale += 0.15;
+		else if (key_code == 5)
+			vars->scale -= 0.15;
+		rotate_points(vars->map);
+		project_points(vars->map, vars->scale, vars->proj);
+		draw_points(vars);
+	}
+	else
+	{
+		if (vars->m_key == 0)
+			vars->m_key = 1;
+		else if (vars->m_key == 1)
+			vars->m_key = 0;
+	}
+	// vars->m_key = key_code;
 	return (0);
 }
 
@@ -60,11 +72,12 @@ int	mouse_rotate(void *params)
 	t_vars	*vars;
 
 	vars = params;
-	if (vars->m_key == 3)
+	if (vars->m_key == 3 || vars->m_key == 1)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		// mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_x != vars->m_prev_x || vars->m_y != vars->m_prev_y)
 		{
 			// mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);

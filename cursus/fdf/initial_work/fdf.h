@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 19:33:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 21:15:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define KEY_P 35
 # define L_KEY_P 112
 # define KEY_C 8
+# define L_KEY_C 99
 
 struct s_point
 {

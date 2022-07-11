@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:58:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 19:30:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 00:38:12 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ t_vars	*create_vars(void *mlx, t_map *map)
 	t_vars	*vars;
 
 	vars = ft_calloc(1, sizeof(t_vars));
-	vars->win_x = (abs(map->max_x) + abs(map->min_x)) * 2 + 1;
-	vars->win_y = (abs(map->max_y) + abs(map->min_y)) * 2 + 1;
+	vars->win_x = (abs(map->max_x) + abs(map->min_x)) * 2 + 101;
+	vars->win_y = (abs(map->max_y) + abs(map->min_y)) * 2 + 101;
 	vars->win = mlx_new_window(mlx, vars->win_x, vars->win_y, "fdf");
 	vars->data = ft_calloc(1, sizeof(t_data));
 	vars->data->img = mlx_new_image(mlx, vars->win_x, vars->win_y);
@@ -45,8 +45,12 @@ t_vars	*create_vars(void *mlx, t_map *map)
 	vars->map = map;
 	vars->img = vars->data->img;
 	vars->scale = 1;
-	vars->translate_x = abs(map->min_x) + vars->win_x / 4;
-	vars->translate_y = abs(map->min_y) + vars->win_y / 4;
+	vars->translate_x = vars->win_x / 4;
+	vars->translate_y = vars->win_y / 4;
+	if (map->min_x < 0)
+		vars->translate_x -= map->min_x;
+	if (map->min_y < 0)
+		vars->translate_y -= map->min_y;
 	vars->m_prev_x = -1;
 	vars->m_prev_y = -1;
 	vars->m_x = -1;
@@ -71,13 +75,11 @@ int	main(int argc, char **argv)
 		map = read_map(argv[1]);
 	vars = create_vars(mlx, map);
 	mlx_hook(vars->win, 2, (1L << 0), handle_keypress, vars);
-	mlx_hook(vars->win, 4, 0, handle_mouse_down, vars);
+	// mlx_hook(vars->win, 4, 0, handle_mouse_down, vars);
 	mlx_hook(vars->win, 5, 0, handle_mouse_up, vars);
-	// mlx_mouse_hook(vars->win, handle_mouse_down, vars);
+	mlx_mouse_hook(vars->win, handle_mouse_down, vars);
 	mlx_hook(vars->win, 17, 0, close_window, vars);
 	mlx_loop_hook(mlx, mouse_rotate, vars);
-	rotate_points(map);
-	project_points(map, 1, vars->proj);
 	draw_points(vars);
 	mlx_loop(mlx);
 	free(vars->data);

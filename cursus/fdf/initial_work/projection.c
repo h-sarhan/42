@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:21:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 18:52:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 00:09:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,16 @@ void	project_points(t_map *map, float scale, char proj)
 	points = map->points_copy;
 	projected_points = map->proj_points;
 	i = 0;
+	map->min_x = INT_MAX;
+	map->min_y = INT_MAX;
+	map->max_x = INT_MIN;
+	map->max_y = INT_MIN;
 	while (i < map->num_rows)
 	{
 		j = 0;
 		while (j < map->num_cols)
 		{
 			project_point(map, projected_points[i][j], points[i][j], proj);
-			check_min_max(map, projected_points[i][j]);
 			projected_points[i][j]->x -= (map->max_og_x / 2.0f);
 			projected_points[i][j]->y -= (map->max_og_y / 2.0f);
 			projected_points[i][j]->z -= (map->max_og_z / 2.0f);
@@ -80,6 +83,7 @@ void	project_points(t_map *map, float scale, char proj)
 			projected_points[i][j]->x += (map->max_og_x / 2.0f);
 			projected_points[i][j]->y += (map->max_og_y / 2.0f);
 			projected_points[i][j]->z += (map->max_og_z / 2.0f);
+			check_min_max(map, projected_points[i][j]);
 			j++;
 		}
 		i++;
