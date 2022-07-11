@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 18:41:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 19:28:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_map	*read_map(char *map_path)
 		line = get_next_line(fd);
 	}
 	first = lines;
-	while (scale * num_cols < 500 && scale * num_rows < 500)
+	while (scale * num_cols < 400 || scale * num_rows < 400)
 		scale++;
 	i = 0;
 	j = 0;
@@ -105,7 +105,7 @@ t_map	*read_map(char *map_path)
 			if (ft_strchr(tokens[j], ',') != NULL)
 				proj_pts[i][j]->color = hextoi(ft_strchr(tokens[j], ',') + 1);
 			else
-				proj_pts[i][j]->color = 0x00FFFFFF;
+				proj_pts[i][j]->color = 0xFFFFFF;
 			points[i][j]->x = i * scale;
 			points[i][j]->y = (num_cols - j) * scale;
 			points[i][j]->z = ft_atoi(tokens[j]) * scale;
@@ -124,6 +124,7 @@ t_map	*read_map(char *map_path)
 	map->num_cols = j;
 	map->num_rows = i;
 	find_min_max(map, map->points_copy);
+	rotate_points(map);
 	project_points(map, 1, 'i');
 	ft_lstclear(&first, free);
 	return (map);
@@ -169,6 +170,16 @@ void	draw_points(t_vars *vars)
 		}
 		i++;
 	}
+	// find_min_max(vars->map, vars->map->proj_points);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	mlx_destroy_image(vars->mlx, old_img);
+	mlx_string_put(vars->mlx, vars->win, 50, 50, vars->theme,  "[CONTROLS]:");
+	mlx_string_put(vars->mlx, vars->win, 70, 70, vars->theme,  "WASD:         Pan");
+	mlx_string_put(vars->mlx, vars->win, 70, 90, vars->theme,  "LEFT/RIGHT:   Rotate X");
+	mlx_string_put(vars->mlx, vars->win, 70, 110, vars->theme, "UP/DOWN:      Rotate Y");
+	mlx_string_put(vars->mlx, vars->win, 70, 130, vars->theme, "Q/E:          Rotate Z");
+	mlx_string_put(vars->mlx, vars->win, 70, 150, vars->theme, "+/-:          Zoom In/Out");
+	mlx_string_put(vars->mlx, vars->win, 70, 170, vars->theme, "MIDDLE MOUSE: Rotate Freely");
+	mlx_string_put(vars->mlx, vars->win, 70, 190, vars->theme, "MOUSE SCROLL: Zoom In/Out");
+	mlx_string_put(vars->mlx, vars->win, 70, 210, vars->theme, "C:            SWITCH THEME");
 }

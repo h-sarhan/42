@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 17:44:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 19:33:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define L_KEY_MINUS 45
 # define KEY_P 35
 # define L_KEY_P 112
+# define KEY_C 8
 
 struct s_point
 {
@@ -124,6 +125,7 @@ struct s_vars
 	int		pan_x;
 	int		pan_y;
 	char	proj;
+	int		theme;
 };
 
 typedef struct s_vars	t_vars;

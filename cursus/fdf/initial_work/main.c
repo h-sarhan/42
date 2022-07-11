@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:58:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 18:43:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 19:30:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_vars	*create_vars(void *mlx, t_map *map)
 	vars->m_x = -1;
 	vars->m_y = -1;
 	vars->proj = 'i';
+	vars->theme = 0xFFFFFF;
 	return (vars);
 }
 

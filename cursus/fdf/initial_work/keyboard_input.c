@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 18:52:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 19:32:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,47 +15,6 @@
 void	check_transformation_keys(int key, t_vars *vars)
 {
 	// ft_printf("%d\n", key);
-	if (key == 111)
-	{
-		// t_point axis;
-		// axis.x = (vars->m_x - vars->m_prev_x);
-		// axis.y = -1 * (vars->m_y - vars->m_prev_y);
-		// axis.z = 0;
-		// float xyz[3];
-		// xyz[0] = axis.x;
-		// xyz[1] = axis.y;
-		// xyz[2] = axis.z;
-		// axis.x = xyz[1];
-		// axis.y = -1 * xyz[0];
-		// axis.z = xyz[2];
-		t_point m_direction;
-		m_direction.x = 1;
-		m_direction.y = 1;
-		m_direction.z = 0;
-		float len = sqrt(pow(m_direction.x, 2) + pow(m_direction.y, 2) + pow(m_direction.z, 2));
-		if (len != 0)
-		{
-			m_direction.x /= len;
-			m_direction.y /= len;
-			m_direction.z /= len;
-		}
-		t_point *axis;
-		axis = cross_product(vars->map->look, &m_direction);
-		// TODO: TRY GETTING CROSS PRODUCT OF AXIS AND ORIENTATION
-		len = sqrt(pow(axis->x, 2) + pow(axis->y, 2) + pow(axis->z, 2));
-		if (len != 0)
-		{
-			axis->x /= len;
-			axis->y /= len;
-			axis->z /= len;
-		}
-		t_quaternion *q_rot = create_quaternion_rotation(5 * (PI / 180.0f), axis);
-		
-		vars->map->orientation = rotate_quaternion(vars->map->orientation, q_rot);
-		rotate_points(vars->map);
-		project_points(vars->map, vars->scale, vars->proj);
-		draw_points(vars);
-	}
 	if ((key == KEY_LEFT || key == L_KEY_LEFT))
 		rotate_y(vars->map, 5);
 	if ((key == KEY_RIGHT || key == L_KEY_RIGHT))
@@ -80,10 +39,22 @@ void	check_transformation_keys(int key, t_vars *vars)
 		vars->scale += 0.1;
 	if (key == KEY_MINUS || key == L_KEY_MINUS)
 		vars->scale -= 0.1;
+	if (key == KEY_C)
+	{
+		if (vars->theme == 0xFFA32B)
+			vars->theme = 0xFF44CC;
+		else if (vars->theme == 0xFF44CC)
+			vars->theme = 0x39FF14;
+		else if (vars->theme == 0x39FF14)
+			vars->theme = 0XFFFFFF;
+		else if (vars->theme == 0XFFFFFF)
+			vars->theme = 0xFFA32B;
+	}
 }
 
 void	check_projection_keys(int key, t_vars *vars)
 {
+	// ft_printf("%d\n", key);
 	if (key == KEY_P || key == L_KEY_P)
 	{
 		ft_printf("SWAPPING PROJECTION\n");
@@ -127,7 +98,7 @@ int	handle_keypress(int key, t_vars *vars)
 		|| key == L_KEY_W || key == KEY_A || key == L_KEY_A || key == KEY_S
 		|| key == L_KEY_S || key == KEY_D || key == L_KEY_D || key == KEY_PLUS
 		|| key == L_KEY_PLUS || key == KEY_MINUS || key == L_KEY_MINUS
-		|| key == KEY_P || key == L_KEY_P)
+		|| key == KEY_P || key == L_KEY_P || key == KEY_C)
 	{
 		rotate_points(vars->map);
 		project_points(vars->map, vars->scale, vars->proj);
