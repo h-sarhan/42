@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 07:03:55 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 07:31:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 13:53:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,7 @@ t_point	*mat_point_product(t_mat3 *mat, t_point *p)
 	z = mat->elms[2][0] * p->x + mat->elms[2][1] * p->y + mat->elms[2][2] * p->z;
 	res = create_point(x, y, z, p->color);
 	free(p);
+	if (res == NULL)
+		return (NULL);
 	return (res);
 }

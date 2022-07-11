@@ -6,11 +6,11 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/08 21:14:25 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/11 13:58:22 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -O3
+CFLAGS = -Wall -Wextra -Ofast
 CC = cc
 
 NAME = fdf
@@ -20,7 +20,7 @@ GNL = libgnl.a
 
 SRCS = fdf.c draw_line.c hextoi.c colors.c read_ppm.c error_handling.c map.c \
 		colors2.c rotation.c projection.c window_management.c keyboard_input.c \
-		main.c
+		main.c matrix.c
 
 # TODO: REMOVE WILDCARDS LATER
 LIBFT_SRCS := $(wildcard libft/*.c)

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 07:34:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:04:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 void	check_transformation_keys(int key, t_vars *vars)
 {
+	vars->map->rot_x = 0;
+	vars->map->rot_y = 0;
+	vars->map->rot_z = 0;
 	if ((key == KEY_LEFT || key == L_KEY_LEFT) && vars->proj != 'o')
-		vars->map->rot_y -= 3;
+		vars->map->rot_y = -3;
 	if ((key == KEY_RIGHT || key == L_KEY_RIGHT) && vars->proj != 'o')
-		vars->map->rot_y += 3;
+		vars->map->rot_y = 3;
 	if ((key == KEY_UP || key == L_KEY_UP) && vars->proj != 'o')
-		vars->map->rot_x += 3;
+		vars->map->rot_x = 3;
 	if ((key == KEY_DOWN || key == L_KEY_DOWN) && vars->proj != 'o')
-		vars->map->rot_x -= 3;
+		vars->map->rot_x = -3;
 	if (key == KEY_Q || key == L_KEY_Q)
-		vars->map->rot_z += 3;
+		vars->map->rot_z = 3;
 	if (key == KEY_E || key == L_KEY_E)
-		vars->map->rot_z -= 3;
+		vars->map->rot_z = -3;
 	if (key == KEY_W || key == L_KEY_W)
 		vars->translate_y -= 10;
 	if (key == KEY_A || key == L_KEY_A)
@@ -49,7 +52,7 @@ void	check_projection_keys(int key, t_vars *vars)
 			vars->proj = 'o';
 			vars->map->rot_x = 0;
 			vars->map->rot_y = 0;
-			vars->map->rot_z = 90;
+			vars->map->rot_z = 0;
 		}
 		else if (vars->proj == 'o')
 		{

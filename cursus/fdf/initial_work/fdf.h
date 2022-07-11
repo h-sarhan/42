@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 07:31:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 13:54:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ struct s_map
 	int				max_og_x;
 	int				max_og_y;
 	int				max_og_z;
+	t_mat3			*orientation;
 };
 typedef struct s_map	t_map;
 

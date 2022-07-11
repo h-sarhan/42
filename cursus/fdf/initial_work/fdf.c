@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 21:12:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:34:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_map	*read_map(char *map_path)
 
 	i = 0;
 	scale = 1;
-	map = ft_calloc(1, sizeof(t_map));
+	map = create_map();
 	map->min_x = INT_MAX;
 	map->min_y = INT_MAX;
 	map->max_x = INT_MIN;
@@ -166,6 +166,12 @@ void	draw_points(t_vars *vars)
 		}
 		i++;
 	}
+	// draw_line(create_point(vars->map->orientation->elms[0][0] * 100, vars->map->orientation->elms[1][0] * 100, vars->map->orientation->elms[2][0] * 100, 0xFF0000),
+	// 		create_point(100, 0, 0, 0xFF0000), vars);
+	// draw_line(create_point(vars->map->orientation->elms[0][1] * 100, vars->map->orientation->elms[1][1] * 100, vars->map->orientation->elms[2][1] * 100, 0x00FF00),
+	// 		create_point(0, 100, 0, 0x00FF00), vars);
+	// draw_line(create_point(vars->map->orientation->elms[0][2] * 100, vars->map->orientation->elms[1][2] * 100, vars->map->orientation->elms[2][2] * 100, 0x0000FF),
+	// 		create_point(0, 0, 100, 0x0000FF), vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	mlx_destroy_image(vars->mlx, old_img);
 }

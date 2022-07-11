@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/10 22:47:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:03:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	handle_mouse_down(int key_code, int x, int y, void *params)
 	(void)x;
 	(void)y;
 	vars = params;
-	// if (key_code == 3)
-	if (vars->m_down == 0)
+	if (key_code == 3)
 		vars->m_down = 1;
-	else if (vars->m_down == 1)
-		vars->m_down = 0;
+	// if (vars->m_down == 0)
+	// else if (vars->m_down == 1)
+		// vars->m_down = 0;
 	return (0);
 }
 
@@ -48,16 +48,18 @@ int	mouse_rotate(void *params)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
-		// mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		// mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
+		vars->map->rot_x = 0;
+		vars->map->rot_y = 0;
+		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_prev_x < vars->m_x)
-			vars->map->rot_y -= 2;
+			vars->map->rot_y = 3;
 		else if (vars->m_prev_x > vars->m_x)
-			vars->map->rot_y += 2;
+			vars->map->rot_y = -3;
 		if (vars->m_prev_y < vars->m_y)
-			vars->map->rot_x += 2;
+			vars->map->rot_x = 3;
 		else if (vars->m_prev_y > vars->m_y)
-			vars->map->rot_x -= 2;
+			vars->map->rot_x = 3;
 		rotate_points(vars->map, vars->map->rot_x * (PI / 180.0f),
 			vars->map->rot_y * (PI / 180.0f),
 			vars->map->rot_z * (PI / 180.0f));

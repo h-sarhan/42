@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 20:53:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/08 19:29:09 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:31:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ t_map	*create_map(void)
 	map->max_og_x = INT_MIN;
 	map->max_og_y = INT_MIN;
 	map->max_og_z = INT_MIN;
+	map->orientation  = ft_calloc(1, sizeof(t_mat3));
+	map->orientation->elms[0][0] = 1;
+	map->orientation->elms[1][0] = 0;
+	map->orientation->elms[2][0] = 0;
+	map->orientation->elms[0][1] = 0;
+	map->orientation->elms[1][1] = 1;
+	map->orientation->elms[2][1] = 0;
+	map->orientation->elms[0][2] = 0;
+	map->orientation->elms[1][2] = 0;
+	map->orientation->elms[2][2] = 1;
 	return (map);
 }
 
