@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:21:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 22:05:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:45:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	project_point(t_point *projected, t_point *orig, char proj)
 		projected->x = orig->x;
 		projected->y = orig->y;
 		projected->z = orig->z;
-		rotate_z_matrix(projected, beta);
-		rotate_x_matrix(projected, alpha + 30 * (PI / 180.0f));
+		// rotate_z_matrix(projected, beta);
+		// rotate_x_matrix(projected, alpha + 30 * (PI / 180.0f));
 	}
 	else if (proj == 'o')
 	{

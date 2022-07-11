@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:58:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 22:40:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:41:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ int	main(int argc, char **argv)
 		map = read_map(argv[1]);
 	vars = create_vars(mlx, map);
 	mlx_hook(vars->win, 2, (1L << 0), handle_keypress, vars);
-	// mlx_hook(vars->win, 4, 0, handle_mouse_down, vars);
-	// mlx_hook(vars->win, 5, 0, handle_mouse_up, vars);
-	mlx_mouse_hook(vars->win, handle_mouse_down, vars);
+	mlx_hook(vars->win, 4, 0, handle_mouse_down, vars);
+	mlx_hook(vars->win, 5, 0, handle_mouse_up, vars);
+	// mlx_mouse_hook(vars->win, handle_mouse_down, vars);
 	mlx_hook(vars->win, 17, 0, close_window, vars);
 	mlx_loop_hook(mlx, mouse_rotate, vars);
 	draw_points(vars);

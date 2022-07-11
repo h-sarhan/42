@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 22:59:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:45:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ void	check_transformation_keys(int key, t_vars *vars)
 	}
 	if ((key == KEY_LEFT || key == L_KEY_LEFT) && vars->proj != 'o')
 		// vars->map->rot_x -= 3;
-		rotate_x(vars->map, -3);
+		rotate_y(vars->map, -3);
 	if ((key == KEY_RIGHT || key == L_KEY_RIGHT) && vars->proj != 'o')
 		// vars->map->rot_x += 3;
-		rotate_x(vars->map, 3);
-	if ((key == KEY_UP || key == L_KEY_UP) && vars->proj != 'o')
 		rotate_y(vars->map, 3);
+	if ((key == KEY_UP || key == L_KEY_UP) && vars->proj != 'o')
+		rotate_x(vars->map, 3);
 		// vars->map->rot_y += 3;
 	if ((key == KEY_DOWN || key == L_KEY_DOWN) && vars->proj != 'o')
-		rotate_y(vars->map, -3);
+		rotate_x(vars->map, -3);
 		// vars->map->rot_y -= 3;
 	if (key == KEY_Q || key == L_KEY_Q)
 		rotate_z(vars->map, 3);

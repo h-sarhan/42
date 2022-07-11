@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:20:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 23:03:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 14:43:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	rotate_y(t_map *map, float rot)
 	t_point	axis;
 
 	axis.x = 0;
-	axis.y = 1;
+	axis.y = -1;
 	axis.z = 0;
 	t_quaternion *q_rot = create_quaternion_rotation(rot * (PI / 180.0f), &axis);
 	map->orientation = rotate_quaternion(q_rot, map->orientation);
@@ -110,5 +110,5 @@ void	rotate_points(t_map *map)
 		}
 		i++;
 	}
-	rotate_point(map->orientation, map->look);
+	// rotate_point(map->orientation, map->look);
 }
