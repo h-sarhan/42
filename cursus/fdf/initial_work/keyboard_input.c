@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 14:45:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 16:17:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_transformation_keys(int key, t_vars *vars)
 {
-	ft_printf("%d\n", key);
+	// ft_printf("%d\n", key);
 	if (key == 111)
 	{
 		// t_point axis;
@@ -49,7 +49,7 @@ void	check_transformation_keys(int key, t_vars *vars)
 			axis->y /= len;
 			axis->z /= len;
 		}
-		t_quaternion *q_rot = create_quaternion_rotation(20 * (PI / 180.0f), axis);
+		t_quaternion *q_rot = create_quaternion_rotation(5 * (PI / 180.0f), axis);
 		
 		vars->map->orientation = rotate_quaternion(vars->map->orientation, q_rot);
 		rotate_points(vars->map);
@@ -58,21 +58,21 @@ void	check_transformation_keys(int key, t_vars *vars)
 	}
 	if ((key == KEY_LEFT || key == L_KEY_LEFT) && vars->proj != 'o')
 		// vars->map->rot_x -= 3;
-		rotate_y(vars->map, -3);
+		rotate_y(vars->map, -5);
 	if ((key == KEY_RIGHT || key == L_KEY_RIGHT) && vars->proj != 'o')
-		// vars->map->rot_x += 3;
-		rotate_y(vars->map, 3);
+		// vars->map->rot_x += 5;
+		rotate_y(vars->map, 5);
 	if ((key == KEY_UP || key == L_KEY_UP) && vars->proj != 'o')
-		rotate_x(vars->map, 3);
-		// vars->map->rot_y += 3;
+		rotate_x(vars->map, 5);
+		// vars->map->rot_y += 5;
 	if ((key == KEY_DOWN || key == L_KEY_DOWN) && vars->proj != 'o')
-		rotate_x(vars->map, -3);
-		// vars->map->rot_y -= 3;
+		rotate_x(vars->map, -5);
+		// vars->map->rot_y -= 5;
 	if (key == KEY_Q || key == L_KEY_Q)
-		rotate_z(vars->map, 3);
-		// vars->map->rot_z += 3;
+		rotate_z(vars->map, 5);
+		// vars->map->rot_z += 5;
 	if (key == KEY_E || key == L_KEY_E)
-		rotate_z(vars->map, -3);
+		rotate_z(vars->map, -5);
 		// vars->map->rot_z -= 3;
 	if (key == KEY_W || key == L_KEY_W)
 		vars->translate_y -= 10;

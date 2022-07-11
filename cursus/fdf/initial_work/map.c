@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 20:53:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 23:04:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 16:56:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ t_map	*create_map(void)
 	map->look->y = 0;
 	map->look->z = -1;
 	map->orientation = create_quaternion(0, 0, 0, 1);
-	// rotate_y(map, 180);
+	// rotate_y(map, 180)
+	rotate_z(map, 45);
+	rotate_x(map, asin(tan(30 * (PI / 180.0f))) / (PI / 180.0f) + 30);;
 	return (map);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 22:57:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/11 16:49:49 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void			rotate_x_matrix(t_point *p, float rot);
 void			rotate_y_matrix(t_point *p, float rot);
 void			rotate_z_matrix(t_point *p, float rot);
 void			rotate_points(t_map *map);
-void			project_point(t_point *projected, t_point *orig, char proj);
+void			project_point(t_map *map, t_point *projected, t_point *orig, char proj);
 void			project_points(t_map *map, float scale, char proj);
 void			free_map(t_map *map);
 int				handle_mouse_down(int key_code, int x, int y, void *params);
