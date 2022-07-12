@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:20:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 23:59:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 00:12:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,17 +115,12 @@ void	rotate_points(t_map *map, t_vars *vars)
 
 			if (vars->proj == 'p')
 			{
-				points_copy[i][j]->x /= (map->max_z - points_copy[i][j]->z)  * 0.05;
-				points_copy[i][j]->y /= (map->max_z -  points_copy[i][j]->z) * 0.05;
-				points_copy[i][j]->x = (points_copy[i][j]->x + 4000 / 2) / 4000;
-				points_copy[i][j]->y = (points_copy[i][j]->y + 4000 / 2) / 4000;
-				points_copy[i][j]->x *= map->win_x / 2;
-				points_copy[i][j]->y *= map->win_y / 2;
-				if (points_copy[i][j]->x >= 1000 || points_copy[i][j]->y >= 1000)
-				{
-					points_copy[i][j]->x = -1;
-					points_copy[i][j]->y = -1;
-				}
+				points_copy[i][j]->x /= (map->max_og_z - points_copy[i][j]->z)  * 0.005;
+				points_copy[i][j]->y /= (map->max_og_z -  points_copy[i][j]->z) * 0.005;
+				points_copy[i][j]->x = (points_copy[i][j]->x + 2000 / 2) / 2000;
+				points_copy[i][j]->y = (points_copy[i][j]->y + 2000 / 2) / 2000;
+				points_copy[i][j]->x *= map->win_x;
+				points_copy[i][j]->y *= map->win_y;
 			}
 			else
 			{
