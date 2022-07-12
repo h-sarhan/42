@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 11:57:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 12:05:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	handle_mouse_down(int key_code, int x, int y, void *params)
 	(void)y;
 	vars = params;
 	
-	// ! FOR LINUX ONLY
+	// ! FOR LINUX
 	// if (key_code == 4 || key_code == 5)
 	// {
 	// 	if (key_code == 4)
@@ -79,15 +79,17 @@ int	mouse_rotate(void *params)
 	t_vars	*vars;
 
 	vars = params;
+	// ! FOR LINUX
+	// if (vars->m_key == 3 || vars->m_key == 1)
 	if (vars->m_key == 3)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
 		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		// ! FOR LINUX
 		// mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_x != vars->m_prev_x || vars->m_y != vars->m_prev_y)
 		{
-			// mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 			if (vars->m_prev_x < vars->m_x)
 				rotate_y(vars->map, -3);
 			else if (vars->m_prev_x > vars->m_x)
