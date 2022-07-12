@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:58:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 11:58:17 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 17:38:49 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ t_vars	*create_vars(void *mlx, t_map *map)
 	t_vars	*vars;
 
 	vars = ft_calloc(1, sizeof(t_vars));
-	vars->win_x = abs(map->max_x - map->min_x) * 2 + 51;
-	vars->win_y = abs(map->max_y - map->min_y) * 2 + 51;
-	vars->win = mlx_new_window(mlx, vars->win_x, vars->win_y, "fdf");
+	map->win_x = abs(map->max_x - map->min_x) * 2 + 51;
+	map->win_y = abs(map->max_y - map->min_y) * 2 + 51;
+	vars->win = mlx_new_window(mlx, map->win_x, map->win_y, "fdf");
 	vars->data = ft_calloc(1, sizeof(t_data));
-	vars->data->img = mlx_new_image(mlx, vars->win_x, vars->win_y);
+	vars->data->img = mlx_new_image(mlx, map->win_x, map->win_y);
 	vars->data->addr = mlx_get_data_addr(vars->data->img,
 			&vars->data->bits_per_pixel, &vars->data->line_length,
 			&vars->data->endian);
@@ -45,8 +45,8 @@ t_vars	*create_vars(void *mlx, t_map *map)
 	vars->map = map;
 	vars->img = vars->data->img;
 	vars->scale = 1;
-	vars->translate_x = vars->win_x / 4;
-	vars->translate_y = vars->win_y / 4;
+	vars->translate_x = 0;
+	vars->translate_y = 0;
 	if (map->min_x < 0)
 		vars->translate_x -= map->min_x;
 	if (map->min_y < 0)

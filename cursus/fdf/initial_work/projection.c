@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:21:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 00:09:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 17:51:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,37 @@ void	project_point(t_map *map, t_point *projected, t_point *orig, char proj)
 		projected->y = orig->y;
 		projected->z = orig->z;
 	}
-	else if (proj == 'o')
+	else if (proj  == 'p')
 	{
-		projected->x = orig->x;
-		projected->y = orig->y;
+		float	zfar = 10;
+		float	znear = 0.1;
+		float	fov = 1.0f / tan(20 * (PI / 180.0f));
+		projected->x = fov * orig->x;
+		projected->y = fov * orig->y;
+		projected->z = ((-zfar * znear) / (zfar - znear)) * orig->z;
+		// if (orig->z != 0)
+		// {
+		projected->x /= orig->z;
+		projected->y /= orig->z;
+		// projected->z /= orig->z;
+		// }
+		// projected->x = (projected->x  + 1) * map->win_x / 4;
+		// projected->y = (projected->y  + 1) * map->win_y / 4;
+		printf("%f\n", projected->x);
+		// printf("Segmentation Fault\n");
+		// exit(0);
 	}
-	else if (proj == 'c')
-	{
-		projected->x = orig->x + 0.5 * orig->z * cos(63.4 * (PI / 180.0f));
-		projected->y = orig->y + 0.5 * orig->z * sin(63.4 * (PI / 180.0f));
-		projected->z = 0;
-	}
+	// else if (proj == 'o')
+	// {
+	// 	projected->x = orig->x;
+	// 	projected->y = orig->y;
+	// }
+	// else if (proj == 'c')
+	// {
+	// 	projected->x = orig->x + 0.5 * orig->z * cos(63.4 * (PI / 180.0f));
+	// 	projected->y = orig->y + 0.5 * orig->z * sin(63.4 * (PI / 180.0f));
+	// 	projected->z = 0;
+	// }
 }
 
 void	check_min_max(t_map *map, t_point *point)
@@ -74,9 +94,6 @@ void	project_points(t_map *map, float scale, char proj)
 			projected_points[i][j]->x -= (map->max_og_x / 2.0f);
 			projected_points[i][j]->y -= (map->max_og_y / 2.0f);
 			projected_points[i][j]->z -= (map->max_og_z / 2.0f);
-			// projected_points[i][j]->x = points[i][j]->x - (map->max_og_x / 2.0f);
-			// projected_points[i][j]->y = points[i][j]->y - (map->max_og_y / 2.0f);
-			// projected_points[i][j]->z = points[i][j]->z - (map->max_og_z / 2.0f);
 			projected_points[i][j]->x *= scale;
 			projected_points[i][j]->y *= scale;
 			projected_points[i][j]->z *= scale;

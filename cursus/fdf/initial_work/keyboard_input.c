@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 11:38:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 16:49:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,25 +61,25 @@ void	check_projection_keys(int key, t_vars *vars)
 		ft_printf("SWAPPING PROJECTION\n");
 		if (vars->proj == 'i')
 		{
-			vars->proj = 'o';
+			vars->proj = 'p';
 			vars->map->rot_x = 0;
 			vars->map->rot_y = 0;
 			vars->map->rot_z = 0;
 		}
-		else if (vars->proj == 'o')
-		{
-			vars->proj = 'c';
-			vars->map->rot_x = 0;
-			vars->map->rot_y = 0;
-			vars->map->rot_z = 0;
-		}
-		else if (vars->proj == 'c')
+		else if (vars->proj == 'p')
 		{
 			vars->proj = 'i';
 			vars->map->rot_x = 0;
 			vars->map->rot_y = 0;
 			vars->map->rot_z = 0;
 		}
+		// else if (vars->proj == 'c')
+		// {
+		// 	vars->proj = 'i';
+		// 	vars->map->rot_x = 0;
+		// 	vars->map->rot_y = 0;
+		// 	vars->map->rot_z = 0;
+		// }
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 12:01:30 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 16:54:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	my_mlx_pixel_put(int x, int y, int color, t_vars *vars)
 	y += vars->translate_y;
 	// x *= vars->scale;
 	// y *= vars->scale;
-	if (x < 0 || y < 0 || x >= vars->win_x || y >= vars->win_y)
+	if (x < 0 || y < 0 || x >= vars->map->win_x || y >= vars->map->win_y)
 		return ;
 	data = vars->data;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));

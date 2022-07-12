@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 21:15:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 16:54:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ struct s_map
 	float				max_og_y;
 	float				max_og_z;
 	t_quaternion	*orientation;
+	float			win_x;
+	float			win_y;
 };
 typedef struct s_map	t_map;
 
@@ -113,8 +115,6 @@ struct s_vars
 	void	*img;
 	t_data	*data;
 	float	scale;
-	int		win_x;
-	int		win_y;
 	int		translate_x;
 	int		translate_y;
 	int		drawing_frame;
@@ -159,6 +159,7 @@ void			rotate_z_matrix(t_point *p, float rot);
 void			rotate_points(t_map *map);
 void			project_point(t_map *map, t_point *projected, t_point *orig, char proj);
 void			project_points(t_map *map, float scale, char proj);
+
 void			free_map(t_map *map);
 int				handle_mouse_down(int key_code, int x, int y, void *params);
 int				handle_mouse_up(int key_code, int x, int y, void *params);

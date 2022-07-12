@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 00:00:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 21:27:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 15:31:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ t_map	*read_map_from_ppm(char *img_path)
 		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
 	fill_map(fd, map, scale);
 	find_min_max(map, map->points_copy);
-	project_points(map, scale, 'i');
+	// project_points(map, scale, 'i');
 	return (map);
 }

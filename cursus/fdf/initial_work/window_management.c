@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 12:05:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 16:55:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	*create_new_image(t_vars *vars)
 	void	*old_image;
 
 	old_image = vars->img;
-	vars->data->img = mlx_new_image(vars->mlx, vars->win_x, vars->win_y);
+	vars->data->img = mlx_new_image(vars->mlx, vars->map->win_x, vars->map->win_y);
 	vars->img = vars->data->img;
 	vars->data->addr = mlx_get_data_addr(vars->data->img,
 			&vars->data->bits_per_pixel,
