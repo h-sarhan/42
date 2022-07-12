@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 00:41:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 12:01:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_map	*read_map(char *map_path)
 	t_point	***proj_pts;
 
 	i = 0;
-	scale = 0.1;
+	scale = 1;
 	// map = ft_calloc(1, sizeof(t_map));
 	map = create_map();
 	map->min_x = INT_MAX;
@@ -82,8 +82,8 @@ t_map	*read_map(char *map_path)
 		line = get_next_line(fd);
 	}
 	first = lines;
-	while (scale * num_cols < 400 || scale * num_rows < 400)
-		scale += 0.1;
+	while (scale * num_cols < 400 || scale * num_rows < 300)
+		scale += 1;
 	i = 0;
 	j = 0;
 	points = ft_calloc(num_rows + 1, sizeof(t_point **));
@@ -181,5 +181,5 @@ void	draw_points(t_vars *vars)
 	mlx_string_put(vars->mlx, vars->win, 70, 150, vars->theme, "+/-:          Zoom In/Out");
 	mlx_string_put(vars->mlx, vars->win, 70, 170, vars->theme, "MIDDLE MOUSE: Rotate Freely");
 	mlx_string_put(vars->mlx, vars->win, 70, 190, vars->theme, "MOUSE SCROLL: Zoom In/Out");
-	mlx_string_put(vars->mlx, vars->win, 70, 210, vars->theme, "C:            SWITCH THEME");
+	mlx_string_put(vars->mlx, vars->win, 70, 210, vars->theme, "C:            Switch Theme");
 }

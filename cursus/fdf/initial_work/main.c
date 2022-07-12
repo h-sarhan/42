@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:58:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 00:38:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 11:58:17 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ t_vars	*create_vars(void *mlx, t_map *map)
 	t_vars	*vars;
 
 	vars = ft_calloc(1, sizeof(t_vars));
-	vars->win_x = (abs(map->max_x) + abs(map->min_x)) * 2 + 101;
-	vars->win_y = (abs(map->max_y) + abs(map->min_y)) * 2 + 101;
+	vars->win_x = abs(map->max_x - map->min_x) * 2 + 51;
+	vars->win_y = abs(map->max_y - map->min_y) * 2 + 51;
 	vars->win = mlx_new_window(mlx, vars->win_x, vars->win_y, "fdf");
 	vars->data = ft_calloc(1, sizeof(t_data));
 	vars->data->img = mlx_new_image(mlx, vars->win_x, vars->win_y);

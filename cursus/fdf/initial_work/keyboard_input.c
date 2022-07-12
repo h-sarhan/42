@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 21:16:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 11:38:27 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_transformation_keys(int key, t_vars *vars)
 {
-	ft_printf("%d\n", key);
+	// ft_printf("%d\n", key);
 	if ((key == KEY_LEFT || key == L_KEY_LEFT))
 		rotate_y(vars->map, 5);
 	if ((key == KEY_RIGHT || key == L_KEY_RIGHT))
