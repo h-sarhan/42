@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:20:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 17:38:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 23:59:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	rotate_z_matrix(t_point *p, float rot)
 	p->z = xyz[2];
 }
 
-void	rotate_points(t_map *map)
+void	rotate_points(t_map *map, t_vars *vars)
 {
 	int		i;
 	int		j;
@@ -92,6 +92,12 @@ void	rotate_points(t_map *map)
 	points = map->points;
 	points_copy = map->points_copy;
 	i = 0;
+	map->min_x = INT_MAX;
+	map->min_y = INT_MAX;
+	map->min_z = INT_MAX;
+	map->max_x = INT_MIN;
+	map->max_y = INT_MIN;
+	map->max_z = INT_MIN;
 	while (i < map->num_rows)
 	{
 		j = -1;
@@ -101,9 +107,33 @@ void	rotate_points(t_map *map)
 			points_copy[i][j]->y = points[i][j]->y - (map->max_og_y / 2.0f);
 			points_copy[i][j]->z = points[i][j]->z - (map->max_og_z / 2.0f);
 			rotate_point(map->orientation, points_copy[i][j]);
-			points_copy[i][j]->x += (map->max_og_x / 2.0f);
-			points_copy[i][j]->y += (map->max_og_y / 2.0f);
-			points_copy[i][j]->z += (map->max_og_z / 2.0f);
+			// if (map->vars)
+			// if ((map->max_z -  points_copy[i][j]->z) != 0)
+			// {
+			// points_copy[i][j]->z /= orig->z;
+			// }
+
+			if (vars->proj == 'p')
+			{
+				points_copy[i][j]->x /= (map->max_z - points_copy[i][j]->z)  * 0.05;
+				points_copy[i][j]->y /= (map->max_z -  points_copy[i][j]->z) * 0.05;
+				points_copy[i][j]->x = (points_copy[i][j]->x + 4000 / 2) / 4000;
+				points_copy[i][j]->y = (points_copy[i][j]->y + 4000 / 2) / 4000;
+				points_copy[i][j]->x *= map->win_x / 2;
+				points_copy[i][j]->y *= map->win_y / 2;
+				if (points_copy[i][j]->x >= 1000 || points_copy[i][j]->y >= 1000)
+				{
+					points_copy[i][j]->x = -1;
+					points_copy[i][j]->y = -1;
+				}
+			}
+			else
+			{
+				points_copy[i][j]->x += (map->max_og_x / 2.0f) + map->win_x / 4;
+				points_copy[i][j]->y += (map->max_og_y / 2.0f) + map->win_y / 4;
+				points_copy[i][j]->z += (map->max_og_z / 2.0f);
+			}
+			check_min_max(map, points_copy[i][j]);
 		}
 		i++;
 	}

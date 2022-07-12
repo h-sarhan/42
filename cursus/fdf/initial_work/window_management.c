@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 16:55:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 22:19:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	handle_mouse_down(int key_code, int x, int y, void *params)
 		vars->scale += 0.15;
 	else if (key_code == 5)
 		vars->scale -= 0.15;
-	rotate_points(vars->map);
+	rotate_points(vars->map, vars);
 	project_points(vars->map, vars->scale, vars->proj);
 	draw_points(vars);
 	return (0);
@@ -85,9 +85,9 @@ int	mouse_rotate(void *params)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
-		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
+		// mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
 		// ! FOR LINUX
-		// mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
+		mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_x != vars->m_prev_x || vars->m_y != vars->m_prev_y)
 		{
 			if (vars->m_prev_x < vars->m_x)
@@ -98,7 +98,7 @@ int	mouse_rotate(void *params)
 				rotate_x(vars->map, -3);
 			else if (vars->m_prev_y > vars->m_y)
 				rotate_x(vars->map, 3);
-			rotate_points(vars->map);
+			rotate_points(vars->map, vars);
 			project_points(vars->map, vars->scale, vars->proj);
 			draw_points(vars);
 		}

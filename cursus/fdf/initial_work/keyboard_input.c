@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 16:49:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 23:14:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	handle_keypress(int key, t_vars *vars)
 		|| key == L_KEY_PLUS || key == KEY_MINUS || key == L_KEY_MINUS
 		|| key == KEY_P || key == L_KEY_P || key == KEY_C)
 	{
-		rotate_points(vars->map);
+		rotate_points(vars->map, vars);
 		project_points(vars->map, vars->scale, vars->proj);
 		draw_points(vars);
 	}

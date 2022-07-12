@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 16:54:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 23:14:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,11 @@ struct s_map
 	t_point			*look;
 	int				rot_z;
 	int				min_x;
-	int				max_x;
 	int				min_y;
+	int				min_z;
+	int				max_x;
 	int				max_y;
+	int				max_z;
 	float				max_og_x;
 	float				max_og_y;
 	float				max_og_z;
@@ -156,7 +158,7 @@ void			rotate_z(t_map *map, float rot);
 void			rotate_x_matrix(t_point *p, float rot);
 void			rotate_y_matrix(t_point *p, float rot);
 void			rotate_z_matrix(t_point *p, float rot);
-void			rotate_points(t_map *map);
+void			rotate_points(t_map *map, t_vars *vars);
 void			project_point(t_map *map, t_point *projected, t_point *orig, char proj);
 void			project_points(t_map *map, float scale, char proj);
 
@@ -172,6 +174,7 @@ t_quaternion	*create_quaternion(float x, float y, float z, float w);
 t_quaternion	*rotate_quaternion(t_quaternion *rot, t_quaternion *q);
 t_quaternion	*create_quaternion_rotation(float rot, t_point *axis);
 void			rotate_point(t_quaternion *q, t_point *p);
+void			check_min_max(t_map *map, t_point *point);
 t_point			*cross_product(t_point *v1, t_point *v2);
 
 

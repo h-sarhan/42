@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 19:29:51 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/12 23:47:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void	draw_line_high(t_point *p1, t_point *p2, t_vars *vars)
 
 void	draw_line(t_point *p1, t_point *p2, t_vars *vars)
 {
+	if (p1->x < 0 || p1->y < 0 || p2->x < 0 || p2->y < 0)
+		return ;
 	if (fabs(p2->y - p1->y) < fabs(p2->x - p1->x))
 	{
 		if (p1->x > p2->x)
