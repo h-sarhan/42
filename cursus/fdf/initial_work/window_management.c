@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 12:05:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:26:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,11 @@ int	handle_mouse_down(int key_code, int x, int y, void *params)
 	(void)x;
 	(void)y;
 	vars = params;
-	
-	// ! FOR LINUX
-	// if (key_code == 4 || key_code == 5)
-	// {
-	// 	if (key_code == 4)
-	// 		vars->scale += 0.15;
-	// 	else if (key_code == 5)
-	// 		vars->scale -= 0.15;
-	// 	rotate_points(vars->map);
-	// 	project_points(vars->map, vars->scale, vars->proj);
-	// 	draw_points(vars);
-	// }
-	// else
-	// {
-	// 	if (vars->m_key == 0)
-	// 		vars->m_key = 1;
-	// 	else if (vars->m_key == 1)
-	// 		vars->m_key = 0;
-	// }
 	vars->m_key = key_code;
 	if (key_code == 4)
-		vars->scale += 0.15;
-	else if (key_code == 5)
-		vars->scale -= 0.15;
+		vars->scale += 0.1;
+	else if (key_code == 5 && vars->scale > 0)
+		vars->scale -= 0.1;
 	rotate_points(vars->map);
 	project_points(vars->map, vars->scale, vars->proj);
 	draw_points(vars);
@@ -60,34 +41,16 @@ int	handle_mouse_up(int key_code, int x, int y, void *params)
 	return (0);
 }
 
-
-t_point	*cross_product(t_point *v1, t_point *v2)
-{
-	t_point	*res;
-
-	res = ft_calloc(1, sizeof(t_point));
-	res->x = v1->y * v2->z - v1->z * v2->y;
-	res->y = v1->z * v2->x - v1->x * v2->z;
-	res->z = v1->x * v2->y - v1->y * v2->x;
-	// free(v1);
-	// free(v2);
-	return (res);
-}
-
 int	mouse_rotate(void *params)
 {
 	t_vars	*vars;
 
 	vars = params;
-	// ! FOR LINUX
-	// if (vars->m_key == 3 || vars->m_key == 1)
 	if (vars->m_key == 3)
 	{
 		vars->m_prev_x = vars->m_x;
 		vars->m_prev_y = vars->m_y;
 		mlx_mouse_get_pos(vars->win, &vars->m_x, &vars->m_y);
-		// ! FOR LINUX
-		// mlx_mouse_get_pos(vars->mlx, vars->win, &vars->m_x, &vars->m_y);
 		if (vars->m_x != vars->m_prev_x || vars->m_y != vars->m_prev_y)
 		{
 			if (vars->m_prev_x < vars->m_x)

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 11:38:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:23:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	check_transformation_keys(int key, t_vars *vars)
 		vars->translate_x += 10;
 	if (key == KEY_PLUS || key == L_KEY_PLUS)
 		vars->scale += 0.1;
-	if (key == KEY_MINUS || key == L_KEY_MINUS)
+	if ((key == KEY_MINUS || key == L_KEY_MINUS) && vars->scale > 0)
 		vars->scale -= 0.1;
 	if (key == KEY_C || key == L_KEY_C)
 	{
@@ -55,30 +55,16 @@ void	check_transformation_keys(int key, t_vars *vars)
 
 void	check_projection_keys(int key, t_vars *vars)
 {
-	// ft_printf("%d\n", key);
 	if (key == KEY_P || key == L_KEY_P)
 	{
 		ft_printf("SWAPPING PROJECTION\n");
 		if (vars->proj == 'i')
 		{
-			vars->proj = 'o';
-			vars->map->rot_x = 0;
-			vars->map->rot_y = 0;
-			vars->map->rot_z = 0;
-		}
-		else if (vars->proj == 'o')
-		{
 			vars->proj = 'c';
-			vars->map->rot_x = 0;
-			vars->map->rot_y = 0;
-			vars->map->rot_z = 0;
 		}
 		else if (vars->proj == 'c')
 		{
 			vars->proj = 'i';
-			vars->map->rot_x = 0;
-			vars->map->rot_y = 0;
-			vars->map->rot_z = 0;
 		}
 	}
 }

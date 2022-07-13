@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 20:53:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 00:42:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:17:29 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ t_map	*create_map(void)
 	map->points = NULL;
 	map->points_copy = NULL;
 	map->proj_points = NULL;
-	map->rot_x = 0;
-	map->rot_y = 0;
-	map->rot_z = 0;
 	map->min_x = INT_MAX;
 	map->max_x = INT_MIN;
 	map->min_y = INT_MAX;

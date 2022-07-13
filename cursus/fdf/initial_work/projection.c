@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:21:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 00:09:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:21:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,13 @@ void	project_point(t_map *map, t_point *projected, t_point *orig, char proj)
 
 	if (proj == 'i')
 	{
-		beta = 45 * (PI / 180.0f);
-		alpha = asin(tan(30 * (PI / 180.0f)));
-		projected->x = orig->x;
-		projected->y = orig->y;
-		projected->z = orig->z;
-	}
-	else if (proj == 'o')
-	{
 		projected->x = orig->x;
 		projected->y = orig->y;
 	}
 	else if (proj == 'c')
 	{
 		projected->x = orig->x + 0.5 * orig->z * cos(63.4 * (PI / 180.0f));
-		projected->y = orig->y + 0.5 * orig->z * sin(63.4 * (PI / 180.0f));
+		projected->y = orig->y + -0.5 * orig->z * sin(63.4 * (PI / 180.0f));
 		projected->z = 0;
 	}
 }
@@ -74,9 +66,6 @@ void	project_points(t_map *map, float scale, char proj)
 			projected_points[i][j]->x -= (map->max_og_x / 2.0f);
 			projected_points[i][j]->y -= (map->max_og_y / 2.0f);
 			projected_points[i][j]->z -= (map->max_og_z / 2.0f);
-			// projected_points[i][j]->x = points[i][j]->x - (map->max_og_x / 2.0f);
-			// projected_points[i][j]->y = points[i][j]->y - (map->max_og_y / 2.0f);
-			// projected_points[i][j]->z = points[i][j]->z - (map->max_og_z / 2.0f);
 			projected_points[i][j]->x *= scale;
 			projected_points[i][j]->y *= scale;
 			projected_points[i][j]->z *= scale;
@@ -88,5 +77,4 @@ void	project_points(t_map *map, float scale, char proj)
 		}
 		i++;
 	}
-	// rotate_points(map);
 }
