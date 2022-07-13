@@ -6,14 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:21:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 15:21:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:55:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// TODO: THIS FUNCTION IS USELESS NOW
-void	project_point(t_map *map, t_point *projected, t_point *orig, char proj)
+void	project_point(t_point *projected, t_point *orig, char proj)
 {
 	float	beta;
 	float	alpha;
@@ -43,6 +42,29 @@ void	check_min_max(t_map *map, t_point *point)
 		map->max_y = point->y;
 }
 
+void	scale_point(t_point *p, float scale)
+{
+	p->x *= scale;
+	p->y *= scale;
+	p->z *= scale;
+}
+
+void	translate_to_origin(t_point *p, t_map *map, char sign)
+{
+	if (sign == '+')
+	{
+		p->x += map->max_og_x / 2.0f;
+		p->y += map->max_og_y / 2.0f;
+		p->z += map->max_og_z / 2.0f;
+	}
+	else if (sign == '-')
+	{
+		p->x -= map->max_og_x / 2.0f;
+		p->y -= map->max_og_y / 2.0f;
+		p->z -= map->max_og_z / 2.0f;
+	}
+}
+
 void	project_points(t_map *map, float scale, char proj)
 {
 	int		i;
@@ -59,21 +81,14 @@ void	project_points(t_map *map, float scale, char proj)
 	map->max_y = INT_MIN;
 	while (i < map->num_rows)
 	{
-		j = 0;
-		while (j < map->num_cols)
+		j = -1;
+		while (++j < map->num_cols)
 		{
-			project_point(map, projected_points[i][j], points[i][j], proj);
-			projected_points[i][j]->x -= (map->max_og_x / 2.0f);
-			projected_points[i][j]->y -= (map->max_og_y / 2.0f);
-			projected_points[i][j]->z -= (map->max_og_z / 2.0f);
-			projected_points[i][j]->x *= scale;
-			projected_points[i][j]->y *= scale;
-			projected_points[i][j]->z *= scale;
-			projected_points[i][j]->x += (map->max_og_x / 2.0f);
-			projected_points[i][j]->y += (map->max_og_y / 2.0f);
-			projected_points[i][j]->z += (map->max_og_z / 2.0f);
+			project_point(projected_points[i][j], points[i][j], proj);
+			translate_to_origin(projected_points[i][j], map, '-');
+			scale_point(projected_points[i][j], scale);
+			translate_to_origin(projected_points[i][j], map, '+');
 			check_min_max(map, projected_points[i][j]);
-			j++;
 		}
 		i++;
 	}

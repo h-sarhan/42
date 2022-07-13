@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:08:02 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/09 15:18:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:42:49 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ t_quaternion	*create_quaternion_rotation(float rot, t_point *axis)
 {
 	t_quaternion	*q;
 	float			s;
+	float			c;
 
 	s = sin(rot / 2.0f);
-	q = create_quaternion(axis->x * s, axis->y * s, axis->z * s, cos(rot/ 2.0f));
+	c = cos(rot / 2.0f);
+	q = create_quaternion(axis->x * s, axis->y * s, axis->z * s, c);
 	if (q == NULL)
 		return (NULL);
 	return (q);
@@ -64,24 +66,24 @@ t_quaternion	*create_quaternion_rotation(float rot, t_point *axis)
 
 void	rotate_point(t_quaternion *q, t_point *p)
 {
-	float x = q->x * 2.0f;
-	float y = q->y * 2.0f;
-	float z = q->z * 2.0f;
-	float xx = q->x * x;
-	float yy = q->y * y;
-	float zz = q->z * z;
-	float xy = q->x * y;
-	float xz = q->x * z;
-	float yz = q->y * z;
-	float wx = q->w * x;
-	float wy = q->w * y;
-	float wz = q->w * z;
-	
 	float	xyz[3];
+	float	wx;
+	float	wy;
+	float	wz;
+
 	xyz[0] = p->x;
 	xyz[1] = p->y;
 	xyz[2] = p->z;
-	p->x = (1.0f - (yy + zz)) * xyz[0] + (xy - wz) * xyz[1] + (xz + wy) * xyz[2];
-	p->y = (xy + wz) * xyz[0] + (1.0f - (xx + zz)) * xyz[1] + (yz - wx) * xyz[2];
-    p->z = (xz - wy) * xyz[0] + (yz + wx) * xyz[1] + (1.0f - (xx + yy)) * xyz[2];
+	wx = q->w * q->x * 2.0f;
+	wy = q->w * q->y * 2.0f;
+	wz = q->w * q->z * 2.0f;
+	p->x = (1.0f - (q->y * q->y * 2.0f + q->z * q->z * 2.0f)) * xyz[0];
+	p->x += (q->x * q->y * 2.0f - wz) * xyz[1];
+	p->x += (q->x * q->z * 2.0f + wy) * xyz[2];
+	p->y = (q->x * q->y * 2.0f + wz) * xyz[0];
+	p->y += (1.0f - (q->x * q->x * 2.0f + q->z * q->z * 2.0f)) * xyz[1];
+	p->y += (q->y * q->z * 2.0f - wx) * xyz[2];
+	p->z = (q->x * q->z * 2.0f - wy) * xyz[0];
+	p->z += (q->y * q->z * 2.0f + wx) * xyz[1];
+	p->z += (1.0f - (q->x * q->x * 2.0f + q->y * q->y * 2.0f)) * xyz[2];
 }

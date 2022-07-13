@@ -6,11 +6,11 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/11 14:42:06 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/13 15:41:17 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -O3
+CFLAGS = -Wall -Wextra -Ofast
 CC = cc
 
 NAME = fdf

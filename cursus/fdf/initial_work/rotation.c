@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:20:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 17:05:46 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:28:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,72 +14,38 @@
 
 void	rotate_x(t_map *map, float rot)
 {
-	t_point	axis;
+	t_point			axis;
+	t_quaternion	*q_rot;
 
 	axis.x = 1;
 	axis.y = 0;
 	axis.z = 0;
-	t_quaternion *q_rot = create_quaternion_rotation(rot * (PI / 180.0f), &axis);
+	q_rot = create_quaternion_rotation(rot * (PI / 180.0f), &axis);
 	map->orientation = rotate_quaternion(q_rot, map->orientation);
 }
 
 void	rotate_y(t_map *map, float rot)
 {
-	t_point	axis;
+	t_point			axis;
+	t_quaternion	*q_rot;
 
 	axis.x = 0;
 	axis.y = -1;
 	axis.z = 0;
-	t_quaternion *q_rot = create_quaternion_rotation(rot * (PI / 180.0f), &axis);
+	q_rot = create_quaternion_rotation(rot * (PI / 180.0f), &axis);
 	map->orientation = rotate_quaternion(q_rot, map->orientation);
 }
 
 void	rotate_z(t_map *map, float rot)
 {
-	t_point	axis;
+	t_point			axis;
+	t_quaternion	*q_rot;
 
 	axis.x = 0;
 	axis.y = 0;
 	axis.z = 1;
-	t_quaternion *q_rot = create_quaternion_rotation(rot * (PI / 180.0f), &axis);
+	q_rot = create_quaternion_rotation(rot * (PI / 180.0f), &axis);
 	map->orientation = rotate_quaternion(q_rot, map->orientation);
-}
-
-
-void	rotate_x_matrix(t_point *p, float rot)
-{
-	int	xyz[3];
-
-	xyz[0] = p->x;
-	xyz[1] = p->y;
-	xyz[2] = p->z;
-	p->x = xyz[0];
-	p->y = cos(rot) * xyz[1] - sin(rot) * xyz[2];
-	p->z = sin(rot) * xyz[1] + cos(rot) * xyz[2];
-}
-
-void	rotate_y_matrix(t_point *p, float rot)
-{
-	int	xyz[3];
-
-	xyz[0] = p->x;
-	xyz[1] = p->y;
-	xyz[2] = p->z;
-	p->x = xyz[0] * cos(rot) + sin(rot) * xyz[2];
-	p->y = xyz[1];
-	p->z = -sin(rot) * xyz[0] + cos(rot) * xyz[2];
-}
-
-void	rotate_z_matrix(t_point *p, float rot)
-{
-	int	xyz[3];
-
-	xyz[0] = p->x;
-	xyz[1] = p->y;
-	xyz[2] = p->z;
-	p->x = xyz[0] * cos(rot) - sin(rot) * xyz[1];
-	p->y = xyz[0] * sin(rot) + cos(rot) * xyz[1];
-	p->z = xyz[2];
 }
 
 void	rotate_points(t_map *map)
