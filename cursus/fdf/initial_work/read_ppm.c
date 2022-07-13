@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 00:00:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 21:27:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 17:31:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ void	fill_map(int fd, t_map *map, int scale)
 	{
 		map->points[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
 		map->points_copy[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
-		map->proj_points[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
+		map->proj_pts[i] = ft_calloc(map->num_cols + 1, sizeof(t_point *));
 		if (map->points[i] == NULL || map->points_copy[i] == NULL
-			|| map->proj_points == NULL)
+			|| map->proj_pts == NULL)
 			exit_msg("Error reading file", EXIT_FAILURE);
 		j = 0;
 		while (j < map->num_cols)
 		{
-			map->proj_points[i][j] = create_point(0, 0, 0, read_ppm_color(fd));
+			map->proj_pts[i][j] = create_point(0, 0, 0, read_ppm_color(fd));
 			map->points[i][j] = create_point(i * scale,
 					(map->num_rows - j) * scale, 0, 0);
 			map->points_copy[i][j] = create_point(i * scale,
@@ -98,9 +98,9 @@ t_map	*read_map_from_ppm(char *img_path)
 		scale++;
 	map->points = ft_calloc(map->num_rows + 1, sizeof(t_point **));
 	map->points_copy = ft_calloc(map->num_rows + 1, sizeof(t_point **));
-	map->proj_points = ft_calloc(map->num_rows + 1, sizeof(t_point **));
+	map->proj_pts = ft_calloc(map->num_rows + 1, sizeof(t_point **));
 	if (map->points == NULL || map->points_copy == NULL
-		|| map->proj_points == NULL)
+		|| map->proj_pts == NULL)
 		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
 	fill_map(fd, map, scale);
 	find_min_max(map, map->points_copy);

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 20:53:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 16:02:09 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 17:31:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,17 @@ void	free_map(t_map *map)
 		j = 0;
 		while (j < map->num_cols)
 		{
-			free(map->proj_points[i][j]);
+			free(map->proj_pts[i][j]);
 			free(map->points[i][j]);
 			free(map->points_copy[i][j]);
 			j++;
 		}
-		free(map->proj_points[i]);
+		free(map->proj_pts[i]);
 		free(map->points[i]);
 		free(map->points_copy[i]);
 		i++;
 	}
-	free(map->proj_points);
+	free(map->proj_pts);
 	free(map->points);
 	free(map->points_copy);
 	free(map->orientation);

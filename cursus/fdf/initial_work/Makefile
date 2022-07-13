@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/13 15:41:17 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/13 16:19:16 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ GNL = libgnl.a
 
 SRCS = fdf.c draw_line.c hextoi.c colors.c read_ppm.c error_handling.c map.c \
 		colors2.c rotation.c projection.c window_management.c keyboard_input.c \
-		main.c quaternion.c
+		main.c quaternion.c read_map.c
 
 # TODO: REMOVE WILDCARDS LATER
 LIBFT_SRCS := $(wildcard libft/*.c)

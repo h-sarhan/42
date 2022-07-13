@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:21:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 16:09:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 17:31:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	project_points(t_map *map, float scale, char proj)
 	t_point	***points;
 
 	points = map->points_copy;
-	projected_points = map->proj_points;
+	projected_points = map->proj_pts;
 	i = 0;
 	map->min_x = INT_MAX;
 	map->min_y = INT_MAX;
