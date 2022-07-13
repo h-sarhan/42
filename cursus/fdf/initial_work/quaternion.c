@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:08:02 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 16:00:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 17:57:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ t_quaternion	*create_quaternion(float x, float y, float z, float w)
 	return (q);
 }
 
-// Use like this
-// orientation = Compose(rotationChange, orientation);
 t_quaternion	*rotate_quaternion(t_quaternion *rot, t_quaternion *q)
 {
 	t_quaternion	*q_new;

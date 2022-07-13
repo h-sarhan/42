@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 16:10:51 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 18:23:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// Switch between different color themes
 void	handle_color_change(int key, t_vars *vars)
 {
 	if (key == KEY_C || key == L_KEY_C)
@@ -24,10 +25,11 @@ void	handle_color_change(int key, t_vars *vars)
 			vars->theme = 0XFFFFFF;
 		else if (vars->theme == 0XFFFFFF)
 			vars->theme = 0xFFA32B;
-		draw_points(vars);
+		draw_frame(vars);
 	}
 }
 
+// Handle transformation keys
 void	check_transformation_keys(int key, t_vars *vars)
 {
 	if ((key == KEY_LEFT || key == L_KEY_LEFT))
@@ -57,11 +59,11 @@ void	check_transformation_keys(int key, t_vars *vars)
 	handle_color_change(key, vars);
 }
 
+// Handle projection change key
 void	check_projection_keys(int key, t_vars *vars)
 {
 	if (key == KEY_P || key == L_KEY_P)
 	{
-		ft_printf("SWAPPING PROJECTION\n");
 		if (vars->proj == 'i')
 		{
 			vars->proj = 'c';
@@ -73,6 +75,7 @@ void	check_projection_keys(int key, t_vars *vars)
 	}
 }
 
+// Handle keyboard input
 int	handle_keypress(int key, t_vars *vars)
 {
 	if (key == KEY_ESC || key == L_KEY_ESC)
@@ -93,7 +96,7 @@ int	handle_keypress(int key, t_vars *vars)
 	{
 		rotate_points(vars->map);
 		project_points(vars->map, vars->scale, vars->proj);
-		draw_points(vars);
+		draw_frame(vars);
 	}
 	return (0);
 }

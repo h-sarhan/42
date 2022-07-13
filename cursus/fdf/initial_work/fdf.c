@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 17:31:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 17:51:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// Find the minimum and maximum x,y,z values of the points before transformation
 void	find_min_max(t_map *map, t_point ***points)
 {
 	int	i;
@@ -41,6 +42,7 @@ void	find_min_max(t_map *map, t_point ***points)
 	map->max_og_z = max_xyz[2];
 }
 
+// Put pixel on an image
 void	my_mlx_pixel_put(int x, int y, int color, t_vars *vars)
 {
 	char	*dst;
@@ -55,6 +57,7 @@ void	my_mlx_pixel_put(int x, int y, int color, t_vars *vars)
 	*(unsigned int *)dst = color;
 }
 
+// Display control messages
 void	display_controls(t_vars *vars)
 {
 	mlx_string_put(vars->mlx, vars->win, 50, 50, vars->theme, "[CONTROLS]:");
@@ -76,7 +79,8 @@ void	display_controls(t_vars *vars)
 		"            Switch Theme");
 }
 
-void	draw_points(t_vars *vars)
+// Draw a frame
+void	draw_frame(t_vars *vars)
 {
 	int		i;
 	int		j;

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 18:57:54 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/07 18:37:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 17:54:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static int	is_space(char c)
 		|| c == '\r' || c == '\t' || c == '\v');
 }
 
+// Read a hexadecimal string and return an integer
 unsigned int	hextoi(char *str)
 {
 	unsigned int	num;

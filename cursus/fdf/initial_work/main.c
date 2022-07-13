@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:58:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 16:37:09 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 17:56:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// Check arguments for invalid input
 void	check_args(int argc, char **argv)
 {
 	if (argc != 2)
@@ -28,6 +29,7 @@ void	check_args(int argc, char **argv)
 	}
 }
 
+// Used by create_vars() to set default values for the vars struct
 void	fill_vars(t_vars *vars, void *mlx, t_map *map)
 {
 	vars->mlx = mlx;
@@ -48,6 +50,7 @@ void	fill_vars(t_vars *vars, void *mlx, t_map *map)
 	vars->theme = 0xFFFFFF;
 }
 
+// Create a vars struct
 t_vars	*create_vars(void *mlx, t_map *map)
 {
 	t_vars	*vars;
@@ -72,6 +75,7 @@ t_vars	*create_vars(void *mlx, t_map *map)
 	return (vars);
 }
 
+// FDF
 int	main(int argc, char **argv)
 {
 	void	*mlx;
@@ -91,7 +95,7 @@ int	main(int argc, char **argv)
 	mlx_mouse_hook(vars->win, handle_mouse_down, vars);
 	mlx_hook(vars->win, 17, 0, close_window, vars);
 	mlx_loop_hook(mlx, mouse_rotate, vars);
-	draw_points(vars);
+	draw_frame(vars);
 	mlx_loop(mlx);
 	free(vars->data);
 	free_map(map);

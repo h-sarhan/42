@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 16:09:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 18:23:18 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	handle_mouse_down(int key_code, int x, int y, void *params)
 		vars->scale -= 0.1;
 	rotate_points(vars->map);
 	project_points(vars->map, vars->scale, vars->proj);
-	draw_points(vars);
+	draw_frame(vars);
 	return (0);
 }
 
@@ -64,7 +64,7 @@ int	mouse_rotate(void *params)
 				rotate_x(vars->map, 3);
 			rotate_points(vars->map);
 			project_points(vars->map, vars->scale, vars->proj);
-			draw_points(vars);
+			draw_frame(vars);
 		}
 	}
 	return (0);

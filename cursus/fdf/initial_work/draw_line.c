@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 16:13:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 17:49:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	draw_line_high(t_point *p1, t_point *p2, t_vars *vars)
 	draw_line_points_high(pts, vars, dxy, dxi);
 }
 
+// Bresenham's line drawing algorithm
 void	draw_line(t_point *p1, t_point *p2, t_vars *vars)
 {
 	if (fabs(p2->y - p1->y) < fabs(p2->x - p1->x))

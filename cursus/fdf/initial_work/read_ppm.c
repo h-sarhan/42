@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 00:00:04 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 17:31:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 18:23:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,12 @@ int	read_ppm_color(int fd)
 	r = 0;
 	g = 0;
 	b = 0;
-	read(fd, &g, 1);
-	read(fd, &b, 1);
-	read(fd, &r, 1);
+	if (read(fd, &g, 1) < 0)
+		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
+	if (read(fd, &b, 1) < 0)
+		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
+	if (read(fd, &r, 1) < 0)
+		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
 	return (create_trgb(0, r, g, b));
 }
 
@@ -103,7 +106,8 @@ t_map	*read_map_from_ppm(char *img_path)
 		|| map->proj_pts == NULL)
 		exit_msg("ERROR READING FILE\n", EXIT_FAILURE);
 	fill_map(fd, map, scale);
-	find_min_max(map, map->points_copy);
+	find_min_max(map, map->points);
+	rotate_points(map);
 	project_points(map, scale, 'i');
 	return (map);
 }

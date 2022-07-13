@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 20:53:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 17:31:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 17:56:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// Create a map struct
 t_map	*create_map(void)
 {
 	t_map	*map;
@@ -37,6 +38,7 @@ t_map	*create_map(void)
 	return (map);
 }
 
+// Create a point
 t_point	*create_point(float x, float y, float z, int color)
 {
 	t_point	*point;
@@ -51,6 +53,7 @@ t_point	*create_point(float x, float y, float z, int color)
 	return (point);
 }
 
+// Free a map
 void	free_map(t_map *map)
 {
 	int	i;
