@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:25:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 15:26:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 16:09:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	handle_mouse_up(int key_code, int x, int y, void *params)
 
 	(void)x;
 	(void)y;
+	(void)key_code;
 	vars = params;
 	vars->m_key = 0;
 	return (0);

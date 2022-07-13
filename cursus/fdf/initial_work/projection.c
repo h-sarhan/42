@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:21:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 15:55:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 16:09:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	project_point(t_point *projected, t_point *orig, char proj)
 {
-	float	beta;
-	float	alpha;
-
 	if (proj == 'i')
 	{
 		projected->x = orig->x;

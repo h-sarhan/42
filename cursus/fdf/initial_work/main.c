@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 20:58:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/12 11:58:17 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 16:09:01 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,8 @@ void	check_args(int argc, char **argv)
 	}
 }
 
-t_vars	*create_vars(void *mlx, t_map *map)
+void	fill_vars(t_vars *vars, void *mlx, t_map *map)
 {
-	t_vars	*vars;
-
-	vars = ft_calloc(1, sizeof(t_vars));
-	vars->win_x = abs(map->max_x - map->min_x) * 2 + 51;
-	vars->win_y = abs(map->max_y - map->min_y) * 2 + 51;
-	vars->win = mlx_new_window(mlx, vars->win_x, vars->win_y, "fdf");
-	vars->data = ft_calloc(1, sizeof(t_data));
-	vars->data->img = mlx_new_image(mlx, vars->win_x, vars->win_y);
-	vars->data->addr = mlx_get_data_addr(vars->data->img,
-			&vars->data->bits_per_pixel, &vars->data->line_length,
-			&vars->data->endian);
 	vars->mlx = mlx;
 	vars->map = map;
 	vars->img = vars->data->img;
@@ -57,6 +46,29 @@ t_vars	*create_vars(void *mlx, t_map *map)
 	vars->m_y = -1;
 	vars->proj = 'i';
 	vars->theme = 0xFFFFFF;
+}
+
+t_vars	*create_vars(void *mlx, t_map *map)
+{
+	t_vars	*vars;
+
+	vars = ft_calloc(1, sizeof(t_vars));
+	if (vars == NULL)
+		return (NULL);
+	vars->win_x = abs(map->max_x - map->min_x) * 2 + 51;
+	vars->win_y = abs(map->max_y - map->min_y) * 2 + 51;
+	vars->win = mlx_new_window(mlx, vars->win_x, vars->win_y, "fdf");
+	vars->data = ft_calloc(1, sizeof(t_data));
+	if (vars->data == NULL)
+	{
+		free(vars->data);
+		return (NULL);
+	}
+	vars->data->img = mlx_new_image(mlx, vars->win_x, vars->win_y);
+	vars->data->addr = mlx_get_data_addr(vars->data->img,
+			&vars->data->bits_per_pixel, &vars->data->line_length,
+			&vars->data->endian);
+	fill_vars(vars, mlx, map);
 	return (vars);
 }
 
@@ -75,7 +87,6 @@ int	main(int argc, char **argv)
 		map = read_map(argv[1]);
 	vars = create_vars(mlx, map);
 	mlx_hook(vars->win, 2, (1L << 0), handle_keypress, vars);
-	// mlx_hook(vars->win, 4, 0, handle_mouse_down, vars);
 	mlx_hook(vars->win, 5, 0, handle_mouse_up, vars);
 	mlx_mouse_hook(vars->win, handle_mouse_down, vars);
 	mlx_hook(vars->win, 17, 0, close_window, vars);

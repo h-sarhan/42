@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:08:02 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 15:42:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 16:00:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,6 @@ t_quaternion	*rotate_quaternion(t_quaternion *rot, t_quaternion *q)
 	float			z;
 	float			w;
 
-	if (rot == NULL)
-		printf("ROT IS NULL\n");
-	if (q == NULL)
-		printf("Q IS NULL\n");
 	x = rot->w * q->x + rot->x * q->w + rot->y * q->z - rot->z * q->y;
 	y = rot->w * q->y - rot->x * q->z + rot->y * q->w + rot->z * q->x;
 	z = rot->w * q->z + rot->x * q->y - rot->y * q->x + rot->z * q->w;
@@ -47,6 +43,8 @@ t_quaternion	*rotate_quaternion(t_quaternion *rot, t_quaternion *q)
 	q_new = create_quaternion(x, y, z, w);
 	free(rot);
 	free(q);
+	if (q_new == NULL)
+		return (NULL);
 	return (q_new);
 }
 

@@ -6,15 +6,30 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 19:54:05 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 15:23:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 16:10:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+void	handle_color_change(int key, t_vars *vars)
+{
+	if (key == KEY_C || key == L_KEY_C)
+	{
+		if (vars->theme == 0xFFA32B)
+			vars->theme = 0xFF44CC;
+		else if (vars->theme == 0xFF44CC)
+			vars->theme = 0x39FF14;
+		else if (vars->theme == 0x39FF14)
+			vars->theme = 0XFFFFFF;
+		else if (vars->theme == 0XFFFFFF)
+			vars->theme = 0xFFA32B;
+		draw_points(vars);
+	}
+}
+
 void	check_transformation_keys(int key, t_vars *vars)
 {
-	// ft_printf("%d\n", key);
 	if ((key == KEY_LEFT || key == L_KEY_LEFT))
 		rotate_y(vars->map, 5);
 	if ((key == KEY_RIGHT || key == L_KEY_RIGHT))
@@ -39,18 +54,7 @@ void	check_transformation_keys(int key, t_vars *vars)
 		vars->scale += 0.1;
 	if ((key == KEY_MINUS || key == L_KEY_MINUS) && vars->scale > 0)
 		vars->scale -= 0.1;
-	if (key == KEY_C || key == L_KEY_C)
-	{
-		if (vars->theme == 0xFFA32B)
-			vars->theme = 0xFF44CC;
-		else if (vars->theme == 0xFF44CC)
-			vars->theme = 0x39FF14;
-		else if (vars->theme == 0x39FF14)
-			vars->theme = 0XFFFFFF;
-		else if (vars->theme == 0XFFFFFF)
-			vars->theme = 0xFFA32B;
-		draw_points(vars);
-	}
+	handle_color_change(key, vars);
 }
 
 void	check_projection_keys(int key, t_vars *vars)

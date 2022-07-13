@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 19:29:51 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 16:13:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,13 @@ void	draw_line_points_low(t_point **pts, t_vars *vars, int *dxy, int *dyi)
 	while (xy[0] < pts[1]->x)
 	{
 		if (pts[1]->color == pts[0]->color && pts[0]->color == 0xFFFFFF)
-			my_mlx_pixel_put(xy[0], xy[1], vars->theme, vars);
+			color = vars->theme;
 		else if (pts[1]->color == pts[0]->color)
-			my_mlx_pixel_put(xy[0], xy[1], pts[0]->color, vars);
+			color = pts[0]->color;
 		else
-		{
 			color = color_mix(pts[0]->color, pts[1]->color,
 					(float)(xy[0] - pts[0]->x) / (pts[1]->x - pts[0]->x));
-			my_mlx_pixel_put(xy[0], xy[1], color, vars);
-		}
+		my_mlx_pixel_put(xy[0], xy[1], color, vars);
 		if (dyi[0] > 0)
 		{
 			xy[1] = xy[1] + dyi[1];
@@ -72,15 +70,13 @@ void	draw_line_points_high(t_point **pts, t_vars *vars, int *dxy, int *dxi)
 	while (xy[1] < pts[1]->y)
 	{
 		if (pts[1]->color == pts[0]->color && pts[0]->color == 0xFFFFFF)
-			my_mlx_pixel_put(xy[0], xy[1], vars->theme, vars);
+			color = vars->theme;
 		else if (pts[1]->color == pts[0]->color)
-			my_mlx_pixel_put(xy[0], xy[1], pts[0]->color, vars);
+			color = pts[0]->color;
 		else
-		{
 			color = color_mix(pts[0]->color, pts[1]->color,
 					(float)(xy[1] - pts[0]->y) / (pts[1]->y - pts[0]->y));
-			my_mlx_pixel_put(xy[0], xy[1], color, vars);
-		}
+		my_mlx_pixel_put(xy[0], xy[1], color, vars);
 		if (dxi[0] > 0)
 		{
 			xy[0] = xy[0] + dxi[1];

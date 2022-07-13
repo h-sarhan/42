@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 20:53:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 15:17:29 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 16:02:09 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ t_map	*create_map(void)
 	map = ft_calloc(1, sizeof(t_map));
 	if (map == NULL)
 		exit_msg("ERROR CREATING MAP\n", EXIT_FAILURE);
-	map->num_rows = 0;
-	map->num_cols = 0;
-	map->points = NULL;
-	map->points_copy = NULL;
-	map->proj_points = NULL;
 	map->min_x = INT_MAX;
 	map->max_x = INT_MIN;
 	map->min_y = INT_MAX;
@@ -31,15 +26,14 @@ t_map	*create_map(void)
 	map->max_og_x = INT_MIN;
 	map->max_og_y = INT_MIN;
 	map->max_og_z = INT_MIN;
-	// TODO: PROTECT THIS
-	map->look = ft_calloc(1, sizeof(t_point));
-	map->look->x = 0;
-	map->look->y = 0;
-	map->look->z = -1;
 	map->orientation = create_quaternion(0, 0, 0, 1);
-	// rotate_y(map, 180)
+	if (map->orientation == NULL)
+	{
+		free(map);
+		exit_msg("ERROR CREATING MAP\n", EXIT_FAILURE);
+	}
 	rotate_z(map, 45);
-	rotate_x(map, asin(tan(30 * (PI / 180.0f))) / (PI / 180.0f) + 30);;
+	rotate_x(map, asin(tan(30 * (PI / 180.0f))) / (PI / 180.0f) + 30);
 	return (map);
 }
 
@@ -49,7 +43,7 @@ t_point	*create_point(float x, float y, float z, int color)
 
 	point = ft_calloc(1, sizeof(t_point));
 	if (point == NULL)
-		exit_msg("ERROR CREATING POINT\n", EXIT_FAILURE);
+		return (NULL);
 	point->x = x;
 	point->y = y;
 	point->z = z;
@@ -82,5 +76,6 @@ void	free_map(t_map *map)
 	free(map->proj_points);
 	free(map->points);
 	free(map->points_copy);
+	free(map->orientation);
 	free(map);
 }

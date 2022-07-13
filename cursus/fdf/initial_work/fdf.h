@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 20:35:32 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/11 21:15:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 16:03:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ struct s_point
 	int		color;
 };
 
-typedef struct s_point	t_point;
+typedef struct s_point		t_point;
 
 struct	s_data
 {
@@ -72,7 +72,7 @@ struct	s_data
 	int		line_length;
 	int		endian;
 };
-typedef struct s_data	t_data;
+typedef struct s_data		t_data;
 
 struct s_quaternion {
 	float	x;
@@ -98,12 +98,12 @@ struct s_map
 	int				max_x;
 	int				min_y;
 	int				max_y;
-	float				max_og_x;
-	float				max_og_y;
-	float				max_og_z;
+	float			max_og_x;
+	float			max_og_y;
+	float			max_og_z;
 	t_quaternion	*orientation;
 };
-typedef struct s_map	t_map;
+typedef struct s_map		t_map;
 
 struct s_vars
 {
@@ -129,8 +129,7 @@ struct s_vars
 	int		theme;
 };
 
-typedef struct s_vars	t_vars;
-
+typedef struct s_vars		t_vars;
 
 void			my_mlx_pixel_put(int x, int y, int color, t_vars *vars);
 unsigned int	hextoi(char *str);
@@ -157,7 +156,7 @@ void			rotate_x_matrix(t_point *p, float rot);
 void			rotate_y_matrix(t_point *p, float rot);
 void			rotate_z_matrix(t_point *p, float rot);
 void			rotate_points(t_map *map);
-void			project_point(t_map *map, t_point *projected, t_point *orig, char proj);
+void			project_point(t_point *projected, t_point *orig, char proj);
 void			project_points(t_map *map, float scale, char proj);
 void			free_map(t_map *map);
 int				handle_mouse_down(int key_code, int x, int y, void *params);
@@ -172,7 +171,5 @@ t_quaternion	*rotate_quaternion(t_quaternion *rot, t_quaternion *q);
 t_quaternion	*create_quaternion_rotation(float rot, t_point *axis);
 void			rotate_point(t_quaternion *q, t_point *p);
 t_point			*cross_product(t_point *v1, t_point *v2);
-
-
 
 #endif
