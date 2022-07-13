@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:19:09 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 18:23:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 18:30:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	fill_map2(t_map *map, int *rows_cols, t_list *lines, float scale)
 			if (ft_strchr(tks[j], ',') != NULL)
 				map->proj_pts[i][j]->color = hextoi(ft_strchr(tks[j], ',') + 1);
 			else
-				map->proj_pts[i][j]->color = 0xFFFFFF;
+				map->proj_pts[i][j]->color = -1;
 			map->points[i][j]->x = i * scale;
 			map->points[i][j]->y = (rows_cols[1] - j) * scale;
 			map->points[i][j]->z = ft_atoi(tks[j]) * scale;

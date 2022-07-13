@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:47:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/13 17:49:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/13 18:30:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	draw_line_points_low(t_point **pts, t_vars *vars, int *dxy, int *dyi)
 	xy[1] = pts[0]->y;
 	while (xy[0] < pts[1]->x)
 	{
-		if (pts[1]->color == pts[0]->color && pts[0]->color == 0xFFFFFF)
+		if (pts[1]->color == pts[0]->color && pts[0]->color == -1)
 			color = vars->theme;
 		else if (pts[1]->color == pts[0]->color)
 			color = pts[0]->color;
@@ -69,7 +69,7 @@ void	draw_line_points_high(t_point **pts, t_vars *vars, int *dxy, int *dxi)
 	xy[1] = pts[0]->y;
 	while (xy[1] < pts[1]->y)
 	{
-		if (pts[1]->color == pts[0]->color && pts[0]->color == 0xFFFFFF)
+		if (pts[1]->color == pts[0]->color && pts[0]->color == -1)
 			color = vars->theme;
 		else if (pts[1]->color == pts[0]->color)
 			color = pts[0]->color;
