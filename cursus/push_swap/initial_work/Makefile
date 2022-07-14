@@ -6,18 +6,19 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/14 04:29:09 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/14 05:01:11 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror -Ofast
+CFLAGS = -Wall -Wextra
 CC = cc
 
 NAME = push_swap
 LIBFT = libft.a
 PRINTF = libftprintf.a
 
-SRCS = doubly_linked_list/dll.c doubly_linked_list/dll2.c doubly_linked_list/dll3.c
+SRCS =	doubly_linked_list/dll.c doubly_linked_list/dll2.c doubly_linked_list/dll3.c \
+		stack/swap.c
 
 LIBFT_SRCS = ft_strchr.c ft_split.c ft_strtrim.c ft_bzero.c ft_strnstr.c ft_strmapi.c ft_isprint.c ft_atoi.c ft_strdup.c \
 			ft_tolower.c ft_toupper.c ft_substr.c ft_striteri.c ft_memchr.c ft_putnbr_fd.c ft_strlcpy.c ft_itoa.c \
