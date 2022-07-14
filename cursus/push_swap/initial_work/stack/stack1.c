@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 14:20:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 16:41:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,6 @@ void	stack_print(t_stack *lst)
 		lst = lst->next;
 	}
 	ft_printf("NULL\n");
-}
-
-void	stack_print_rev(t_stack *lst)
-{
-	if (lst == NULL)
-		return ;
-	while (lst->next != NULL)
-		lst = lst->next;
-	ft_printf("NULL");
-	while (lst != NULL)
-	{
-		ft_printf("<-[%d]", lst->num);
-		lst = lst->prev;
-	}
-	ft_printf("\n");
 }
 
 // int		main()

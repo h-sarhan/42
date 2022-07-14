@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 14:05:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 16:41:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,11 @@ t_stack	*stack_new(int num);
 void	stack_add_top(t_stack **lst, t_stack *new);
 void	stack_add_bottom(t_stack **lst, t_stack *new);
 void	stack_print(t_stack *lst);
-void	stack_print_rev(t_stack *lst);
 
 int		stack_size(t_stack *lst);
 t_stack	*stack_bottom(t_stack *lst);
 t_stack	*stack_top(t_stack *lst);
-void	stack_delone(t_stack *lst);
-void	stack_clear(t_stack **lst);
 
-void	stack_iter(t_stack *lst, void (*f)(int));
-t_stack	*stack_map(t_stack *lst, int (*f)(int));
 
 // Stack
 void	swap(t_stack **stack_a, t_stack **stack_b, char which);
@@ -52,4 +47,5 @@ int		is_sorted_asc(t_stack *stack);
 void insertion_sort(t_stack *stack_a, t_stack *stack_b);
 t_stack	*find_min(t_stack *list);
 t_stack	*find_max(t_stack *list);
+int	kind_of_sorted_asc(t_stack *stack);
 #endif
