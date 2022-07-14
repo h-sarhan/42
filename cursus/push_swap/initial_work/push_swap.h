@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 06:13:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 06:48:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ t_dlist	*ft_dlstmap(t_dlist *lst, int (*f)(int));
 void	swap(t_dlist **stack_a, t_dlist **stack_b, char which);
 void	push(t_dlist **stack_a, t_dlist **stack_b, char which);
 void	rotate(t_dlist **stack_a, t_dlist **stack_b, char which);
+void	reverse_rotate(t_dlist **stack_a, t_dlist **stack_b, char which);
 #endif

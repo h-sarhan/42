@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/14 06:34:05 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/14 06:45:02 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT = libft.a
 PRINTF = libftprintf.a
 
 SRCS =	doubly_linked_list/dll.c doubly_linked_list/dll2.c doubly_linked_list/dll3.c \
-		stack/swap.c stack/push.c stack/rotate.c stack/reverse_rotate.c
+		stack/swap.c stack/push.c stack/rotate.c stack/reverse_rotate.c main.c
 
 LIBFT_SRCS = ft_strchr.c ft_split.c ft_strtrim.c ft_bzero.c ft_strnstr.c ft_strmapi.c ft_isprint.c ft_atoi.c ft_strdup.c \
 			ft_tolower.c ft_toupper.c ft_substr.c ft_striteri.c ft_memchr.c ft_putnbr_fd.c ft_strlcpy.c ft_itoa.c \

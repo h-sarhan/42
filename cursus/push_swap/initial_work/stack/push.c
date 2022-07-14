@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:23:41 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 06:11:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 06:55:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ void	push(t_dlist **stack_a, t_dlist **stack_b, char which)
 	{
 		popped = ft_dlstfirst(*stack_b);
 		temp = popped->next;
-		temp->prev = NULL;
+		if (popped->next != NULL)
+		{
+			popped->next = NULL;
+			temp->prev = NULL;
+		}
 		*stack_b = temp;
 		ft_dlstadd_front(stack_a, popped);
 	}
@@ -31,7 +35,11 @@ void	push(t_dlist **stack_a, t_dlist **stack_b, char which)
 	{
 		popped = ft_dlstfirst(*stack_a);
 		temp = popped->next;
-		temp->prev = NULL;
+		if (popped->next != NULL)
+		{
+			popped->next = NULL;
+			temp->prev = NULL;
+		}
 		*stack_a = temp;
 		ft_dlstadd_front(stack_b, popped);
 	}

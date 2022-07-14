@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:29:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 06:40:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 06:58:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	reverse_rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
 
 	if (stack_a == NULL || stack_b == NULL)
 		return ;
-	if ((which == 'a' || which == 'r') && ft_dlstsize(*stack_a) > 1)
+	if ((which == 'a' || which == 'c') && ft_dlstsize(*stack_a) > 1)
 	{
 		first = ft_dlstfirst(*stack_a);
 		last = ft_dlstlast(*stack_a);
@@ -31,7 +31,7 @@ void	reverse_rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
 		first->prev = last;
 		*stack_a = last;
 	}
-	if ((which == 'b' || which == 'r') && ft_dlstsize(*stack_b) > 1)
+	if ((which == 'b' || which == 'c') && ft_dlstsize(*stack_b) > 1)
 	{
 		first = ft_dlstfirst(*stack_b);
 		last = ft_dlstlast(*stack_b);
@@ -46,7 +46,7 @@ void	reverse_rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
 		ft_printf("rra\n");
 	if (which == 'b')
 		ft_printf("rrb\n");
-	if (which == 'r')
+	if (which == 'c')
 		ft_printf("rrr\n");
 }
 

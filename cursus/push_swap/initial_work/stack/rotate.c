@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:58:36 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 06:33:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 06:58:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
 
 	if (stack_a == NULL || stack_b == NULL)
 		return ;
-	if ((which == 'a' || which == 'r') && ft_dlstsize(*stack_a) > 1)
+	if ((which == 'a' || which == 'c') && ft_dlstsize(*stack_a) > 1)
 	{
 		first = ft_dlstfirst(*stack_a);
 		last = ft_dlstlast(*stack_a);
@@ -31,7 +31,7 @@ void	rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
 		last->next = first;
 		*stack_a = temp;
 	}
-	if ((which == 'b' || which == 'r') && ft_dlstsize(*stack_b) > 1)
+	if ((which == 'b' || which == 'c') && ft_dlstsize(*stack_b) > 1)
 	{
 		first = ft_dlstfirst(*stack_b);
 		last = ft_dlstlast(*stack_b);
@@ -46,7 +46,7 @@ void	rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
 		ft_printf("ra\n");
 	if (which == 'b')
 		ft_printf("rb\n");
-	if (which == 'r')
+	if (which == 'c')
 		ft_printf("rr\n");
 }
 
