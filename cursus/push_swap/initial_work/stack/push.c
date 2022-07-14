@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:23:41 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 05:54:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 06:11:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ void	push(t_dlist **stack_a, t_dlist **stack_b, char which)
 		*stack_a = temp;
 		ft_dlstadd_front(stack_b, popped);
 	}
+	if (which == 'a')
+		ft_printf("pa\n");
+	if (which == 'b')
+		ft_printf("pb\n");
 }
 
 // int	main()
