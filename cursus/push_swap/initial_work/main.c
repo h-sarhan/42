@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 18:44:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 19:20:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 		while (nums[i] != NULL)
 			stack_add_bottom(&stack_a, stack_new(ft_atoi(nums[i++])));
 	}
-	// stupid_sort(stack_a, stack_b);
+	insertion_sort(stack_a, stack_b);
 	// ft_printf("%d\n", is_sorted_asc(stack_a));
 	// stack_print(stack_a);
 	// stack_print(stack_b);
@@ -44,7 +44,7 @@ int	main(int argc, char **argv)
 	// while (i < 6)
 	// 	stack_add_bottom(&stack, stack_new(nums[i++]));
 	// ft_printf("%d\n", kind_of_sorted_asc(stack));
-	ft_printf("%d\n", kind_of_sorted_asc(stack_a));
+	// ft_printf("%d\n", kind_of_sorted_asc(stack_a));
 }
 
 // TODO: CHECK ERROR MANAGEMENT SECTION
