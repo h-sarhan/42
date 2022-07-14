@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:23:41 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:22:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	push(t_stack **stack_a, t_stack **stack_b, char which)
 
 	if (stack_a == NULL || stack_b == NULL)
 		return ;
-	if (which == 'a' && ft_dlstsize(*stack_b) > 0)
+	if (which == 'a' && stack_size(*stack_b) > 0)
 	{
-		popped = ft_dlstfirst(*stack_b);
+		popped = stack_top(*stack_b);
 		temp = popped->next;
 		if (popped->next != NULL)
 		{
@@ -29,11 +29,11 @@ void	push(t_stack **stack_a, t_stack **stack_b, char which)
 			temp->prev = NULL;
 		}
 		*stack_b = temp;
-		ft_dlstadd_front(stack_a, popped);
+		stack_add_top(stack_a, popped);
 	}
-	if (which == 'b' && ft_dlstsize(*stack_a) > 0)
+	if (which == 'b' && stack_size(*stack_a) > 0)
 	{
-		popped = ft_dlstfirst(*stack_a);
+		popped = stack_top(*stack_a);
 		temp = popped->next;
 		if (popped->next != NULL)
 		{
@@ -41,7 +41,7 @@ void	push(t_stack **stack_a, t_stack **stack_b, char which)
 			temp->prev = NULL;
 		}
 		*stack_a = temp;
-		ft_dlstadd_front(stack_b, popped);
+		stack_add_top(stack_b, popped);
 	}
 	if (which == 'a')
 		ft_printf("pa\n");

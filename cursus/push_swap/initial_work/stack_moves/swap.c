@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:47:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:22:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	swap(t_stack **stack_a, t_stack **stack_b, char which)
 
 	if ((which == 'a' || which == 'c') && stack_a != NULL)
 	{
-		if (ft_dlstsize(*stack_a) > 1)
+		if (stack_size(*stack_a) > 1)
 		{
-			first = ft_dlstfirst(*stack_a);
+			first = stack_top(*stack_a);
 			second = first->next;
 			third = second->next;
 			second->prev = NULL;
@@ -35,9 +35,9 @@ void	swap(t_stack **stack_a, t_stack **stack_b, char which)
 	}
 	if ((which == 'b' || which == 'c') && stack_b != NULL)
 	{
-		if (ft_dlstsize(*stack_b) > 1)
+		if (stack_size(*stack_b) > 1)
 		{
-			first = ft_dlstfirst(*stack_b);
+			first = stack_top(*stack_b);
 			second = first->next;
 			third = second->next;
 			second->prev = NULL;

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dll.c                                              :+:      :+:    :+:   */
+/*   stack1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:22:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-t_stack	*ft_dlstnew(int num)
+t_stack	*stack_new(int num)
 {
 	t_stack	*node;
 
@@ -25,7 +25,7 @@ t_stack	*ft_dlstnew(int num)
 	return (node);
 }
 
-void	ft_dlstadd_front(t_stack **lst, t_stack *new)
+void	stack_add_top(t_stack **lst, t_stack *new)
 {
 	if (*lst == NULL)
 	{
@@ -37,7 +37,7 @@ void	ft_dlstadd_front(t_stack **lst, t_stack *new)
 	*lst = new;
 }
 
-void	ft_dlstadd_back(t_stack **lst, t_stack *new)
+void	stack_add_bottom(t_stack **lst, t_stack *new)
 {
 	t_stack	*back;
 
@@ -53,7 +53,7 @@ void	ft_dlstadd_back(t_stack **lst, t_stack *new)
 	new->prev = back;
 }
 
-void	ft_dlst_print(t_stack *lst)
+void	stack_print(t_stack *lst)
 {
 	while (lst != NULL)
 	{
@@ -63,7 +63,7 @@ void	ft_dlst_print(t_stack *lst)
 	ft_printf("NULL\n");
 }
 
-void	ft_dlst_print_reverse(t_stack *lst)
+void	stack_print_rev(t_stack *lst)
 {
 	if (lst == NULL)
 		return ;
@@ -85,13 +85,13 @@ void	ft_dlst_print_reverse(t_stack *lst)
 // 	int i = 0;
 // 	while (i < 6)
 // 	{
-// 		ft_dlstadd_back(&list, ft_dlstnew(&nums[i]));
+// 		stack_add_bottom(&list, stack_new(&nums[i]));
 // 		i++;
 // 	}
 // 	ft_dlst_print_ints(list);
 // 	ft_printf("\n");
 // 	ft_dlst_print_ints_reverse(list);
-// 	ft_printf("SIZE == %d\n", ft_dlstsize(list));
-// 	ft_printf("FIRST ELEMENT == %d\n",*(int *) ft_dlstfirst(list)->content);
-// 	ft_printf("LAST ELEMENT == %d\n", *(int *)ft_dlstlast(list)->content);
+// 	ft_printf("SIZE == %d\n", stack_size(list));
+// 	ft_printf("FIRST ELEMENT == %d\n",*(int *) stack_top(list)->content);
+// 	ft_printf("LAST ELEMENT == %d\n", *(int *)stack_bottom(list)->content);
 // }

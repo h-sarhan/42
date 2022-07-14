@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:21:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main()
 	t_stack	*stack_b = NULL;
 	int i = 0;
 	while (i < 6)
-		ft_dlstadd_back(&stack_a, ft_dlstnew(nums[i++]));
+		stack_add_bottom(&stack_a, stack_new(nums[i++]));
 
 
 	ft_printf("%d\n", find_min(stack_a)->num);
@@ -34,6 +34,6 @@ int	main()
 	// push(&stack_a, &stack_b, 'a');
 	// push(&stack_a, &stack_b, 'a');
 	// push(&stack_a, &stack_b, 'a');
-	// ft_dlst_print(stack_a);
-	// ft_dlst_print(stack_b);
+	// stack_print(stack_a);
+	// stack_print(stack_b);
 }

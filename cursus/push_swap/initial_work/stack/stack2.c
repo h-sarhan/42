@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dll2.c                                             :+:      :+:    :+:   */
+/*   stack2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:26:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:22:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-int	ft_dlstsize(t_stack *lst)
+int	stack_size(t_stack *lst)
 {
 	int	size;
 
@@ -25,7 +25,7 @@ int	ft_dlstsize(t_stack *lst)
 	return (size);
 }
 
-t_stack	*ft_dlstlast(t_stack *lst)
+t_stack	*stack_bottom(t_stack *lst)
 {
 	if (lst == NULL)
 		return (NULL);
@@ -34,7 +34,7 @@ t_stack	*ft_dlstlast(t_stack *lst)
 	return (lst);
 }
 
-t_stack	*ft_dlstfirst(t_stack *lst)
+t_stack	*stack_top(t_stack *lst)
 {
 	if (lst == NULL)
 		return (NULL);
@@ -43,7 +43,7 @@ t_stack	*ft_dlstfirst(t_stack *lst)
 	return (lst);
 }
 
-void	ft_dlstdelone(t_stack *lst)
+void	stack_delone(t_stack *lst)
 {
 	if (lst != NULL)
 	{
@@ -51,7 +51,7 @@ void	ft_dlstdelone(t_stack *lst)
 	}
 }
 
-void	ft_dlstclear(t_stack **lst)
+void	stack_clear(t_stack **lst)
 {
 	t_stack	*node;
 	t_stack	*next_node;

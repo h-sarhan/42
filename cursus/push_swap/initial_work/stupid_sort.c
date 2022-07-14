@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 07:04:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:22:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_stack	*find_min(t_stack *list)
 {
 	t_stack	*min;
 
-	list = ft_dlstfirst(list);
+	list = stack_top(list);
 	min = list;
 	while (list != NULL)
 	{
@@ -27,4 +27,11 @@ t_stack	*find_min(t_stack *list)
 		list = list->next;
 	}
 	return (min);
+}
+
+void	move_to_bottom()
+{
+	t_stack	*bottom;
+
+	bottom = stack_bottom();
 }
