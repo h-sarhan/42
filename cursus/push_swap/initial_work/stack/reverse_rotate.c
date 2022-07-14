@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   reverse_rotate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/14 05:58:36 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 06:33:27 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/07/14 06:29:23 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/07/14 06:40:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
+void	reverse_rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
 {
 	t_dlist	*first;
 	t_dlist	*last;
@@ -24,30 +24,30 @@ void	rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
 	{
 		first = ft_dlstfirst(*stack_a);
 		last = ft_dlstlast(*stack_a);
-		temp = first->next;
-		temp->prev = NULL;
-		first->prev = last;
-		first->next = NULL;
+		temp = last->prev;
+		temp->next = NULL;
 		last->next = first;
-		*stack_a = temp;
+		last->prev = NULL;
+		first->prev = last;
+		*stack_a = last;
 	}
 	if ((which == 'b' || which == 'r') && ft_dlstsize(*stack_b) > 1)
 	{
 		first = ft_dlstfirst(*stack_b);
 		last = ft_dlstlast(*stack_b);
-		temp = first->next;
-		temp->prev = NULL;
-		first->prev = last;
-		first->next = NULL;
+		temp = last->prev;
+		temp->next = NULL;
 		last->next = first;
-		*stack_b = temp;
+		last->prev = NULL;
+		first->prev = last;
+		*stack_b = last;
 	}
 	if (which == 'a')
-		ft_printf("ra\n");
+		ft_printf("rra\n");
 	if (which == 'b')
-		ft_printf("rb\n");
+		ft_printf("rrb\n");
 	if (which == 'r')
-		ft_printf("rr\n");
+		ft_printf("rrr\n");
 }
 
 // int	main()
@@ -63,10 +63,10 @@ void	rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
 // 		ft_dlstadd_back(&list2, ft_dlstnew(nums2[i]));
 // 		i++;
 // 	}
-// 	// ft_dlst_print(list);
-// 	ft_dlst_print(list2);
+// 	ft_dlst_print(list);
+// 	// ft_dlst_print(list2);
 // 	ft_printf("\n");
-// 	rotate(&list, &list2, 'b');
-// 	// ft_dlst_print(list);
-// 	ft_dlst_print(list2);
+// 	reverse_rotate(&list, &list2, 'a');
+// 	ft_dlst_print(list);
+// 	// ft_dlst_print(list2);
 // }
