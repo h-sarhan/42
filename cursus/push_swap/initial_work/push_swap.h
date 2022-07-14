@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 11:23:01 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:35:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,9 @@ void	swap(t_stack **stack_a, t_stack **stack_b, char which);
 void	push(t_stack **stack_a, t_stack **stack_b, char which);
 void	rotate(t_stack **stack_a, t_stack **stack_b, char which);
 void	reverse_rotate(t_stack **stack_a, t_stack **stack_b, char which);
+void	move_to_bottom(t_stack *min);
+void	move_to_top(t_stack *min);
+void	stupid_sort(t_stack *stack_a, t_stack *stack_b);
+
 t_stack	*find_min(t_stack *list);
 #endif

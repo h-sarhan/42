@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 11:22:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:28:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	stack_add_bottom(t_stack **lst, t_stack *new)
 
 void	stack_print(t_stack *lst)
 {
+	lst = stack_top(lst);
 	while (lst != NULL)
 	{
 		ft_printf("[%d]->", lst->num);
