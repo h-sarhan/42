@@ -6,15 +6,15 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:26:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 06:13:51 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	ft_dlstiter(t_dlist *lst, void (*f)(int))
+void	ft_dlstiter(t_stack *lst, void (*f)(int))
 {
-	t_dlist	*node;
+	t_stack	*node;
 
 	node = lst;
 	while (node != NULL)
@@ -24,12 +24,12 @@ void	ft_dlstiter(t_dlist *lst, void (*f)(int))
 	}
 }
 
-t_dlist	*ft_dlstmap(t_dlist *lst, int (*f)(int))
+t_stack	*ft_dlstmap(t_stack *lst, int (*f)(int))
 {
-	t_dlist	*old;
-	t_dlist	*new;
+	t_stack	*old;
+	t_stack	*new;
 	int		new_content;
-	t_dlist	*temp;
+	t_stack	*temp;
 
 	old = lst;
 	new = NULL;

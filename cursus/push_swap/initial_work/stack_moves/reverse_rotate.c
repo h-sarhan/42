@@ -1,52 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   reverse_rotate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/14 05:23:41 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 06:55:56 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/07/14 06:29:23 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	push(t_dlist **stack_a, t_dlist **stack_b, char which)
+void	reverse_rotate(t_stack **stack_a, t_stack **stack_b, char which)
 {
-	t_dlist	*popped;
-	t_dlist	*temp;
+	t_stack	*first;
+	t_stack	*last;
+	t_stack	*temp;
 
 	if (stack_a == NULL || stack_b == NULL)
 		return ;
-	if (which == 'a' && ft_dlstsize(*stack_b) > 0)
+	if ((which == 'a' || which == 'c') && ft_dlstsize(*stack_a) > 1)
 	{
-		popped = ft_dlstfirst(*stack_b);
-		temp = popped->next;
-		if (popped->next != NULL)
-		{
-			popped->next = NULL;
-			temp->prev = NULL;
-		}
-		*stack_b = temp;
-		ft_dlstadd_front(stack_a, popped);
+		first = ft_dlstfirst(*stack_a);
+		last = ft_dlstlast(*stack_a);
+		temp = last->prev;
+		temp->next = NULL;
+		last->next = first;
+		last->prev = NULL;
+		first->prev = last;
+		*stack_a = last;
 	}
-	if (which == 'b' && ft_dlstsize(*stack_a) > 0)
+	if ((which == 'b' || which == 'c') && ft_dlstsize(*stack_b) > 1)
 	{
-		popped = ft_dlstfirst(*stack_a);
-		temp = popped->next;
-		if (popped->next != NULL)
-		{
-			popped->next = NULL;
-			temp->prev = NULL;
-		}
-		*stack_a = temp;
-		ft_dlstadd_front(stack_b, popped);
+		first = ft_dlstfirst(*stack_b);
+		last = ft_dlstlast(*stack_b);
+		temp = last->prev;
+		temp->next = NULL;
+		last->next = first;
+		last->prev = NULL;
+		first->prev = last;
+		*stack_b = last;
 	}
 	if (which == 'a')
-		ft_printf("pa\n");
+		ft_printf("rra\n");
 	if (which == 'b')
-		ft_printf("pb\n");
+		ft_printf("rrb\n");
+	if (which == 'c')
+		ft_printf("rrr\n");
 }
 
 // int	main()
@@ -63,9 +64,9 @@ void	push(t_dlist **stack_a, t_dlist **stack_b, char which)
 // 		i++;
 // 	}
 // 	ft_dlst_print(list);
-// 	ft_dlst_print(list2);
+// 	// ft_dlst_print(list2);
 // 	ft_printf("\n");
-// 	push(&list, &list2, 'b');
+// 	reverse_rotate(&list, &list2, 'a');
 // 	ft_dlst_print(list);
-// 	ft_dlst_print(list2);
+// 	// ft_dlst_print(list2);
 // }

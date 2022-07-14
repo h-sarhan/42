@@ -6,13 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:26:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 05:44:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-int	ft_dlstsize(t_dlist *lst)
+int	ft_dlstsize(t_stack *lst)
 {
 	int	size;
 
@@ -25,7 +25,7 @@ int	ft_dlstsize(t_dlist *lst)
 	return (size);
 }
 
-t_dlist	*ft_dlstlast(t_dlist *lst)
+t_stack	*ft_dlstlast(t_stack *lst)
 {
 	if (lst == NULL)
 		return (NULL);
@@ -34,7 +34,7 @@ t_dlist	*ft_dlstlast(t_dlist *lst)
 	return (lst);
 }
 
-t_dlist	*ft_dlstfirst(t_dlist *lst)
+t_stack	*ft_dlstfirst(t_stack *lst)
 {
 	if (lst == NULL)
 		return (NULL);
@@ -43,7 +43,7 @@ t_dlist	*ft_dlstfirst(t_dlist *lst)
 	return (lst);
 }
 
-void	ft_dlstdelone(t_dlist *lst)
+void	ft_dlstdelone(t_stack *lst)
 {
 	if (lst != NULL)
 	{
@@ -51,10 +51,10 @@ void	ft_dlstdelone(t_dlist *lst)
 	}
 }
 
-void	ft_dlstclear(t_dlist **lst)
+void	ft_dlstclear(t_stack **lst)
 {
-	t_dlist	*node;
-	t_dlist	*next_node;
+	t_stack	*node;
+	t_stack	*next_node;
 
 	node = *lst;
 	while (node != NULL)

@@ -6,17 +6,17 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:58:36 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 06:58:43 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	rotate(t_dlist **stack_a, t_dlist **stack_b, char which)
+void	rotate(t_stack **stack_a, t_stack **stack_b, char which)
 {
-	t_dlist	*first;
-	t_dlist	*last;
-	t_dlist	*temp;
+	t_stack	*first;
+	t_stack	*last;
+	t_stack	*temp;
 
 	if (stack_a == NULL || stack_b == NULL)
 		return ;

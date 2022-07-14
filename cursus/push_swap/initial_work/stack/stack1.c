@@ -6,17 +6,17 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 05:43:46 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-t_dlist	*ft_dlstnew(int num)
+t_stack	*ft_dlstnew(int num)
 {
-	t_dlist	*node;
+	t_stack	*node;
 
-	node = ft_calloc(1, sizeof(t_dlist));
+	node = ft_calloc(1, sizeof(t_stack));
 	if (node == NULL)
 		return (NULL);
 	node->prev = NULL;
@@ -25,7 +25,7 @@ t_dlist	*ft_dlstnew(int num)
 	return (node);
 }
 
-void	ft_dlstadd_front(t_dlist **lst, t_dlist *new)
+void	ft_dlstadd_front(t_stack **lst, t_stack *new)
 {
 	if (*lst == NULL)
 	{
@@ -37,9 +37,9 @@ void	ft_dlstadd_front(t_dlist **lst, t_dlist *new)
 	*lst = new;
 }
 
-void	ft_dlstadd_back(t_dlist **lst, t_dlist *new)
+void	ft_dlstadd_back(t_stack **lst, t_stack *new)
 {
-	t_dlist	*back;
+	t_stack	*back;
 
 	if (*lst == NULL)
 	{
@@ -53,7 +53,7 @@ void	ft_dlstadd_back(t_dlist **lst, t_dlist *new)
 	new->prev = back;
 }
 
-void	ft_dlst_print(t_dlist *lst)
+void	ft_dlst_print(t_stack *lst)
 {
 	while (lst != NULL)
 	{
@@ -63,7 +63,7 @@ void	ft_dlst_print(t_dlist *lst)
 	ft_printf("NULL\n");
 }
 
-void	ft_dlst_print_reverse(t_dlist *lst)
+void	ft_dlst_print_reverse(t_stack *lst)
 {
 	if (lst == NULL)
 		return ;

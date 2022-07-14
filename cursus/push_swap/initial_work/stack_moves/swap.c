@@ -6,17 +6,17 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:47:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 06:58:52 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:10:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	swap(t_dlist **stack_a, t_dlist **stack_b, char which)
+void	swap(t_stack **stack_a, t_stack **stack_b, char which)
 {
-	t_dlist	*first;
-	t_dlist	*second;
-	t_dlist	*third;
+	t_stack	*first;
+	t_stack	*second;
+	t_stack	*third;
 
 	if ((which == 'a' || which == 'c') && stack_a != NULL)
 	{
