@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:47:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 05:45:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 05:47:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,4 @@ void	swap(t_dlist **stack_a, t_dlist **stack_b, char which)
 		ft_printf("sb\n");
 	if (which == 's')
 		ft_printf("ss\n");
-}
-
-int	main()
-{
-	int	nums[] = {10, 20, 30, 40, 50};
-	t_dlist	*list = NULL;
-	int i = 0;
-	while (i < 5)
-	{
-		ft_dlstadd_back(&list, ft_dlstnew(nums[i]));
-		i++;
-	}
-	ft_dlst_print(list);
-	swap(&list, NULL, 'a');
-	ft_dlst_print(list);
 }
