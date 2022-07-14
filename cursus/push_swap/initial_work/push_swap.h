@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 16:41:32 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 18:39:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	move_to_top(t_stack *min);
 void	stupid_sort(t_stack *stack_a, t_stack *stack_b);
 int		is_sorted_desc(t_stack *stack);
 int		is_sorted_asc(t_stack *stack);
-void insertion_sort(t_stack *stack_a, t_stack *stack_b);
-t_stack	*find_min(t_stack *list);
-t_stack	*find_max(t_stack *list);
-int	kind_of_sorted_asc(t_stack *stack);
+void	insertion_sort(t_stack *stack_a, t_stack *stack_b);
+t_stack	*find_min(t_stack *stack);
+t_stack	*find_max(t_stack *stack);
+int		kind_of_sorted_asc(t_stack *stack);
 #endif

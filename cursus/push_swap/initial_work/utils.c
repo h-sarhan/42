@@ -6,23 +6,23 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:09:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 13:42:43 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 18:43:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack	*find_min(t_stack *list)
+t_stack	*find_min(t_stack *stack)
 {
 	t_stack	*min;
 
-	list = stack_top(list);
-	min = list;
-	while (list != NULL)
+	stack = stack_top(stack);
+	min = stack;
+	while (stack != NULL)
 	{
-		if (list->num < min->num)
-			min = list;
-		list = list->next;
+		if (stack->num < min->num)
+			min = stack;
+		stack = stack->next;
 	}
 	return (min);
 }

@@ -6,37 +6,41 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 16:19:16 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 16:39:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 18:56:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// Check if all elements before minimum element are in increasing order.
+// Check if all elements after minimum element are in increasing order.
+// Check if the last element of the array is smaller than the starting element.
 int	kind_of_sorted_asc(t_stack *stack)
 {
-	t_stack	*outer_el;
-	t_stack	*inner_el;
+	t_stack	*min;
+	t_stack *bottom;
+	t_stack *top;
 
-	int sorted;
-	outer_el = stack;
-	while (outer_el != NULL)
+	bottom = stack_bottom(stack);
+	top = stack_top(stack);
+	if (stack == NULL)
+		ft_printf("DO SOMETHING\n");
+	min = find_min(stack);
+	while (stack->next != NULL && stack->next != min)
 	{
-		sorted = 1;
-		inner_el = outer_el;
-		while (inner_el->next != outer_el)
-		{
-			if (inner_el->num > inner_el->next->num)
-			{
-				sorted = 0;
-				break ;
-			}
-			inner_el = inner_el->next;
-			if (inner_el->next == NULL)
-				inner_el = stack_top(stack);
-		}
-		outer_el = outer_el->next;
-		if (sorted == 1)
-			return (1);
+		if (stack->num > stack->next->num)
+			return (0);
+		stack = stack->next;
 	}
-	return (0);
+	stack = min->next;
+	while (stack != NULL && stack->next != NULL && stack->next != bottom)
+	{
+		if (stack->num > stack->next->num)
+			return (0);
+		stack = stack->next;
+	}
+	if (bottom->num < top->num)
+		return (1);
+	else
+		return (0);
 }
