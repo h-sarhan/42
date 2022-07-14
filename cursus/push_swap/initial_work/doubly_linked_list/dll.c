@@ -6,13 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 05:00:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 05:43:46 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-t_dlist	*ft_dlstnew(void *content)
+t_dlist	*ft_dlstnew(int num)
 {
 	t_dlist	*node;
 
@@ -21,7 +21,7 @@ t_dlist	*ft_dlstnew(void *content)
 		return (NULL);
 	node->prev = NULL;
 	node->next = NULL;
-	node->content = content;
+	node->num = num;
 	return (node);
 }
 
@@ -53,17 +53,17 @@ void	ft_dlstadd_back(t_dlist **lst, t_dlist *new)
 	new->prev = back;
 }
 
-void	ft_dlst_print_ints(t_dlist *lst)
+void	ft_dlst_print(t_dlist *lst)
 {
 	while (lst != NULL)
 	{
-		ft_printf("[%d]->", *(int *)lst->content);
+		ft_printf("[%d]->", lst->num);
 		lst = lst->next;
 	}
 	ft_printf("NULL\n");
 }
 
-void	ft_dlst_print_ints_reverse(t_dlist *lst)
+void	ft_dlst_print_reverse(t_dlist *lst)
 {
 	if (lst == NULL)
 		return ;
@@ -72,7 +72,7 @@ void	ft_dlst_print_ints_reverse(t_dlist *lst)
 	ft_printf("NULL");
 	while (lst != NULL)
 	{
-		ft_printf("<-[%d]", *(int *)lst->content);
+		ft_printf("<-[%d]", lst->num);
 		lst = lst->prev;
 	}
 	ft_printf("\n");

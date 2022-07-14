@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:26:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 04:28:52 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 05:44:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,25 @@ t_dlist	*ft_dlstfirst(t_dlist *lst)
 	return (lst);
 }
 
-void	ft_dlstdelone(t_dlist *lst, void (*del)(void *))
+void	ft_dlstdelone(t_dlist *lst)
 {
 	if (lst != NULL)
 	{
-		(*del)(lst->content);
 		free(lst);
 	}
+}
+
+void	ft_dlstclear(t_dlist **lst)
+{
+	t_dlist	*node;
+	t_dlist	*next_node;
+
+	node = *lst;
+	while (node != NULL)
+	{
+		next_node = node->next;
+		free(node);
+		node = next_node;
+	}
+	*lst = NULL;
 }

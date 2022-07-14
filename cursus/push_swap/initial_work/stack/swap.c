@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:47:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 05:05:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/14 05:45:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ int	main()
 	int i = 0;
 	while (i < 5)
 	{
-		ft_dlstadd_back(&list, ft_dlstnew(&nums[i]));
+		ft_dlstadd_back(&list, ft_dlstnew(nums[i]));
 		i++;
 	}
-	ft_dlst_print_ints(list);
+	ft_dlst_print(list);
 	swap(&list, NULL, 'a');
-	ft_dlst_print_ints(list);
+	ft_dlst_print(list);
 }
