@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 12:15:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 12:17:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,19 @@ void	stack_print(t_stack *lst)
 	ft_printf("NULL\n");
 }
 
-int		main()
-{
-	int	nums[] = {-10, 10, 20, 30, 40, 50};
-	t_stack	*stack = NULL;
-	int i = 0;
-	while (i < 6)
-	{
-		stack_add_top(&stack, stack_new(nums[i]));
-		i++;
-	}
-	stack_print(stack);
-	ft_printf("\n");
-	ft_printf("SIZE == %d\n", stack_size(stack));
-	ft_printf("FIRST ELEMENT == %d\n",stack->num);
-	ft_printf("LAST ELEMENT == %d\n", stack_bottom(stack)->num);
-}
+// int		main()
+// {
+// 	int	nums[] = {-10, 10, 20, 30, 40, 50};
+// 	t_stack	*stack = NULL;
+// 	int i = 0;
+// 	while (i < 6)
+// 	{
+// 		stack_add_top(&stack, stack_new(nums[i]));
+// 		i++;
+// 	}
+// 	stack_print(stack);
+// 	ft_printf("\n");
+// 	ft_printf("SIZE == %d\n", stack_size(stack));
+// 	ft_printf("FIRST ELEMENT == %d\n",stack->num);
+// 	ft_printf("LAST ELEMENT == %d\n", stack_bottom(stack)->num);
+// }
