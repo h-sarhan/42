@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:09:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 12:14:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 14:08:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	is_sorted_desc(t_stack *stack)
 
 int	is_sorted_asc(t_stack *stack)
 {
+	if (stack_size(stack) < 2)
+		return (1);
 	while (stack->next != NULL)
 	{
 		if (stack->num > stack->next->num)

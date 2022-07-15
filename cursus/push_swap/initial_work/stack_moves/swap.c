@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:47:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 13:05:51 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 13:07:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void	swap(t_stack **stack_a, t_stack **stack_b, char which)
 
 // int	main()
 // {
-// 	int	nums[] = {10, 20, 30, 40, 50};
-// 	int	nums2[] = {60, 70, 80, 90, 100};
+// 	int	nums[] = {10, 20, };
+// 	int	nums2[] = {60, 70};
 // 	t_stack	*stack_a = NULL;
 // 	t_stack	*stack_b = NULL;
 // 	int i = 0;
-// 	while (i < 5)
+// 	while (i < 2)
 // 	{
 // 		stack_add_bottom(&stack_a, stack_new(nums[i]));
 // 		stack_add_bottom(&stack_b, stack_new(nums2[i]));

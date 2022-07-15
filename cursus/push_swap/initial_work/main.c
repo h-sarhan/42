@@ -6,47 +6,47 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 12:01:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 14:45:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// int	main(int argc, char **argv)
-// {
-// 	// TODO: CHECK FOR DUPLICATES
-// 	// TODO: CHECK FOR OVERFLOW
-// 	// TODO: OTHER STUFF
-// 	t_stack	*stack_a = NULL;
-// 	t_stack	*stack_b = NULL;
-// 	if (argc > 2)
-// 	{
-// 		int i = 1;
-// 		while (i < argc)
-// 			stack_add_bottom(&stack_a, stack_new(ft_atoi(argv[i++])));
-// 	}
-// 	else if (argc == 2)
-// 	{
-// 		char **nums = ft_split(argv[1], ' ');
-// 		int i = 0;
-// 		while (nums[i] != NULL)
-// 			stack_add_bottom(&stack_a, stack_new(ft_atoi(nums[i++])));
-// 	}
-// 	insertion_sort(stack_a, stack_b);
-// 	// ft_printf("%d\n", is_sorted_asc(stack_a));
-// 	// stack_print(stack_a);
-// 	// stack_print(stack_b);
+int	main(int argc, char **argv)
+{
+	// TODO: CHECK FOR DUPLICATES
+	// TODO: CHECK FOR OVERFLOW
+	// TODO: OTHER STUFF
+	t_stack	*stack_a = NULL;
+	t_stack	*stack_b = NULL;
+	if (argc > 2)
+	{
+		int i = 1;
+		while (i < argc)
+			stack_add_bottom(&stack_a, stack_new(ft_atoi(argv[i++])));
+	}
+	else if (argc == 2)
+	{
+		char **nums = ft_split(argv[1], ' ');
+		int i = 0;
+		while (nums[i] != NULL)
+			stack_add_bottom(&stack_a, stack_new(ft_atoi(nums[i++])));
+	}
+	insertion_sort(&stack_a, &stack_b);
+	// stack_print(stack_a);
+	// stack_print(stack_b);
 	
-// 	// t_stack    *stack;
-// 	// stack = NULL;
-// 	// int nums[] = {1, 2, 3,  4, 5, -100};
-// 	// int i = 0;
-// 	// while (i < 6)
-// 	// 	stack_add_bottom(&stack, stack_new(nums[i++]));
-// 	// ft_printf("%d\n", kind_of_sorted_asc(stack));
-// 	// ft_printf("%d\n", kind_of_sorted_asc(stack_a));
-// }
+	// t_stack    *stack;
+	// stack = NULL;
+	// int nums[] = { 1 , 2, 3, 4 , 5, 6, 0};
+	// int i = 0;
+	// while (i < sizeof(nums)/sizeof(int))
+	// 	stack_add_bottom(&stack, stack_new(nums[i++]));
+	// ft_printf("%d\n", kind_of_sorted_asc(stack));
+}
 
+
+// ! 100 ints insertion sort gives me ~3500 moves
 // TODO: CHECK ERROR MANAGEMENT SECTION
 // PUSH SWAP RANGES:
 // 2 integers:

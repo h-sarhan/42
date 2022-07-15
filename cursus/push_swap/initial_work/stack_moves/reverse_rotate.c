@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:29:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 12:13:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 14:36:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,64 @@
 
 void	reverse_rotate(t_stack **stack_a, t_stack **stack_b, char which)
 {
-	// t_stack	*first;
-	// t_stack	*last;
-	// t_stack	*temp;
-
-	// if (stack_a == NULL && stack_b == NULL)
-	// 	return ;
-	// if ((which == 'a' || which == 'c') && stack_size(*stack_a) > 1)
-	// {
-	// 	first = *stack_a;
-	// 	last = stack_bottom(*stack_a);
-	// 	temp->next = NULL;
-	// 	last->next = first;
-	// 	*stack_a = last;
-	// }
-	// if ((which == 'b' || which == 'c') && stack_size(*stack_b) > 1)
-	// {
-	// 	first = *stack_b;
-	// 	last = stack_bottom(*stack_b);
-	// 	temp->next = NULL;
-	// 	last->next = first;
-	// 	*stack_b = last;
-	// }
-	// if (which == 'a')
-	// 	ft_printf("rra\n");
-	// if (which == 'b')
-	// 	ft_printf("rrb\n");
-	// if (which == 'c')
-	// 	ft_printf("rrr\n");
+	t_stack	*first;
+	t_stack	*bottom;
+	t_stack	*before_bottom;
+	
+	if (stack_a == NULL && stack_b == NULL)
+		return ;
+	if ((which == 'a' || which == 'c') && stack_size(*stack_a) > 1)
+	{
+		first = *stack_a;
+		bottom = stack_bottom(*stack_a);
+		before_bottom = first;
+		while (before_bottom->next->next != NULL)
+			before_bottom = before_bottom->next;
+		bottom->next = first;
+		before_bottom->next = NULL;
+		*stack_a = bottom;
+	}
+	if ((which == 'b' || which == 'c') && stack_size(*stack_b) > 1)
+	{
+		first = *stack_b;
+		bottom = stack_bottom(*stack_b);
+		before_bottom = first;
+		while (before_bottom->next->next != NULL)
+			before_bottom = before_bottom->next;
+		bottom->next = first;
+		before_bottom->next = NULL;
+		*stack_b = bottom;
+	}
+	if (which == 'a')
+		ft_printf("rra\n");
+	if (which == 'b')
+		ft_printf("rrb\n");
+	if (which == 'c')
+		ft_printf("rrr\n");
 }
 
 // int	main()
 // {
 // 	int	nums[] = {10, 20, 30, 40, 50};
 // 	int	nums2[] = {60, 70, 80, 90, 100};
-// 	t_dlist	*list = NULL;
-// 	t_dlist	*list2 = NULL;
+// 	t_stack	*stack_a = NULL;
+// 	t_stack	*stack_b = NULL;
 // 	int i = 0;
 // 	while (i < 5)
 // 	{
-// 		ft_dlstadd_back(&list, ft_dlstnew(nums[i]));
-// 		ft_dlstadd_back(&list2, ft_dlstnew(nums2[i]));
+// 		stack_add_bottom(&stack_a, stack_new(nums[i]));
+// 		stack_add_bottom(&stack_b, stack_new(nums2[i]));
 // 		i++;
 // 	}
-// 	ft_dlst_print(list);
-// 	// ft_dlst_print(list2);
+// 	stack_print(stack_a);
+// 	// stack_print(stack_b);
+// 	// reverse_rotate(&stack_a, &stack_b, 'a');
+// 	// reverse_rotate(&stack_a, &stack_b, 'a');
+// 	// reverse_rotate(&stack_a, &stack_b, 'a');
+// 	// reverse_rotate(&stack_a, &stack_b, 'a');
+// 	// reverse_rotate(&stack_a, &stack_b, 'a');
+// 	// reverse_rotate(&stack_a, &stack_b, 'a');
 // 	ft_printf("\n");
-// 	reverse_rotate(&list, &list2, 'a');
-// 	ft_dlst_print(list);
-// 	// ft_dlst_print(list2);
+// 	stack_print(stack_a);
+// 	// stack_print(stack_b);
 // }

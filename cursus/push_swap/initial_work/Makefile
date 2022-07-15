@@ -6,11 +6,11 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/14 18:37:09 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/15 14:06:44 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -g3
 CC = cc
 
 NAME = push_swap
@@ -41,7 +41,7 @@ PRINTF_OBJS := $(PRINTF_SRCS:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(PRINTF) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS)  $(LIBFT) $(PRINTF) -o $@
+	$(CC) $(CFLAGS) $(OBJS)  $(PRINTF) $(LIBFT)   -o $@
 
 $(LIBFT): $(LIBFT_OBJS)
 	ar -rcs $@ $^
