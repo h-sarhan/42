@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 14:45:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 17:40:12 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,18 @@ int	main(int argc, char **argv)
 		while (nums[i] != NULL)
 			stack_add_bottom(&stack_a, stack_new(ft_atoi(nums[i++])));
 	}
-	insertion_sort(&stack_a, &stack_b);
-	// stack_print(stack_a);
-	// stack_print(stack_b);
+	// insertion_sort(&stack_a, &stack_b);
+	partition_start(&stack_a, &stack_b);
+	stack_print(stack_a);
+	stack_print(stack_b);
 	
 	// t_stack    *stack;
 	// stack = NULL;
-	// int nums[] = { 1 , 2, 3, 4 , 5, 6, 0};
+	// int nums[] = {6, 11 , 10, 9, 8 , 7};
 	// int i = 0;
 	// while (i < sizeof(nums)/sizeof(int))
 	// 	stack_add_bottom(&stack, stack_new(nums[i++]));
-	// ft_printf("%d\n", kind_of_sorted_asc(stack));
+	// ft_printf("%d\n", kind_of_sorted_desc(stack));
 }
 
 

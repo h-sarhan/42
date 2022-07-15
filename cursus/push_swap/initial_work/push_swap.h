@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 14:11:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 17:35:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	insertion_sort(t_stack **stack_a, t_stack **stack_b);
 t_stack	*find_min(t_stack *stack);
 t_stack	*find_max(t_stack *stack);
 int		kind_of_sorted_asc(t_stack *stack);
+int		kind_of_sorted_desc(t_stack *stack);
 #endif
