@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 18:10:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 18:14:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	main(int argc, char **argv)
 	partition_start(&stack_a, &stack_b);
 	// stack_print(stack_a);
 	// stack_print(stack_b);
-	print_stacks_side_by_side(stack_a, stack_b);
 	
 	// t_stack    *stack;
 	// stack = NULL;
