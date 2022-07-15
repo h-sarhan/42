@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:29:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 11:30:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 12:13:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,34 @@
 
 void	reverse_rotate(t_stack **stack_a, t_stack **stack_b, char which)
 {
-	t_stack	*first;
-	t_stack	*last;
-	t_stack	*temp;
+	// t_stack	*first;
+	// t_stack	*last;
+	// t_stack	*temp;
 
-	if (stack_a == NULL && stack_b == NULL)
-		return ;
-	if ((which == 'a' || which == 'c') && stack_size(*stack_a) > 1)
-	{
-		first = stack_top(*stack_a);
-		last = stack_bottom(*stack_a);
-		temp = last->prev;
-		temp->next = NULL;
-		last->next = first;
-		last->prev = NULL;
-		first->prev = last;
-		*stack_a = last;
-	}
-	if ((which == 'b' || which == 'c') && stack_size(*stack_b) > 1)
-	{
-		first = stack_top(*stack_b);
-		last = stack_bottom(*stack_b);
-		temp = last->prev;
-		temp->next = NULL;
-		last->next = first;
-		last->prev = NULL;
-		first->prev = last;
-		*stack_b = last;
-	}
-	if (which == 'a')
-		ft_printf("rra\n");
-	if (which == 'b')
-		ft_printf("rrb\n");
-	if (which == 'c')
-		ft_printf("rrr\n");
+	// if (stack_a == NULL && stack_b == NULL)
+	// 	return ;
+	// if ((which == 'a' || which == 'c') && stack_size(*stack_a) > 1)
+	// {
+	// 	first = *stack_a;
+	// 	last = stack_bottom(*stack_a);
+	// 	temp->next = NULL;
+	// 	last->next = first;
+	// 	*stack_a = last;
+	// }
+	// if ((which == 'b' || which == 'c') && stack_size(*stack_b) > 1)
+	// {
+	// 	first = *stack_b;
+	// 	last = stack_bottom(*stack_b);
+	// 	temp->next = NULL;
+	// 	last->next = first;
+	// 	*stack_b = last;
+	// }
+	// if (which == 'a')
+	// 	ft_printf("rra\n");
+	// if (which == 'b')
+	// 	ft_printf("rrb\n");
+	// if (which == 'c')
+	// 	ft_printf("rrr\n");
 }
 
 // int	main()

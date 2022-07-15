@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:23:41 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 11:22:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 11:55:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,22 @@ void	push(t_stack **stack_a, t_stack **stack_b, char which)
 		return ;
 	if (which == 'a' && stack_size(*stack_b) > 0)
 	{
-		popped = stack_top(*stack_b);
+		popped = *stack_b;
 		temp = popped->next;
 		if (popped->next != NULL)
 		{
 			popped->next = NULL;
-			temp->prev = NULL;
 		}
 		*stack_b = temp;
 		stack_add_top(stack_a, popped);
 	}
 	if (which == 'b' && stack_size(*stack_a) > 0)
 	{
-		popped = stack_top(*stack_a);
+		popped = *stack_a;
 		temp = popped->next;
 		if (popped->next != NULL)
 		{
 			popped->next = NULL;
-			temp->prev = NULL;
 		}
 		*stack_a = temp;
 		stack_add_top(stack_b, popped);

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:09:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 18:43:32 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 12:14:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 t_stack	*find_min(t_stack *stack)
 {
 	t_stack	*min;
-
-	stack = stack_top(stack);
+	// t_stack	*top;
+	
+	// stack = stack;
 	min = stack;
 	while (stack != NULL)
 	{
@@ -53,7 +54,7 @@ t_stack	*find_max(t_stack *list)
 {
 	t_stack	*max;
 
-	list = stack_top(list);
+	// list = list;
 	max = list;
 	while (list != NULL)
 	{
@@ -62,4 +63,15 @@ t_stack	*find_max(t_stack *list)
 		list = list->next;
 	}
 	return (max);
+}
+
+void	move_to_bottom(t_stack *min)
+{
+	t_stack	*stack;
+
+	stack = min;
+	while (min->next != NULL)
+	{
+		reverse_rotate(&stack, NULL, 'a');
+	}
 }
