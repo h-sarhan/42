@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:09:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 17:39:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/15 18:12:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,47 @@ void	move_to_bottom(t_stack *min)
 	{
 		reverse_rotate(&stack, NULL, 'a');
 	}
+}
+
+void	print_stacks_side_by_side(t_stack *stack_a, t_stack *stack_b)
+{
+	ft_printf(" ===========\n");
+	ft_printf("  A      B\n");
+	while (stack_a != NULL && stack_b != NULL)
+	{
+		ft_printf(" [%d]    [%d]\n", stack_a->num, stack_b->num);
+		ft_printf("  ↓      ↓\n");
+		stack_a = stack_a->next;
+		stack_b = stack_b->next;
+	}
+	if (stack_a == NULL && stack_b == NULL)
+	{
+		ft_printf(" NULL   NULL\n");
+		ft_printf(" ===========\n");
+		return ;
+	}
+	else if (stack_a == NULL)
+	{
+		ft_printf(" NULL     \n");
+	}
+	else if (stack_b == NULL)
+	{
+		ft_printf("       NULL\n");
+	}
+	while (stack_a != NULL)
+	{
+		ft_printf(" [%d]       \n", stack_a->num);
+		ft_printf("   ↓        \n");
+		stack_a = stack_a->next;		
+	}
+	if (stack_a == NULL)
+		ft_printf(" NULL     \n");
+	while (stack_b != NULL)
+	{
+		ft_printf("         [%d]\n", stack_b->num);
+		ft_printf("           ↓ \n");
+		stack_b = stack_b->next;		
+	}
+	if (stack_b == NULL)
+		ft_printf("        NULL\n");
 }
