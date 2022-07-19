@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/19 16:47:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 21:33:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ int	main(int argc, char **argv)
 	// experiment(stack_a);
 	get_final_positions(stack_a);
 	
+	// int chonk_size = ft_atoi(argv[argc - 1]);
+	int chonk_size = 8;
+	chonk(&stack_a, &stack_b, chonk_size);
+	// print_stacks_side_by_side(stack_a, stack_b);
+	// ft_printf("CHONK END\n");
+	sort_after_chonking(&stack_a, &stack_b, chonk_size);
+	// print_stacks_side_by_side(stack_a, stack_b);
 	// insertion_sort(&stack_a, &stack_b);
 	// bubble_sort_stack(&stack_a, 'a');
 	// stack_print(stack_a);
