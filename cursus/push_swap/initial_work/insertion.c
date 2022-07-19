@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:43:58 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 14:41:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:48:52 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// ! SHIT ALGORITHM
 void insertion_sort(t_stack **stack_a, t_stack **stack_b)
 {
 	// t_stack *top;

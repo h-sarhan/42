@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 12:17:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:33:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_stack	*stack_new(int num)
 		return (NULL);
 	node->next = NULL;
 	node->num = num;
+	node->final_idx = -1;
 	return (node);
 }
 

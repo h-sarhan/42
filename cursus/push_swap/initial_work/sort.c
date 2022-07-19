@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 10:59:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/18 14:49:47 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:48:18 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// ! SHIT ALGORITHM
 void	bubble_sort_stack(t_stack **stack, char which)
 {
 	while (!kind_of_sorted_asc(*stack))

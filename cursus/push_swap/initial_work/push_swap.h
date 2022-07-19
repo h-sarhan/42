@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/18 14:46:43 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:42:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ void	print_stacks_side_by_side(t_stack *stack_a, t_stack *stack_b);
 
 void	experiment(t_stack *stack);
 void	bubble_sort_stack(t_stack **stack, char which);
-
+void	get_final_positions(t_stack *stack);
 #endif

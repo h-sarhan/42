@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/18 14:50:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:47:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ int	main(int argc, char **argv)
 		while (nums[i] != NULL)
 			stack_add_bottom(&stack_a, stack_new(ft_atoi(nums[i++])));
 	}
-	experiment(stack_a);
+	// experiment(stack_a);
+	get_final_positions(stack_a);
+	
 	// insertion_sort(&stack_a, &stack_b);
 	// bubble_sort_stack(&stack_a, 'a');
 	// stack_print(stack_a);
