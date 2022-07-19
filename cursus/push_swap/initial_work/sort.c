@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 10:59:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/19 19:56:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 22:08:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ void	bubble_sort_stack(t_stack **stack, char which)
 				if (which == 'a')
 				{
 					swap(stack, NULL, 'a');
-					rotate(stack, NULL, 'a');
+					rotate(stack, NULL, 'a', 0);
 				}
 			}
 			else if (which == 'a')
-				rotate(stack, NULL, 'a');
+				rotate(stack, NULL, 'a', 0);
 			// stack = stack->next;
 		}
 		// stack = stack->next;
 	}
 	while (kind_of_sorted_asc(*stack) && !is_sorted_asc(*stack))
-		rotate(stack, NULL, which);
+		rotate(stack, NULL, which, 0);
 }

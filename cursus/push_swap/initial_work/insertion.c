@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:43:58 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/19 16:48:52 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 22:08:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void insertion_sort(t_stack **stack_a, t_stack **stack_b)
 			{
 				// stack_print(*stack_a);
 				
-				reverse_rotate(stack_a, stack_b, 'a');
+				reverse_rotate(stack_a, stack_b, 'a', 0);
 				swap(stack_a, stack_b, 'a');
 			}
 		}
@@ -48,7 +48,7 @@ void insertion_sort(t_stack **stack_a, t_stack **stack_b)
 				// stack_print(stack_a);
 				
 				swap(stack_a, stack_b, 'a');
-				rotate(stack_a, stack_b, 'a');
+				rotate(stack_a, stack_b, 'a', 0);
 			}
 			
 		}
@@ -59,14 +59,14 @@ void insertion_sort(t_stack **stack_a, t_stack **stack_b)
 	{
 		while (!is_sorted_asc(*stack_a))
 		{
-			reverse_rotate(stack_a, stack_b, 'a');
+			reverse_rotate(stack_a, stack_b, 'a', 0);
 		}
 	}
 	else
 	{
 		while (!is_sorted_asc(*stack_a))
 		{
-			rotate(stack_a, stack_b, 'a');
+			rotate(stack_a, stack_b, 'a', 0);
 		}
 	}
 	// stack_print(stack_a);

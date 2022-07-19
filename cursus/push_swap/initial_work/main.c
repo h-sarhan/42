@@ -6,12 +6,12 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/19 21:33:47 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 23:18:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+// /usr/bin/python3 python_visualizer.py `ruby -e "puts (0..100).to_a.shuffle.join(' ')"`
 int	main(int argc, char **argv)
 {
 	// TODO: CHECK FOR DUPLICATES
@@ -34,9 +34,9 @@ int	main(int argc, char **argv)
 	}
 	// experiment(stack_a);
 	get_final_positions(stack_a);
-	
+
 	// int chonk_size = ft_atoi(argv[argc - 1]);
-	int chonk_size = 8;
+	int chonk_size = 40;
 	chonk(&stack_a, &stack_b, chonk_size);
 	// print_stacks_side_by_side(stack_a, stack_b);
 	// ft_printf("CHONK END\n");
@@ -56,9 +56,9 @@ int	main(int argc, char **argv)
 	// ft_printf("%d\n", kind_of_sorted_desc(stack));
 }
 
-
-// ! 100 ints insertion sort gives me ~3500 moves
 // TODO: CHECK ERROR MANAGEMENT SECTION
+// ! 100 ints with 15 chonk size ~ 750
+// ! 500 ints with 40 chonk size ~ 7270
 // PUSH SWAP RANGES:
 // 2 integers:
 // 2 - 3 moves
@@ -66,13 +66,13 @@ int	main(int argc, char **argv)
 // 8 - 12 moves
 // 100 integers:
 // [5 points] less than 700 moves
-// [4 points] less than 900 moves
+//? [4 points] less than 900 moves
 // [3 points] less than 1100 moves
 // [2 points] less than 1300 moves
 // [1 points] less than 1500 moves
 // 500 integers:
 // [5 points] less than 5500 moves
 // [4 points] less than 7000 moves
-// [3 points] less than 8500 moves
+//? [3 points] less than 8500 moves
 // [2 points] less than 10000 moves
 // [1 points] less than 11500 moves

@@ -6,13 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:29:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 14:36:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 21:54:18 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	reverse_rotate(t_stack **stack_a, t_stack **stack_b, char which)
+void	reverse_rotate(t_stack **stack_a, t_stack **stack_b, char which, int q)
 {
 	t_stack	*first;
 	t_stack	*bottom;
@@ -42,11 +42,11 @@ void	reverse_rotate(t_stack **stack_a, t_stack **stack_b, char which)
 		before_bottom->next = NULL;
 		*stack_b = bottom;
 	}
-	if (which == 'a')
+	if (which == 'a' && !q)
 		ft_printf("rra\n");
-	if (which == 'b')
+	if (which == 'b' && !q)
 		ft_printf("rrb\n");
-	if (which == 'c')
+	if (which == 'c' && !q)
 		ft_printf("rrr\n");
 }
 

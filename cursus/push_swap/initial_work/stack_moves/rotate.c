@@ -6,13 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:58:36 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/19 21:06:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 21:54:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	rotate(t_stack **stack_a, t_stack **stack_b, char which)
+void	rotate(t_stack **stack_a, t_stack **stack_b, char which, int q)
 {
 	t_stack	*first;
 	t_stack	*second;
@@ -26,8 +26,6 @@ void	rotate(t_stack **stack_a, t_stack **stack_b, char which)
 		stack_bottom(*stack_a)->next = first;
 		first->next = NULL;
 		*stack_a = second;
-		if (which == 'a')
-			ft_printf("ra\n");
 	}
 	if ((which == 'b' || which == 'c') && stack_size(*stack_b) > 1)
 	{
@@ -36,10 +34,12 @@ void	rotate(t_stack **stack_a, t_stack **stack_b, char which)
 		stack_bottom(*stack_b)->next = first;
 		first->next = NULL;
 		*stack_b = second;
-		if (which == 'b')
-			ft_printf("rb\n");
 	}
-	if (which == 'c')
+	if (which == 'a' && !q)
+		ft_printf("ra\n");
+	if (which == 'b' && !q)
+		ft_printf("rb\n");
+	if (which == 'c' && !q)
 		ft_printf("rr\n");
 }
 

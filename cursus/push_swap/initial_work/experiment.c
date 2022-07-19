@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 14:13:29 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/18 14:37:46 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 22:09:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	experiment(t_stack *stack_a)
 			break;
 		line = ft_strtrim(line, "\n");
 		if (ft_strncmp(line, "ra", ft_strlen(line)) == 0)
-			rotate(&stack_a, &stack_b, 'a');
+			rotate(&stack_a, &stack_b, 'a', 0);
 		if (ft_strncmp(line, "rb", ft_strlen(line)) == 0)
-			rotate(&stack_a, &stack_b, 'b');
+			rotate(&stack_a, &stack_b, 'b', 0);
 		if (ft_strncmp(line, "rra", ft_strlen(line)) == 0)
-			reverse_rotate(&stack_a, &stack_b, 'a');
+			reverse_rotate(&stack_a, &stack_b, 'a', 0);
 		if (ft_strncmp(line, "rrb", ft_strlen(line)) == 0)
-			reverse_rotate(&stack_a, &stack_b, 'b');
+			reverse_rotate(&stack_a, &stack_b, 'b', 0);
 		if (ft_strncmp(line, "pa", ft_strlen(line)) == 0)
 			push(&stack_a, &stack_b, 'a');
 		if (ft_strncmp(line, "pb", ft_strlen(line)) == 0)

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:09:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/19 16:46:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/19 22:07:49 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	move_to_bottom(t_stack *min)
 	stack = min;
 	while (min->next != NULL)
 	{
-		reverse_rotate(&stack, NULL, 'a');
+		reverse_rotate(&stack, NULL, 'a', 0);
 	}
 }
 
