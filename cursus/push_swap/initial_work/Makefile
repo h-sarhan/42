@@ -6,11 +6,11 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/19 21:02:01 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/20 07:14:51 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -g3
+CFLAGS = -Wall -Wextra -g3 -Ofast
 CC = cc
 
 NAME = push_swap
