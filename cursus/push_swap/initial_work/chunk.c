@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/25 17:32:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/25 20:16:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 		while (stack_size(*stack_a) > 0 && (*stack_a)->final_idx >= chunk_idx * chunk_size
 			&& (*stack_a)->final_idx < (chunk_idx + 1) * chunk_size)
 		{
-			if ((*stack_a)->final_idx > (chunk_idx + 0.5) * chunk_size)
+			if ((*stack_a)->final_idx % 2 == 1)
 			{
 				if (rotated_b == 1)
 				{
@@ -144,6 +144,7 @@ int	which_direction(t_stack **stack, int desired_idx)
 	return (num_backward_rots < num_forward_rots);
 }
 
+// TODO: REWRITE TO SORT EVEN THEN ODD INDICES FIRST
 void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	next_idx;
@@ -168,6 +169,8 @@ void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 				rotate(stack_a, stack_b, 'b', 0);
 			curr_idx = (*stack_b)->final_idx;
 		}
+		// if (rev)
+		// 	rotate(stack_a, stack_b, 'a', 0);
 		push(stack_a, stack_b, 'a');
 		next_idx--;
 		if (next_idx == stop_at)
