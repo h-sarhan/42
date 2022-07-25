@@ -6,38 +6,16 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 12:57:38 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/25 13:37:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/25 13:41:12 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "push_swap.h"
 
-void	swap_els(int **a, int **b)
-{
-	int	temp[2];
 
-	temp[0] = (*a)[0];
-	temp[1] = (*a)[1];
-	*a = *b;
-	*b = temp;
-}
-
-int	**find_min_val(int **arr, int size)
-{
-	int	i;
-	int	**min;
-
-	i = 0;
-	min = arr;
-	while (i < size)
-	{
-		if (arr[i][0] < (*min)[0])
-			min = &arr[i];
-		i++;
-	}
-	return (min);
-}
+// TODO: Create a struct and sort it to find the shortest path
+// https://www.geeksforgeeks.org/shortest-path-to-traverse-all-the-elements-of-a-circular-array-in-increasing-order/
 
 void	selection_sort(int **arr, int size)
 {
