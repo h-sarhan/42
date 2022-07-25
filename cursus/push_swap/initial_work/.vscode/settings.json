@@ -1,11 +1,13 @@
 {
 	"files.associations": {
+		"*.c": "c",
 		"*.h": "c",
 		"utility": "c",
 		"memory": "c",
 		"algorithm": "c",
 		"chrono": "c",
 		"limits": "c",
-		"ratio": "c"
+		"ratio": "c",
+		"cstdlib": "c"
 	}
 }

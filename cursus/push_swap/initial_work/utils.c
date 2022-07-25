@@ -18,6 +18,7 @@ t_stack	*find_min(t_stack *stack)
 	t_stack	*min_stack;
 
 	min = INT_MAX;
+	min_stack = NULL;
 	while (stack != NULL)
 	{
 		if (stack->num < min && stack->final_idx == -1)
