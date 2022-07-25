@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/20 07:39:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/25 09:07:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int	main(int argc, char **argv)
 	// experiment(stack_a);
 	get_final_positions(stack_a);
 
-	// int chonk_size = ft_atoi(argv[argc - 1]);
-	int chonk_size = 17;
-	chonk(&stack_a, &stack_b, chonk_size);
+	// int chunk_size = ft_atoi(argv[argc - 1]);
+	int chunk_size = 17;
+	chunk(&stack_a, &stack_b, chunk_size);
 	// print_stacks_side_by_side(stack_a, stack_b);
-	// ft_printf("CHONK END\n");
-	sort_after_chonking(&stack_a, &stack_b, chonk_size);
+	// ft_printf("chunk END\n");
+	sort_after_chunking(&stack_a, &stack_b, chunk_size);
 	// print_stacks_side_by_side(stack_a, stack_b);
 	// insertion_sort(&stack_a, &stack_b);
 	// bubble_sort_stack(&stack_a, 'a');
@@ -57,8 +57,8 @@ int	main(int argc, char **argv)
 }
 
 // TODO: CHECK ERROR MANAGEMENT SECTION
-// ! 100 ints with 15 chonk size ~ 750
-// ! 500 ints with 40 chonk size ~ 7270
+// ! 100 ints with 15 chunk size ~ 750
+// ! 500 ints with 40 chunk size ~ 7270
 // PUSH SWAP RANGES:
 // 2 integers:
 // 2 - 3 moves

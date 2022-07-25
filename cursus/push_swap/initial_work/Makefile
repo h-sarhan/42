@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/20 07:14:51 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/25 09:07:44 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ PRINTF = libftprintf.a
 
 SRCS =	stack_moves/swap.c stack_moves/push.c stack_moves/rotate.c stack_moves/reverse_rotate.c main.c \
 		stack/stack1.c stack/stack2.c stupid_sort.c utils.c insertion.c kind_of_sorted.c sort.c experiment.c \
-		chonk.c
+		chunk.c
 
 LIBFT_SRCS = ft_strchr.c ft_split.c ft_strtrim.c ft_bzero.c ft_strnstr.c ft_strmapi.c ft_isprint.c ft_atoi.c ft_strdup.c \
 			ft_tolower.c ft_toupper.c ft_substr.c ft_striteri.c ft_memchr.c ft_putnbr_fd.c ft_strlcpy.c ft_itoa.c \

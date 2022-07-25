@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   chonk.c                                            :+:      :+:    :+:   */
+/*   chunk.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/20 08:16:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/25 09:08:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	forward_distance_to(t_stack **stack, int chonk_idx, int chonk_size)
+int	forward_distance_to(t_stack **stack, int chunk_idx, int chunk_size)
 {
 	int	num_rots;
 	int	i;
 
 	// ft_printf("checking forward rotations\n");
 	num_rots = 0;
-	while (!((*stack)->final_idx >= chonk_idx * chonk_size 
-		&& (*stack)->final_idx < (chonk_idx + 1) * chonk_size))
+	while (!((*stack)->final_idx >= chunk_idx * chunk_size 
+		&& (*stack)->final_idx < (chunk_idx + 1) * chunk_size))
 	{
 		rotate(stack, NULL, 'a', 1);
 		num_rots++;
@@ -35,15 +35,15 @@ int	forward_distance_to(t_stack **stack, int chonk_idx, int chonk_size)
 	return (num_rots);
 }
 
-int	reverse_distance_to(t_stack **stack, int chonk_idx, int chonk_size)
+int	reverse_distance_to(t_stack **stack, int chunk_idx, int chunk_size)
 {
 	int	num_rots;
 	int	i;
 
 	num_rots = 0;
 	// ft_printf("checking backward rotations\n");
-	while (!((*stack)->final_idx >= chonk_idx * chonk_size 
-		&& (*stack)->final_idx < (chonk_idx + 1) * chonk_size))
+	while (!((*stack)->final_idx >= chunk_idx * chunk_size 
+		&& (*stack)->final_idx < (chunk_idx + 1) * chunk_size))
 	{
 		reverse_rotate(stack, NULL, 'a', 1);
 		num_rots++;
@@ -59,63 +59,38 @@ int	reverse_distance_to(t_stack **stack, int chonk_idx, int chonk_size)
 }
 
 
-// int	mid_chonk()
-// {
-// 	stack_size(*stack_a) > 0 && (*stack_a)->final_idx >= chonk_idx * chonk_size
-// 			&& (*stack_a)->final_idx < (chonk_idx + 1) * chonk_size
-// }
-
 // USE THIS EXAMPLE
 // 17 0 20 28 11 21 41 12 6 1 46 18 2 43 45 50 29 4 32 23
-void	chonk(t_stack **stack_a, t_stack **stack_b, int chonk_size)
+void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
-	int	chonk_idx;
+	int	chunk_idx;
 	int	rev;
-	int push_count;
-	// int	rotated_a;
-
-	push_count = 0;
+	
 	rev = 0;
-	chonk_idx = 0;
-	int initial_size = stack_size(*stack_a);
-	while (stack_size(*stack_a) > initial_size / 2)
-	{
-		while ((*stack_a)->final_idx % 2 == 0 && (*stack_a)->final_idx >= chonk_idx * chonk_size
-			&& (*stack_a)->final_idx <= (chonk_idx + 1) * chonk_size)
-		{
-			push(stack_a, stack_b, 'b');
-			push_count++;
-			printf("IN HERE\n");
-			if (stack_size(*stack_b) == (chonk_idx + 1) * chonk_size / 2 + 1)
-				chonk_idx++;
-		}
-		// printf("THIS ONE\n");
-		rotate(stack_a, stack_b, 'a', 0);
-	}
-	initial_size = stack_size(*stack_b);
-	chonk_idx = 0;
+	chunk_idx = 0;
+	// if (forward_distance_to(stack_a, chunk_idx, chunk_size) > 
+	// 	reverse_distance_to(stack_a, chunk_idx, chunk_size))
+	// 	rev = 1;
 	while (stack_size(*stack_a) > 0)
 	{
-		while (stack_size(*stack_a) > 0 && (*stack_a)->final_idx >= chonk_idx * chonk_size
-			&& (*stack_a)->final_idx <= (chonk_idx + 1) * chonk_size)
+		while (stack_size(*stack_a) > 0 && (*stack_a)->final_idx >= chunk_idx * chunk_size
+			&& (*stack_a)->final_idx < (chunk_idx + 1) * chunk_size)
 		{
-			if (stack_size(*stack_b) == (initial_size) + (chonk_idx + 1) * chonk_size / 2)
-				chonk_idx++;
 			push(stack_a, stack_b, 'b');
-			push_count++;
-			printf("IN HERE\n");
+			if (stack_size(*stack_b) == (chunk_idx + 1) * chunk_size)
+				chunk_idx++;
+			// print_stacks_side_by_side(*stack_a, *stack_b);
+			// if (stack_size(*stack_a) > 0 && forward_distance_to(stack_a, chunk_idx, chunk_size) > 
+			// 	reverse_distance_to(stack_a, chunk_idx, chunk_size))
+			// 	rev = 1;
+			// else
+			// 	rev = 0;
 		}
-		if ((*stack_a)->final_idx % 2 != 0)
-		{
-			ft_printf("chonk_idx is %d\n", chonk_idx);
-			ft_printf("chonk_size is %d\n", chonk_size);
-			ft_printf("Stack size is %d\n", stack_size(*stack_b));
-			ft_printf("chonk_range is between %d and %d\n", chonk_idx * chonk_size, (chonk_idx + 1) * chonk_size);
-			ft_printf("stack_size should reach %d\n", (initial_size + 1) + (chonk_idx + 1) * chonk_size / 2);
-			ft_printf("stack_a el final idx is %d\n", (*stack_a)->final_idx);
-		}
-		print_stacks_side_by_side(*stack_a, *stack_b); //
-		rotate(stack_a, stack_b, 'a', 0);
+		// if (rev)
+		// 	reverse_rotate(stack_a, stack_b, 'a', 0);
+		// else
+			rotate(stack_a, stack_b, 'a', 0);
+		// print_stacks_side_by_side(*stack_a, *stack_b);
 	}
 }
 
@@ -152,8 +127,7 @@ int	which_direction(t_stack **stack, int desired_idx)
 	return (num_backward_rots < num_forward_rots);
 }
 
-
-void	sort_after_chonking(t_stack **stack_a, t_stack **stack_b, int chonk_size)
+void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	next_idx;
 	int	curr_idx;
@@ -161,7 +135,7 @@ void	sort_after_chonking(t_stack **stack_a, t_stack **stack_b, int chonk_size)
 	int	rev;
 	
 	next_idx = stack_size(*stack_b) - 1;
-	stop_at = next_idx - chonk_size;
+	stop_at = next_idx - chunk_size;
 	while (stack_size(*stack_b) > 0)
 	{
 		curr_idx = (*stack_b)->final_idx;
@@ -177,9 +151,14 @@ void	sort_after_chonking(t_stack **stack_a, t_stack **stack_b, int chonk_size)
 				rotate(stack_a, stack_b, 'b', 0);
 			curr_idx = (*stack_b)->final_idx;
 		}
+		// while (curr_idx != next_idx)
+		// {
+		// 	reverse_rotate(stack_a, stack_b, 'b', 0);
+		// 	curr_idx = (*stack_b)->final_idx;
+		// }
 		push(stack_a, stack_b, 'a');
 		next_idx--;
 		if (next_idx == stop_at)
-			stop_at -= chonk_size;
+			stop_at -= chunk_size;
 	}
 }
