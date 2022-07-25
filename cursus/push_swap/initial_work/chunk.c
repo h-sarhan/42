@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/25 09:08:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/25 11:12:00 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,32 +65,38 @@ void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	chunk_idx;
 	int	rev;
-	
+	int	mid;
+	// int rotated_both;
+
 	rev = 0;
 	chunk_idx = 0;
-	// if (forward_distance_to(stack_a, chunk_idx, chunk_size) > 
-	// 	reverse_distance_to(stack_a, chunk_idx, chunk_size))
-	// 	rev = 1;
+	// rotated_both = 0;
+	// mid = stack_size(*stack_a) / 2;
 	while (stack_size(*stack_a) > 0)
 	{
 		while (stack_size(*stack_a) > 0 && (*stack_a)->final_idx >= chunk_idx * chunk_size
 			&& (*stack_a)->final_idx < (chunk_idx + 1) * chunk_size)
 		{
-			push(stack_a, stack_b, 'b');
+			if ((*stack_a)->final_idx < (chunk_idx + 0.5) * chunk_size)
+			{
+				push(stack_a, stack_b, 'b');
+				// rotated_both = 0;
+			}
+			else
+			{
+				push(stack_a, stack_b, 'b');
+				rotate(stack_a, stack_b, 'b', 0);
+				// rotated_both = 1;
+			}
 			if (stack_size(*stack_b) == (chunk_idx + 1) * chunk_size)
 				chunk_idx++;
-			// print_stacks_side_by_side(*stack_a, *stack_b);
-			// if (stack_size(*stack_a) > 0 && forward_distance_to(stack_a, chunk_idx, chunk_size) > 
-			// 	reverse_distance_to(stack_a, chunk_idx, chunk_size))
-			// 	rev = 1;
-			// else
-			// 	rev = 0;
 		}
-		// if (rev)
-		// 	reverse_rotate(stack_a, stack_b, 'a', 0);
-		// else
+		// if (!rotated_both)
+		// {
 			rotate(stack_a, stack_b, 'a', 0);
-		// print_stacks_side_by_side(*stack_a, *stack_b);
+		// }
+		// else
+			// rotated_both = 0;
 	}
 }
 
@@ -151,11 +157,6 @@ void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 				rotate(stack_a, stack_b, 'b', 0);
 			curr_idx = (*stack_b)->final_idx;
 		}
-		// while (curr_idx != next_idx)
-		// {
-		// 	reverse_rotate(stack_a, stack_b, 'b', 0);
-		// 	curr_idx = (*stack_b)->final_idx;
-		// }
 		push(stack_a, stack_b, 'a');
 		next_idx--;
 		if (next_idx == stop_at)
