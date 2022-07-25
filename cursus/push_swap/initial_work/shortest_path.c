@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 12:57:38 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/25 16:28:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/25 17:01:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ void	create_path(t_path *path)
 		if (abs(path->indices[i] - path->indices[i - 1]) 
 		> path->size - abs(path->indices[i] - path->indices[i - 1]))
 		{
-			path->direction[i] = 'r';
+			path->direction[i - 1] = 'r';
 			// printf("R\n");
 		}
 		else
 		{
-			path->direction[i] = 'f';
+			path->direction[i - 1] = 'f';
 			// printf("F\n");
 		}
 		i++;
@@ -112,5 +112,6 @@ char	*shortest_path(t_stack *stack)
 	// for (int i = 0; i < path.size; i++)
 	// 	ft_printf("value %d, idx %d\n", path.positions[i], path.indices[i]);
 	create_path(&path);
+	// printf("path direction %s\n", path.direction);
 	return path.direction;
 }

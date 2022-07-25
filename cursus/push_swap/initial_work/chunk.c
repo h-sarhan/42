@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/25 16:35:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/25 17:09:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 	rev = 0;
 	chunk_idx = 0;
 	rotated_b = 0;
-	// char*path = shortest_path(*stack_a);
+	char*path = shortest_path(*stack_a);
 	// int i = 0;
 	while (stack_size(*stack_a) > 0)
 	{
@@ -97,6 +97,7 @@ void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 			}
 			if (stack_size(*stack_b) == (chunk_idx + 1) * chunk_size)
 				chunk_idx++;
+			path = shortest_path(*stack_a);
 		}
 		// if (rotated_b == 1)
 		// {
@@ -110,11 +111,11 @@ void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 			break;
 		// if (forward_distance_to(stack_a, chunk_idx, chunk_size) < reverse_distance_to(stack_a, chunk_idx, chunk_size))
 		// path = shortest_path(*stack_a);
-		// if (*path == 'f')
-		rotate(stack_a, stack_b, 'a', 0);
-		// else
-		// 	reverse_rotate(stack_a, stack_b, 'a', 0);
-		// path++;
+		// printf("PATH DIRECTION IS %c\n", *path);
+		if (*path == 'f')
+			rotate(stack_a, stack_b, 'a', 0);
+		else
+			reverse_rotate(stack_a, stack_b, 'a', 0);
 		
 		// else
 		// 	reverse_rotate(stack_a, stack_b, 'a', 0);
