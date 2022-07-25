@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/25 11:12:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/25 12:13:29 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,38 +65,49 @@ void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	chunk_idx;
 	int	rev;
-	int	mid;
-	// int rotated_both;
+	int	rotated_b;
+
 
 	rev = 0;
 	chunk_idx = 0;
-	// rotated_both = 0;
-	// mid = stack_size(*stack_a) / 2;
+	rotated_b = 0;
 	while (stack_size(*stack_a) > 0)
 	{
 		while (stack_size(*stack_a) > 0 && (*stack_a)->final_idx >= chunk_idx * chunk_size
 			&& (*stack_a)->final_idx < (chunk_idx + 1) * chunk_size)
 		{
-			if ((*stack_a)->final_idx < (chunk_idx + 0.5) * chunk_size)
+			if ((*stack_a)->final_idx >= (chunk_idx + 0.5) * chunk_size)
 			{
+				if (rotated_b == 1)
+				{
+					rotated_b = 0;
+					ft_printf("rb\n");
+				}
 				push(stack_a, stack_b, 'b');
-				// rotated_both = 0;
 			}
 			else
 			{
+				if (rotated_b == 1)
+				{
+					ft_printf("rb\n");
+				}
 				push(stack_a, stack_b, 'b');
-				rotate(stack_a, stack_b, 'b', 0);
-				// rotated_both = 1;
+				rotate(stack_a, stack_b, 'b', 1);
+				rotated_b = 1;
 			}
 			if (stack_size(*stack_b) == (chunk_idx + 1) * chunk_size)
 				chunk_idx++;
 		}
-		// if (!rotated_both)
-		// {
+		if (rotated_b == 1)
+		{
+			rotate(stack_a, stack_b, 'a', 1);
+			ft_printf("rr\n");
+			rotated_b = 0;
+		}
+		else
+		{
 			rotate(stack_a, stack_b, 'a', 0);
-		// }
-		// else
-			// rotated_both = 0;
+		}
 	}
 }
 
