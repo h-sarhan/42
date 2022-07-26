@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/26 14:19:59 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/26 14:58:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,8 @@ void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 	next_idx = stack_size(*stack_b) - 1;
 	// printf("FIRST IDX == %d\n", next_idx);
 	stop_at = next_idx - chunk_size;
-	// bubble_sort_stack(stack_a, stack_b, 'a');
+	bubble_sort_stack(stack_a, stack_b, 'a');  
+	// sort_single_stack(stack_a);
 	while (stack_size(*stack_b) > 0 && next_idx >= 0)
 	{
 		// ft_printf("Stuck here 1\n");

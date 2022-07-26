@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:09:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/19 22:07:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/26 14:52:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_stack	*find_min(t_stack *stack)
 	t_stack	*min_stack;
 
 	min = INT_MAX;
+	min_stack = stack;
 	while (stack != NULL)
 	{
 		if (stack->num < min && stack->final_idx == -1)
@@ -60,7 +61,6 @@ t_stack	*find_max(t_stack *list)
 {
 	t_stack	*max;
 
-	// list = list;
 	max = list;
 	while (list != NULL)
 	{
