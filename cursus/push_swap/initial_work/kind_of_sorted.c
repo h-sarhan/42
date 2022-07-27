@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 16:19:16 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 17:39:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/27 14:14:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	kind_of_sorted_asc(t_stack *stack)
 	bottom = stack_bottom(stack);
 	if (stack_size(stack) < 3)
 		return (1);
-	min = find_min(stack);
+	min = find_min_stack(stack);
 	while (stack != NULL && stack->next != min && stack->next != NULL)
 	{
 		if (stack->num > stack->next->num)

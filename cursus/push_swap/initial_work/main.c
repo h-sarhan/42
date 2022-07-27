@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/26 14:07:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/27 14:32:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,17 @@ int	main(int argc, char **argv)
 		while (nums[i] != NULL)
 			stack_add_bottom(&stack_a, stack_new(ft_atoi(nums[i++])));
 	}
-	// experiment(stack_a);
 	get_final_positions(stack_a);
 
-	// int chunk_size = ft_atoi(argv[argc - 1]);
-	int chunk_size = 15;
-	chunk(&stack_a, &stack_b, chunk_size);
-	// print_stacks_side_by_side(stack_a, stack_b);
-	// ft_printf("chunk END\n");
-	sort_after_chunking(&stack_a, &stack_b, chunk_size);
-	// print_stacks_side_by_side(stack_a, stack_b);
-	// insertion_sort(&stack_a, &stack_b);
-	// bubble_sort_stack(&stack_a, 'a');
-	// stack_print(stack_a);
-	// stack_print(stack_b);
+	int chunk_size = 58;
 
-	// t_stack    *stack;
-	// stack = NULL;
-	// int nums[] = {6, 11 , 10, 9, 8 , 7};
-	// int i = 0;
-	// while (i < sizeof(nums)/sizeof(int))
-	// 	stack_add_bottom(&stack, stack_new(nums[i++]));
-	// ft_printf("%d\n", kind_of_sorted_desc(stack));
+	chunk(&stack_a, &stack_b, chunk_size);
+
+
+	sort_after_chunking(&stack_a, &stack_b, chunk_size);
+
+	// sort_single_stack(&stack_a);
+	// print_stacks_side_by_side(stack_a, NULL);
 }
 
 // TODO: CHECK ERROR MANAGEMENT SECTION

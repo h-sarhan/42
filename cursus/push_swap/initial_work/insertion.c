@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:43:58 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/19 22:08:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/27 14:16:18 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void insertion_sort(t_stack **stack_a, t_stack **stack_b)
 				
 				swap(stack_a, stack_b, 'a');
 				rotate(stack_a, stack_b, 'a', 0);
+				// print_stacks_side_by_side(*stack_a, *stack_b);
 			}
 			
 		}

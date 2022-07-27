@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/26 14:37:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/27 14:24:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	rotate(t_stack **stack_a, t_stack **stack_b, char which, int q);
 void	reverse_rotate(t_stack **stack_a, t_stack **stack_b, char which, int q);
 void	move_to_bottom(t_stack *min);
 // void	move_to_top(t_stack *min);
-void	stupid_sort(t_stack *stack_a, t_stack *stack_b);
+void	stupid_sort(t_stack **stack_a, t_stack **stack_b);
 int		is_sorted_desc(t_stack *stack);
 int		is_sorted_asc(t_stack *stack);
 void	insertion_sort(t_stack **stack_a, t_stack **stack_b);
@@ -60,4 +60,6 @@ void	get_final_positions(t_stack *stack);
 void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size);
 void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size);
 void	sort_single_stack(t_stack **stack);
+t_stack	*find_min_stack(t_stack *stack);
+
 #endif
