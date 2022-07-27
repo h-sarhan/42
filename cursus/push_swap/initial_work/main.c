@@ -6,11 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/27 14:32:53 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/27 17:11:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+t_stack	*find_min_stack_after(t_stack *stack, int after);
 // /usr/bin/python3 python_visualizer.py `ruby -e "puts (0..100).to_a.shuffle.join(' ')"`
 int	main(int argc, char **argv)
 {
@@ -34,14 +36,15 @@ int	main(int argc, char **argv)
 	}
 	get_final_positions(stack_a);
 
-	int chunk_size = 58;
+	// t_stack* min_stack = find_min_stack_after(stack_a, 5);
+	// printf("MIN STACK AFTER %d\n", min_stack->num);
+	int chunk_size = 15;
 
-	chunk(&stack_a, &stack_b, chunk_size);
+	// chunk(&stack_a, &stack_b, chunk_size);
 
+	selection_sort(&stack_a);
+	// sort_after_chunking(&stack_a, &stack_b, chunk_size);
 
-	sort_after_chunking(&stack_a, &stack_b, chunk_size);
-
-	// sort_single_stack(&stack_a);
 	// print_stacks_side_by_side(stack_a, NULL);
 }
 

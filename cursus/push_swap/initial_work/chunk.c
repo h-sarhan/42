@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/27 14:39:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/27 16:43:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,8 @@ void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 	// bubble_sort_stack(stack_a, stack_b, 'a');  
 	// sort_single_stack(stack_a);
 	// insertion_sort(stack_a, stack_b);
-	stupid_sort(stack_a, stack_b);
+	// stupid_sort(stack_a, stack_b);
+	selection_sort(stack_a);
 	while (stack_size(*stack_b) > 0 && next_idx >= 0)
 	{
 		// ft_printf("Stuck here 1\n");
