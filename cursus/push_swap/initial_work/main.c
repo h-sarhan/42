@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/28 16:58:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/28 20:16:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv)
 	get_final_positions(stack_a);
 
 	// int chunk_size = ft_atoi(argv[argc - 1]);
-	int chunk_size = 15;
+	int chunk_size = 58;
 	chunk(&stack_a, &stack_b, chunk_size);
 	
 	// print_stacks_side_by_side(stack_a, stack_b);
@@ -63,8 +63,6 @@ int	main(int argc, char **argv)
 }
 
 // TODO: CHECK ERROR MANAGEMENT SECTION
-// ! 100 ints with 15 chunk size ~650
-// ! 500 ints with 60 chunk size ~5570
 // PUSH SWAP RANGES:
 // 2 integers:
 // 2 - 3 moves
@@ -77,8 +75,8 @@ int	main(int argc, char **argv)
 // [2 points] less than 1300 moves
 // [1 points] less than 1500 moves
 // 500 integers:
-// [5 points] less than 5500 moves
-//? [4 points] less than 7000 moves
+//? [5 points] less than 5500 moves
+// [4 points] less than 7000 moves
 // [3 points] less than 8500 moves
 // [2 points] less than 10000 moves
 // [1 points] less than 11500 moves

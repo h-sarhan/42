@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/28 17:07:30 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/28 20:11:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,12 +196,10 @@ void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	next_idx;
 	int	curr_idx;
-	int	stop_at;
 	int	rev;
 	int	distance_to_alt_idx;
 	// printf("SORTING\n");
 	next_idx = stack_size(*stack_b) - 1;
-	stop_at = next_idx - chunk_size;
 	while (stack_size(*stack_b) > 0)
 	{
 		curr_idx = (*stack_b)->final_idx;
@@ -211,7 +209,44 @@ void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 			rev = 0;
 		if (next_idx > 1)
 		{
-			if (forward_distance_to_idx(stack_b, next_idx - 1))
+			if (forward_distance_to_idx(stack_b, next_idx - 1) < reverse_distance_to_idx(stack_b, next_idx - 1))
+				distance_to_alt_idx = forward_distance_to_idx(stack_b, next_idx - 1);
+			else
+				distance_to_alt_idx = reverse_distance_to_idx(stack_b, next_idx - 1);
+			if (distance_to_alt_idx < reverse_distance_to_idx(stack_b, next_idx)
+				&& distance_to_alt_idx < forward_distance_to_idx(stack_b, next_idx))
+			{
+				if (which_direction(stack_b, next_idx - 1))
+					rev = 1;
+				else
+					rev = 0;
+				while (curr_idx != next_idx - 1)
+				{
+					if (rev)
+						reverse_rotate(stack_a, stack_b, 'b', 0);
+					else
+						rotate(stack_a, stack_b, 'b', 0);
+					curr_idx = (*stack_b)->final_idx;
+				}
+				push(stack_a, stack_b, 'a');
+				if (which_direction(stack_b, next_idx))
+					rev = 1;
+				else
+					rev = 0;
+				curr_idx = (*stack_b)->final_idx;
+				while (curr_idx != next_idx)
+				{
+					if (rev)
+						reverse_rotate(stack_a, stack_b, 'b', 0);
+					else
+						rotate(stack_a, stack_b, 'b', 0);
+					curr_idx = (*stack_b)->final_idx;
+				}
+				push(stack_a, stack_b, 'a');
+				swap(stack_a, stack_b, 'a');
+				next_idx -= 2;
+				continue;
+			}
 		}
 		while (curr_idx != next_idx)
 		{
@@ -223,7 +258,5 @@ void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 		}
 		push(stack_a, stack_b, 'a');
 		next_idx--;
-		if (next_idx == stop_at)
-			stop_at -= chunk_size;
 	}
 }
