@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/27 17:11:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/28 14:18:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ int	main(int argc, char **argv)
 	// t_stack* min_stack = find_min_stack_after(stack_a, 5);
 	// printf("MIN STACK AFTER %d\n", min_stack->num);
 	int chunk_size = 15;
+	// selection_sort(&stack_a);
+	int pushed_to_b = chunk(&stack_a, &stack_b, chunk_size);
 
-	// chunk(&stack_a, &stack_b, chunk_size);
-
-	selection_sort(&stack_a);
-	// sort_after_chunking(&stack_a, &stack_b, chunk_size);
+	sort_after_chunking(&stack_a, &stack_b, chunk_size, pushed_to_b);
 
 	// print_stacks_side_by_side(stack_a, NULL);
 }

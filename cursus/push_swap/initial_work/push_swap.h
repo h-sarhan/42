@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/27 16:43:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/28 14:00:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	push(t_stack **stack_a, t_stack **stack_b, char which);
 void	rotate(t_stack **stack_a, t_stack **stack_b, char which, int q);
 void	reverse_rotate(t_stack **stack_a, t_stack **stack_b, char which, int q);
 void	move_to_bottom(t_stack *min);
-// void	move_to_top(t_stack *min);
 void	stupid_sort(t_stack **stack_a, t_stack **stack_b);
 int		is_sorted_desc(t_stack *stack);
 int		is_sorted_asc(t_stack *stack);
@@ -54,13 +53,13 @@ void	partition_start(t_stack **stack_a, t_stack **stack_b);
 void	print_stacks_side_by_side(t_stack *stack_a, t_stack *stack_b);
 
 void	experiment(t_stack *stack);
-void	bubble_sort_stack(t_stack **stack, char which);
-// void	bubble_sort_stack(t_stack **stacka, t_stack** stackb, char which);
 void	get_final_positions(t_stack *stack);
-void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size);
-void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size);
+int		chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size);
+void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size, int pushed_to_b);
 void	sort_single_stack(t_stack **stack);
 t_stack	*find_min_stack(t_stack *stack);
+void	bubble_sort(t_stack **stack);
 void	selection_sort(t_stack **stack);
+int	which_direction(t_stack **stack, int desired_idx);
 
 #endif

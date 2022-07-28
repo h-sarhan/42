@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/27 16:43:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/28 14:12:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	reverse_distance_to(t_stack **stack, int chunk_idx, int chunk_size)
 
 // USE THIS EXAMPLE
 // 17 0 20 28 11 21 41 12 6 1 46 18 2 43 45 50 29 4 32 23
-void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
+int	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	chunk_idx;
 	int	rev;
@@ -116,6 +116,7 @@ void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 			rotate(stack_a, stack_b, 'a', 0);
 		}
 	}
+	return (stack_size(*stack_a));
 }
 
 int	which_direction(t_stack **stack, int desired_idx)
@@ -124,59 +125,68 @@ int	which_direction(t_stack **stack, int desired_idx)
 	int	num_backward_rots;
 	int	i;
 	num_forward_rots = 0;
-	while ((*stack)->final_idx != desired_idx)
+	while ((*stack)->final_idx != desired_idx && num_forward_rots < stack_size(*stack))
 	{
-		// ft_printf("Stuck here 3\n");
+		// ft_printf("desired idx is %d\n", desired_idx);
 		// ft_printf("Stack idx %d\nDesired idx %d\n", (*stack)->final_idx, desired_idx);
 		rotate(stack, NULL, 'a', 1);
 		num_forward_rots++;
 	}
+	if (num_forward_rots == stack_size(*stack))
+		return (-1);
 	i = 0;
 	while (i < num_forward_rots)
 	{
+		// ft_printf("Stuck here 2\n");
 		reverse_rotate(stack, NULL, 'a', 1);
 		i++;
 	}
 	num_backward_rots = 0;
 	while ((*stack)->final_idx != desired_idx)
 	{
+		// ft_printf("Stuck here 3\n");
 		reverse_rotate(stack, NULL, 'a', 1);
 		num_backward_rots++;
 	}
 	i = 0;
 	while (i < num_backward_rots)
 	{
+		// ft_printf("Stuck here 4\n");
 		rotate(stack, NULL, 'a', 1);
 		i++;
 	}
 	return (num_backward_rots < num_forward_rots);
 }
 
-void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
+void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size, int pushed_to_b)
 {
 	int	next_idx;
 	int	curr_idx;
-	int	stop_at;
+	// int	stop_at;
 	int	rev;
 	
 	next_idx = stack_size(*stack_b) - 1;
 	// printf("FIRST IDX == %d\n", next_idx);
-	stop_at = next_idx - chunk_size;
-	// bubble_sort_stack(stack_a, stack_b, 'a');  
-	// sort_single_stack(stack_a);
-	// insertion_sort(stack_a, stack_b);
-	// stupid_sort(stack_a, stack_b);
-	selection_sort(stack_a);
+	// stop_at = next_idx - chunk_size;
+	// selection_sort(stack_a);
+	insertion_sort(stack_a, stack_b);
 	while (stack_size(*stack_b) > 0 && next_idx >= 0)
 	{
 		// ft_printf("Stuck here 1\n");
 		curr_idx = (*stack_b)->final_idx;
-		if (which_direction(stack_b, next_idx))
+		int dir = which_direction(stack_b, next_idx);
+		if (dir == 1)
 			rev = 1;
 		else
 			rev = 0;
+		if (dir == -1)
+		{
+			next_idx--;
+			continue;
+		}
 		while (curr_idx != next_idx)
 		{
+			// printf("STUCK HERE\n");
 			// ft_printf("Stuck here 2\n");
 			// print_stacks_side_by_side(*stack_a, *stack_b);
 			if (rev)
@@ -187,7 +197,7 @@ void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 		}
 		push(stack_a, stack_b, 'a');
 		next_idx--;
-		if (next_idx == stop_at)
-			stop_at -= chunk_size;
+		// if (next_idx == stop_at)
+		// 	stop_at -= chunk_size;
 	}
 }
