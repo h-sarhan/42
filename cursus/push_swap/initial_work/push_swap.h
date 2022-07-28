@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/28 15:45:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/28 15:57:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	print_stacks_side_by_side(t_stack *stack_a, t_stack *stack_b);
 void	experiment(t_stack *stack);
 void	bubble_sort_stack(t_stack **stack, char which);
 void	get_final_positions(t_stack *stack);
-void	chunk_most(t_stack **stack_a, t_stack **stack_b, int chunk_size);
-void	chunk_rest(t_stack **stack_a, t_stack **stack_b, int chunk_size);
+void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size);
 void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size);
 #endif
