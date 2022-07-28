@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/25 17:32:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/28 15:46:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	reverse_distance_to(t_stack **stack, int chunk_idx, int chunk_size)
 
 // USE THIS EXAMPLE
 // 17 0 20 28 11 21 41 12 6 1 46 18 2 43 45 50 29 4 32 23
-void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
+void	chunk_most(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	chunk_idx;
 	int	rev;
@@ -76,7 +76,7 @@ void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 		while (stack_size(*stack_a) > 0 && (*stack_a)->final_idx >= chunk_idx * chunk_size
 			&& (*stack_a)->final_idx < (chunk_idx + 1) * chunk_size)
 		{
-			if ((*stack_a)->final_idx > (chunk_idx + 0.5) * chunk_size)
+			if ((*stack_a)->final_idx < (chunk_idx + 0.5) * chunk_size)
 			{
 				if (rotated_b == 1)
 				{

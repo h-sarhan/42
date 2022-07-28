@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/25 17:33:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/28 15:45:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ int	main(int argc, char **argv)
 	get_final_positions(stack_a);
 
 	// int chunk_size = ft_atoi(argv[argc - 1]);
-	int chunk_size = 45;
-	chunk(&stack_a, &stack_b, chunk_size);
+	int chunk_size = 58;
+	chunk_most(&stack_a, &stack_b, chunk_size);
 	// print_stacks_side_by_side(stack_a, stack_b);
+	// chunk_size = 5;
+	// chunk(&stack_a, &stack_b, chunk_size);
 	// ft_printf("chunk END\n");
 	sort_after_chunking(&stack_a, &stack_b, chunk_size);
 	// print_stacks_side_by_side(stack_a, stack_b);
