@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/29 11:50:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/29 14:04:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ int	main(int argc, char **argv)
 	int chunk_size;
 	if (stack_size(stack_a) < 10)
 	{
+		// * IDEA:
+		// * Sort numbers from positions stack_size to stack_size / 2 and
+		// * push everything from stack_size / 2 - 1 to stack b
+		// * sort B in descending order
+		// * After that
+		// * try to sort in parallel to utilize rr, rrr, and ss
 		// insertion_sort(&stack_a, &stack_b);
 		// chunk_size = 3;
 		// chunk(&stack_a, &stack_b, chunk_size);
