@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/28 20:11:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/29 11:33:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,6 @@ int	reverse_distance_to_idx(t_stack **stack, int desired_idx)
 	return (num_rots);
 }
 
-// ! THIS CAN BE OPTIMIZED BY CHECKING IF THE SECOND LAREGEST ITEM IS CLOSER THAN THE LARGEST ITEM
-// ! IF IT IS WE CAN PUSH THE SECOND LARGEST ITEM THEN SWAP A
 void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	next_idx;

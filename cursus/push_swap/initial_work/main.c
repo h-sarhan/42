@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/28 20:16:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/29 11:50:21 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,24 @@ int	main(int argc, char **argv)
 		while (nums[i] != NULL)
 			stack_add_bottom(&stack_a, stack_new(ft_atoi(nums[i++])));
 	}
-	// experiment(stack_a);
 	get_final_positions(stack_a);
 
-	// int chunk_size = ft_atoi(argv[argc - 1]);
-	int chunk_size = 58;
-	chunk(&stack_a, &stack_b, chunk_size);
+	int chunk_size;
+	if (stack_size(stack_a) < 10)
+	{
+		// insertion_sort(&stack_a, &stack_b);
+		// chunk_size = 3;
+		// chunk(&stack_a, &stack_b, chunk_size);
+		// sort_after_chunking(&stack_a, &stack_b, chunk_size);
+		bubble_sort_stack(&stack_a, 'a');
+	}
+	else
+	{
+		chunk_size = 0.1075 * stack_size(stack_a) + 6.25;
+		chunk(&stack_a, &stack_b, chunk_size);
+		sort_after_chunking(&stack_a, &stack_b, chunk_size);
+	}
 	
-	// print_stacks_side_by_side(stack_a, stack_b);
-	// chunk_size = 5;
-	// chunk(&stack_a, &stack_b, chunk_size);
-	// ft_printf("chunk END\n");
-	sort_after_chunking(&stack_a, &stack_b, chunk_size);
-	// print_stacks_side_by_side(stack_a, stack_b);
-	// insertion_sort(&stack_a, &stack_b);
-	// bubble_sort_stack(&stack_a, 'a');
-	// stack_print(stack_a);
-	// stack_print(stack_b);
-
-	// t_stack    *stack;
-	// stack = NULL;
-	// int nums[] = {6, 11 , 10, 9, 8 , 7};
-	// int i = 0;
-	// while (i < sizeof(nums)/sizeof(int))
-	// 	stack_add_bottom(&stack, stack_new(nums[i++]));
-	// ft_printf("%d\n", kind_of_sorted_desc(stack));
 }
 
 // TODO: CHECK ERROR MANAGEMENT SECTION

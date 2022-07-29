@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 07:04:37 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 12:10:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/29 11:41:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 // 	stacka_size = stack_size(stack_a);
 // 	while (stack_size(stack_b) < stacka_size)
 // 	{
-// 		min = find_min(stack_a);
+// 		min = find_min_pos(stack_a);
 // 		// move_to_top(min);
 // 		push(&stack_a, &stack_b, 'b');
 // 	}

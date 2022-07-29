@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:26:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/19 21:10:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/29 11:41:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	get_final_positions(t_stack *stack)
 	idx = 0;
 	while (idx < stack_size(stack))
 	{
-		min = find_min(stack);
+		min = find_min_pos(stack);
 		min->final_idx = idx;
 		idx++;
 	}

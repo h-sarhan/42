@@ -6,11 +6,30 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:09:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/19 22:07:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/29 11:43:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+t_stack	*find_min_pos(t_stack *stack)
+{
+	int		min;
+	t_stack	*min_stack;
+
+	min = INT_MAX;
+	min_stack = stack;
+	while (stack != NULL)
+	{
+		if (stack->num < min && stack->final_idx == -1)
+		{
+			min = stack->num;
+			min_stack = stack;
+		}
+		stack = stack->next;
+	}
+	return (min_stack);
+}
 
 t_stack	*find_min(t_stack *stack)
 {
@@ -18,9 +37,10 @@ t_stack	*find_min(t_stack *stack)
 	t_stack	*min_stack;
 
 	min = INT_MAX;
+	min_stack = stack;
 	while (stack != NULL)
 	{
-		if (stack->num < min && stack->final_idx == -1)
+		if (stack->num < min)
 		{
 			min = stack->num;
 			min_stack = stack;
