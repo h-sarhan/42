@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 06:33:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 16:47:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:00:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,16 @@ void	sort_five(t_stack **stack_a, t_stack **stack_b)
 		swap(stack_a, stack_b, 'b');
 	push(stack_a, stack_b, 'a');
 	push(stack_a, stack_b, 'a');
+}
+
+void	sort_small(t_stack *stack_a, t_stack *stack_b)
+{
+	if (stack_size(stack_a) == 2 && stack_a->num > stack_a->next->num)
+		swap(&stack_a, &stack_b, 'a');
+	if (stack_size(stack_a) == 3)
+		sort_three(&stack_a, &stack_b);
+	if (stack_size(stack_a) == 4)
+		sort_four(&stack_a, &stack_b);
+	if (stack_size(stack_a) == 5)
+		sort_five(&stack_a, &stack_b);
 }

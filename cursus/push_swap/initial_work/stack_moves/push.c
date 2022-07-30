@@ -6,11 +6,22 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:23:41 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 16:42:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:04:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
+
+static void	stack_add_top(t_stack **lst, t_stack *new)
+{
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	new->next = *lst;
+	*lst = new;
+}
 
 void	push(t_stack **stack_a, t_stack **stack_b, char which)
 {
@@ -40,40 +51,3 @@ void	push(t_stack **stack_a, t_stack **stack_b, char which)
 		ft_printf("pb\n");
 	}
 }
-
-// int	main()
-// {
-// 	int	nums[] = {10, 20, 30, 40, 50};
-// 	int	nums2[] = {60, 70, 80, 90, 100};
-// 	t_stack	*stack_a = NULL;
-// 	t_stack	*stack_b = NULL;
-// 	int i = 0;
-// 	while (i < 5)
-// 	{
-// 		stack_add_bottom(&stack_a, stack_new(nums[i]));
-// 		stack_add_bottom(&stack_b, stack_new(nums2[i]));
-// 		i++;
-// 	}
-// 	stack_print(stack_a);
-// 	stack_print(stack_b);
-// 	ft_printf("\n");
-// 	push(&stack_a, &stack_b, 'a');
-// 	push(&stack_a, &stack_b, 'a');
-// 	push(&stack_a, &stack_b, 'a');
-// 	push(&stack_a, &stack_b, 'a');
-// 	push(&stack_a, &stack_b, 'a');
-// 	push(&stack_a, &stack_b, 'a');
-// 	push(&stack_a, &stack_b, 'a');
-// 	push(&stack_a, &stack_b, 'a');
-// 	push(&stack_a, &stack_b, 'a');
-// 	push(&stack_a, &stack_b, 'b');
-// 	push(&stack_a, &stack_b, 'b');
-// 	push(&stack_a, &stack_b, 'b');
-// 	push(&stack_a, &stack_b, 'b');
-// 	push(&stack_a, &stack_b, 'b');
-// 	push(&stack_a, &stack_b, 'b');
-// 	push(&stack_a, &stack_b, 'a');
-// 	ft_printf("\n");
-// 	stack_print(stack_a);
-// 	stack_print(stack_b);
-// }

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 16:46:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:05:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct s_stack
 
 // Stack
 t_stack	*stack_new(int num);
-void	stack_add_top(t_stack **lst, t_stack *new);
 void	stack_add_bottom(t_stack **lst, t_stack *new);
 int		stack_size(t_stack *lst);
 t_stack	*stack_bottom(t_stack *lst);
@@ -53,6 +52,7 @@ void	free_split_array(char **split_array);
 void	sort_three(t_stack **stack_a, t_stack **stack_b);
 void	sort_four(t_stack **stack_a, t_stack **stack_b);
 void	sort_five(t_stack **stack_a, t_stack **stack_b);
+void	sort_small(t_stack *stack_a, t_stack *stack_b);
 
 void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size);
 void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b);

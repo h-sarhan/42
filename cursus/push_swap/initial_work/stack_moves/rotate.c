@@ -6,11 +6,23 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:58:36 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 11:26:30 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:06:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
+
+// void	rotate_a(t_stack **stack_a)
+// {
+	
+// 		first = *stack_a;
+// 		second = first->next;
+// 		stack_bottom(*stack_a)->next = first;
+// 		first->next = NULL;
+// 		*stack_a = second;
+// }
+// 	t_stack	*first;
+// 	t_stack	*second;
 
 void	rotate(t_stack **stack_a, t_stack **stack_b, char which, bool q)
 {
