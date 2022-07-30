@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:23:41 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/15 13:04:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 16:42:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ void	push(t_stack **stack_a, t_stack **stack_b, char which)
 		popped = *stack_b;
 		temp = popped->next;
 		if (popped->next != NULL)
-		{
 			popped->next = NULL;
-		}
 		*stack_b = temp;
 		stack_add_top(stack_a, popped);
 		ft_printf("pa\n");
@@ -36,9 +34,7 @@ void	push(t_stack **stack_a, t_stack **stack_b, char which)
 		popped = *stack_a;
 		temp = popped->next;
 		if (popped->next != NULL)
-		{
 			popped->next = NULL;
-		}
 		*stack_a = temp;
 		stack_add_top(stack_b, popped);
 		ft_printf("pb\n");

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 16:39:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 16:40:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	main(int argc, char **argv)
 	int		i;
 
 	if (argc == 1)
-	{
 		return (EXIT_SUCCESS);
-	}
 	int	num_args;
 	char *arg_string = arg_joiner(argv);
 	int	*nums = parse_args(arg_string, &num_args);

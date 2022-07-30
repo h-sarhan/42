@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 12:17:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 16:27:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 16:47:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static bool	is_numeric(char *str)
 	return (true);
 }
 
-
 static void	parse_error(char **args, int *nums, char *arg_string)
 {
 	if (args != NULL)
@@ -86,13 +85,12 @@ static void	parse_error(char **args, int *nums, char *arg_string)
 	exit(EXIT_FAILURE);
 }
 
-
 static int	*check_for_dups(char **args, int num_args, char *arg_string)
 {
 	int	*nums;
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	nums = ft_calloc(num_args, sizeof(int));
 	if (nums == NULL)
