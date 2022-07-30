@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 12:01:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:23:46 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 
 # include <stdbool.h>
+# include <limits.h>
 
 # include "libft/libft.h" 
 # include "printf/ft_printf.h"
@@ -45,6 +46,7 @@ t_stack	*find_min(t_stack *stack);
 void	get_final_positions(t_stack *stack);
 int		forward_distance_to(t_stack **stack, int desired_idx);
 int		reverse_distance_to(t_stack **stack, int desired_idx);
+void	free_split_array(char **split_array);
 
 // Small sorts
 void	sort_three(t_stack **stack_a, t_stack **stack_b);
@@ -54,4 +56,9 @@ void	sort_five(t_stack **stack_a, t_stack **stack_b);
 void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size);
 void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b);
 
+
+// Parsing
+char	*arg_joiner(char **argv);
+long	ft_atol(const char *str);
+void	check_args(char *arg_string);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 10:23:07 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/14 00:06:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:24:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 # define SIZET_MAX 18446744073709551615UL 
-# define INT_MIN -2147483648 
-# define INT_MAX 2147483647
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);

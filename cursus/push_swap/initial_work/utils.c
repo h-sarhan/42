@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:09:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 11:43:46 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:21:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,17 @@ void	get_final_positions(t_stack *stack)
 		min->final_idx = idx;
 		idx++;
 	}
+}
+
+void	free_split_array(char **split_array)
+{
+	int	i;
+
+	i = 0;
+	while (split_array[i] != NULL)
+	{
+		free(split_array[i]);
+		i++;
+	}
+	free(split_array);
 }
