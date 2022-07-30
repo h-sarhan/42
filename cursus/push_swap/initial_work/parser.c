@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 12:17:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 17:13:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 18:51:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	parse_error(char **args, int *nums, char *arg_string)
 		free(nums);
 	if (arg_string != NULL)
 		free(arg_string);
-	ft_printf("Error\n");
+	write(2, "Error\n", ft_strlen("Error\n"));
 	exit(EXIT_FAILURE);
 }
 
