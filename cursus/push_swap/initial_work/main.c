@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 15:24:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:50:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@ int	main(int argc, char **argv)
 	// int i;
 	// char **nums;
 	
-	// TODO Make this better
-	// TODO: CHECK FOR DUPLICATES
-	// TODO: CHECK FOR OVERFLOW
-	// TODO: OTHER STUFF
 	// ! TODO: LEAKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	(void)argc;
+	if (argc == 1)
+	{
+		return (EXIT_SUCCESS);
+	}
 	char *arg_string = arg_joiner(argv);
 	// ft_printf("%s\n", arg_string);
 	check_args(arg_string);
+	free(arg_string);
 	// stack_a = NULL;
 	// stack_b = NULL;
 	// if (argc > 2)

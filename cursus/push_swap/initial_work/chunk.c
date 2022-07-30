@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 11:46:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 15:46:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	chunk_idx;
-	int	rev;
 	int	rotated_b;
 
-	rev = 0;
 	chunk_idx = 0;
 	rotated_b = 0;
 	while (stack_size(*stack_a) > 0)
