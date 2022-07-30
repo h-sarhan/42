@@ -6,54 +6,11 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 12:17:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 16:47:02 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:13:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static char	*join_arg(const char *str1, const char *str2)
-{
-	char	*arg_with_space;
-	char	*joined_args;
-
-	arg_with_space = ft_strjoin(str1, " ");
-	if (arg_with_space == NULL)
-		return (NULL);
-	joined_args = ft_strjoin(arg_with_space, str2);
-	free(arg_with_space);
-	if (joined_args == NULL)
-	{
-		free(arg_with_space);
-		return (NULL);
-	}
-	return (joined_args);
-}
-
-char	*arg_joiner(char **argv)
-{
-	char	*joined_args;
-	char	*temp;
-	int		i;
-
-	i = 1;
-	joined_args = ft_strdup("");
-	if (joined_args == NULL)
-		exit(EXIT_FAILURE);
-	while (argv[i] != NULL)
-	{
-		temp = joined_args;
-		joined_args = join_arg(temp, argv[i]);
-		free(temp);
-		if (joined_args == NULL)
-		{
-			free(temp);
-			exit(EXIT_FAILURE);
-		}
-		i++;
-	}
-	return (joined_args);
-}
 
 static bool	is_numeric(char *str)
 {

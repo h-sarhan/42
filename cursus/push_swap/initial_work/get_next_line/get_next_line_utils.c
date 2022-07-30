@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 20:31:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/18 14:23:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:14:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,3 @@ void	*resize(char **arr, int old_len, int new_len)
 		new_arr[i++] = '\0';
 	return (new_arr);
 }
-
-
-
-// Returns the maximum of the two int arguments
-// int	max(int a, int b)
-// {
-// 	if (a > b)
-// 		return (a);
-// 	return (b);
-// }

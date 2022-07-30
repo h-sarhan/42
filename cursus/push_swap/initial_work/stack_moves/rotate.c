@@ -6,46 +6,47 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:58:36 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 17:06:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:10:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-// void	rotate_a(t_stack **stack_a)
-// {
-	
-// 		first = *stack_a;
-// 		second = first->next;
-// 		stack_bottom(*stack_a)->next = first;
-// 		first->next = NULL;
-// 		*stack_a = second;
-// }
-// 	t_stack	*first;
-// 	t_stack	*second;
-
-void	rotate(t_stack **stack_a, t_stack **stack_b, char which, bool q)
+static void	rotate_a(t_stack **stack_a)
 {
 	t_stack	*first;
 	t_stack	*second;
 
+	first = *stack_a;
+	second = first->next;
+	stack_bottom(*stack_a)->next = first;
+	first->next = NULL;
+	*stack_a = second;
+}
+
+static void	rotate_b(t_stack **stack_b)
+{
+	t_stack	*first;
+	t_stack	*second;
+
+	first = *stack_b;
+	second = first->next;
+	stack_bottom(*stack_b)->next = first;
+	first->next = NULL;
+	*stack_b = second;
+}
+
+void	rotate(t_stack **stack_a, t_stack **stack_b, char which, bool q)
+{
 	if (stack_a == NULL && stack_b == NULL)
 		return ;
 	if ((which == 'a' || which == 'c') && stack_size(*stack_a) > 1)
 	{
-		first = *stack_a;
-		second = first->next;
-		stack_bottom(*stack_a)->next = first;
-		first->next = NULL;
-		*stack_a = second;
+		rotate_a(stack_a);
 	}
 	if ((which == 'b' || which == 'c') && stack_size(*stack_b) > 1)
 	{
-		first = *stack_b;
-		second = first->next;
-		stack_bottom(*stack_b)->next = first;
-		first->next = NULL;
-		*stack_b = second;
+		rotate_b(stack_b);
 	}
 	if (which == 'a' && !q)
 		ft_printf("ra\n");
@@ -54,29 +55,3 @@ void	rotate(t_stack **stack_a, t_stack **stack_b, char which, bool q)
 	if (which == 'c' && !q)
 		ft_printf("rr\n");
 }
-
-// int	main()
-// {
-// 	int	nums[] = {10, 20, 30, 40, 50};
-// 	int	nums2[] = {60, 70, 80, 90, 100};
-// 	t_stack	*stack_a = NULL;
-// 	t_stack	*stack_b = NULL;
-// 	int i = 0;
-// 	while (i < 5)
-// 	{
-// 		stack_add_bottom(&stack_a, stack_new(nums[i]));
-// 		stack_add_bottom(&stack_b, stack_new(nums2[i]));
-// 		i++;
-// 	}
-// 	stack_print(stack_a);
-// 	// stack_print(stack_b);
-// 	rotate(&stack_a, &stack_b, 'a');
-// 	rotate(&stack_a, &stack_b, 'a');
-// 	rotate(&stack_a, &stack_b, 'a');
-// 	rotate(&stack_a, &stack_b, 'a');
-// 	rotate(&stack_a, &stack_b, 'a');
-// 	rotate(&stack_a, &stack_b, 'a');
-// 	ft_printf("\n");
-// 	stack_print(stack_a);
-// 	// stack_print(stack_b);
-// }

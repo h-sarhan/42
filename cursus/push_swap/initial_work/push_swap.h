@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 17:05:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:13:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size);
 void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b);
 
 // Parsing
-char	*arg_joiner(char **argv);
 long	ft_atol(const char *str);
 int		*parse_args(char *arg_string, int *num_args);
 #endif

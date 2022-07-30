@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/30 15:04:53 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/30 17:14:46 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ $(PRINTF): $(PRINTF_OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 norm:
-	norminette $(LIBFT_SRCS) $(PRINTF_SRCS) $(SRCS) libft/libft.h printf/ft_printf.h push_swap.h
+	norminette $(LIBFT_SRCS) $(PRINTF_SRCS) $(SRCS) $(GNL_SRCS) libft/libft.h printf/ft_printf.h push_swap.h
 
 clean:
 	rm -f $(OBJS) $(LIBFT_OBJS) $(PRINTF_OBJS) $(LIBFT) $(PRINTF) $(GNL_OBJS)
