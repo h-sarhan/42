@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 17:13:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:17:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	reverse_rotate(t_stack **a, t_stack **b, char which, bool q);
 bool	is_sorted_asc(t_stack *stack);
 t_stack	*find_min(t_stack *stack);
 void	get_final_positions(t_stack *stack);
-int		forward_distance_to(t_stack **stack, int desired_idx);
-int		reverse_distance_to(t_stack **stack, int desired_idx);
+int		forward_dist(t_stack **stack, int desired_idx);
+int		reverse_dist(t_stack **stack, int desired_idx);
 void	free_split_array(char **split_array);
 
 // Small sorts

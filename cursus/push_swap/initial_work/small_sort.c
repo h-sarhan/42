@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 06:33:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 17:00:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 17:17:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	sort_four(t_stack **stack_a, t_stack **stack_b)
 	bool	rev;
 
 	rev = false;
-	if (forward_distance_to(stack_a, 0) > reverse_distance_to(stack_a, 0))
+	if (forward_dist(stack_a, 0) > reverse_dist(stack_a, 0))
 		rev = true;
 	while ((*stack_a)->final_idx != 0 && rev)
 		reverse_rotate(stack_a, stack_b, 'a', 0);
@@ -62,7 +62,7 @@ void	sort_five(t_stack **stack_a, t_stack **stack_b)
 	bool	rev;
 
 	rev = false;
-	if (forward_distance_to(stack_a, 0) > reverse_distance_to(stack_a, 0))
+	if (forward_dist(stack_a, 0) > reverse_dist(stack_a, 0))
 		rev = true;
 	while ((*stack_a)->final_idx != 0 && rev)
 		reverse_rotate(stack_a, stack_b, 'a', 0);
@@ -72,7 +72,7 @@ void	sort_five(t_stack **stack_a, t_stack **stack_b)
 		return ;
 	push(stack_a, stack_b, 'b');
 	rev = false;
-	if (forward_distance_to(stack_a, 1) > reverse_distance_to(stack_a, 1))
+	if (forward_dist(stack_a, 1) > reverse_dist(stack_a, 1))
 		rev = true;
 	while ((*stack_a)->final_idx != 1 && rev)
 		reverse_rotate(stack_a, stack_b, 'a', 0);
