@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 11:19:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 11:22:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv)
 	{
 		chunk_size = 0.1075 * stack_size(stack_a) + 6.25;
 		chunk(&stack_a, &stack_b, chunk_size);
-		sort_after_chunking(&stack_a, &stack_b, chunk_size);
+		sort_after_chunking(&stack_a, &stack_b);
 	}
 }
 

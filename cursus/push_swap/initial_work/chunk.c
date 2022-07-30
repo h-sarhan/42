@@ -6,72 +6,21 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/29 11:33:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 11:28:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	forward_distance_to(t_stack **stack, int chunk_idx, int chunk_size)
-{
-	int	num_rots;
-	int	i;
-
-	// ft_printf("checking forward rotations\n");
-	num_rots = 0;
-	while (!((*stack)->final_idx >= chunk_idx * chunk_size 
-		&& (*stack)->final_idx < (chunk_idx + 1) * chunk_size))
-	{
-		rotate(stack, NULL, 'a', 1);
-		num_rots++;
-	}
-	i = 0;
-	while (i < num_rots)
-	{
-		reverse_rotate(stack, NULL, 'a', 1);
-		i++;
-	}
-	// ft_printf("forward rotations == %d\n", num_rots);
-	return (num_rots);
-}
-
-int	reverse_distance_to(t_stack **stack, int chunk_idx, int chunk_size)
-{
-	int	num_rots;
-	int	i;
-
-	num_rots = 0;
-	// ft_printf("checking backward rotations\n");
-	while (!((*stack)->final_idx >= chunk_idx * chunk_size 
-		&& (*stack)->final_idx < (chunk_idx + 1) * chunk_size))
-	{
-		reverse_rotate(stack, NULL, 'a', 1);
-		num_rots++;
-	}
-	i = 0;
-	while (i < num_rots)
-	{
-		rotate(stack, NULL, 'a', 1);
-		i++;
-	}
-	// ft_printf("backward rotations == %d\n", num_rots);
-	return (num_rots);
-}
-
-
-
-// USE THIS EXAMPLE
-// 17 0 20 28 11 21 41 12 6 1 46 18 2 43 45 50 29 4 32 23
 void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size)
 {
 	int	chunk_idx;
 	int	rev;
 	int	rotated_b;
-	// float	ratio;
+
 	rev = 0;
 	chunk_idx = 0;
 	rotated_b = 0;
-	// ratio = 0.4;
 	while (stack_size(*stack_a) > 0)
 	{
 		while (stack_size(*stack_a) > 0 && (*stack_a)->final_idx >= chunk_idx * chunk_size
@@ -151,7 +100,6 @@ int	forward_distance_to_idx(t_stack **stack, int desired_idx)
 	int	num_rots;
 	int	i;
 
-	// ft_printf("checking forward rotations\n");
 	num_rots = 0;
 	while ((*stack)->final_idx != desired_idx) 
 	{
@@ -164,7 +112,6 @@ int	forward_distance_to_idx(t_stack **stack, int desired_idx)
 		reverse_rotate(stack, NULL, 'a', 1);
 		i++;
 	}
-	// ft_printf("forward rotations == %d\n", num_rots);
 	return (num_rots);
 }
 
@@ -174,7 +121,6 @@ int	reverse_distance_to_idx(t_stack **stack, int desired_idx)
 	int	i;
 
 	num_rots = 0;
-	// ft_printf("checking backward rotations\n");
 	while ((*stack)->final_idx != desired_idx) 
 	{
 		reverse_rotate(stack, NULL, 'a', 1);
@@ -186,17 +132,16 @@ int	reverse_distance_to_idx(t_stack **stack, int desired_idx)
 		rotate(stack, NULL, 'a', 1);
 		i++;
 	}
-	// ft_printf("backward rotations == %d\n", num_rots);
 	return (num_rots);
 }
 
-void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b, int chunk_size)
+void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b)
 {
 	int	next_idx;
 	int	curr_idx;
 	int	rev;
 	int	distance_to_alt_idx;
-	// printf("SORTING\n");
+
 	next_idx = stack_size(*stack_b) - 1;
 	while (stack_size(*stack_b) > 0)
 	{
