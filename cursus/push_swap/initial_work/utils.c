@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 13:09:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 11:38:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 11:43:46 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ t_stack	*find_min(t_stack *stack)
 	return (min_stack);
 }
 
-int	is_sorted_asc(t_stack *stack)
+bool	is_sorted_asc(t_stack *stack)
 {
 	if (stack_size(stack) < 2)
 		return (1);
 	while (stack->next != NULL)
 	{
 		if (stack->num > stack->next->num)
-			return (0);
+			return (false);
 		stack = stack->next;
 	}
-	return (1);
+	return (true);
 }
 
 static t_stack	*find_min_pos(t_stack *stack)

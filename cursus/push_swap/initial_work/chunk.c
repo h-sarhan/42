@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 11:28:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 11:46:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	which_direction(t_stack **stack, int desired_idx)
 }
 
 
-int	forward_distance_to_idx(t_stack **stack, int desired_idx)
+int	forward_distance_to(t_stack **stack, int desired_idx)
 {
 	int	num_rots;
 	int	i;
@@ -115,7 +115,7 @@ int	forward_distance_to_idx(t_stack **stack, int desired_idx)
 	return (num_rots);
 }
 
-int	reverse_distance_to_idx(t_stack **stack, int desired_idx)
+int	reverse_distance_to(t_stack **stack, int desired_idx)
 {
 	int	num_rots;
 	int	i;
@@ -152,12 +152,12 @@ void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b)
 			rev = 0;
 		if (next_idx > 1)
 		{
-			if (forward_distance_to_idx(stack_b, next_idx - 1) < reverse_distance_to_idx(stack_b, next_idx - 1))
-				distance_to_alt_idx = forward_distance_to_idx(stack_b, next_idx - 1);
+			if (forward_distance_to(stack_b, next_idx - 1) < reverse_distance_to(stack_b, next_idx - 1))
+				distance_to_alt_idx = forward_distance_to(stack_b, next_idx - 1);
 			else
-				distance_to_alt_idx = reverse_distance_to_idx(stack_b, next_idx - 1);
-			if (distance_to_alt_idx < reverse_distance_to_idx(stack_b, next_idx)
-				&& distance_to_alt_idx < forward_distance_to_idx(stack_b, next_idx))
+				distance_to_alt_idx = reverse_distance_to(stack_b, next_idx - 1);
+			if (distance_to_alt_idx < reverse_distance_to(stack_b, next_idx)
+				&& distance_to_alt_idx < forward_distance_to(stack_b, next_idx))
 			{
 				if (which_direction(stack_b, next_idx - 1))
 					rev = 1;
