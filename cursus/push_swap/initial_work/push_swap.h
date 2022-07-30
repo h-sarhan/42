@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 18:06:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 18:08:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	sort_five(t_stack **stack_a, t_stack **stack_b);
 void	sort_small(t_stack *stack_a, t_stack *stack_b);
 
 void	chunk(t_stack **stack_a, t_stack **stack_b, int chunk_size);
-void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b);
+void	sort_after_chunking(t_stack **stack_a);
 
 // Parsing
 long	ft_atol(const char *str);

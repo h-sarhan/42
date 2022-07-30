@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 18:07:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 18:39:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void	fill_stack(t_stack **stack, char **argv)
 int	main(int argc, char **argv)
 {
 	t_stack	*stacks[2];
-	// t_stack	*stack_a;
-	// t_stack	*stacks[1];
 	int		chunk_size;
 
 	stacks[0] = NULL;
@@ -105,7 +103,7 @@ int	main(int argc, char **argv)
 	{
 		chunk_size = 0.1075 * stack_size(stacks[0]) + 6.25;
 		chunk(&stacks[0], &stacks[1], chunk_size);
-		sort_after_chunking(&stacks[0], &stacks[1]);
+		sort_after_chunking(stacks);
 	}
 	stack_clear(&stacks[0]);
 }
