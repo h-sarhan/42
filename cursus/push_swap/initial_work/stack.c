@@ -1,16 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack2.c                                           :+:      :+:    :+:   */
+/*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/14 04:26:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/29 11:41:35 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/07/14 00:04:46 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/07/30 11:37:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "push_swap.h"
+
+t_stack	*stack_new(int num)
+{
+	t_stack	*node;
+
+	node = ft_calloc(1, sizeof(t_stack));
+	if (node == NULL)
+		return (NULL);
+	node->next = NULL;
+	node->num = num;
+	node->final_idx = -1;
+	return (node);
+}
+
+void	stack_add_top(t_stack **lst, t_stack *new)
+{
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	new->next = *lst;
+	*lst = new;
+}
+
+void	stack_add_bottom(t_stack **lst, t_stack *new)
+{
+	t_stack	*back;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	back = *lst;
+	while (back->next != NULL)
+		back = back->next;
+	back->next = new;
+}
 
 int	stack_size(t_stack *lst)
 {
@@ -32,23 +71,4 @@ t_stack	*stack_bottom(t_stack *lst)
 	while (lst->next != NULL)
 		lst = lst->next;
 	return (lst);
-}
-
-void	get_final_positions(t_stack *stack)
-{
-	t_stack	*min;
-	int		idx;
-
-	idx = 0;
-	while (idx < stack_size(stack))
-	{
-		min = find_min_pos(stack);
-		min->final_idx = idx;
-		idx++;
-	}
-	// while(stack != NULL)
-	// {
-	// 	printf("%d\n", stack->final_idx);
-	// 	stack = stack->next;
-	// }
 }

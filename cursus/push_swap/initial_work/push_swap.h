@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 11:26:53 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 11:38:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ typedef struct s_stack
 t_stack	*stack_new(int num);
 void	stack_add_top(t_stack **lst, t_stack *new);
 void	stack_add_bottom(t_stack **lst, t_stack *new);
-void	stack_print(t_stack *lst);
-
 int		stack_size(t_stack *lst);
 t_stack	*stack_bottom(t_stack *lst);
+
 
 
 // Stack moves
@@ -44,7 +43,6 @@ void	rotate(t_stack **a, t_stack **b, char which, bool q);
 void	reverse_rotate(t_stack **a, t_stack **b, char which, bool q);
 
 int		is_sorted_asc(t_stack *stack);
-t_stack	*find_min_pos(t_stack *stack);
 t_stack	*find_min(t_stack *stack);
 
 // small_sort
