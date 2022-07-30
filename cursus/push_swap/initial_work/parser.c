@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 12:17:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 16:11:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 16:27:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void	parse_error(char **args, int *nums, char *arg_string)
 }
 
 
-static void	check_for_dups(char **args, int num_args, char *arg_string)
+static int	*check_for_dups(char **args, int num_args, char *arg_string)
 {
 	int	*nums;
 	int	i;
@@ -112,11 +112,11 @@ static void	check_for_dups(char **args, int num_args, char *arg_string)
 		}
 		i++;
 	}
-	free(nums);
 	free_split_array(args);
+	return (nums);
 }
 
-void	check_args(char *arg_string)
+int	*parse_args(char *arg_string, int *num_args)
 {
 	char	**args;
 	int		i;
@@ -141,5 +141,6 @@ void	check_args(char *arg_string)
 			parse_error(args, NULL, arg_string);
 		i++;
 	}
-	check_for_dups(args, i, arg_string);
+	*num_args = i;
+	return (check_for_dups(args, i, arg_string));
 }

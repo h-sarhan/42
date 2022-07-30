@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 15:23:46 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 16:27:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	stack_add_top(t_stack **lst, t_stack *new);
 void	stack_add_bottom(t_stack **lst, t_stack *new);
 int		stack_size(t_stack *lst);
 t_stack	*stack_bottom(t_stack *lst);
+void	stack_clear(t_stack **lst);
 
 // Stack moves
 void	swap(t_stack **stack_a, t_stack **stack_b, char which);
@@ -60,5 +61,5 @@ void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b);
 // Parsing
 char	*arg_joiner(char **argv);
 long	ft_atol(const char *str);
-void	check_args(char *arg_string);
+int		*parse_args(char *arg_string, int *num_args);
 #endif

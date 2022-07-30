@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 11:37:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 16:24:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,19 @@ t_stack	*stack_bottom(t_stack *lst)
 	while (lst->next != NULL)
 		lst = lst->next;
 	return (lst);
+}
+
+void	stack_clear(t_stack **lst)
+{
+	t_stack	*node;
+	t_stack	*next_node;
+
+	node = *lst;
+	while (node != NULL)
+	{
+		next_node = node->next;
+		free(node);
+		node = next_node;
+	}
+	*lst = NULL;
 }
