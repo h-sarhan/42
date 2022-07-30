@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 17:33:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/30 18:06:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,38 +62,6 @@ void	chunk(t_stack **a, t_stack **b, int chunk_size)
 	}
 }
 
-int	which_direction(t_stack **stack, int desired_idx)
-{
-	int	num_forward_rots;
-	int	num_backward_rots;
-	int	i;
-
-	num_forward_rots = 0;
-	while ((*stack)->final_idx != desired_idx)
-	{
-		rotate(stack, NULL, 'a', 1);
-		num_forward_rots++;
-	}
-	i = 0;
-	while (i < num_forward_rots)
-	{
-		reverse_rotate(stack, NULL, 'a', 1);
-		i++;
-	}
-	num_backward_rots = 0;
-	while ((*stack)->final_idx != desired_idx)
-	{
-		reverse_rotate(stack, NULL, 'a', 1);
-		num_backward_rots++;
-	}
-	i = 0;
-	while (i < num_backward_rots)
-	{
-		rotate(stack, NULL, 'a', 1);
-		i++;
-	}
-	return (num_backward_rots < num_forward_rots);
-}
 
 int	forward_dist(t_stack **stack, int desired_idx)
 {
@@ -135,70 +103,84 @@ int	reverse_dist(t_stack **stack, int desired_idx)
 	return (num_rots);
 }
 
+int	distance_to(t_stack **stack, int desired_idx, bool *rev)
+{
+	int	num_forward_rots;
+	int	num_backward_rots;
+
+	num_forward_rots = forward_dist(stack, desired_idx);
+	num_backward_rots = reverse_dist(stack, desired_idx);
+	if (num_forward_rots < num_backward_rots)
+	{
+		*rev = false;
+		return (num_forward_rots);
+	}
+	else
+	{
+		*rev = true;
+		return (num_backward_rots);
+	}
+}
+
+void	fwd_push_element(t_stack **stack_a, t_stack **stack_b, int curr_idx,
+	int desired_idx)
+{
+	while (curr_idx != desired_idx)
+	{
+		rotate(stack_a, stack_b, 'b', false);
+		curr_idx = (*stack_b)->final_idx;
+	}
+}
+
+void	rev_push_element(t_stack **stack_a, t_stack **stack_b, int curr_idx,
+	int desired_idx)
+{
+	while (curr_idx != desired_idx)
+	{
+		reverse_rotate(stack_a, stack_b, 'b', false);
+		curr_idx = (*stack_b)->final_idx;
+	}
+}
+
 void	sort_after_chunking(t_stack **stack_a, t_stack **stack_b)
 {
-	int	next_idx;
-	int	curr_idx;
-	int	rev;
-	int	distance_to_alt_idx;
+	int		next_idx;
+	int		curr_idx;
+	bool	rev[2];
+	int		distance_to_alt_idx;
+	int		distance_to_next_idx;
 
 	next_idx = stack_size(*stack_b) - 1;
 	while (stack_size(*stack_b) > 0)
 	{
 		curr_idx = (*stack_b)->final_idx;
-		if (which_direction(stack_b, next_idx))
-			rev = 1;
-		else
-			rev = 0;
+		distance_to_next_idx = distance_to(stack_b, next_idx, &rev[0]);
 		if (next_idx > 1)
 		{
-			if (forward_dist(stack_b, next_idx - 1) < reverse_dist(stack_b, next_idx - 1))
-				distance_to_alt_idx = forward_dist(stack_b, next_idx - 1);
-			else
-				distance_to_alt_idx = reverse_dist(stack_b, next_idx - 1);
-			if (distance_to_alt_idx < reverse_dist(stack_b, next_idx)
-				&& distance_to_alt_idx < forward_dist(stack_b, next_idx))
+			distance_to_alt_idx = distance_to(stack_b, next_idx - 1, &rev[1]);
+			if (distance_to_alt_idx < distance_to_next_idx)
 			{
-				if (which_direction(stack_b, next_idx - 1))
-					rev = 1;
+				if (rev[1])
+					rev_push_element(stack_a, stack_b, curr_idx, next_idx - 1);
 				else
-					rev = 0;
-				while (curr_idx != next_idx - 1)
-				{
-					if (rev)
-						reverse_rotate(stack_a, stack_b, 'b', 0);
-					else
-						rotate(stack_a, stack_b, 'b', 0);
-					curr_idx = (*stack_b)->final_idx;
-				}
+					fwd_push_element(stack_a, stack_b, curr_idx, next_idx - 1);
 				push(stack_a, stack_b, 'a');
-				if (which_direction(stack_b, next_idx))
-					rev = 1;
-				else
-					rev = 0;
+				distance_to_next_idx = distance_to(stack_b, next_idx, &rev[0]);
 				curr_idx = (*stack_b)->final_idx;
-				while (curr_idx != next_idx)
-				{
-					if (rev)
-						reverse_rotate(stack_a, stack_b, 'b', 0);
-					else
-						rotate(stack_a, stack_b, 'b', 0);
-					curr_idx = (*stack_b)->final_idx;
-				}
+				if (rev[0])
+					rev_push_element(stack_a, stack_b, curr_idx, next_idx);
+				else
+					fwd_push_element(stack_a, stack_b, curr_idx, next_idx);
 				push(stack_a, stack_b, 'a');
 				swap(stack_a, stack_b, 'a');
 				next_idx -= 2;
 				continue ;
 			}
 		}
-		while (curr_idx != next_idx)
-		{
-			if (rev)
-				reverse_rotate(stack_a, stack_b, 'b', 0);
-			else
-				rotate(stack_a, stack_b, 'b', 0);
-			curr_idx = (*stack_b)->final_idx;
-		}
+		if (rev[0])
+			rev_push_element(stack_a, stack_b, curr_idx, next_idx);
+		else
+			fwd_push_element(stack_a, stack_b, curr_idx, next_idx);
 		push(stack_a, stack_b, 'a');
 		next_idx--;
 	}
