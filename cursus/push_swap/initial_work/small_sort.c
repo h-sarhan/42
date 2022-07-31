@@ -6,13 +6,14 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 06:33:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 17:17:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 11:33:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_three(t_stack **stack_a, t_stack **stack_b)
+// Sort a stack with 3 elements
+static void	sort_three(t_stack **stack_a, t_stack **stack_b)
 {
 	int	nums[3];
 
@@ -39,7 +40,8 @@ void	sort_three(t_stack **stack_a, t_stack **stack_b)
 	}
 }
 
-void	sort_four(t_stack **stack_a, t_stack **stack_b)
+// Sort a stack with 4 elements
+static void	sort_four(t_stack **stack_a, t_stack **stack_b)
 {
 	bool	rev;
 
@@ -57,7 +59,8 @@ void	sort_four(t_stack **stack_a, t_stack **stack_b)
 	push(stack_a, stack_b, 'a');
 }
 
-void	sort_five(t_stack **stack_a, t_stack **stack_b)
+// Sort a stack with 5 elements
+static void	sort_five(t_stack **stack_a, t_stack **stack_b)
 {
 	bool	rev;
 
@@ -86,14 +89,15 @@ void	sort_five(t_stack **stack_a, t_stack **stack_b)
 	push(stack_a, stack_b, 'a');
 }
 
-void	sort_small(t_stack *stack_a, t_stack *stack_b)
+// Sort stacks of size <= 5
+void	sort_small(t_stack **stack_a, t_stack **stack_b)
 {
-	if (stack_size(stack_a) == 2 && stack_a->num > stack_a->next->num)
-		swap(&stack_a, &stack_b, 'a');
-	if (stack_size(stack_a) == 3)
-		sort_three(&stack_a, &stack_b);
-	if (stack_size(stack_a) == 4)
-		sort_four(&stack_a, &stack_b);
-	if (stack_size(stack_a) == 5)
-		sort_five(&stack_a, &stack_b);
+	if (stack_size(*stack_a) == 2 && (*stack_a)->num > (*stack_a)->next->num)
+		swap(stack_a, stack_b, 'a');
+	if (stack_size(*stack_a) == 3)
+		sort_three(stack_a, stack_b);
+	if (stack_size(*stack_a) == 4)
+		sort_four(stack_a, stack_b);
+	if (stack_size(*stack_a) == 5)
+		sort_five(stack_a, stack_b);
 }

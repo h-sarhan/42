@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 18:40:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 11:47:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// Pushes a chunked element from stack A to B
 static	void	push_chunk_el(t_stack **stack_a, t_stack **stack_b, int pivot,
 	bool *rot_b)
 {
@@ -34,6 +35,12 @@ static	void	push_chunk_el(t_stack **stack_a, t_stack **stack_b, int pivot,
 	}
 }
 
+// Pushes elements from stack A to stack B in a chunked order, meaning that
+// elements in stack B are going to be relatively sorted, which will reduce
+// the number of rotations needed to get to a desired index.
+// This function includes one important optimization where the chunked elements
+// are rotated around a pivot point after being pushed, which further reduces
+// the number of rotations. I also take advantage of rr here.
 void	chunk(t_stack **a, t_stack **b, int chunk_size)
 {
 	int		chunk_idx;
@@ -53,7 +60,7 @@ void	chunk(t_stack **a, t_stack **b, int chunk_size)
 		}
 		if (rot_b == true)
 		{
-			rotate(a, b, 'a', 1);
+			rotate(a, b, 'a', true);
 			ft_printf("rr\n");
 			rot_b = false;
 		}

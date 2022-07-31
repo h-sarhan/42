@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 15:00:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 15:29:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 11:35:29 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// Checks if a character is whitespace
 static int	is_space(char c)
 {
 	return (c == ' ' || c == '\f'
@@ -19,6 +20,7 @@ static int	is_space(char c)
 		|| c == '\t' || c == '\v');
 }
 
+// atol
 long	ft_atol(const char *str)
 {
 	long	num;
@@ -40,7 +42,7 @@ long	ft_atol(const char *str)
 	{
 		num *= 10;
 		num += str[i++] - '0';
-		if (num > INT_MAX && !(num != (long) INT_MIN && sign == -1))
+		if (num > INT_MAX && !(num == (long) INT_MAX + 1 && sign == -1))
 			return ((long) INT_MAX + 1);
 	}
 	return (num * sign);

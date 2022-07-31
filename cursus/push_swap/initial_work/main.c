@@ -6,12 +6,14 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 18:39:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 11:39:27 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// Join an argument from argv with another one while adding a space in the
+// middle
 static char	*join_arg(const char *str1, const char *str2)
 {
 	char	*arg_with_space;
@@ -23,13 +25,11 @@ static char	*join_arg(const char *str1, const char *str2)
 	joined_args = ft_strjoin(arg_with_space, str2);
 	free(arg_with_space);
 	if (joined_args == NULL)
-	{
-		free(arg_with_space);
 		return (NULL);
-	}
 	return (joined_args);
 }
 
+// Join all the args from argv together with a space in the middle
 static char	*arg_joiner(char **argv)
 {
 	char	*joined_args;
@@ -46,15 +46,13 @@ static char	*arg_joiner(char **argv)
 		joined_args = join_arg(temp, argv[i]);
 		free(temp);
 		if (joined_args == NULL)
-		{
-			free(temp);
 			exit(EXIT_FAILURE);
-		}
 		i++;
 	}
 	return (joined_args);
 }
 
+// Fills stack a with parsed numbers from the command line
 void	fill_stack(t_stack **stack, char **argv)
 {
 	char	*arg_string;
@@ -65,7 +63,6 @@ void	fill_stack(t_stack **stack, char **argv)
 
 	arg_string = arg_joiner(argv);
 	nums = parse_args(arg_string, &num_args);
-	free(arg_string);
 	i = 0;
 	while (i < num_args)
 	{
@@ -81,6 +78,8 @@ void	fill_stack(t_stack **stack, char **argv)
 	free(nums);
 }
 
+// Push swap
+// * For testing: ./push_swap `ruby -e "puts (-50..50).to_a.shuffle.join(' ')"`
 int	main(int argc, char **argv)
 {
 	t_stack	*stacks[2];
@@ -98,7 +97,7 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	if (stack_size(stacks[0]) <= 5)
-		sort_small(stacks[0], stacks[1]);
+		sort_small(&stacks[0], &stacks[1]);
 	else
 	{
 		chunk_size = 0.1075 * stack_size(stacks[0]) + 6.25;

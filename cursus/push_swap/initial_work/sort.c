@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 18:40:29 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 10:59:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// Returns the number of forward rotations needed to reach a stack element
 int	forward_dist(t_stack **stack, int desired_idx)
 {
 	int	num_rots;
@@ -32,6 +33,7 @@ int	forward_dist(t_stack **stack, int desired_idx)
 	return (num_rots);
 }
 
+// Returns the number of reverse rotations needed to reach a stack element
 int	reverse_dist(t_stack **stack, int desired_idx)
 {
 	int	num_rots;
@@ -52,7 +54,10 @@ int	reverse_dist(t_stack **stack, int desired_idx)
 	return (num_rots);
 }
 
-int	dist_to(t_stack **stack, int desired_idx, bool *rev)
+// Returns the minimum distance to a stack element, either through forward
+// or reverse rotations. Also sets the rev parameter to true if reverse
+// rotating to the desired element is faster
+static int	dist_to(t_stack **stack, int desired_idx, bool *rev)
 {
 	int	num_forward_rots;
 	int	num_backward_rots;
@@ -71,7 +76,9 @@ int	dist_to(t_stack **stack, int desired_idx, bool *rev)
 	}
 }
 
-void	push_element(t_stack **stacks, int curr_idx, int desired_idx, bool rev)
+// Rotates to a stack element in stack b and pushes it to stack a
+static void	push_element(t_stack **stacks, int curr_idx,
+	int desired_idx, bool rev)
 {
 	while (curr_idx != desired_idx)
 	{
@@ -84,6 +91,13 @@ void	push_element(t_stack **stacks, int curr_idx, int desired_idx, bool rev)
 	push(&stacks[0], &stacks[1], 'a');
 }
 
+// Main sorting algorithm
+// After chunking, the elements in stack b will be relatively sorted, so
+// the number of rotations needed to get to each element is lower.
+// This algorithm will simply rotate to the biggest index, push it to stack A
+// and decrement the index. One important optimization included is that if the
+// second biggest index is closer than the biggest one then I rotate to it, push
+// it, rotate to biggest, push that, then swap A.
 void	sort_after_chunking(t_stack **stacks)
 {
 	int		next_idx;

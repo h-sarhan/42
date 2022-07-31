@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 12:17:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 18:51:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 11:27:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// Checks if an argument id numeric
 static bool	is_numeric(char *str)
 {
 	int	i;
@@ -30,6 +31,8 @@ static bool	is_numeric(char *str)
 	return (true);
 }
 
+// Exits the program, frees what is necessary, and prints an error message, not
+// in that order.
 static void	parse_error(char **args, int *nums, char *arg_string)
 {
 	if (args != NULL)
@@ -38,11 +41,12 @@ static void	parse_error(char **args, int *nums, char *arg_string)
 		free(nums);
 	if (arg_string != NULL)
 		free(arg_string);
-	write(2, "Error\n", ft_strlen("Error\n"));
+	ft_putstr_fd("Error\n", 2);
 	exit(EXIT_FAILURE);
 }
 
-static int	*check_for_dups(char **args, int num_args, char *arg_string)
+// Checks the arguments for duplicates
+static int	*check_for_dups(char **args, int num_args)
 {
 	int	*nums;
 	int	i;
@@ -62,7 +66,7 @@ static int	*check_for_dups(char **args, int num_args, char *arg_string)
 		while (j < i)
 		{
 			if (nums[j] == nums[i])
-				parse_error(args, nums, arg_string);
+				parse_error(args, nums, NULL);
 			j++;
 		}
 		i++;
@@ -71,6 +75,7 @@ static int	*check_for_dups(char **args, int num_args, char *arg_string)
 	return (nums);
 }
 
+// Parses the argument strings passed to push_swap
 int	*parse_args(char *arg_string, int *num_args)
 {
 	char	**args;
@@ -78,11 +83,9 @@ int	*parse_args(char *arg_string, int *num_args)
 	long	val;
 
 	args = ft_split(arg_string, ' ');
+	free(arg_string);
 	if (args == NULL)
-	{
-		free(arg_string);
-		exit(EXIT_SUCCESS);
-	}
+		exit(EXIT_FAILURE);
 	if (args[0] == NULL)
 	{
 		free_split_array(args);
@@ -93,9 +96,9 @@ int	*parse_args(char *arg_string, int *num_args)
 	{
 		val = ft_atol(args[i]);
 		if (!is_numeric(args[i]) || val > INT_MAX || val < INT_MIN)
-			parse_error(args, NULL, arg_string);
+			parse_error(args, NULL, NULL);
 		i++;
 	}
 	*num_args = i;
-	return (check_for_dups(args, i, arg_string));
+	return (check_for_dups(args, i));
 }

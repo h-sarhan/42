@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:46 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 17:04:37 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 10:47:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// Creates a new stack element
 t_stack	*stack_new(int num)
 {
 	t_stack	*node;
@@ -25,6 +26,7 @@ t_stack	*stack_new(int num)
 	return (node);
 }
 
+// Adds a stack element to the bottom of the stack
 void	stack_add_bottom(t_stack **lst, t_stack *new)
 {
 	t_stack	*back;
@@ -40,6 +42,7 @@ void	stack_add_bottom(t_stack **lst, t_stack *new)
 	back->next = new;
 }
 
+// Returns the size of a stack
 int	stack_size(t_stack *lst)
 {
 	int	size;
@@ -53,6 +56,7 @@ int	stack_size(t_stack *lst)
 	return (size);
 }
 
+// Returns the element at the bottom of a stack
 t_stack	*stack_bottom(t_stack *lst)
 {
 	if (lst == NULL)
@@ -62,6 +66,7 @@ t_stack	*stack_bottom(t_stack *lst)
 	return (lst);
 }
 
+// Frees a every element of a stack
 void	stack_clear(t_stack **lst)
 {
 	t_stack	*node;
