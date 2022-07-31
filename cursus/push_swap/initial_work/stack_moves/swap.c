@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 04:47:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 16:51:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 13:15:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,20 @@ static void	swap_b(t_stack **stack_b)
 	*stack_b = second;
 }
 
-void	swap(t_stack **stack_a, t_stack **stack_b, char which)
+void	swap(t_stack **stack_a, t_stack **stack_b, char which, bool quiet)
 {
 	if ((which == 'a' || which == 'c') && stack_size(*stack_a) > 1)
 	{
 		swap_a(stack_a);
-		if (which != 'c')
+		if (which != 'c' && !quiet)
 			ft_printf("sa\n");
 	}
 	if ((which == 'b' || which == 'c') && stack_size(*stack_b) > 1)
 	{
 		swap_b(stack_b);
-		if (which != 'c')
+		if (which != 'c' && !quiet)
 			ft_printf("sb\n");
 	}
-	if (which == 'c')
+	if (which == 'c' && !quiet)
 		ft_printf("ss\n");
 }

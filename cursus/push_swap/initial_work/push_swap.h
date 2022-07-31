@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/31 12:43:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 13:49:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_stack	*stack_bottom(t_stack *lst);
 void	stack_clear(t_stack **lst);
 
 // Stack Moves
-void	swap(t_stack **stack_a, t_stack **stack_b, char which);
-void	push(t_stack **stack_a, t_stack **stack_b, char which);
+void	swap(t_stack **stack_a, t_stack **stack_b, char which, bool quiet);
+void	push(t_stack **stack_a, t_stack **stack_b, char which, bool quiet);
 void	rotate(t_stack **a, t_stack **b, char which, bool q);
 void	reverse_rotate(t_stack **a, t_stack **b, char which, bool q);
 
@@ -58,5 +58,5 @@ int		*parse_args(char *arg_string, int *num_args);
 char	*join_arg(const char *str1, const char *str2);
 char	*arg_joiner(char **argv);
 void	fill_stack(t_stack **stack, char **argv);
-
+void	parse_error(char **args, int *nums, char *arg_string);
 #endif

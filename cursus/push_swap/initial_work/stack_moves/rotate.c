@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:58:36 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 17:10:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 12:59:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,9 @@ void	rotate(t_stack **stack_a, t_stack **stack_b, char which, bool q)
 	if (stack_a == NULL && stack_b == NULL)
 		return ;
 	if ((which == 'a' || which == 'c') && stack_size(*stack_a) > 1)
-	{
 		rotate_a(stack_a);
-	}
 	if ((which == 'b' || which == 'c') && stack_size(*stack_b) > 1)
-	{
 		rotate_b(stack_b);
-	}
 	if (which == 'a' && !q)
 		ft_printf("ra\n");
 	if (which == 'b' && !q)

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 16:52:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/31 11:47:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 13:16:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static	void	push_chunk_el(t_stack **stack_a, t_stack **stack_b, int pivot,
 			*rot_b = false;
 			ft_printf("rb\n");
 		}
-		push(stack_a, stack_b, 'b');
+		push(stack_a, stack_b, 'b', false);
 	}
 	else
 	{
 		if (*rot_b == true)
 			ft_printf("rb\n");
-		push(stack_a, stack_b, 'b');
+		push(stack_a, stack_b, 'b', false);
 		rotate(stack_a, stack_b, 'b', 1);
 		*rot_b = true;
 	}

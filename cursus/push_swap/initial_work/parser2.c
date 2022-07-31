@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 12:42:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/31 12:44:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 13:50:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ char	*arg_joiner(char **argv)
 		exit(EXIT_FAILURE);
 	while (argv[i] != NULL)
 	{
+		if (ft_strlen(argv[i]) == 0)
+		{
+			free(joined_args);
+			parse_error(NULL, NULL, NULL);
+		}
 		temp = joined_args;
 		joined_args = join_arg(temp, argv[i]);
 		free(temp);

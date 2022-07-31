@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 05:23:41 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/30 17:04:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 14:59:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,42 @@ static void	stack_add_top(t_stack **lst, t_stack *new)
 	*lst = new;
 }
 
-void	push(t_stack **stack_a, t_stack **stack_b, char which)
+static void	push_a(t_stack **stack_a, t_stack **stack_b, bool quiet)
 {
 	t_stack	*popped;
 	t_stack	*temp;
 
+	popped = *stack_b;
+	temp = popped->next;
+	if (popped->next != NULL)
+		popped->next = NULL;
+	*stack_b = temp;
+	stack_add_top(stack_a, popped);
+	if (!quiet)
+		ft_printf("pa\n");
+}
+
+static void	push_b(t_stack **stack_a, t_stack **stack_b, bool quiet)
+{
+	t_stack	*popped;
+	t_stack	*temp;
+
+	popped = *stack_a;
+	temp = popped->next;
+	if (popped->next != NULL)
+		popped->next = NULL;
+	*stack_a = temp;
+	stack_add_top(stack_b, popped);
+	if (!quiet)
+		ft_printf("pb\n");
+}
+
+void	push(t_stack **stack_a, t_stack **stack_b, char which, bool quiet)
+{
 	if (stack_a == NULL && stack_b == NULL)
 		return ;
 	if (which == 'a' && stack_size(*stack_b) > 0)
-	{
-		popped = *stack_b;
-		temp = popped->next;
-		if (popped->next != NULL)
-			popped->next = NULL;
-		*stack_b = temp;
-		stack_add_top(stack_a, popped);
-		ft_printf("pa\n");
-	}
+		push_a(stack_a, stack_b, quiet);
 	if (which == 'b' && stack_size(*stack_a) > 0)
-	{
-		popped = *stack_a;
-		temp = popped->next;
-		if (popped->next != NULL)
-			popped->next = NULL;
-		*stack_a = temp;
-		stack_add_top(stack_b, popped);
-		ft_printf("pb\n");
-	}
+		push_b(stack_a, stack_b, quiet);
 }

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 06:42:01 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/31 12:41:52 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 14:50:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	main(int argc, char **argv)
 	if (is_sorted_asc(stacks[0]))
 	{
 		stack_clear(&stacks[0]);
-		return (0);
+		stack_clear(&stacks[1]);
+		return (EXIT_SUCCESS);
 	}
 	if (stack_size(stacks[0]) <= 5)
 		sort_small(&stacks[0], &stacks[1]);
@@ -39,4 +40,5 @@ int	main(int argc, char **argv)
 		sort_after_chunking(stacks);
 	}
 	stack_clear(&stacks[0]);
+	stack_clear(&stacks[1]);
 }

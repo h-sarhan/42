@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 12:17:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/31 11:27:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 13:49:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static bool	is_numeric(char *str)
 
 // Exits the program, frees what is necessary, and prints an error message, not
 // in that order.
-static void	parse_error(char **args, int *nums, char *arg_string)
+void	parse_error(char **args, int *nums, char *arg_string)
 {
 	if (args != NULL)
 		free_split_array(args);
@@ -41,7 +41,7 @@ static void	parse_error(char **args, int *nums, char *arg_string)
 		free(nums);
 	if (arg_string != NULL)
 		free(arg_string);
-	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
 

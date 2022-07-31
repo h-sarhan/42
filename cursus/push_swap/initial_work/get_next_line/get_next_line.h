@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 12:42:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/18 14:23:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 14:58:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define TRUE 1
 # define FALSE 0
 
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 1
 
 // get_next_line.c
 char	*get_next_line(int fd);

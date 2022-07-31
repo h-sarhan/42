@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/31 10:59:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 13:18:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	forward_dist(t_stack **stack, int desired_idx)
 	num_rots = 0;
 	while ((*stack)->final_idx != desired_idx)
 	{
-		rotate(stack, NULL, 'a', 1);
+		rotate(stack, NULL, 'a', true);
 		num_rots++;
 	}
 	i = 0;
 	while (i < num_rots)
 	{
-		reverse_rotate(stack, NULL, 'a', 1);
+		reverse_rotate(stack, NULL, 'a', true);
 		i++;
 	}
 	return (num_rots);
@@ -42,13 +42,13 @@ int	reverse_dist(t_stack **stack, int desired_idx)
 	num_rots = 0;
 	while ((*stack)->final_idx != desired_idx)
 	{
-		reverse_rotate(stack, NULL, 'a', 1);
+		reverse_rotate(stack, NULL, 'a', true);
 		num_rots++;
 	}
 	i = 0;
 	while (i < num_rots)
 	{
-		rotate(stack, NULL, 'a', 1);
+		rotate(stack, NULL, 'a', true);
 		i++;
 	}
 	return (num_rots);
@@ -88,7 +88,7 @@ static void	push_element(t_stack **stacks, int curr_idx,
 			rotate(&stacks[0], &stacks[1], 'b', false);
 		curr_idx = stacks[1]->final_idx;
 	}
-	push(&stacks[0], &stacks[1], 'a');
+	push(&stacks[0], &stacks[1], 'a', false);
 }
 
 // Main sorting algorithm
@@ -117,7 +117,7 @@ void	sort_after_chunking(t_stack **stacks)
 			dist_to_next = dist_to(&stacks[1], next_idx, &rev[0]);
 			curr_idx = stacks[1]->final_idx;
 			push_element(stacks, curr_idx, next_idx, rev[0]);
-			swap(&stacks[0], &stacks[1], 'a');
+			swap(&stacks[0], &stacks[1], 'a', false);
 			next_idx -= 2;
 			continue ;
 		}
