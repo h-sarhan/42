@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:04:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/31 11:34:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/07/31 12:43:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,8 @@ void	sort_small(t_stack **stack_a, t_stack **stack_b);
 // Parsing
 long	ft_atol(const char *str);
 int		*parse_args(char *arg_string, int *num_args);
+char	*join_arg(const char *str1, const char *str2);
+char	*arg_joiner(char **argv);
+void	fill_stack(t_stack **stack, char **argv);
+
 #endif

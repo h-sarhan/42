@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/25 20:40:06 by hsarhan           #+#    #+#              #
-#    Updated: 2022/07/31 12:33:38 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/07/31 12:43:45 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT = libft.a
 PRINTF = libftprintf.a
 
 SRCS =	stack_moves/swap.c stack_moves/push.c stack_moves/rotate.c stack_moves/reverse_rotate.c \
-		push_swap.c stack.c utils.c chunk.c small_sort.c parser.c ft_atol.c sort.c
+		stack.c utils.c chunk.c small_sort.c parser.c ft_atol.c sort.c parser2.c
 
 LIBFT_SRCS = ft_strchr.c ft_split.c ft_strtrim.c ft_bzero.c ft_strnstr.c ft_strmapi.c ft_isprint.c ft_atoi.c ft_strdup.c \
 			ft_tolower.c ft_toupper.c ft_substr.c ft_striteri.c ft_memchr.c ft_putnbr_fd.c ft_strlcpy.c ft_itoa.c \
@@ -45,8 +45,8 @@ GNL_OBJS := $(GNL_SRCS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(PRINTF) $(GNL_OBJS) $(OBJS) 
-	$(CC) $(CFLAGS) $(OBJS)  $(GNL_OBJS) $(PRINTF) $(LIBFT)   -o $@
+$(NAME): $(LIBFT) $(PRINTF) $(GNL_OBJS) $(OBJS) push_swap.o
+	$(CC) $(CFLAGS) push_swap.o $(OBJS)  $(GNL_OBJS) $(PRINTF) $(LIBFT)   -o $@
 
 $(LIBFT): $(LIBFT_OBJS)
 	ar -rcs $@ $^
@@ -56,6 +56,11 @@ $(PRINTF): $(PRINTF_OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+checker: $(LIBFT) $(PRINTF) $(GNL_OBJS) $(OBJS) checker.o
+	$(CC) $(CFLAGS) checker.o $(OBJS)  $(GNL_OBJS) $(PRINTF) $(LIBFT)   -o $@
+
+bonus: checker
 
 norm:
 	norminette $(LIBFT_SRCS) $(PRINTF_SRCS) $(SRCS) $(GNL_SRCS) libft/libft.h printf/ft_printf.h push_swap.h
