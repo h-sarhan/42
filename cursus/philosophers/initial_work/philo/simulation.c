@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 13:53:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 14:29:18 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ t_sim	*create_simulation(void)
 	sim = malloc(sizeof(t_sim));
 	if (sim == NULL)
 	{
-		write_to_stderror("Failed to allocate memory\n");
-		exit(EXIT_FAILURE);
+		write_to_stderror("Failed to allocate memory\n", NULL);
+		return (NULL);
 	}
 	sim->start_time = get_start_time();
 	if (sim->start_time == NULL)
 	{
 		free_sim(sim);
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	return (sim);
 }

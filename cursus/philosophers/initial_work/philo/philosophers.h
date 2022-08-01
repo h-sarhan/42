@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 13:55:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 14:34:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,23 @@
 // Constants
 # define FAIL -1
 # define SUCCESS 0
+# define TIME_FAILURE 0
+# define THREAD_FAILURE 0
+
+// Typedefs
+typedef struct s_sim	t_sim;
+typedef unsigned long	t_time_ms;
 
 // Simulation struct
 struct s_sim
 {
+	size_t			phil_amount;
+	t_time_ms		time_to_die;
+	t_time_ms		time_to_eat;
+	t_time_ms		time_to_sleep;
+	
 	struct timeval	*start_time;
 };
-typedef struct s_sim	t_sim;
 
 // Simulation functions
 t_sim					*create_simulation(void);
@@ -41,24 +51,23 @@ size_t					ft_strlen(const char *str);
 void					ft_free(void *memory);
 
 // Error Handling
-void					write_to_stderror(const char *msg);
+void					write_to_stderror(const char *msg, bool *success);
 
 // Time
-typedef unsigned long	t_time_ms;
 struct timeval			*get_start_time(void);
-t_time_ms				get_time(t_sim *sim);
+t_time_ms				get_time(t_sim *sim, bool *success);
 
 // Threading functions
-pthread_t				create_thread(t_sim *sim, void *(*f)(void *),
-							void *arg);
-void					detach_thread(t_sim *sim, const pthread_t *thread);
-void					join_thread(t_sim *sim, const pthread_t *thread);
+pthread_t				create_thread(void *(*f)(void *), void *arg,
+							bool *success);
+void					detach_thread(const pthread_t *thread, bool *success);
+void					join_thread(const pthread_t *thread, bool *success);
 
 // Logging functions
-void					log_fork(t_sim *sim, size_t phil_num);
-void					log_eat(t_sim *sim, size_t phil_num);
-void					log_eat(t_sim *sim, size_t phil_num);
-void					log_think(t_sim *sim, size_t phil_num);
-void					log_death(t_sim *sim, size_t phil_num);
+void					log_fork(t_sim *sim, size_t phil_num, bool *success);
+void					log_eat(t_sim *sim, size_t phil_num, bool *success);
+void					log_sleep(t_sim *sim, size_t phil_num, bool *success);
+void					log_think(t_sim *sim, size_t phil_num, bool *success);
+void					log_death(t_sim *sim, size_t phil_num, bool *success);
 
 #endif
