@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 19:06:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 22:21:37 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ struct timeval	*get_start_time(void)
 		write_to_stderror("Failed to allocate memory\n", NULL);
 		return (NULL);
 	}
+	memset(start_time, 0, sizeof(struct timeval));
 	if (gettimeofday(start_time, NULL) == FAIL)
 	{
 		write_to_stderror("Failed to get time\n", NULL);

@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 10:29:36 by hsarhan           #+#    #+#              #
-#    Updated: 2022/08/01 18:43:08 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/08/01 22:19:55 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ CC = cc
 # TODO: Add -Werror before submitting
 CFLAGS = -Wall -Wextra  -g3 -pthread # -Werror
 
-SRCS = error_handling.c logging.c simulation.c threads.c time.c utils.c parser.c main.c philosophers.c
+SRCS = error_handling.c logging.c simulation.c threads.c time.c utils.c parser.c \
+		main.c philosophers.c mutexes.c
 
 OBJS := $(SRCS:%.c=%.o)
 
@@ -28,9 +29,6 @@ $(NAME): $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-
-bonus:
-	@echo "Not yet"
 
 norm:
 	norminette

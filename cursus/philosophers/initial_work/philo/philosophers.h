@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 19:18:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 22:21:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <pthread.h>
 # include <stdbool.h>
 # include <limits.h>
+# include <string.h>
 
 // Constants
 # define FAIL -1
@@ -84,7 +85,7 @@ t_time_ms		get_time(const t_sim *sim, bool *success);
 // Threading Functions
 pthread_t		create_thread(void *(*f)(void *), void *arg, bool *success);
 void			detach_thread(const pthread_t *thread, bool *success);
-void			join_thread(const pthread_t *thread, bool *success);
+void			join_thread(const pthread_t *thread, bool *success, void **ret);
 
 // Logging Functions
 void			log_fork(const t_sim *sim, const size_t phil_num, bool *succ);

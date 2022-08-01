@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:55:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 19:09:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 20:28:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	detach_thread(const pthread_t *thread, bool *success)
 }
 
 // Wrapper function around pthread_join that handles errors
-void	join_thread(const pthread_t *thread, bool *success)
+void	join_thread(const pthread_t *thread, bool *success, void **ret)
 {
-	if (pthread_join(*thread, NULL) != SUCCESS)
+	if (pthread_join(*thread, ret) != SUCCESS)
 	{
 		write_to_stderror("Failed to join thread\n", NULL);
 		*success = false;
