@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 12:32:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 12:41:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ void						write_to_stderror(const char *msg);
 // Time
 typedef unsigned long		t_time_ms;
 struct timeval				*get_start_time(void);
-t_time_ms					get_time(const struct timeval *start_time);
+t_time_ms					get_time(t_simulation *sim);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 12:29:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 12:48:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ t_simulation	*create_simulation(void)
 		exit(EXIT_FAILURE);
 	}
 	sim->start_time = get_start_time();
+	if (sim->start_time == NULL)
+	{
+		free(sim);
+		exit(EXIT_FAILURE);
+	}
 	return (sim);
 }
 
