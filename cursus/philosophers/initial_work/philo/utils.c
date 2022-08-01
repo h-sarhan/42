@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 15:43:32 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 15:50:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,20 @@ void	ft_free(void *memory)
 	*(void **)memory = NULL;
 }
 
-// Checks for whitespace
-static bool	is_space(const char c)
+// Checks if a character is whitespace
+static int	is_space(char c)
 {
 	return (c == ' ' || c == '\f'
 		|| c == '\n' || c == '\r'
 		|| c == '\t' || c == '\v');
 }
 
-// It's atoi
-int	ft_atoi(const char *str)
+// atol
+long	ft_atol(const char *str)
 {
-	int	num;
-	int	i;
-	int	sign;
+	long	num;
+	int		i;
+	int		sign;
 
 	num = 0;
 	i = 0;
@@ -56,13 +56,15 @@ int	ft_atoi(const char *str)
 	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
-			sign = -1;
+			return (FAIL);
 		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		num *= 10;
 		num += str[i++] - '0';
+		if (num > UINT_MAX)
+			return (FAIL);
 	}
 	return (num * sign);
 }

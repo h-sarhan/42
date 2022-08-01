@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:17:17 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 15:42:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 15:58:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ static bool	is_numeric(const char *str)
 	}
 	return (true);
 }
+
 void	parse_args(t_sim *sim, const int argc, char **argv, bool *success)
 {
 	size_t	i;
-	
+
 	if (argc != 5 && argc != 6)
 	{
 		*success = false;
@@ -47,24 +48,25 @@ void	parse_args(t_sim *sim, const int argc, char **argv, bool *success)
 	i = 1;
 	while (i < (size_t) argc)
 	{
-		if (!is_numeric(argv[i]) || ft_atoi(argv[i]) <= 0)
+		if (!is_numeric(argv[i]) || ft_atol(argv[i]) == FAIL
+			|| ft_atol(argv[i]) == 0)
 		{
 			*success = false;
 			return ;
 		}
 		i++;
 	}
-	sim->num_phils = ft_atoi(argv[1]);
-	printf("number of philosophers: %lu\n", sim->num_phils);
-	sim->time_to_die = ft_atoi(argv[2]);
+	sim->num_phils = ft_atol(argv[1]);
+	printf("number of philosophers: %u\n", sim->num_phils);
+	sim->time_to_die = ft_atol(argv[2]);
 	printf("time to die: %lu\n", sim->time_to_die);
-	sim->time_to_eat = ft_atoi(argv[3]);
+	sim->time_to_eat = ft_atol(argv[3]);
 	printf("time to eat: %lu\n", sim->time_to_eat);
-	sim->time_to_sleep = ft_atoi(argv[4]);
+	sim->time_to_sleep = ft_atol(argv[4]);
 	printf("time to sleep: %lu\n", sim->time_to_sleep);
 	sim->min_eats = 0;
 	if (argc == 6)
-		sim->min_eats = ft_atoi(argv[5]);
-	printf("min eats: %lu\n", sim->min_eats);
+		sim->min_eats = ft_atol(argv[5]);
+	printf("min eats: %u\n", sim->min_eats);
 	*success = true;
 }

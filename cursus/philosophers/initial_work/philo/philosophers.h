@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 15:37:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 15:58:27 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ typedef unsigned long	t_time_ms;
 // Simulation struct
 struct s_sim
 {
-	size_t			num_phils;
-	t_time_ms		time_to_die;
-	t_time_ms		time_to_eat;
-	t_time_ms		time_to_sleep;
-	size_t			min_eats;
-	struct timeval	*start_time;
+	unsigned int			num_phils;
+	t_time_ms				time_to_die;
+	t_time_ms				time_to_eat;
+	t_time_ms				time_to_sleep;
+	unsigned int			min_eats;
+	struct timeval			*start_time;
 };
 
 // Simulation functions
@@ -72,7 +72,7 @@ void					log_think(t_sim *sim, size_t phil_num, bool *success);
 void					log_death(t_sim *sim, size_t phil_num, bool *success);
 
 // Parsing
-int						ft_atoi(const char *str);
-void					parse_args(t_sim *sim, const int argc,char **argv,
-								bool *success);
+long					ft_atol(const char *str);
+void					parse_args(t_sim *sim, const int argc, char **argv,
+							bool *success);
 #endif
