@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 19:04:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 19:19:18 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int	main(int argc, char **argv)
 {
 	t_sim		*sim;
-	// t_time_ms	time_ms;
 	bool		success;
 
 	(void)argc, (void)argv;
