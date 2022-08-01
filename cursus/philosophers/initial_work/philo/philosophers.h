@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 12:41:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 13:18:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 // Constants
 # define FAIL -1
+# define SUCCESS 0
 
 // Simulation struct
 struct s_simulation
@@ -46,4 +47,9 @@ void						write_to_stderror(const char *msg);
 typedef unsigned long		t_time_ms;
 struct timeval				*get_start_time(void);
 t_time_ms					get_time(t_simulation *sim);
+
+// Threading function
+pthread_t					create_thread(t_simulation *sim, void *(*f)(void *),
+								void *arg);
+
 #endif

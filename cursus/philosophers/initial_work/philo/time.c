@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 12:46:32 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 13:10:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+// Get the start time of the simulation
 struct timeval	*get_start_time(void)
 {
 	struct timeval	*start_time;
@@ -30,6 +31,7 @@ struct timeval	*get_start_time(void)
 	return (start_time);
 }
 
+// Get the current time in ms
 t_time_ms	get_time(t_simulation *sim)
 {
 	struct timeval	curr_time;
