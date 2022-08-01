@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 14:36:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 19:06:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ struct timeval	*get_start_time(void)
 }
 
 // Get the current time in ms
-t_time_ms	get_time(t_sim *sim, bool *success)
+t_time_ms	get_time(const t_sim *sim, bool *success)
 {
 	struct timeval	curr_time;
 	t_time_ms		curr_time_in_ms;

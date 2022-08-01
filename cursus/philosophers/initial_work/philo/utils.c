@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 15:50:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 19:10:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_free(void *memory)
 }
 
 // Checks if a character is whitespace
-static int	is_space(char c)
+static bool	is_space(const char c)
 {
 	return (c == ' ' || c == '\f'
 		|| c == '\n' || c == '\r'

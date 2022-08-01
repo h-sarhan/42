@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.c                                     :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 16:28:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 19:04:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	main(int argc, char **argv)
 {
 	t_sim		*sim;
-	t_time_ms	time_ms;
+	// t_time_ms	time_ms;
 	bool		success;
 
 	(void)argc, (void)argv;
@@ -30,13 +30,12 @@ int	main(int argc, char **argv)
 		free_sim(sim);
 		return (EXIT_FAILURE);
 	}
-	usleep(10000);
-	time_ms = get_time(sim, &success);
+	create_philosophers(sim, &success);
 	if (!success)
 	{
 		free_sim(sim);
 		return (EXIT_FAILURE);
 	}
-	printf("%lu\n", time_ms);
 	free_sim(sim);
+	return (EXIT_SUCCESS);
 }

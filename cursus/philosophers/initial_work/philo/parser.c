@@ -6,13 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:17:17 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 15:58:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 19:08:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static int	ft_isdigit(const int c)
+static bool	ft_isdigit(const int c)
 {
 	return (c >= '0' && c <= '9');
 }

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 14:29:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 18:58:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ t_sim	*create_simulation(void)
 void	free_sim(t_sim *sim)
 {
 	ft_free(&sim->start_time);
+	ft_free(&sim->forks);
+	ft_free(&sim->phils);
 	ft_free(&sim);
 }

@@ -6,14 +6,14 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 14:32:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 19:07:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 // Log that a philosopher took a fork
-void	log_fork(t_sim *sim, size_t phil_num, bool *success)
+void	log_fork(const t_sim *sim, const size_t phil_num, bool *success)
 {
 	t_time_ms	time;
 
@@ -33,7 +33,7 @@ void	log_fork(t_sim *sim, size_t phil_num, bool *success)
 }
 
 // Log that a philosopher is eating
-void	log_eat(t_sim *sim, size_t phil_num, bool *success)
+void	log_eat(const t_sim *sim, const size_t phil_num, bool *success)
 {
 	t_time_ms	time;
 
@@ -53,7 +53,7 @@ void	log_eat(t_sim *sim, size_t phil_num, bool *success)
 }
 
 // Log that a philosopher is sleeping
-void	log_sleep(t_sim *sim, size_t phil_num, bool *success)
+void	log_sleep(const t_sim *sim, const size_t phil_num, bool *success)
 {
 	t_time_ms	time;
 
@@ -73,7 +73,7 @@ void	log_sleep(t_sim *sim, size_t phil_num, bool *success)
 }
 
 // Log that a philosopher is thinking
-void	log_think(t_sim *sim, size_t phil_num, bool *success)
+void	log_think(const t_sim *sim, const size_t phil_num, bool *success)
 {
 	t_time_ms	time;
 
@@ -93,7 +93,7 @@ void	log_think(t_sim *sim, size_t phil_num, bool *success)
 }
 
 // Log that a philosopher died
-void	log_death(t_sim *sim, size_t phil_num, bool *success)
+void	log_death(const t_sim *sim, const size_t phil_num, bool *success)
 {
 	t_time_ms	time;
 
