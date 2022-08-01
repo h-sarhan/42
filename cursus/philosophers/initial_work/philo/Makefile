@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 10:29:36 by hsarhan           #+#    #+#              #
-#    Updated: 2022/08/01 15:56:32 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/08/01 16:34:55 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = cc
 # TODO: Add -Werror before submitting
 CFLAGS = -Wall -Wextra  -g3 -pthread # -Werror
 
-SRCS = error_handling.c logging.c philosophers.c simulation.c threads.c time.c utils.c parser.c
+SRCS = error_handling.c logging.c philosopher.c simulation.c threads.c time.c utils.c parser.c main.c
 
 OBJS := $(SRCS:%.c=%.o)
 

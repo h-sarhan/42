@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 15:58:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/01 16:35:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,39 @@
 # define THREAD_FAILURE 0
 
 // Typedefs
-typedef struct s_sim	t_sim;
-typedef unsigned long	t_time_ms;
+typedef struct s_sim		t_sim;
+typedef struct s_phil		t_phil;
+typedef unsigned long		t_time_ms;
+typedef enum e_phil_state	t_phil_state;
 
 // Simulation struct
 struct s_sim
 {
-	unsigned int			num_phils;
-	t_time_ms				time_to_die;
-	t_time_ms				time_to_eat;
-	t_time_ms				time_to_sleep;
-	unsigned int			min_eats;
-	struct timeval			*start_time;
+	unsigned int	num_phils;
+	t_time_ms		time_to_die;
+	t_time_ms		time_to_eat;
+	t_time_ms		time_to_sleep;
+	unsigned int	min_eats;
+	struct timeval	*start_time;
+	t_phil			*philosophers;
+};
+
+// Philosopher states
+enum e_phil_state
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	DEAD
+};
+
+// Philosopher struct
+struct s_phil
+{
+	pthread_t		thread;
+	t_phil_state	state;
+	bool			holding_lfork;
+	bool			holding_rfork;
 };
 
 // Simulation functions
