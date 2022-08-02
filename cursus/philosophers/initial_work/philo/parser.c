@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:17:17 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 09:16:46 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 10:53:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	parse_args(t_sim *sim, const int argc, char **argv, bool *success)
 {
 	size_t	i;
 
+	*success = true;
 	if (argc != 5 && argc != 6)
 	{
 		*success = false;

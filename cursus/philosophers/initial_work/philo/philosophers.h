@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 10:21:29 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 10:56:00 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdbool.h>
 # include <limits.h>
 # include <string.h>
+# include <stdint.h>
 
 // Constants
 # define FAIL -1
@@ -45,7 +46,7 @@ struct s_sim
 	t_time_ms		time_to_sleep;
 	unsigned int	min_eats;
 	t_timeval		*start_time;
-	t_phil			*phils;
+	// t_phil			*phils;
 	bool			*forks;
 };
 
@@ -61,18 +62,21 @@ enum e_phil_state
 // Philosopher Struct
 struct s_phil
 {
-	pthread_t		thread;
+	// pthread_t		thread;
 	t_phil_state	state;
 	unsigned int	num;
+	t_sim			*sim;
 };
 
 // Philosopher Functions
-void		create_philosophers(t_sim *sim, bool *success);
+t_phil		**create_philosophers(t_sim *sim);
+void		free_philosophers(t_phil **phils);
 // void		*run_simulation();
 
 // Simulation Functions
 t_sim		*create_simulation(void);
 void		free_sim(t_sim *sim);
+void		*run_sim(const t_sim *sim);
 
 // Utils
 size_t		ft_strlen(const char *str);

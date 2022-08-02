@@ -6,34 +6,64 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 09:44:46 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 10:55:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	create_philosophers(t_sim *sim, bool *success)
+static t_phil	*create_philosopher(t_sim *sim, const unsigned int num)
 {
-	size_t	i;
+	t_phil	*phil;
 
-	sim->forks = ft_calloc(sim->num_phils, sizeof(bool));
-	if (sim->forks == NULL)
+	phil = ft_calloc(1, sizeof(t_phil));
+	if (phil == NULL)
+		return (NULL);
+	phil->num = num;
+	phil->sim = sim;
+	phil->state = THINKING;
+	return (phil);
+}
+
+t_phil	**create_philosophers(t_sim *sim)
+{
+	t_phil			**phils;
+	unsigned int	num;
+	unsigned int	temp;
+
+	num = 0;
+	phils = ft_calloc(sim->num_phils, sizeof(t_sim *));
+	if (phils == NULL)
+		return (NULL);
+	while (num < sim->num_phils)
 	{
-		*success = false;
-		return ;
+		phils[num] = create_philosopher(sim, num + 1);
+		if (phils[num] == NULL)
+		{
+			temp = 0;
+			while (temp < num)
+			{
+				ft_free(&phils[temp]);
+				temp++;
+			}
+			return (NULL);
+		}
+		num++;
 	}
-	sim->phils = ft_calloc(sim->num_phils, sizeof(t_phil));
-	if (sim->phils == NULL)
-	{
-		*success = false;
-		return ;
-	}
+	return (phils);
+}
+
+void	free_philosophers(t_phil **phils)
+{
+	unsigned int	num_phils;
+	unsigned int	i;
+
+	num_phils = phils[0]->sim->num_phils;
 	i = 0;
-	while (i < sim->num_phils)
+	while (i < num_phils)
 	{
-		sim->phils[i].state = THINKING;
-		sim->phils[i].num = i + 1;
+		ft_free(&phils[i]);
 		i++;
 	}
-	*success = true;
+	ft_free(&phils);
 }

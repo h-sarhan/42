@@ -6,12 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:32:16 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 10:32:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 10:35:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+// Creates a mutex and handles errors
 pthread_mutex_t	create_mutex(bool *success)
 {
 	pthread_mutex_t	mutex;
@@ -26,6 +27,7 @@ pthread_mutex_t	create_mutex(bool *success)
 	return (mutex);
 }
 
+// Frees a mutex and handles errors
 void	free_mutex(pthread_mutex_t mutex, bool *success)
 {
 	if (pthread_mutex_destroy(&mutex) != SUCCESS)
@@ -36,6 +38,7 @@ void	free_mutex(pthread_mutex_t mutex, bool *success)
 	*success = true;
 }
 
+// Locks a mutex and handles errors
 void	lock_mutex(pthread_mutex_t mutex, bool *success)
 {
 	if (pthread_mutex_lock(&mutex) != SUCCESS)
@@ -46,6 +49,7 @@ void	lock_mutex(pthread_mutex_t mutex, bool *success)
 	*success = true;
 }
 
+// Unlocks a mutex and handles errors
 void	unlock_mutex(pthread_mutex_t mutex, bool *success)
 {
 	if (pthread_mutex_lock(&mutex) != SUCCESS)
