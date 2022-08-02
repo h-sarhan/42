@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 09:21:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 09:44:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ struct s_phil
 {
 	pthread_t		thread;
 	t_phil_state	state;
+	unsigned int	num;
 };
 
 // Philosopher Functions
