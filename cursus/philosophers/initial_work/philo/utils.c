@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 19:10:47 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 09:18:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static bool	is_space(const char c)
 		|| c == '\t' || c == '\v');
 }
 
-// atol
-long	ft_atol(const char *str)
+// Ascii string to unsigned int, checks for overflow while doing the conversion
+long	string_to_uint(const char *str)
 {
 	long	num;
 	int		i;
@@ -67,4 +67,18 @@ long	ft_atol(const char *str)
 			return (FAIL);
 	}
 	return (num * sign);
+}
+
+// Calloc
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*memory;
+
+	if (count != 0 && size != 0 && count > SIZE_T_MAX / size)
+		return (NULL);
+	memory = malloc(count * size);
+	if (memory == NULL)
+		return (NULL);
+	memset(memory, 0, count * size);
+	return (memory);
 }

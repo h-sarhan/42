@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 22:21:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 09:21:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_sim		t_sim;
 typedef struct s_phil		t_phil;
 typedef unsigned long		t_time_ms;
 typedef enum e_phil_state	t_phil_state;
+typedef struct timeval		t_timeval;
 
 // Simulation Struct
 struct s_sim
@@ -43,7 +44,7 @@ struct s_sim
 	t_time_ms		time_to_eat;
 	t_time_ms		time_to_sleep;
 	unsigned int	min_eats;
-	struct timeval	*start_time;
+	t_timeval		*start_time;
 	t_phil			*phils;
 	bool			*forks;
 };
@@ -65,36 +66,37 @@ struct s_phil
 };
 
 // Philosopher Functions
-void			create_philosophers(t_sim *sim, bool *success);
+void		create_philosophers(t_sim *sim, bool *success);
 
 // Simulation Functions
-t_sim			*create_simulation(void);
-void			free_sim(t_sim *sim);
+t_sim		*create_simulation(void);
+void		free_sim(t_sim *sim);
 
 // Utils
-size_t			ft_strlen(const char *str);
-void			ft_free(void *memory);
+size_t		ft_strlen(const char *str);
+void		ft_free(void *memory);
+void		*ft_calloc(size_t count, size_t size);
 
 // Error Handling
-void			write_to_stderror(const char *msg, bool *success);
+void		write_to_stderror(const char *msg, bool *success);
 
 // Time
-struct timeval	*get_start_time(void);
-t_time_ms		get_time(const t_sim *sim, bool *success);
+t_timeval	*get_start_time(void);
+t_time_ms	get_time(const t_sim *sim, bool *success);
 
 // Threading Functions
-pthread_t		create_thread(void *(*f)(void *), void *arg, bool *success);
-void			detach_thread(const pthread_t *thread, bool *success);
-void			join_thread(const pthread_t *thread, bool *success, void **ret);
+pthread_t	create_thread(void *(*f)(void *), void *arg, bool *success);
+void		detach_thread(const pthread_t *thread, bool *success);
+void		join_thread(const pthread_t *thread, bool *success, void **ret);
 
 // Logging Functions
-void			log_fork(const t_sim *sim, const size_t phil_num, bool *succ);
-void			log_eat(const t_sim *sim, const size_t phil_num, bool *succ);
-void			log_sleep(const t_sim *sim, const size_t phil_num, bool *succ);
-void			log_think(const t_sim *sim, const size_t phil_num, bool *succ);
-void			log_death(const t_sim *sim, const size_t phil_num, bool *succ);
+void		log_fork(const t_sim *sim, const size_t phil_num, bool *succ);
+void		log_eat(const t_sim *sim, const size_t phil_num, bool *succ);
+void		log_sleep(const t_sim *sim, const size_t phil_num, bool *succ);
+void		log_think(const t_sim *sim, const size_t phil_num, bool *succ);
+void		log_death(const t_sim *sim, const size_t phil_num, bool *succ);
 
 // Parsing
-long			ft_atol(const char *str);
-void			parse_args(t_sim *sim, const int argc, char **argv, bool *succ);
+long		string_to_uint(const char *str);
+void		parse_args(t_sim *sim, const int argc, char **argv, bool *succ);
 #endif

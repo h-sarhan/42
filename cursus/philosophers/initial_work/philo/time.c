@@ -6,24 +6,23 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 22:21:37 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 09:22:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 // Get the start time of the simulation
-struct timeval	*get_start_time(void)
+t_timeval	*get_start_time(void)
 {
-	struct timeval	*start_time;
+	t_timeval	*start_time;
 
-	start_time = malloc(sizeof(struct timeval));
+	start_time = ft_calloc(1, sizeof(t_timeval));
 	if (start_time == NULL)
 	{
 		write_to_stderror("Failed to allocate memory\n", NULL);
 		return (NULL);
 	}
-	memset(start_time, 0, sizeof(struct timeval));
 	if (gettimeofday(start_time, NULL) == FAIL)
 	{
 		write_to_stderror("Failed to get time\n", NULL);
@@ -35,9 +34,9 @@ struct timeval	*get_start_time(void)
 // Get the current time in ms
 t_time_ms	get_time(const t_sim *sim, bool *success)
 {
-	struct timeval	curr_time;
-	t_time_ms		curr_time_in_ms;
-	t_time_ms		start_time_in_ms;
+	t_timeval	curr_time;
+	t_time_ms	curr_time_in_ms;
+	t_time_ms	start_time_in_ms;
 
 	start_time_in_ms = sim->start_time->tv_sec * 1000 + \
 						sim->start_time->tv_usec / 1000;
