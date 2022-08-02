@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 09:44:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 10:21:29 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ struct s_phil
 
 // Philosopher Functions
 void		create_philosophers(t_sim *sim, bool *success);
+// void		*run_simulation();
 
 // Simulation Functions
 t_sim		*create_simulation(void);
