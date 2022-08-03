@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 15:09:32 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 15:23:46 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	*run_sim(void *phil_ptr)
 	unsigned int	right;
 	bool			success;
 	t_phil			*phil;
-	bool			fork_left_held;
-	bool			fork_right_held;
 
 	phil = (t_phil *) phil_ptr;
 	left = phil->num;
@@ -50,9 +48,8 @@ void	*run_sim(void *phil_ptr)
 	success = true;
 	if (phil->num == phil->sim->num_phils)
 		right = 1;
-	fork_left_held = read_fork_status(phil->sim, left, &success);
-	fork_right_held = read_fork_status(phil->sim, right, &success);
-	if (fork_left_held == false && fork_right_held == false)
+	if (read_fork_status(phil->sim, left, &success) == false
+		&& read_fork_status(phil->sim, right, &success) == false)
 	{
 		set_fork_status(phil->sim, left, true, &success);
 		set_fork_status(phil->sim, right, true, &success);
@@ -69,5 +66,6 @@ void	free_sim(t_sim *sim)
 {
 	ft_free(&sim->start_time);
 	ft_free(&sim->forks);
+	ft_free(&sim->fork_mutexes);
 	ft_free(&sim);
 }

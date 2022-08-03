@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 15:07:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 15:21:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	i = 0;
-	while (philosophers[i % sim->num_phils]->state != DEAD)
-		i++;
+	// while (philosophers[i % sim->num_phils]->state != DEAD)
+	// 	i++;
 	free_philosophers(philosophers);
 	free_sim(sim);
 	ft_free(&threads);
