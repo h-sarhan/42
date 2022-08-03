@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 12:51:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 14:24:00 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	log_fork(const t_sim *sim, const size_t phil_num, bool *success)
 void	log_eat(const t_sim *sim, const size_t phil_num, bool *success)
 {
 	t_time_ms	time;
-
 	time = get_time(sim, success);
 	if (!success)
 	{

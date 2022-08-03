@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:32:16 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 13:05:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 14:22:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ pthread_mutex_t	create_mutex(bool *success)
 }
 
 // Frees a mutex and handles errors
-void	free_mutex(pthread_mutex_t mutex, bool *success)
+void	free_mutex(pthread_mutex_t *mutex, bool *success)
 {
-	if (pthread_mutex_destroy(&mutex) != SUCCESS)
+	if (pthread_mutex_destroy(mutex) != SUCCESS)
 	{
 		write_to_stderror("Failed to free mutex\n", NULL);
 		*success = false;
@@ -39,9 +39,9 @@ void	free_mutex(pthread_mutex_t mutex, bool *success)
 }
 
 // Locks a mutex and handles errors
-void	lock_mutex(pthread_mutex_t mutex, bool *success)
+void	lock_mutex(pthread_mutex_t *mutex, bool *success)
 {
-	if (pthread_mutex_lock(&mutex) != SUCCESS)
+	if (pthread_mutex_lock(mutex) != SUCCESS)
 	{
 		write_to_stderror("Failed to lock mutex\n", NULL);
 		*success = false;
@@ -50,9 +50,9 @@ void	lock_mutex(pthread_mutex_t mutex, bool *success)
 }
 
 // Unlocks a mutex and handles errors
-void	unlock_mutex(pthread_mutex_t mutex, bool *success)
+void	unlock_mutex(pthread_mutex_t *mutex, bool *success)
 {
-	if (pthread_mutex_lock(&mutex) != SUCCESS)
+	if (pthread_mutex_unlock(mutex) != SUCCESS)
 	{
 		write_to_stderror("Failed to unlock mutex\n", NULL);
 		*success = false;

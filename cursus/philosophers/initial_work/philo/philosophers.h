@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 13:52:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 14:27:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ struct s_sim
 	t_timeval		*start_time;
 	bool			*forks;
 	pthread_mutex_t	*fork_mutexes;
+	pthread_mutex_t	logging_mutex;
 };
 
 // Philosopher States
@@ -108,8 +109,8 @@ void			parse_args(t_sim *sim, const int argc, char **argv, bool *succ);
 
 // Mutexes
 pthread_mutex_t	create_mutex(bool *success);
-void			free_mutex(pthread_mutex_t mutex, bool *success);
-void			lock_mutex(pthread_mutex_t mutex, bool *success);
-void			unlock_mutex(pthread_mutex_t mutex, bool *success);
+void			free_mutex(pthread_mutex_t *mutex, bool *success);
+void			lock_mutex(pthread_mutex_t *mutex, bool *success);
+void			unlock_mutex(pthread_mutex_t *mutex, bool *success);
 
 #endif
