@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 10:56:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 16:29:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	main(int argc, char **argv)
 	t_sim		*sim;
 	bool		success;
 	t_phil		**philosophers;
+	pthread_t	*threads;
+	size_t		i;
 
 	(void)argc, (void)argv;
 	sim = create_simulation();
@@ -36,7 +38,36 @@ int	main(int argc, char **argv)
 		free_sim(sim);
 		return (EXIT_FAILURE);
 	}
+	threads = ft_calloc(sim->num_phils, sizeof(pthread_t));
+	if (threads == NULL)
+	{
+		free_philosophers(philosophers);
+		free_sim(sim);
+		return (EXIT_FAILURE);
+	}
+	i = 0;
+	while (i < sim->num_phils)
+	{
+		threads[i] =  create_thread(run_sim, philosophers[i], &success);
+		if (success == false)
+		{
+			free_philosophers(philosophers);
+			free_sim(sim);
+			ft_free(&threads);
+			return (EXIT_FAILURE);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < sim->num_phils)
+	{
+		join_thread();
+	}
+	i = 0;
+	while (philosophers[i % sim->num_phils]->state != DEAD)
+		i++;
 	free_philosophers(philosophers);
 	free_sim(sim);
+	ft_free(&threads);
 	return (EXIT_SUCCESS);
 }

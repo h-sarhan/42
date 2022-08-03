@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 10:56:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/02 16:07:37 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void		free_philosophers(t_phil **phils);
 // Simulation Functions
 t_sim		*create_simulation(void);
 void		free_sim(t_sim *sim);
-void		*run_sim(const t_sim *sim);
+void		*run_sim(const t_phil *phil);
 
 // Utils
 size_t		ft_strlen(const char *str);
