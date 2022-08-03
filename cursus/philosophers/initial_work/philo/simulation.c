@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 13:07:43 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 14:01:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,38 @@ t_sim	*create_simulation(void)
 // Starts the eat->think->sleep cycle of a philosopher
 void	*run_sim(void *phil_ptr)
 {
-	unsigned int	fork_left;
-	unsigned int	fork_right;
+	unsigned int	left;
+	unsigned int	right;
 	bool			success;
 	const t_phil	*phil;
 
 	phil = (const t_phil *) phil_ptr;
-	fork_left = phil->num;
-	fork_right = phil->num + 1;
+	left = phil->num;
+	right = phil->num + 1;
+	success = true;
 	if (phil->num == phil->sim->num_phils)
-		fork_right = 1;
-	
-	log_eat(phil->sim, phil->num, &success);
+		right = 1;
+	lock_mutex(phil->sim->fork_mutexes[left], &success);
+	lock_mutex(phil->sim->fork_mutexes[right], &success);
+	if (success == false)
+	{
+		// ! Do something
+	}
+	if (phil->sim->forks[left] == false && phil->sim->forks[right] == false)
+	{
+		phil->sim->forks[left] = true;
+		phil->sim->forks[right] = true;
+		usleep(phil->sim->time_to_sleep * 1000);
+		log_eat(phil->sim, phil->num, &success);
+	}
+	phil->sim->forks[left] = false;
+	phil->sim->forks[right] = false;
+	unlock_mutex(phil->sim->fork_mutexes[right], &success);
+	unlock_mutex(phil->sim->fork_mutexes[left], &success);
+	if (success == false)
+	{
+		// ! Do something
+	}
 	return (NULL);
 }
 

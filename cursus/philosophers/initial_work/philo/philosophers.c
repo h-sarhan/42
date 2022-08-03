@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 13:23:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 14:02:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_phil	**create_philosophers(t_sim *sim)
 
 	num = 0;
 	phils = ft_calloc(sim->num_phils, sizeof(t_sim *));
+	success = true;
 	if (phils == NULL)
 		return (NULL);
 	while (num < sim->num_phils)
@@ -73,7 +74,13 @@ void	create_forks(t_sim *sim, bool *success)
 	unsigned int	temp;
 
 	i = 0;
-	sim->fork_mutexes = ft_calloc(sim->num_phils, sizeof(pthread_mutex_t));
+	sim->forks = ft_calloc(sim->num_phils + 1, sizeof(bool));
+	if (sim->forks == NULL)
+	{
+		*success = false;
+		return ;
+	}
+	sim->fork_mutexes = ft_calloc(sim->num_phils + 1, sizeof(pthread_mutex_t));
 	if (sim->fork_mutexes == NULL)
 	{
 		*success = false;
@@ -82,6 +89,7 @@ void	create_forks(t_sim *sim, bool *success)
 	while (i < sim->num_phils)
 	{
 		sim->fork_mutexes[i] = create_mutex(success);
+		sim->forks[i] = false;
 		if (*success == false)
 		{
 			temp = 0;

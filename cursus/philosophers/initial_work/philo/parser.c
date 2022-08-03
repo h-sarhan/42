@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:17:17 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 13:08:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 13:44:46 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ void	parse_args(t_sim *sim, const int argc, char **argv, bool *success)
 	if (argc == 6)
 		sim->min_eats = atoui(argv[5]);
 	*success = true;
+	printf("number of philosophers: %u\n", sim->num_phils);
+	printf("time to die: %lu\n", sim->time_to_die);
+	printf("time to eat: %lu\n", sim->time_to_eat);
+	printf("time to sleep: %lu\n", sim->time_to_sleep);
+	printf("min eats: %u\n", sim->min_eats);
 }
-	// printf("min eats: %u\n", sim->min_eats);
-	// printf("time to sleep: %lu\n", sim->time_to_sleep);
-	// printf("time to eat: %lu\n", sim->time_to_eat);
-	// printf("time to die: %lu\n", sim->time_to_die);
-	// printf("number of philosophers: %u\n", sim->num_phils);

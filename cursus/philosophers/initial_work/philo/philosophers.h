@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 13:13:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 13:52:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # define SUCCESS 0
 # define TIME_FAILURE 0
 # define THREAD_FAILURE 0
-
 // Typedefs
 typedef struct s_sim		t_sim;
 typedef struct s_phil		t_phil;
