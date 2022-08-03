@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 16:29:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 13:07:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(int argc, char **argv)
 	pthread_t	*threads;
 	size_t		i;
 
-	(void)argc, (void)argv;
 	sim = create_simulation();
 	if (sim == NULL)
 		return (EXIT_FAILURE);
@@ -61,7 +60,15 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < sim->num_phils)
 	{
-		join_thread();
+		join_thread(&threads[i], &success, NULL);
+		if (success == false)
+		{
+			free_philosophers(philosophers);
+			free_sim(sim);
+			ft_free(&threads);
+			return (EXIT_FAILURE);
+		}
+		i++;
 	}
 	i = 0;
 	while (philosophers[i % sim->num_phils]->state != DEAD)

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 10:52:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 13:08:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static bool	is_space(const char c)
 }
 
 // Ascii string to unsigned int, checks for overflow while doing the conversion
-long	string_to_uint(const char *str)
+long	atoui(const char *str)
 {
 	long	num;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 10:55:48 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 13:23:21 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_phil	**create_philosophers(t_sim *sim)
 	t_phil			**phils;
 	unsigned int	num;
 	unsigned int	temp;
+	bool			success;
 
 	num = 0;
 	phils = ft_calloc(sim->num_phils, sizeof(t_sim *));
@@ -46,11 +47,54 @@ t_phil	**create_philosophers(t_sim *sim)
 				ft_free(&phils[temp]);
 				temp++;
 			}
+			ft_free(&phils);
 			return (NULL);
 		}
 		num++;
 	}
+	create_forks(sim, &success);
+	if (success == false)
+	{
+		temp = 0;
+		while (temp < sim->num_phils)
+		{
+			ft_free(&phils[temp]);
+			temp++;
+		}
+		ft_free(&phils);
+		return (NULL);
+	}
 	return (phils);
+}
+
+void	create_forks(t_sim *sim, bool *success)
+{
+	unsigned int	i;
+	unsigned int	temp;
+
+	i = 0;
+	sim->fork_mutexes = ft_calloc(sim->num_phils, sizeof(pthread_mutex_t));
+	if (sim->fork_mutexes == NULL)
+	{
+		*success = false;
+		return ;
+	}
+	while (i < sim->num_phils)
+	{
+		sim->fork_mutexes[i] = create_mutex(success);
+		if (*success == false)
+		{
+			temp = 0;
+			while (temp < i)
+			{
+				free_mutex(sim->fork_mutexes[temp], success);
+				temp++;
+			}
+			ft_free(&sim->fork_mutexes);
+			return ;
+		}
+		i++;
+	}
 }
 
 void	free_philosophers(t_phil **phils)

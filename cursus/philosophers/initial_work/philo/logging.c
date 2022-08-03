@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 19:07:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 12:51:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	log_fork(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
-	if (printf("%lu %zu has taken a fork\n", time, phil_num) < SUCCESS)
+	if (printf("%lums phil #%zu has taken a fork\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
 		*success = false;
@@ -43,7 +43,7 @@ void	log_eat(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
-	if (printf("%lu %zu is eating\n", time, phil_num) < SUCCESS)
+	if (printf("%lums phil #%zu is eating\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
 		*success = false;
@@ -63,7 +63,7 @@ void	log_sleep(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
-	if (printf("%lu %zu is sleeping\n", time, phil_num) < SUCCESS)
+	if (printf("%lums phil #%zu is sleeping\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
 		*success = false;
@@ -83,7 +83,7 @@ void	log_think(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
-	if (printf("%lu %zu is thinking\n", time, phil_num) < SUCCESS)
+	if (printf("%lums phil #%zu is thinking\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
 		*success = false;
@@ -103,7 +103,7 @@ void	log_death(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
-	if (printf("%lu %zu has died\n", time, phil_num) < SUCCESS)
+	if (printf("%lums philosopher #%zu has died\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
 		*success = false;

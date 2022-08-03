@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/02 16:29:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 13:07:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,25 @@ t_sim	*create_simulation(void)
 	return (sim);
 }
 
-void	*run_sim(const t_phil *phil)
+// Starts the eat->think->sleep cycle of a philosopher
+void	*run_sim(void *phil_ptr)
 {
 	unsigned int	fork_left;
 	unsigned int	fork_right;
 	bool			success;
+	const t_phil	*phil;
 
+	phil = (const t_phil *) phil_ptr;
 	fork_left = phil->num;
 	fork_right = phil->num + 1;
 	if (phil->num == phil->sim->num_phils)
 		fork_right = 1;
+	
 	log_eat(phil->sim, phil->num, &success);
 	return (NULL);
 }
 
-// Frees a simulation strucct
+// Frees a simulation struct
 void	free_sim(t_sim *sim)
 {
 	ft_free(&sim->start_time);
