@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 14:01:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 15:07:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < sim->num_phils)
 	{
-		threads[i] =  create_thread(run_sim, philosophers[i], &success);
+		threads[i] = create_thread(run_sim, philosophers[i], &success);
 		if (success == false)
 		{
 			free_philosophers(philosophers);

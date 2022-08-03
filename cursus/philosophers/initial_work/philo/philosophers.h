@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 15:04:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 15:09:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_phil		t_phil;
 typedef unsigned long		t_time_ms;
 typedef enum e_phil_state	t_phil_state;
 typedef struct timeval		t_timeval;
-typedef 					void (*log_func)(const t_sim *sim,
+typedef void				(*t_log_func)(const t_sim *sim,
 								const size_t phil_num, bool *success);
 // Simulation Struct
 struct s_sim
@@ -63,7 +63,6 @@ enum e_phil_state
 // Philosopher Struct
 struct s_phil
 {
-	// pthread_t		thread;
 	t_phil_state	state;
 	unsigned int	num;
 	t_sim			*sim;
@@ -103,7 +102,8 @@ void			log_eat(const t_sim *sim, const size_t phil_num, bool *succ);
 void			log_sleep(const t_sim *sim, const size_t phil_num, bool *succ);
 void			log_think(const t_sim *sim, const size_t phil_num, bool *succ);
 void			log_death(const t_sim *sim, const size_t phil_num, bool *succ);
-void			log_action(t_sim *sim, const size_t phil_num, bool *succ, log_func f);
+void			log_action(t_sim *sim, const size_t phil_num, bool *succ,
+					t_log_func f);
 
 // Parsing
 long			atoui(const char *str);

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 15:04:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 15:09:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	log_fork(const t_sim *sim, const size_t phil_num, bool *success)
 void	log_eat(const t_sim *sim, const size_t phil_num, bool *success)
 {
 	t_time_ms	time;
+
 	time = get_time(sim, success);
 	if (!success)
 	{
@@ -111,7 +112,7 @@ void	log_death(const t_sim *sim, const size_t phil_num, bool *success)
 	*success = true;
 }
 
-void	log_action(t_sim *sim, const size_t phil_num, bool *succ, log_func f)
+void	log_action(t_sim *sim, const size_t phil_num, bool *succ, t_log_func f)
 {
 	lock_mutex(&sim->logging_mutex, succ);
 	f(sim, phil_num, succ);
