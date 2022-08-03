@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 15:09:16 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 16:30:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ struct s_phil
 {
 	t_phil_state	state;
 	unsigned int	num;
+	pthread_mutex_t	state_mutex;
 	t_sim			*sim;
 };
 
@@ -89,7 +90,7 @@ void			write_to_stderror(const char *msg, bool *success);
 
 // Time
 t_timeval		*get_start_time(void);
-t_time_ms		get_time(const t_sim *sim, bool *success);
+t_time_ms		get_time(const t_timeval *sim, bool *success);
 
 // Threading Functions
 pthread_t		create_thread(void *(*f)(void *), void *arg, bool *success);
@@ -120,5 +121,10 @@ bool			read_fork_status(const t_sim *sim, const unsigned int fork_idx,
 					bool *succ);
 void			set_fork_status(t_sim *sim, const unsigned int fork_idx,
 					const bool value, bool *success);
+
+// Philosopher status
+t_phil_state	read_phil_state(t_phil *phil, bool *success);
+void			set_phil_state(t_phil *phil, const t_phil_state state,
+					bool *success);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 15:23:46 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 16:42:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,80 @@ void	*run_sim(void *phil_ptr)
 	unsigned int	right;
 	bool			success;
 	t_phil			*phil;
+	t_timeval		*phil_eat_time;
+	bool			left_held;
+	bool			right_held;
 
+	phil_eat_time = get_start_time();
 	phil = (t_phil *) phil_ptr;
-	left = phil->num;
-	right = phil->num + 1;
-	success = true;
-	if (phil->num == phil->sim->num_phils)
-		right = 1;
-	if (read_fork_status(phil->sim, left, &success) == false
-		&& read_fork_status(phil->sim, right, &success) == false)
+	while (1)
 	{
-		set_fork_status(phil->sim, left, true, &success);
-		set_fork_status(phil->sim, right, true, &success);
-		usleep(phil->sim->time_to_eat * 1000);
-		log_action(phil->sim, phil->num, &success, log_eat);
-		set_fork_status(phil->sim, left, false, &success);
-		set_fork_status(phil->sim, right, false, &success);
+		// if (phil->state == THINKING)
+		if (read_phil_state(phil, &success) == THINKING)
+		{
+			left = phil->num;
+			right = phil->num + 1;
+			success = true;
+			if (phil->num == phil->sim->num_phils)
+				right = 1;
+			// left_held = false;
+			// right_held = false;
+			lock_mutex(&phil->sim->fork_mutexes[left], &success);
+			lock_mutex(&phil->sim->fork_mutexes[right], &success);
+			left_held = phil->sim->forks[left];
+			right_held = phil->sim->forks[right];
+			unlock_mutex(&phil->sim->fork_mutexes[left], &success);
+			unlock_mutex(&phil->sim->fork_mutexes[right], &success);
+			while (left_held == true || right_held == true)	
+			{
+				lock_mutex(&phil->sim->fork_mutexes[left], &success);
+				lock_mutex(&phil->sim->fork_mutexes[right], &success);
+				left_held = phil->sim->forks[left];
+				right_held = phil->sim->forks[right];
+				unlock_mutex(&phil->sim->fork_mutexes[left], &success);
+				unlock_mutex(&phil->sim->fork_mutexes[right], &success);
+				if (get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
+				{
+					// phil->state = DEAD;
+					set_phil_state(phil, DEAD, &success);
+					log_action(phil->sim, phil->num, &success, log_death);
+					return (NULL);
+				}
+			}
+			set_fork_status(phil->sim, left, true, &success);
+			log_action(phil->sim, phil->num, &success, log_fork);
+			set_fork_status(phil->sim, right, true, &success);
+			log_action(phil->sim, phil->num, &success, log_fork);
+			// phil->state = EATING;
+			set_phil_state(phil, EATING, &success);
+			log_action(phil->sim, phil->num, &success, log_eat);
+			usleep(phil->sim->time_to_eat * 1000);
+			phil_eat_time = get_start_time();
+			set_fork_status(phil->sim, left, false, &success);
+			set_fork_status(phil->sim, right, false, &success);
+		}
+		// if (phil->state == EATING)
+		if (read_phil_state(phil, &success) == EATING)
+		{
+			// phil->state = SLEEPING;
+			set_phil_state(phil, SLEEPING, &success);
+			log_action(phil->sim, phil->num, &success, log_sleep);
+			usleep(phil->sim->time_to_sleep * 1000);
+			if (get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
+			{
+				// phil->state = DEAD;
+				set_phil_state(phil, DEAD, &success);
+				log_action(phil->sim, phil->num, &success, log_death);
+				return (NULL);
+			}
+		}
+		// if (phil->state == SLEEPING)
+		if (read_phil_state(phil, &success) == SLEEPING)
+		{
+			set_phil_state(phil, THINKING, &success);
+			// phil->state = THINKING;
+			log_action(phil->sim, phil->num, &success, log_think);
+		}
 	}
 	return (NULL);
 }

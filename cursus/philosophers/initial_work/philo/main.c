@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 15:21:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 16:45:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	i = 0;
+	// while (philosophers[i % sim->num_phils]->state != DEAD)
+	while (read_phil_state(philosophers[i % sim->num_phils], &success) != DEAD)
+		i++;
 	while (i < sim->num_phils)
 	{
 		join_thread(&threads[i], &success, NULL);
@@ -71,10 +74,8 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	i = 0;
-	// while (philosophers[i % sim->num_phils]->state != DEAD)
-	// 	i++;
-	free_philosophers(philosophers);
-	free_sim(sim);
-	ft_free(&threads);
+	// free_philosophers(philosophers);
+	// free_sim(sim);
+	// ft_free(&threads);
 	return (EXIT_SUCCESS);
 }

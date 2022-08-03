@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 14:39:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 16:22:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static t_phil	*create_philosopher(t_sim *sim, const unsigned int num)
 {
 	t_phil	*phil;
+	bool	success;
 
 	phil = ft_calloc(1, sizeof(t_phil));
 	if (phil == NULL)
@@ -22,6 +23,11 @@ static t_phil	*create_philosopher(t_sim *sim, const unsigned int num)
 	phil->num = num;
 	phil->sim = sim;
 	phil->state = THINKING;
+	phil->state_mutex = create_mutex(&success);
+	if (success == false)
+	{
+		// ! do something
+	}
 	return (phil);
 }
 
