@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 14:24:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 15:04:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,11 @@ void	log_death(const t_sim *sim, const size_t phil_num, bool *success)
 		return ;
 	}
 	*success = true;
+}
+
+void	log_action(t_sim *sim, const size_t phil_num, bool *succ, log_func f)
+{
+	lock_mutex(&sim->logging_mutex, succ);
+	f(sim, phil_num, succ);
+	unlock_mutex(&sim->logging_mutex, succ);
 }

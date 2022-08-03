@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 14:02:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 14:39:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	create_forks(t_sim *sim, bool *success)
 			temp = 0;
 			while (temp < i)
 			{
-				free_mutex(sim->fork_mutexes[temp], success);
+				free_mutex(&sim->fork_mutexes[temp], success);
 				temp++;
 			}
 			ft_free(&sim->fork_mutexes);

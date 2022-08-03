@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 14:38:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 15:05:34 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*run_sim(void *phil_ptr)
 	unsigned int	left;
 	unsigned int	right;
 	bool			success;
-	t_phil	*phil;
+	t_phil			*phil;
 	bool			fork_left_held;
 	bool			fork_right_held;
 	
@@ -51,37 +51,17 @@ void	*run_sim(void *phil_ptr)
 	if (phil->num == phil->sim->num_phils)
 		right = 1;
 	
-	lock_mutex(&phil->sim->fork_mutexes[left], &success);
-	fork_left_held = phil->sim->forks[left];
-	unlock_mutex(&phil->sim->fork_mutexes[left], &success);
+	fork_left_held = read_fork_status(phil->sim, left, &success);
+	fork_right_held = read_fork_status(phil->sim, right, &success);
 
-	fork_right_held = phil->sim->forks[right];
-	unlock_mutex(&phil->sim->fork_mutexes[right], &success);
-
-	lock_mutex(&phil->sim->fork_mutexes[right], &success);
 	if (fork_left_held == false && fork_right_held == false)
 	{
-		lock_mutex(&phil->sim->fork_mutexes[left], &success);
-		phil->sim->forks[left] = true;
-		unlock_mutex(&phil->sim->fork_mutexes[left], &success);
-
-		lock_mutex(&phil->sim->fork_mutexes[right], &success);
-		phil->sim->forks[right] = true;
-		unlock_mutex(&phil->sim->fork_mutexes[right], &success);
-
+		set_fork_status(phil->sim, left, true, &success);
+		set_fork_status(phil->sim, right, true, &success);
 		usleep(phil->sim->time_to_eat * 1000);
-
-		lock_mutex(&phil->sim->logging_mutex, &success);
-		log_eat(phil->sim, phil->num, &success);
-		unlock_mutex(&phil->sim->logging_mutex, &success);
-
-		lock_mutex(&phil->sim->fork_mutexes[left], &success);
-		phil->sim->forks[left] = false;
-		unlock_mutex(&phil->sim->fork_mutexes[left], &success);
-
-		lock_mutex(&phil->sim->fork_mutexes[right], &success);
-		phil->sim->forks[right] = false;
-		unlock_mutex(&phil->sim->fork_mutexes[right], &success);
+		log_action(phil->sim, phil->num, &success, log_eat);
+		set_fork_status(phil->sim, left, false, &success);
+		set_fork_status(phil->sim, right, false, &success);
 	}
 	return (NULL);
 }
