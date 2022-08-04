@@ -6,14 +6,14 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 10:29:36 by hsarhan           #+#    #+#              #
-#    Updated: 2022/08/03 16:21:51 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/08/04 15:38:36 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
 # TODO: Add -Werror before submitting
-CFLAGS = -Wall -Wextra  -g3 -pthread # -Werror
+CFLAGS = -Wall -Wextra -pthread -g3  # -Werror
 
 SRCS = error_handling.c logging.c simulation.c threads.c time.c utils.c parser.c \
 		main.c philosophers.c mutexes.c mutex_operations.c
@@ -25,10 +25,10 @@ NAME = philo
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS)  $(OBJS) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS)  -c $< -o $@
 
 norm:
 	norminette

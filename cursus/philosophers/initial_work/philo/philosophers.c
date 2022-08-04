@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 16:22:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 15:37:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_phil	*create_philosopher(t_sim *sim, const unsigned int num)
 	phil->num = num;
 	phil->sim = sim;
 	phil->state = THINKING;
-	phil->state_mutex = create_mutex(&success);
+	create_mutex(&phil->state_mutex, &success);
 	if (success == false)
 	{
 		// ! do something
@@ -92,9 +92,9 @@ void	create_forks(t_sim *sim, bool *success)
 		*success = false;
 		return ;
 	}
-	while (i < sim->num_phils)
+	while (i < sim->num_phils + 1)
 	{
-		sim->fork_mutexes[i] = create_mutex(success);
+		create_mutex(&sim->fork_mutexes[i], success);
 		sim->forks[i] = false;
 		if (*success == false)
 		{

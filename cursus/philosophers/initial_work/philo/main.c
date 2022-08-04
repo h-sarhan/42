@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/04 12:48:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 15:32:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	i = 0;
-	while (read_phil_state(philosophers[i % sim->num_phils], &success) != DEAD)
-		i++;
-	i = 0;
-	while (i < sim->num_phils)
-	{
-		set_phil_state(philosophers[i], DEAD, &success);
-		i++;
-	}
+	while (read_sim_status(sim, &success) == true)
+		;
+	// i = 0;
+	// while (i < sim->num_phils)
+	// {
+	// 	set_phil_state(philosophers[i], DEAD, &success);
+	// 	i++;
+	// }
 	size_t temp = 0;
 	while (temp < sim->num_phils)
 	{
@@ -82,8 +82,6 @@ int	main(int argc, char **argv)
 		}
 		temp++;
 	}
-	// i = 0;
-	// ! THIS CAUSES BIG SEG FAULTS
 	free_philosophers(philosophers);
 	free_sim(sim);
 	ft_free(&threads);

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/04 12:15:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 15:36:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define SUCCESS 0
 # define TIME_FAILURE 0
 # define THREAD_FAILURE 0
+
 // Typedefs
 typedef struct s_sim		t_sim;
 typedef struct s_phil		t_phil;
@@ -49,6 +50,8 @@ struct s_sim
 	bool			*forks;
 	pthread_mutex_t	*fork_mutexes;
 	pthread_mutex_t	logging_mutex;
+	bool			status;
+	pthread_mutex_t	status_mutex;
 };
 
 // Philosopher States
@@ -79,6 +82,9 @@ t_sim			*create_simulation(void);
 void			free_sim(t_sim *sim);
 void			*run_sim(void *phil);
 void			create_forks(t_sim *sim, bool *success);
+bool			read_sim_status(t_sim *sim, bool *success);
+void			set_sim_status(t_sim *sim, const bool status, bool *success);
+
 
 // Utils
 size_t			ft_strlen(const char *str);
@@ -111,7 +117,7 @@ long			atoui(const char *str);
 void			parse_args(t_sim *sim, const int argc, char **argv, bool *succ);
 
 // Mutexes
-pthread_mutex_t	create_mutex(bool *success);
+void			create_mutex(pthread_mutex_t *mutex, bool *success);
 void			free_mutex(pthread_mutex_t *mutex, bool *success);
 void			lock_mutex(pthread_mutex_t *mutex, bool *success);
 void			unlock_mutex(pthread_mutex_t *mutex, bool *success);

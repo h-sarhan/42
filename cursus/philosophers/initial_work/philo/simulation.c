@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/04 12:47:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 15:32:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,33 @@ t_sim	*create_simulation(void)
 		return (NULL);
 	}
 	sim->start_time = get_start_time();
-	sim->logging_mutex = create_mutex(&success);
+	create_mutex(&sim->logging_mutex, &success);
+	create_mutex(&sim->status_mutex, &success);
 	if (sim->start_time == NULL || success == false)
 	{
 		free_sim(sim);
 		return (NULL);
 	}
+	sim->status = true;
 	return (sim);
 }
 
-// bool	check_for_death()
-// {
+bool	read_sim_status(t_sim *sim, bool *success)
+{
+	bool	status;
 
-// }
+	lock_mutex(&sim->status_mutex, success);
+	status = sim->status;
+	unlock_mutex(&sim->status_mutex, success);
+	return (status);
+}
+
+void	set_sim_status(t_sim *sim, const bool status, bool *success)
+{
+	lock_mutex(&sim->status_mutex, success);
+	sim->status = status;
+	unlock_mutex(&sim->status_mutex, success);
+}
 
 // Starts the eat->think->sleep cycle of a philosopher
 void	*run_sim(void *phil_ptr)
@@ -52,9 +66,8 @@ void	*run_sim(void *phil_ptr)
 
 	phil_eat_time = get_start_time();
 	phil = (t_phil *) phil_ptr;
-	while (phil->state != DEAD)
+	while (read_sim_status(phil->sim, &success) == true)
 	{
-		// if (phil->state == THINKING)
 		if (read_phil_state(phil, &success) == THINKING)
 		{
 			left = phil->num;
@@ -62,15 +75,13 @@ void	*run_sim(void *phil_ptr)
 			success = true;
 			if (phil->num == phil->sim->num_phils)
 				right = 1;
-			// left_held = false;
-			// right_held = false;
 			lock_mutex(&phil->sim->fork_mutexes[left], &success);
 			left_held = phil->sim->forks[left];
 			unlock_mutex(&phil->sim->fork_mutexes[left], &success);
 			lock_mutex(&phil->sim->fork_mutexes[right], &success);
 			right_held = phil->sim->forks[right];
 			unlock_mutex(&phil->sim->fork_mutexes[right], &success);
-			while ((left_held == true || right_held == true) && phil->state != DEAD)	
+			while ((left_held == true || right_held == true) && read_sim_status(phil->sim, &success) == true)	
 			{
 				lock_mutex(&phil->sim->fork_mutexes[left], &success);
 				left_held = phil->sim->forks[left];
@@ -80,50 +91,76 @@ void	*run_sim(void *phil_ptr)
 				unlock_mutex(&phil->sim->fork_mutexes[right], &success);
 				if (get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
 				{
-					// phil->state = DEAD;
-					ft_free(&phil_eat_time);
 					set_phil_state(phil, DEAD, &success);
-					log_action(phil->sim, phil->num, &success, log_death);
+					ft_free(&phil_eat_time);
+					
+					if (read_sim_status(phil->sim, &success) == true)
+						log_action(phil->sim, phil->num, &success, log_death);
+					if (read_sim_status(phil->sim, &success) == true)
+						set_sim_status(phil->sim, false, &success);
 					return (NULL);
 				}
 			}
+			if (read_sim_status(phil->sim, &success) == false)
+			{
+				set_phil_state(phil, DEAD, &success);
+				ft_free(&phil_eat_time);
+				return (NULL);
+			}
 			set_fork_status(phil->sim, left, true, &success);
-			log_action(phil->sim, phil->num, &success, log_fork);
+			if (read_sim_status(phil->sim, &success) == true)
+				log_action(phil->sim, phil->num, &success, log_fork);
 			set_fork_status(phil->sim, right, true, &success);
-			log_action(phil->sim, phil->num, &success, log_fork);
-			// phil->state = EATING;
+			if (read_sim_status(phil->sim, &success) == true)
+				log_action(phil->sim, phil->num, &success, log_fork);
 			set_phil_state(phil, EATING, &success);
-			log_action(phil->sim, phil->num, &success, log_eat);
+			if (read_sim_status(phil->sim, &success) == true)
+				log_action(phil->sim, phil->num, &success, log_eat);
 			usleep(phil->sim->time_to_eat * 1000);
+			if (read_sim_status(phil->sim, &success) == true
+				&& get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
+			{
+				set_phil_state(phil, DEAD, &success);
+				ft_free(&phil_eat_time);
+				if (read_sim_status(phil->sim, &success) == true)
+					log_action(phil->sim, phil->num, &success, log_death);
+				if (read_sim_status(phil->sim, &success) == true)
+					set_sim_status(phil->sim, false, &success);
+				return (NULL);
+			}
 			ft_free(&phil_eat_time);
 			phil_eat_time = get_start_time();
 			set_fork_status(phil->sim, left, false, &success);
 			set_fork_status(phil->sim, right, false, &success);
 		}
-		// if (phil->state == EATING)
 		else if (read_phil_state(phil, &success) == EATING)
 		{
-			// phil->state = SLEEPING;
 			set_phil_state(phil, SLEEPING, &success);
-			log_action(phil->sim, phil->num, &success, log_sleep);
+			if (read_sim_status(phil->sim, &success) == true)
+				log_action(phil->sim, phil->num, &success, log_sleep);
 			usleep(phil->sim->time_to_sleep * 1000);
-			if (get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
+			if (read_sim_status(phil->sim, &success) == true
+				&& get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
 			{
-				// phil->state = DEAD;
-				ft_free(&phil_eat_time);
 				set_phil_state(phil, DEAD, &success);
-				log_action(phil->sim, phil->num, &success, log_death);
+				ft_free(&phil_eat_time);
+				if (read_sim_status(phil->sim, &success) == true)
+					log_action(phil->sim, phil->num, &success, log_death);
+				if (read_sim_status(phil->sim, &success) == true)
+					set_sim_status(phil->sim, false, &success);
 				return (NULL);
 			}
 		}
-		// if (phil->state == SLEEPING)
 		else if (read_phil_state(phil, &success) == SLEEPING)
 		{
 			set_phil_state(phil, THINKING, &success);
-			// phil->state = THINKING;
-			log_action(phil->sim, phil->num, &success, log_think);
+			if (read_sim_status(phil->sim, &success) == true)
+				log_action(phil->sim, phil->num, &success, log_think);
 		}
+		else
+			return (NULL);
 	}
+	ft_free(&phil_eat_time);
 	return (NULL);
 }
 
