@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 16:59:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 12:25:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	*run_sim(void *phil_ptr)
 				if (get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
 				{
 					// phil->state = DEAD;
+					ft_free(&phil_eat_time);
 					set_phil_state(phil, DEAD, &success);
 					log_action(phil->sim, phil->num, &success, log_death);
 					return (NULL);
@@ -89,6 +90,7 @@ void	*run_sim(void *phil_ptr)
 			set_phil_state(phil, EATING, &success);
 			log_action(phil->sim, phil->num, &success, log_eat);
 			usleep(phil->sim->time_to_eat * 1000);
+			ft_free(&phil_eat_time);
 			phil_eat_time = get_start_time();
 			set_fork_status(phil->sim, left, false, &success);
 			set_fork_status(phil->sim, right, false, &success);
@@ -103,6 +105,7 @@ void	*run_sim(void *phil_ptr)
 			if (get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
 			{
 				// phil->state = DEAD;
+				ft_free(&phil_eat_time);
 				set_phil_state(phil, DEAD, &success);
 				log_action(phil->sim, phil->num, &success, log_death);
 				return (NULL);

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 16:30:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 12:15:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_timeval		*get_start_time(void);
 t_time_ms		get_time(const t_timeval *sim, bool *success);
 
 // Threading Functions
-pthread_t		create_thread(void *(*f)(void *), void *arg, bool *success);
+void			create_thread(pthread_t *thread, void *(*f)(void *), void *arg, bool *success);
 void			detach_thread(const pthread_t *thread, bool *success);
 void			join_thread(const pthread_t *thread, bool *success, void **ret);
 

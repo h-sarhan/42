@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 17:01:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 12:28:00 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < sim->num_phils)
 	{
-		threads[i] = create_thread(run_sim, philosophers[i], &success);
+		create_thread(&threads[i], run_sim, philosophers[i], &success);
 		if (success == false)
 		{
 			free_philosophers(philosophers);
@@ -58,14 +58,12 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	i = 0;
-	// while (philosophers[i % sim->num_phils]->state != DEAD)
 	while (read_phil_state(philosophers[i % sim->num_phils], &success) != DEAD)
 		i++;
-	return (EXIT_SUCCESS);
+	i = 0;
 	while (i < sim->num_phils)
 	{
-		detach_thread(&threads[i], &success);
-		// join_thread(&threads[i], &success, NULL);
+		join_thread(&threads[i], &success, NULL);
 		if (success == false)
 		{
 			free_philosophers(philosophers);
@@ -77,8 +75,8 @@ int	main(int argc, char **argv)
 	}
 	i = 0;
 	// ! THIS CAUSES BIG SEG FAULTS
-	// free_philosophers(philosophers);
-	// free_sim(sim);
-	// ft_free(&threads);
+	free_philosophers(philosophers);
+	free_sim(sim);
+	ft_free(&threads);
 	return (EXIT_SUCCESS);
 }

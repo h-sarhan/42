@@ -6,25 +6,26 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:55:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/01 20:28:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 12:16:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 // Wrapper function around pthread_create that handles errors
-pthread_t	create_thread(void *(*f)(void *), void *arg, bool *success)
+void	create_thread(pthread_t *thread, void *(*f)(void *), void *arg,
+			bool *success)
 {
-	pthread_t	thread;
+	// pthread_t	thread;
 
-	if (pthread_create(&thread, NULL, f, arg) != SUCCESS)
+	if (pthread_create(thread, NULL, f, arg) != SUCCESS)
 	{
 		write_to_stderror("Failed to create thread\n", NULL);
 		*success = false;
-		return (THREAD_FAILURE);
+		return ;
 	}
 	*success = true;
-	return (thread);
+	return ;
 }
 
 // Wrapper function around pthread_detach that handles errors
