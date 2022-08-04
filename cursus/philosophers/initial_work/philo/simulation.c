@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/04 15:32:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 22:54:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,38 +66,44 @@ void	*run_sim(void *phil_ptr)
 
 	phil_eat_time = get_start_time();
 	phil = (t_phil *) phil_ptr;
+	if (phil->sim->num_phils == 1)
+	{
+		left = 0;
+		right = 0;
+	}
+	else
+	{
+		left = phil->num - 1;
+		right = phil->num;
+	}
+	if (phil->num == phil->sim->num_phils)
+		right = 0;
 	while (read_sim_status(phil->sim, &success) == true)
 	{
 		if (read_phil_state(phil, &success) == THINKING)
 		{
-			left = phil->num;
-			right = phil->num + 1;
 			success = true;
-			if (phil->num == phil->sim->num_phils)
-				right = 1;
-			lock_mutex(&phil->sim->fork_mutexes[left], &success);
-			left_held = phil->sim->forks[left];
-			unlock_mutex(&phil->sim->fork_mutexes[left], &success);
-			lock_mutex(&phil->sim->fork_mutexes[right], &success);
-			right_held = phil->sim->forks[right];
-			unlock_mutex(&phil->sim->fork_mutexes[right], &success);
+			left_held = read_fork_status(phil->sim, left, &success);
+			if (left == right)
+				right_held = true;
+			else
+				right_held = read_fork_status(phil->sim, right, &success);
 			while ((left_held == true || right_held == true) && read_sim_status(phil->sim, &success) == true)	
 			{
-				lock_mutex(&phil->sim->fork_mutexes[left], &success);
-				left_held = phil->sim->forks[left];
-				unlock_mutex(&phil->sim->fork_mutexes[left], &success);
-				lock_mutex(&phil->sim->fork_mutexes[right], &success);
-				right_held = phil->sim->forks[right];
-				unlock_mutex(&phil->sim->fork_mutexes[right], &success);
-				if (get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
+				left_held = read_fork_status(phil->sim, left, &success);
+				if (left == right)
+					right_held = true;
+				else
+					right_held = read_fork_status(phil->sim, right, &success);
+				if (get_time(phil_eat_time, &success) > phil->sim->time_to_die)
 				{
 					set_phil_state(phil, DEAD, &success);
 					ft_free(&phil_eat_time);
-					
 					if (read_sim_status(phil->sim, &success) == true)
-						log_action(phil->sim, phil->num, &success, log_death);
-					if (read_sim_status(phil->sim, &success) == true)
+					{
 						set_sim_status(phil->sim, false, &success);
+						log_action(phil->sim, phil->num, &success, log_death);
+					}
 					return (NULL);
 				}
 			}
@@ -116,20 +122,26 @@ void	*run_sim(void *phil_ptr)
 			set_phil_state(phil, EATING, &success);
 			if (read_sim_status(phil->sim, &success) == true)
 				log_action(phil->sim, phil->num, &success, log_eat);
-			usleep(phil->sim->time_to_eat * 1000);
-			if (read_sim_status(phil->sim, &success) == true
-				&& get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
+			ft_free(&phil_eat_time);
+			phil_eat_time = get_start_time();
+			if (phil->sim->time_to_eat + get_time(phil_eat_time, &success) > phil->sim->time_to_die)
+				usleep((phil->sim->time_to_die - phil->sim->time_to_eat) * 1000);
+			else
+				usleep(phil->sim->time_to_eat * 1000);
+			// usleep(phil->sim->time_to_eat * 1000);
+			if (get_time(phil_eat_time, &success) > phil->sim->time_to_die)
 			{
 				set_phil_state(phil, DEAD, &success);
 				ft_free(&phil_eat_time);
+				// if (read_sim_status(phil->sim, &success) == true)
 				if (read_sim_status(phil->sim, &success) == true)
-					log_action(phil->sim, phil->num, &success, log_death);
-				if (read_sim_status(phil->sim, &success) == true)
+				{
+
 					set_sim_status(phil->sim, false, &success);
+					log_action(phil->sim, phil->num, &success, log_death);
+				}
 				return (NULL);
 			}
-			ft_free(&phil_eat_time);
-			phil_eat_time = get_start_time();
 			set_fork_status(phil->sim, left, false, &success);
 			set_fork_status(phil->sim, right, false, &success);
 		}
@@ -138,16 +150,20 @@ void	*run_sim(void *phil_ptr)
 			set_phil_state(phil, SLEEPING, &success);
 			if (read_sim_status(phil->sim, &success) == true)
 				log_action(phil->sim, phil->num, &success, log_sleep);
-			usleep(phil->sim->time_to_sleep * 1000);
-			if (read_sim_status(phil->sim, &success) == true
-				&& get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
+			if (phil->sim->time_to_sleep + get_time(phil_eat_time, &success) > phil->sim->time_to_die)
+				usleep((phil->sim->time_to_die - phil->sim->time_to_sleep) * 1000);
+			else
+				usleep(phil->sim->time_to_sleep * 1000);
+			if (get_time(phil_eat_time, &success) > phil->sim->time_to_die)
 			{
 				set_phil_state(phil, DEAD, &success);
 				ft_free(&phil_eat_time);
+				// if (read_sim_status(phil->sim, &success) == true)
 				if (read_sim_status(phil->sim, &success) == true)
-					log_action(phil->sim, phil->num, &success, log_death);
-				if (read_sim_status(phil->sim, &success) == true)
+				{
 					set_sim_status(phil->sim, false, &success);
+					log_action(phil->sim, phil->num, &success, log_death);
+				}
 				return (NULL);
 			}
 		}

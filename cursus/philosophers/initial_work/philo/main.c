@@ -6,13 +6,21 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/04 15:32:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 23:12:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+
+// Tests: 
+// * 1 800 200 200: Should not eat and die
+// * 5 800 200 200: No one should die
+// * 4 410 200 200: No one should die
+// * 4 310 200 200: A philosopher should die
 // Philosophers
+
+// ! Remove the calloc from get_start_time
 int	main(int argc, char **argv)
 {
 	t_sim		*sim;
@@ -60,19 +68,11 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (read_sim_status(sim, &success) == true)
 		;
-	// i = 0;
-	// while (i < sim->num_phils)
-	// {
-	// 	set_phil_state(philosophers[i], DEAD, &success);
-	// 	i++;
-	// }
 	size_t temp = 0;
 	while (temp < sim->num_phils)
 	{
-		// if (temp != i)
-		// 	detach_thread(&threads[temp], &success);
-		// else
 		join_thread(&threads[temp], &success, NULL);
+		free_mutex(&sim->fork_mutexes[temp], &success);
 		if (success == false)
 		{
 			free_philosophers(philosophers);
@@ -82,6 +82,8 @@ int	main(int argc, char **argv)
 		}
 		temp++;
 	}
+	free_mutex(&sim->logging_mutex, &success);
+	free_mutex(&sim->status_mutex, &success);
 	free_philosophers(philosophers);
 	free_sim(sim);
 	ft_free(&threads);

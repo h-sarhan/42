@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 16:14:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 23:05:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	log_fork(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
-	if (printf("%-4lums phil %-3zu has taken a fork\n", time, phil_num) < SUCCESS)
+	if (printf("%-4lu %-3zu has taken a fork\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
 		*success = false;
@@ -43,7 +43,7 @@ void	log_eat(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
-	if (printf("%-4lums phil %-3zu is eating\n", time, phil_num) < SUCCESS)
+	if (printf("%-4lu %-3zu is eating\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
 		*success = false;
@@ -63,7 +63,7 @@ void	log_sleep(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
-	if (printf("%-4lums phil %-3zu is sleeping\n", time, phil_num) < SUCCESS)
+	if (printf("%-4lu %-3zu is sleeping\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
 		*success = false;
@@ -83,7 +83,7 @@ void	log_think(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
-	if (printf("%-4lums phil %-3zu is thinking\n", time, phil_num) < SUCCESS)
+	if (printf("%-4lu %-3zu is thinking\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
 		*success = false;
@@ -103,7 +103,7 @@ void	log_death(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
-	if (printf("%-4lums phil %-3zu has died\n", time, phil_num) < SUCCESS)
+	if (printf("%-4lu %-3zu has died\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
 		*success = false;
@@ -114,7 +114,11 @@ void	log_death(const t_sim *sim, const size_t phil_num, bool *success)
 
 void	log_action(t_sim *sim, const size_t phil_num, bool *succ, t_log_func f)
 {
-	lock_mutex(&sim->logging_mutex, succ);
-	f(sim, phil_num, succ);
-	unlock_mutex(&sim->logging_mutex, succ);
+	// if (read_sim_status(sim, succ) == true)
+	// {
+		lock_mutex(&sim->logging_mutex, succ);
+		f(sim, phil_num, succ);
+		// usleep(100);
+		unlock_mutex(&sim->logging_mutex, succ);
+	// }
 }
