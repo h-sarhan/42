@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/04 12:25:53 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/04 12:47:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ t_sim	*create_simulation(void)
 	return (sim);
 }
 
+// bool	check_for_death()
+// {
+
+// }
+
 // Starts the eat->think->sleep cycle of a philosopher
 void	*run_sim(void *phil_ptr)
 {
@@ -47,7 +52,7 @@ void	*run_sim(void *phil_ptr)
 
 	phil_eat_time = get_start_time();
 	phil = (t_phil *) phil_ptr;
-	while (1)
+	while (phil->state != DEAD)
 	{
 		// if (phil->state == THINKING)
 		if (read_phil_state(phil, &success) == THINKING)
@@ -65,7 +70,7 @@ void	*run_sim(void *phil_ptr)
 			lock_mutex(&phil->sim->fork_mutexes[right], &success);
 			right_held = phil->sim->forks[right];
 			unlock_mutex(&phil->sim->fork_mutexes[right], &success);
-			while (left_held == true || right_held == true)	
+			while ((left_held == true || right_held == true) && phil->state != DEAD)	
 			{
 				lock_mutex(&phil->sim->fork_mutexes[left], &success);
 				left_held = phil->sim->forks[left];
@@ -96,7 +101,7 @@ void	*run_sim(void *phil_ptr)
 			set_fork_status(phil->sim, right, false, &success);
 		}
 		// if (phil->state == EATING)
-		if (read_phil_state(phil, &success) == EATING)
+		else if (read_phil_state(phil, &success) == EATING)
 		{
 			// phil->state = SLEEPING;
 			set_phil_state(phil, SLEEPING, &success);
@@ -112,7 +117,7 @@ void	*run_sim(void *phil_ptr)
 			}
 		}
 		// if (phil->state == SLEEPING)
-		if (read_phil_state(phil, &success) == SLEEPING)
+		else if (read_phil_state(phil, &success) == SLEEPING)
 		{
 			set_phil_state(phil, THINKING, &success);
 			// phil->state = THINKING;
