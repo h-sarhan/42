@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 16:42:51 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/03 16:59:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,18 @@ void	*run_sim(void *phil_ptr)
 			// left_held = false;
 			// right_held = false;
 			lock_mutex(&phil->sim->fork_mutexes[left], &success);
-			lock_mutex(&phil->sim->fork_mutexes[right], &success);
 			left_held = phil->sim->forks[left];
-			right_held = phil->sim->forks[right];
 			unlock_mutex(&phil->sim->fork_mutexes[left], &success);
+			lock_mutex(&phil->sim->fork_mutexes[right], &success);
+			right_held = phil->sim->forks[right];
 			unlock_mutex(&phil->sim->fork_mutexes[right], &success);
 			while (left_held == true || right_held == true)	
 			{
 				lock_mutex(&phil->sim->fork_mutexes[left], &success);
-				lock_mutex(&phil->sim->fork_mutexes[right], &success);
 				left_held = phil->sim->forks[left];
-				right_held = phil->sim->forks[right];
 				unlock_mutex(&phil->sim->fork_mutexes[left], &success);
+				lock_mutex(&phil->sim->fork_mutexes[right], &success);
+				right_held = phil->sim->forks[right];
 				unlock_mutex(&phil->sim->fork_mutexes[right], &success);
 				if (get_time(phil_eat_time, &success) >= phil->sim->time_to_die)
 				{
