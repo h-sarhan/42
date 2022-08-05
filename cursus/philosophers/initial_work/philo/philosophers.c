@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/04 22:01:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/05 08:47:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ static t_phil	*create_philosopher(t_sim *sim, const unsigned int num)
 	phil->num = num;
 	phil->sim = sim;
 	phil->state = THINKING;
+	phil->phil_eat_time = ft_calloc(1, sizeof(t_timeval));
+	if (phil->phil_eat_time == NULL)
+	{
+		write_to_stderror("Failed to allocate memory\n", NULL);
+		return (NULL);
+	}
 	create_mutex(&phil->state_mutex, &success);
 	if (success == false)
 	{
@@ -120,6 +126,7 @@ void	free_philosophers(t_phil **phils)
 	i = 0;
 	while (i < num_phils)
 	{
+		ft_free(&phils[i]->phil_eat_time);
 		ft_free(&phils[i]);
 		i++;
 	}

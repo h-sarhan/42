@@ -6,29 +6,20 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/04 23:12:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/05 08:39:12 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 // Get the start time of the simulation
-t_timeval	*get_start_time(void)
+void	get_start_time(t_timeval *start_time)
 {
-	t_timeval	*start_time;
-
-	start_time = ft_calloc(1, sizeof(t_timeval));
-	if (start_time == NULL)
-	{
-		write_to_stderror("Failed to allocate memory\n", NULL);
-		return (NULL);
-	}
 	if (gettimeofday(start_time, NULL) == FAIL)
 	{
 		write_to_stderror("Failed to get time\n", NULL);
-		return (NULL);
+		return ;
 	}
-	return (start_time);
 }
 
 // Get the current time in ms

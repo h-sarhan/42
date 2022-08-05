@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/04 23:05:04 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/05 09:19:12 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	log_death(const t_sim *sim, const size_t phil_num, bool *success)
 		write_to_stderror("Logging failure\n", NULL);
 		return ;
 	}
+	// usleep(100);
 	if (printf("%-4lu %-3zu has died\n", time, phil_num) < SUCCESS)
 	{
 		write_to_stderror("Logging failure\n", NULL);
@@ -116,9 +117,9 @@ void	log_action(t_sim *sim, const size_t phil_num, bool *succ, t_log_func f)
 {
 	// if (read_sim_status(sim, succ) == true)
 	// {
-		lock_mutex(&sim->logging_mutex, succ);
+		// lock_mutex(&sim->logging_mutex, succ);
 		f(sim, phil_num, succ);
 		// usleep(100);
-		unlock_mutex(&sim->logging_mutex, succ);
+		// unlock_mutex(&sim->logging_mutex, succ);
 	// }
 }
