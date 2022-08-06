@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/04 15:36:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/06 16:44:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ typedef struct s_phil		t_phil;
 typedef unsigned long		t_time_ms;
 typedef enum e_phil_state	t_phil_state;
 typedef struct timeval		t_timeval;
-typedef void				(*t_log_func)(const t_sim *sim,
-								const size_t phil_num, bool *success);
+typedef void				(*t_log_func)(const t_time_ms *time, const size_t phil_num, bool *success);
 // Simulation Struct
 struct s_sim
 {
@@ -70,6 +69,7 @@ struct s_phil
 	unsigned int	num;
 	pthread_mutex_t	state_mutex;
 	t_sim			*sim;
+	t_timeval		*phil_eat_time;
 };
 
 // Philosopher Functions
@@ -90,25 +90,26 @@ void			set_sim_status(t_sim *sim, const bool status, bool *success);
 size_t			ft_strlen(const char *str);
 void			ft_free(void *memory);
 void			*ft_calloc(size_t count, size_t size);
+void			sleepsleep(t_time_ms sleep_time);
 
 // Error Handling
 void			write_to_stderror(const char *msg, bool *success);
 
 // Time
-t_timeval		*get_start_time(void);
+void			get_start_time(t_timeval *start_time);
 t_time_ms		get_time(const t_timeval *sim, bool *success);
-
+t_time_ms		get_micro_time(const t_timeval *start_time, bool *success);
 // Threading Functions
 void			create_thread(pthread_t *thread, void *(*f)(void *), void *arg, bool *success);
 void			detach_thread(const pthread_t *thread, bool *success);
 void			join_thread(const pthread_t *thread, bool *success, void **ret);
 
 // Logging Functions
-void			log_fork(const t_sim *sim, const size_t phil_num, bool *succ);
-void			log_eat(const t_sim *sim, const size_t phil_num, bool *succ);
-void			log_sleep(const t_sim *sim, const size_t phil_num, bool *succ);
-void			log_think(const t_sim *sim, const size_t phil_num, bool *succ);
-void			log_death(const t_sim *sim, const size_t phil_num, bool *succ);
+void			log_fork(const t_time_ms *time, const size_t phil_num, bool *success);
+void			log_eat(const t_time_ms *time, const size_t phil_num, bool *success);
+void			log_sleep(const t_time_ms *time, const size_t phil_num, bool *success);
+void			log_think(const t_time_ms *time, const size_t phil_num, bool *success);
+void			log_death(const t_time_ms *time, const size_t phil_num, bool *success);
 void			log_action(t_sim *sim, const size_t phil_num, bool *succ,
 					t_log_func f);
 
@@ -129,8 +130,8 @@ void			set_fork_status(t_sim *sim, const unsigned int fork_idx,
 					const bool value, bool *success);
 
 // Philosopher status
-t_phil_state	read_phil_state(t_phil *phil, bool *success);
-void			set_phil_state(t_phil *phil, const t_phil_state state,
-					bool *success);
+// t_phil_state	read_phil_state(t_phil *phil, bool *success);
+// void			set_phil_state(t_phil *phil, const t_phil_state state,
+// 					bool *success);
 
 #endif
