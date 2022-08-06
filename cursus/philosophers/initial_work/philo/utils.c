@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/03 13:08:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/06 16:50:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,20 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	memset(memory, 0, count * size);
 	return (memory);
+}
+
+void	sleepsleep(t_time_ms sleep_time)
+{
+	t_time_ms	time_slept;
+	t_timeval	start_time;
+
+	bool		success;
+	success = true;
+	time_slept = 0;
+	get_start_time(&start_time);
+	while (time_slept < sleep_time)
+	{
+		usleep(50);
+		time_slept = get_time(&start_time, &success) * 1000;
+	}
 }

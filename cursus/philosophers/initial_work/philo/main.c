@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/05 09:21:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/06 16:50:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 // * ./philo 4 410 200 200: No one should die
 // * ./philo 4 310 200 200: A philosopher should die
 // Philosophers
+
+
+
 
 int	main(int argc, char **argv)
 {
@@ -93,3 +96,26 @@ int	main(int argc, char **argv)
 	ft_free(&threads);
 	return (EXIT_SUCCESS);
 }
+
+// int	main()
+// {
+// // 	void	sleepsleep(t_time_ms sleep_time)
+// // {
+// 	t_time_ms	time_slept;
+// 	t_timeval	start_time;
+// 	t_time_ms sleep_time = 50 * 10;
+
+// 	bool		success;
+// 	success = true;
+// 	time_slept = 0;
+// 	get_start_time(&start_time);
+// 	while (time_slept < sleep_time)
+// 	{
+// 		usleep(50);
+		
+// 		time_slept = get_time(&start_time, &success) * 1000;
+// 		// printf("50 us passed\n");
+		
+// 	}
+// // }
+// }
