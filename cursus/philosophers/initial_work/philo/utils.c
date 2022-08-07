@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/06 21:56:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/07 11:21:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	sleepsleep(t_time_ms sleep_time)
 	get_start_time(&start_time);
 	while (time_slept < sleep_time)
 	{
-		usleep(50);
+		usleep(60);
 		time_slept = get_micro_time(&start_time, &success);
 	}
 }
