@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/08 09:55:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/08 13:31:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static t_phil	*create_philosopher(t_sim *sim, const unsigned int num)
 		write_to_stderror("Failed to allocate memory\n");
 		return (NULL);
 	}
-	create_mutex(&phil->state_mutex);
+	create_mutex(&phil->num_eats_mutex);
+	phil->num_eats = 0;
 	return (phil);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/08 09:54:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/08 13:31:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ struct s_phil
 {
 	t_phil_state	state;
 	unsigned int	num;
-	pthread_mutex_t	state_mutex;
+	pthread_mutex_t	num_eats_mutex;
+	unsigned int	num_eats;
 	t_sim			*sim;
 	t_timeval		*phil_eat_time;
 };
