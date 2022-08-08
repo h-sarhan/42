@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/08 09:56:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/08 10:19:21 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ void	sleepsleep(t_time_ms sleep_time)
 	t_time_ms	time_slept;
 	t_timeval	start_time;
 
-	bool		success;
-	success = true;
 	time_slept = 0;
 	get_start_time(&start_time);
 	while (time_slept < sleep_time)
