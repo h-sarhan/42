@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/07 14:45:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/08 09:59:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	parse_args(sim, argc, argv, &success);
 	if (!success)
 	{
-		write_to_stderror("Invalid arguments\n", NULL);
+		write_to_stderror("Invalid arguments\n");
 		free_sim(sim);
 		return (EXIT_FAILURE);
 	}
@@ -58,7 +58,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < sim->num_phils)
 	{
-		create_thread(&threads[i], run_sim, philosophers[i], &success);
+		create_thread(&threads[i], run_sim, philosophers[i]);
 		if (success == false)
 		{
 			free_philosophers(philosophers);
@@ -69,12 +69,12 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	i = 0;
-	while (read_sim_status(sim, &success) == true)
+	while (read_sim_status(sim) == true)
 		;
 	size_t temp = 0;
 	while (temp < sim->num_phils)
 	{
-		join_thread(&threads[temp], &success, NULL);
+		join_thread(&threads[temp], NULL);
 		if (success == false)
 		{
 			free_philosophers(philosophers);
@@ -87,11 +87,11 @@ int	main(int argc, char **argv)
 	temp = 0;
 	while (temp < sim->num_phils)
 	{
-		free_mutex(&sim->fork_mutexes[temp], &success);
+		free_mutex(&sim->fork_mutexes[temp]);
 		temp++;
 	}
-	free_mutex(&sim->logging_mutex, &success);
-	free_mutex(&sim->status_mutex, &success);
+	free_mutex(&sim->logging_mutex);
+	free_mutex(&sim->status_mutex);
 	free_philosophers(philosophers);
 	free_sim(sim);
 	ft_free(&threads);

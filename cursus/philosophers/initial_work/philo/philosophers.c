@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/05 08:47:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/08 09:55:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static t_phil	*create_philosopher(t_sim *sim, const unsigned int num)
 {
 	t_phil	*phil;
-	bool	success;
 
 	phil = ft_calloc(1, sizeof(t_phil));
 	if (phil == NULL)
@@ -26,14 +25,10 @@ static t_phil	*create_philosopher(t_sim *sim, const unsigned int num)
 	phil->phil_eat_time = ft_calloc(1, sizeof(t_timeval));
 	if (phil->phil_eat_time == NULL)
 	{
-		write_to_stderror("Failed to allocate memory\n", NULL);
+		write_to_stderror("Failed to allocate memory\n");
 		return (NULL);
 	}
-	create_mutex(&phil->state_mutex, &success);
-	if (success == false)
-	{
-		// ! do something
-	}
+	create_mutex(&phil->state_mutex);
 	return (phil);
 }
 
@@ -42,11 +37,9 @@ t_phil	**create_philosophers(t_sim *sim)
 	t_phil			**phils;
 	unsigned int	num;
 	unsigned int	temp;
-	bool			success;
 
 	num = 0;
 	phils = ft_calloc(sim->num_phils, sizeof(t_sim *));
-	success = true;
 	if (phils == NULL)
 		return (NULL);
 	while (num < sim->num_phils)
@@ -65,22 +58,22 @@ t_phil	**create_philosophers(t_sim *sim)
 		}
 		num++;
 	}
-	create_forks(sim, &success);
-	if (success == false)
-	{
-		temp = 0;
-		while (temp < sim->num_phils)
-		{
-			ft_free(&phils[temp]);
-			temp++;
-		}
-		ft_free(&phils);
-		return (NULL);
-	}
+	create_forks(sim);
+	// if (success == false)
+	// {
+	// 	temp = 0;
+	// 	while (temp < sim->num_phils)
+	// 	{
+	// 		ft_free(&phils[temp]);
+	// 		temp++;
+	// 	}
+	// 	ft_free(&phils);
+	// 	return (NULL);
+	// }
 	return (phils);
 }
 
-void	create_forks(t_sim *sim, bool *success)
+void	create_forks(t_sim *sim)
 {
 	unsigned int	i;
 	unsigned int	temp;
@@ -89,30 +82,28 @@ void	create_forks(t_sim *sim, bool *success)
 	sim->forks = ft_calloc(sim->num_phils, sizeof(bool));
 	if (sim->forks == NULL)
 	{
-		*success = false;
 		return ;
 	}
 	sim->fork_mutexes = ft_calloc(sim->num_phils, sizeof(pthread_mutex_t));
 	if (sim->fork_mutexes == NULL)
 	{
-		*success = false;
 		return ;
 	}
 	while (i < sim->num_phils)
 	{
-		create_mutex(&sim->fork_mutexes[i], success);
+		create_mutex(&sim->fork_mutexes[i]);
 		sim->forks[i] = false;
-		if (*success == false)
-		{
-			temp = 0;
-			while (temp < i)
-			{
-				free_mutex(&sim->fork_mutexes[temp], success);
-				temp++;
-			}
-			ft_free(&sim->fork_mutexes);
-			return ;
-		}
+		// if (*success == false)
+		// {
+		// 	temp = 0;
+		// 	while (temp < i)
+		// 	{
+		// 		free_mutex(&sim->fork_mutexes[temp]);
+		// 		temp++;
+		// 	}
+		// 	ft_free(&sim->fork_mutexes);
+		// 	return ;
+		// }
 		i++;
 	}
 }
