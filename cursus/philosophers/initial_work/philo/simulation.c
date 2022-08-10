@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/10 15:24:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/10 17:02:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void *run_sim(void *phil_ptr)
 		{
 			if (forks_held < 2)
 			{
-				if (phil->num % 2 == 0)
+				if (phil->num % 2 == 1)
 				{
 					lock_mutex(&phil->sim->fork_mutexes[right]);
 					if (phil->sim->forks[right] == false)
