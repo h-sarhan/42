@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/08 13:59:01 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/10 14:39:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 
 // Tests: 
-// * ./philo 1 800 200 200: Should not eat and die
+// ? Issues with an odd number of philosophers
+// ! ./philo 1 800 200 200: Should not eat and die
 // * ./philo 5 800 200 200: No one should die
 // * ./philo 4 410 200 200: No one should die
 // * ./philo 4 310 200 100: A philosopher should die
@@ -68,9 +69,30 @@ int	main(int argc, char **argv)
 		}
 		i++;
 	}
-	i = 0;
 	while (read_sim_status(sim) == true)
-		;
+	{
+		bool	all_ate = true;
+		i = 0;
+		if (sim->min_eats > 0)
+		{
+			while (i < sim->num_phils)
+			{
+				lock_mutex(&philosophers[i]->num_eats_mutex);
+				if (philosophers[i]->num_eats < sim->min_eats)
+				{
+					// printf("min_eats==%d\n", philosophers[i]->num_eats);
+					all_ate = false;
+				}
+				unlock_mutex(&philosophers[i]->num_eats_mutex);
+				i++;
+			}
+			if (all_ate == true)
+			{
+				set_sim_status(sim, false);
+				break;
+			}
+		}
+	}
 	size_t temp = 0;
 	while (temp < sim->num_phils)
 	{
