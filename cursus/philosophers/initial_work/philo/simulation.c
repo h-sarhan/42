@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/11 18:13:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/11 20:39:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,7 @@ void	*run_sim(void *phil_ptr)
 	if (phil->num == phil->sim->num_phils)
 		right = 0;
 	left_held = true;
-	// if (left == right)
-	// 	right_held = true;
-	// else
-		right_held = true;
+	right_held = true;
 	while (1)
 	{
 		if (phil->state == THINKING)
@@ -94,14 +91,19 @@ void	*run_sim(void *phil_ptr)
 			success = true;
 			while ((left_held == true || right_held == true))	
 			{
-				left_held = read_fork_status(phil->sim, left);
+				lock_mutex(&phil->sim->fork_mutexes[left]);
+				left_held = phil->sim->forks[left];
+				unlock_mutex(&phil->sim->fork_mutexes[left]);
 				if (left == right)
 					right_held = true;
 				else
-					right_held = read_fork_status(phil->sim, right);
+				{
+					lock_mutex(&phil->sim->fork_mutexes[right]);
+					right_held = phil->sim->forks[right];
+					unlock_mutex(&phil->sim->fork_mutexes[right]);
+				}
 				if (get_micro_time(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 				{
-					// printf("%d DIED WHILE WATING FOR FORK\n", phil->num);
 					phil->state = DEAD;
 					lock_mutex(&phil->sim->status_mutex);
 					if (phil->sim->status == true)
@@ -115,24 +117,25 @@ void	*run_sim(void *phil_ptr)
 					return (NULL);
 				}
 			}
-			// lock_mutex(&phil->sim->logging_mutex);
-			// printf("fork %d and fork %d have been taken by philosopher %d\n", left, right, phil->num);
-			// unlock_mutex(&phil->sim->logging_mutex);
-			// f | f | f
-			set_fork_status(phil->sim, left, true);
-			set_fork_status(phil->sim, right, true);
-			// if (read_sim_status(phil->sim) == false)
-			// 	return (NULL);
+			lock_mutex(&phil->sim->fork_mutexes[left]);
+			phil->sim->forks[left] = true;
+			lock_mutex(&phil->sim->fork_mutexes[right]);
+			phil->sim->forks[right] = true;
 			time = get_time(phil->sim->start_time);
 			lock_mutex(&phil->sim->logging_mutex);
 			log_fork(&time, phil->num);
 			log_fork(&time, phil->num);
 			log_eat(&time, phil->num);
 			unlock_mutex(&phil->sim->logging_mutex);
+			lock_mutex(&phil->num_eats_mutex);
+			phil->num_eats++;
+			unlock_mutex(&phil->num_eats_mutex);
 			get_start_time(phil->phil_eat_time);
 			sleepsleep(phil->sim->time_to_eat * 1000);
-			set_fork_status(phil->sim, left, false);
-			set_fork_status(phil->sim, right, false);
+			phil->sim->forks[right] = false;
+			unlock_mutex(&phil->sim->fork_mutexes[right]);
+			phil->sim->forks[left] = false;
+			unlock_mutex(&phil->sim->fork_mutexes[left]);
 			if (read_sim_status(phil->sim) == true)
 				log_action(phil->sim, phil->num, log_sleep);
 			else
@@ -144,15 +147,12 @@ void	*run_sim(void *phil_ptr)
 			phil->state = SLEEPING;
 			if (get_micro_time(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 			{
-				// printf("%d DIED AFTER EATING\n", phil->num);
-
 				phil->state = DEAD;
 				lock_mutex(&phil->sim->status_mutex);
 				if (phil->sim->status == true)
 				{
 					phil->sim->status = false;
 					unlock_mutex(&phil->sim->status_mutex);
-					// set_sim_status(phil->sim, false);
 					log_action(phil->sim, phil->num, log_death);
 				}
 				else
@@ -163,7 +163,6 @@ void	*run_sim(void *phil_ptr)
 			if (time >= phil->sim->time_to_die * 1000)
 			{
 				phil->state = DEAD;
-				// printf("%d GO HERE AND SLEEP %lums\n", phil->num, (phil->sim->time_to_die - phil->sim->time_to_sleep));
 				sleepsleep((phil->sim->time_to_die * 1000 - get_micro_time(phil->phil_eat_time)));
 				
 				lock_mutex(&phil->sim->status_mutex);
@@ -192,7 +191,9 @@ void	*run_sim(void *phil_ptr)
 			if (get_micro_time(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 			{
 				phil->state = DEAD;
+				lock_mutex(&phil->sim->logging_mutex);
 				printf("%d DIED AFTER SLEEPING\n", phil->num);
+				unlock_mutex(&phil->sim->logging_mutex);
 				
 				lock_mutex(&phil->sim->status_mutex);
 				if (phil->sim->status == true)

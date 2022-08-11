@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/08 10:19:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/11 20:34:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	*ft_calloc(size_t count, size_t size)
 	return (memory);
 }
 
+// TODO: Make this return an error when sim ends while sleeping
 void	sleepsleep(t_time_ms sleep_time)
 {
 	t_time_ms	time_slept;
