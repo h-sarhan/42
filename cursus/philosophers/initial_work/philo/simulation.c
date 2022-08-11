@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/10 17:02:58 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/11 18:13:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,17 @@ void set_sim_status(t_sim *sim, const bool status)
 	unlock_mutex(&sim->status_mutex);
 }
 
-
-
-void *run_sim(void *phil_ptr)
+void	*run_sim(void *phil_ptr)
 {
-	t_phil			*phil;
-	int				forks_held;
 	unsigned int	left;
 	unsigned int	right;
+	bool			success;
+	t_phil			*phil;
+	bool			left_held;
+	bool			right_held;
 	t_time_ms		time;
 
-	phil = phil_ptr;
-	forks_held = 0;
+	phil = (t_phil *) phil_ptr;
 	get_start_time(phil->phil_eat_time);
 	if (phil->sim->num_phils == 1)
 	{
@@ -78,86 +77,31 @@ void *run_sim(void *phil_ptr)
 	}
 	else
 	{
-		left = phil->num;
-		right = phil->num - 1;
+		left = phil->num - 1;
+		right = phil->num;
 	}
 	if (phil->num == phil->sim->num_phils)
-		left = 0;
+		right = 0;
+	left_held = true;
+	// if (left == right)
+	// 	right_held = true;
+	// else
+		right_held = true;
 	while (1)
 	{
 		if (phil->state == THINKING)
 		{
-			if (forks_held < 2)
+			success = true;
+			while ((left_held == true || right_held == true))	
 			{
-				if (phil->num % 2 == 1)
-				{
-					lock_mutex(&phil->sim->fork_mutexes[right]);
-					if (phil->sim->forks[right] == false)
-					{
-						phil->sim->forks[right] = true;
-						log_action(phil->sim, phil->num, log_fork);
-						forks_held++;
-						unlock_mutex(&phil->sim->fork_mutexes[right]);
-					}
-					else
-					{
-						unlock_mutex(&phil->sim->fork_mutexes[right]);
-						lock_mutex(&phil->sim->fork_mutexes[left]);
-						if (phil->sim->forks[left] == false)
-						{
-							phil->sim->forks[left] = true;
-							log_action(phil->sim, phil->num, log_fork);
-							forks_held++;
-						}
-						unlock_mutex(&phil->sim->fork_mutexes[left]);
-					}
-				}
+				left_held = read_fork_status(phil->sim, left);
+				if (left == right)
+					right_held = true;
 				else
-				{
-					lock_mutex(&phil->sim->fork_mutexes[left]);
-					if (phil->sim->forks[left] == false)
-					{
-						phil->sim->forks[left] = true;
-						log_action(phil->sim, phil->num, log_fork);
-						forks_held++;
-						unlock_mutex(&phil->sim->fork_mutexes[left]);
-					}
-					else
-					{
-						unlock_mutex(&phil->sim->fork_mutexes[left]);
-						lock_mutex(&phil->sim->fork_mutexes[right]);
-						if (phil->sim->forks[right] == false)
-						{
-							phil->sim->forks[right] = true;
-							log_action(phil->sim, phil->num, log_fork);
-							forks_held++;
-						}
-						unlock_mutex(&phil->sim->fork_mutexes[right]);
-					}
-				}
-				
-			}
-			if (forks_held == 2)
-			{
-				get_start_time(phil->phil_eat_time);
-				time = get_time(phil->sim->start_time);
-				if (read_sim_status(phil->sim) == true)
-				{
-					lock_mutex(&phil->sim->logging_mutex);
-					log_eat(&time, phil->num);
-					unlock_mutex(&phil->sim->logging_mutex);
-					lock_mutex(&phil->num_eats_mutex);
-					phil->num_eats++;
-					unlock_mutex(&phil->num_eats_mutex);
-				}
-				else
-					return (NULL);
-				sleepsleep(phil->sim->time_to_eat * 1000);
+					right_held = read_fork_status(phil->sim, right);
 				if (get_micro_time(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 				{
-					// lock_mutex(&phil->sim->logging_mutex);
 					// printf("%d DIED WHILE WATING FOR FORK\n", phil->num);
-					// unlock_mutex(&phil->sim->logging_mutex);
 					phil->state = DEAD;
 					lock_mutex(&phil->sim->status_mutex);
 					if (phil->sim->status == true)
@@ -170,43 +114,58 @@ void *run_sim(void *phil_ptr)
 						unlock_mutex(&phil->sim->status_mutex);
 					return (NULL);
 				}
-				lock_mutex(&phil->sim->fork_mutexes[left]);
-				phil->sim->forks[left] = false;
-				unlock_mutex(&phil->sim->fork_mutexes[left]);
-				lock_mutex(&phil->sim->fork_mutexes[right]);
-				phil->sim->forks[right] = false;
-				unlock_mutex(&phil->sim->fork_mutexes[right]);
-				log_action(phil->sim, phil->num, log_sleep);
-				forks_held = 0;
-				phil->state = EATING;
 			}
+			// lock_mutex(&phil->sim->logging_mutex);
+			// printf("fork %d and fork %d have been taken by philosopher %d\n", left, right, phil->num);
+			// unlock_mutex(&phil->sim->logging_mutex);
+			// f | f | f
+			set_fork_status(phil->sim, left, true);
+			set_fork_status(phil->sim, right, true);
+			// if (read_sim_status(phil->sim) == false)
+			// 	return (NULL);
+			time = get_time(phil->sim->start_time);
+			lock_mutex(&phil->sim->logging_mutex);
+			log_fork(&time, phil->num);
+			log_fork(&time, phil->num);
+			log_eat(&time, phil->num);
+			unlock_mutex(&phil->sim->logging_mutex);
+			get_start_time(phil->phil_eat_time);
+			sleepsleep(phil->sim->time_to_eat * 1000);
+			set_fork_status(phil->sim, left, false);
+			set_fork_status(phil->sim, right, false);
+			if (read_sim_status(phil->sim) == true)
+				log_action(phil->sim, phil->num, log_sleep);
+			else
+				return (NULL);
+			phil->state = EATING;
+		}
+		if (phil->state == EATING)
+		{
+			phil->state = SLEEPING;
 			if (get_micro_time(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 			{
-				// lock_mutex(&phil->sim->logging_mutex);
-				// printf("%d DIED WHILE WATING FOR FORK\n", phil->num);
-				// unlock_mutex(&phil->sim->logging_mutex);
+				// printf("%d DIED AFTER EATING\n", phil->num);
+
 				phil->state = DEAD;
 				lock_mutex(&phil->sim->status_mutex);
 				if (phil->sim->status == true)
 				{
 					phil->sim->status = false;
 					unlock_mutex(&phil->sim->status_mutex);
+					// set_sim_status(phil->sim, false);
 					log_action(phil->sim, phil->num, log_death);
 				}
 				else
 					unlock_mutex(&phil->sim->status_mutex);
 				return (NULL);
 			}
-		}
-		if (phil->state == EATING)
-		{
-			phil->state = SLEEPING;
 			time = phil->sim->time_to_sleep * 1000 + get_micro_time(phil->phil_eat_time);
 			if (time >= phil->sim->time_to_die * 1000)
 			{
 				phil->state = DEAD;
+				// printf("%d GO HERE AND SLEEP %lums\n", phil->num, (phil->sim->time_to_die - phil->sim->time_to_sleep));
 				sleepsleep((phil->sim->time_to_die * 1000 - get_micro_time(phil->phil_eat_time)));
-				// printf("%d Died while sleeping\n", phil->num);
+				
 				lock_mutex(&phil->sim->status_mutex);
 				if (phil->sim->status == true)
 				{
@@ -222,35 +181,37 @@ void *run_sim(void *phil_ptr)
 			}
 			else
 				sleepsleep(phil->sim->time_to_sleep * 1000);
-			log_action(phil->sim, phil->num, log_think);
-			if (read_sim_status(phil->sim) == false)
+			if (read_sim_status(phil->sim) == true)
+				log_action(phil->sim, phil->num, log_think);
+			else
 				return (NULL);
 		}
 		if (phil->state == SLEEPING)
 		{
 			phil->state = THINKING;
-			// if (get_micro_time(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
-			// {
-			// 	phil->state = DEAD;
-			// 	printf("%d DIED AFTER SLEEPING\n", phil->num);
+			if (get_micro_time(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
+			{
+				phil->state = DEAD;
+				printf("%d DIED AFTER SLEEPING\n", phil->num);
 				
-			// 	lock_mutex(&phil->sim->status_mutex);
-			// 	if (phil->sim->status == true)
-			// 	{
-			// 		phil->sim->status = false;
-			// 		unlock_mutex(&phil->sim->status_mutex);
-			// 		log_action(phil->sim, phil->num, log_death);
-			// 	}
-			// 	else
-			// 		unlock_mutex(&phil->sim->status_mutex);
-			// 	return (NULL);
-			// }
+				lock_mutex(&phil->sim->status_mutex);
+				if (phil->sim->status == true)
+				{
+					phil->sim->status = false;
+					unlock_mutex(&phil->sim->status_mutex);
+					log_action(phil->sim, phil->num, log_death);
+				}
+				else
+					unlock_mutex(&phil->sim->status_mutex);
+				return (NULL);
+			}
 		}
 		if (phil->state == DEAD)
 			return (NULL);
 	}
 	return (NULL);
 }
+
 
 // Frees a simulation struct
 void free_sim(t_sim *sim)
