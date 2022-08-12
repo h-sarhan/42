@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:32:16 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/08 09:53:39 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/12 18:29:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	free_mutex(pthread_mutex_t *mutex)
 	{
 		write_to_stderror("Failed to free mutex\n");
 	}
+	// printf("%d\n", pthread_mutex_destroy(mutex));
 }
 
 // Locks a mutex and handles errors

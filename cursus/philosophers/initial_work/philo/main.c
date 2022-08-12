@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/11 20:40:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/12 17:38:16 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 // Tests: 
 // ? Issues with an odd number of philosophers
-// * ./philo 1 800 200 200: Should not eat and die
-// * ./philo 5 800 200 200: No one should die
+// ? valgrind --tool=helgrind --history-level=none  ./philo 5 800 200 200 7
+// ! ./philo 1 800 200 200: Should not eat and die
+// * ./philo 5 800 200 200 7: No one should die
 // * ./philo 4 410 200 200: No one should die
 // ! ./philo 4 310 200 100: A philosopher should die
 // Philosophers
