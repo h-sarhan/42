@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 11:29:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 12:40:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 	parse_args(sim, argc, argv, &success);
 	if (!success)
 	{
-		write_to_stderror("Invalid arguments\n");
+		write(STDERR_FILENO, "Invalid arguments\n", 18);
 		free_sim(sim);
 		return (EXIT_FAILURE);
 	}
@@ -61,7 +61,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < sim->num_phils)
 	{
-		create_thread(&threads[i], run_sim, philosophers[i]);
+		pthread_create(&threads[i], NULL, run_sim, philosophers[i]);
 		if (success == false)
 		{
 			free_philosophers(philosophers);
@@ -79,10 +79,10 @@ int	main(int argc, char **argv)
 			i = 0;
 			while (i < sim->num_phils)
 			{
-				lock_mutex(&philosophers[i]->num_eats_mutex);
+				pthread_mutex_lock(&philosophers[i]->num_eats_mutex);
 				if (philosophers[i]->num_eats < sim->min_eats)
 					all_ate = false;
-				unlock_mutex(&philosophers[i]->num_eats_mutex);
+				pthread_mutex_unlock(&philosophers[i]->num_eats_mutex);
 				i++;
 			}
 			if (all_ate == true)
@@ -95,7 +95,7 @@ int	main(int argc, char **argv)
 	temp = 0;
 	while (temp < sim->num_phils)
 	{
-		join_thread(&threads[temp], NULL);
+		pthread_join(threads[temp], NULL);
 		if (success == false)
 		{
 			free_philosophers(philosophers);
@@ -108,11 +108,11 @@ int	main(int argc, char **argv)
 	temp = 0;
 	while (temp < sim->num_phils)
 	{
-		free_mutex(&sim->fork_mutexes[temp]);
+		pthread_mutex_destroy(&sim->fork_mutexes[temp]);
 		temp++;
 	}
-	free_mutex(&sim->logging_mutex);
-	free_mutex(&sim->status_mutex);
+	pthread_mutex_destroy(&sim->logging_mutex);
+	pthread_mutex_destroy(&sim->status_mutex);
 	free_philosophers(philosophers);
 	free_sim(sim);
 	ft_free(&threads);

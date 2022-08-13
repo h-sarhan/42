@@ -6,17 +6,16 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 10:29:36 by hsarhan           #+#    #+#              #
-#    Updated: 2022/08/13 09:51:24 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/08/13 12:41:37 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
 # TODO: Add -Werror before submitting
-CFLAGS = -Wall -Wextra -pthread -g3 -fsanitize=thread # -Werror
+CFLAGS = -Wall -Wextra -pthread -g3 -O2  # -Werror
 
-SRCS = error_handling.c logging.c simulation.c threads.c time.c utils.c parser.c \
-		main.c philosophers.c mutexes.c mutex_operations.c
+SRCS = logging.c logging2.c simulation.c time.c utils.c parser.c main.c philosophers.c 
 
 OBJS := $(SRCS:%.c=%.o)
 
