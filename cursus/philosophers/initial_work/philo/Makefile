@@ -6,14 +6,14 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 10:29:36 by hsarhan           #+#    #+#              #
-#    Updated: 2022/08/13 13:39:40 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/08/13 13:54:09 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
 # TODO: Add -Werror before submitting
-CFLAGS = -Wall -Wextra -pthread -g3 -O2 # -Werror
+CFLAGS = -Wall -Wextra -pthread -g3 # -Werror
 
 SRCS = logging.c simulation.c time.c utils.c parser.c main.c philosophers.c
 

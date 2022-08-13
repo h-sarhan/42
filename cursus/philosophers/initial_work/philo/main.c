@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 13:51:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 13:54:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static t_sim	*init_sim(int argc, char **argv, t_phil ***philosophers)
 	if (sim == NULL)
 		return (NULL);
 	parse_args(sim, argc, argv, &success);
-	if (!success)
+	if (success == false)
 	{
 		write(STDERR_FILENO, "Invalid arguments\n", 18);
 		free_sim(sim);
@@ -98,6 +98,8 @@ int	main(int argc, char **argv)
 	size_t		i;
 
 	sim = init_sim(argc, argv, &philosophers);
+	if (sim == NULL)
+		return (EXIT_FAILURE);
 	threads = ft_calloc(sim->num_phils, sizeof(pthread_t));
 	if (threads == NULL)
 	{
