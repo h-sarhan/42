@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 11:00:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 11:26:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,18 @@ t_phil	**create_philosophers(t_sim *sim)
 		num++;
 	}
 	create_forks(sim);
-	// if (success == false)
-	// {
-	// 	temp = 0;
-	// 	while (temp < sim->num_phils)
-	// 	{
-	// 		ft_free(&phils[temp]);
-	// 		temp++;
-	// 	}
-	// 	ft_free(&phils);
-	// 	return (NULL);
-	// }
+	if (sim->forks == NULL || sim->fork_mutexes == NULL
+		|| sim->fork_takers == NULL)
+	{
+		temp = 0;
+		while (temp < sim->num_phils)
+		{
+			ft_free(&phils[temp]);
+			temp++;
+		}
+		ft_free(&phils);
+		return (NULL);
+	}
 	return (phils);
 }
 
@@ -83,33 +84,23 @@ void	create_forks(t_sim *sim)
 	sim->forks = ft_calloc(sim->num_phils, sizeof(bool));
 	if (sim->forks == NULL)
 	{
+		sim->fork_mutexes = NULL;
+		sim->fork_takers = NULL;
 		return ;
 	}
 	sim->fork_mutexes = ft_calloc(sim->num_phils, sizeof(pthread_mutex_t));
 	if (sim->fork_mutexes == NULL)
 	{
+		sim->fork_takers = NULL;
 		return ;
 	}
 	sim->fork_takers = ft_calloc(sim->num_phils, sizeof(unsigned int));
 	if (sim->fork_takers == NULL)
-	{
 		return ;
-	}
 	while (i < sim->num_phils)
 	{
 		create_mutex(&sim->fork_mutexes[i]);
 		sim->forks[i] = false;
-		// if (*success == false)
-		// {
-		// 	temp = 0;
-		// 	while (temp < i)
-		// 	{
-		// 		free_mutex(&sim->fork_mutexes[temp]);
-		// 		temp++;
-		// 	}
-		// 	ft_free(&sim->fork_mutexes);
-		// 	return ;
-		// }
 		i++;
 	}
 }

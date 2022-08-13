@@ -6,12 +6,11 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 10:59:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 11:29:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
 
 // Tests: 
 // ? valgrind --tool=helgrind --history-level=none  ./philo 5 800 200 200 7
@@ -24,7 +23,7 @@
 // * ./philo 5 300 100 60
 // * ./philo 5 200 100 60
 // * ./philo 4 500 400 300
-// ! ./philo 3 700 200 200 Philosophers shouldnt die here
+// * ./philo 3 700 200 200 Philosophers shouldnt die here
 
 int	main(int argc, char **argv)
 {
@@ -33,6 +32,8 @@ int	main(int argc, char **argv)
 	t_phil		**philosophers;
 	pthread_t	*threads;
 	size_t		i;
+	bool		all_ate;
+	size_t		temp;
 
 	sim = create_simulation();
 	if (sim == NULL)
@@ -72,7 +73,7 @@ int	main(int argc, char **argv)
 	}
 	while (read_sim_status(sim) == true)
 	{
-		bool	all_ate = true;
+		all_ate = true;
 		if (sim->min_eats > 0)
 		{
 			i = 0;
@@ -80,21 +81,18 @@ int	main(int argc, char **argv)
 			{
 				lock_mutex(&philosophers[i]->num_eats_mutex);
 				if (philosophers[i]->num_eats < sim->min_eats)
-				{
-					// printf("min_eats==%d\n", philosophers[i]->num_eats);
 					all_ate = false;
-				}
 				unlock_mutex(&philosophers[i]->num_eats_mutex);
 				i++;
 			}
 			if (all_ate == true)
 			{
 				set_sim_status(sim, false);
-				break;
+				break ;
 			}
 		}
 	}
-	size_t temp = 0;
+	temp = 0;
 	while (temp < sim->num_phils)
 	{
 		join_thread(&threads[temp], NULL);
@@ -120,26 +118,3 @@ int	main(int argc, char **argv)
 	ft_free(&threads);
 	return (EXIT_SUCCESS);
 }
-
-// int	main()
-// {
-// // 	void	sleepsleep(t_time_ms sleep_time)
-// // {
-// 	t_time_ms	time_slept;
-// 	t_timeval	start_time;
-// 	t_time_ms sleep_time = 50 * 10;
-
-// 	bool		success;
-// 	success = true;
-// 	time_slept = 0;
-// 	get_start_time(&start_time);
-// 	while (time_slept < sleep_time)
-// 	{
-// 		usleep(50);
-		
-// 		time_slept = get_time(&start_time, &success) * 1000;
-// 		// printf("50 us passed\n");
-		
-// 	}
-// // }
-// }

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 11:00:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 11:24:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_phil		t_phil;
 typedef unsigned long		t_time_ms;
 typedef enum e_phil_state	t_phil_state;
 typedef struct timeval		t_timeval;
-typedef void				(*t_log_func)(const t_time_ms *time, const size_t phil_num);
+typedef void				(*t_log_func)(const t_time_ms *time,
+								const size_t phil_num);
 // Simulation Struct
 struct s_sim
 {
@@ -87,7 +88,6 @@ void			create_forks(t_sim *sim);
 bool			read_sim_status(t_sim *sim);
 void			set_sim_status(t_sim *sim, const bool status);
 
-
 // Utils
 size_t			ft_strlen(const char *str);
 void			ft_free(void *memory);
@@ -116,7 +116,8 @@ void			log_action(t_sim *sim, const size_t phil_num, t_log_func f);
 
 // Parsing
 long			atoui(const char *str);
-void			parse_args(t_sim *sim, const int argc, char **argv, bool *success);
+void			parse_args(t_sim *sim, const int argc, char **argv,
+					bool *success);
 
 // Mutexes
 void			create_mutex(pthread_mutex_t *mutex);

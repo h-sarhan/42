@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 11:04:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 11:22:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,5 +270,6 @@ void free_sim(t_sim *sim)
 	ft_free(&sim->start_time);
 	ft_free(&sim->forks);
 	ft_free(&sim->fork_mutexes);
+	ft_free(&sim->fork_takers);
 	ft_free(&sim);
 }

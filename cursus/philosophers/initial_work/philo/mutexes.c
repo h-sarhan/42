@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:32:16 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/12 18:29:43 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 11:27:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,17 @@ void	create_mutex(pthread_mutex_t *mutex)
 // Frees a mutex and handles errors
 void	free_mutex(pthread_mutex_t *mutex)
 {
-	// printf("%d\n", pthread_mutex_lock(mutex));
 	if (pthread_mutex_destroy(mutex) != SUCCESS)
 	{
 		write_to_stderror("Failed to free mutex\n");
 	}
-	// printf("%d\n", pthread_mutex_destroy(mutex));
 }
 
 // Locks a mutex and handles errors
 void	lock_mutex(pthread_mutex_t *mutex)
 {
-	// printf("%d\n", pthread_mutex_lock(mutex));
 	if (pthread_mutex_lock(mutex) != SUCCESS)
 	{
-		// perror(NULL);
 		write_to_stderror("Failed to lock mutex\n");
 	}
 }
@@ -46,10 +42,8 @@ void	lock_mutex(pthread_mutex_t *mutex)
 // Unlocks a mutex and handles errors
 void	unlock_mutex(pthread_mutex_t *mutex)
 {
-	// printf("%d\n", pthread_mutex_unlock(mutex));
 	if (pthread_mutex_unlock(mutex) != SUCCESS)
 	{
-		// perror(NULL);
 		write_to_stderror("Failed to unlock mutex\n");
 	}
 }

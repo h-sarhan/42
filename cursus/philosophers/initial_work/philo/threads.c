@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:55:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/08 09:49:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 11:23:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 // Wrapper function around pthread_create that handles errors
 void	create_thread(pthread_t *thread, void *(*f)(void *), void *arg)
 {
-	// pthread_t	thread;
-
 	if (pthread_create(thread, NULL, f, arg) != SUCCESS)
 	{
 		write_to_stderror("Failed to create thread\n");
@@ -24,7 +22,6 @@ void	create_thread(pthread_t *thread, void *(*f)(void *), void *arg)
 	}
 	return ;
 }
-
 
 // Wrapper function around pthread_join that handles errors
 void	join_thread(const pthread_t *thread, void **ret)

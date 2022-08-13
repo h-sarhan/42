@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/08 09:56:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 11:23:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_time_ms	get_time(const t_timeval *start_time)
 	t_time_ms	curr_time_in_ms;
 	t_time_ms	start_time_in_ms;
 
-	start_time_in_ms = start_time->tv_sec * 1000 +  start_time->tv_usec / 1000;
+	start_time_in_ms = start_time->tv_sec * 1000 + start_time->tv_usec / 1000;
 	if (gettimeofday(&curr_time, NULL) == FAIL)
 	{
 		write_to_stderror("Failed to get time\n");
