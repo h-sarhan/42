@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 12:42:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 13:38:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # define FAIL -1
 # define SUCCESS 0
 # define TIME_FAILURE 0
-# define THREAD_FAILURE 0
 
 // Typedefs
 typedef struct s_sim		t_sim;
@@ -86,6 +85,7 @@ void			*run_sim(void *phil);
 void			create_forks(t_sim *sim);
 bool			read_sim_status(t_sim *sim);
 void			set_sim_status(t_sim *sim, const bool status);
+unsigned int	read_num_eats(t_phil *phil);
 
 // Utils
 size_t			ft_strlen(const char *str);
@@ -98,7 +98,6 @@ t_time_ms		get_time(const t_timeval *sim);
 t_time_ms		get_micro_time(const t_timeval *start_time);
 
 // Logging Functions
-void			log_fork(const t_time_ms *time, const size_t phil_num);
 void			log_eat(const t_time_ms *time, const size_t phil_num);
 void			log_sleep(const t_time_ms *time, const size_t phil_num);
 void			log_think(const t_time_ms *time, const size_t phil_num);

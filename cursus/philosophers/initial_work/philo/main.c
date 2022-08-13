@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 12:40:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 13:51:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,52 +25,50 @@
 // * ./philo 4 500 400 300
 // * ./philo 3 700 200 200 Philosophers shouldnt die here
 
-int	main(int argc, char **argv)
+static void	cleanup(t_sim *sim, pthread_t	*threads, t_phil **philosophers)
 {
-	t_sim		*sim;
-	bool		success;
-	t_phil		**philosophers;
-	pthread_t	*threads;
-	size_t		i;
-	bool		all_ate;
-	size_t		temp;
+	size_t	temp;
+
+	temp = 0;
+	while (temp < sim->num_phils)
+	{
+		pthread_join(threads[temp], NULL);
+		temp++;
+	}
+	free_philosophers(philosophers);
+	free_sim(sim);
+	ft_free(&threads);
+}
+
+static t_sim	*init_sim(int argc, char **argv, t_phil ***philosophers)
+{
+	bool	success;
+	t_sim	*sim;
 
 	sim = create_simulation();
 	if (sim == NULL)
-		return (EXIT_FAILURE);
+		return (NULL);
 	parse_args(sim, argc, argv, &success);
 	if (!success)
 	{
 		write(STDERR_FILENO, "Invalid arguments\n", 18);
 		free_sim(sim);
-		return (EXIT_FAILURE);
+		return (NULL);
 	}
-	philosophers = create_philosophers(sim);
-	if (philosophers == NULL)
+	*philosophers = create_philosophers(sim);
+	if (*philosophers == NULL)
 	{
 		free_sim(sim);
-		return (EXIT_FAILURE);
+		return (NULL);
 	}
-	threads = ft_calloc(sim->num_phils, sizeof(pthread_t));
-	if (threads == NULL)
-	{
-		free_philosophers(philosophers);
-		free_sim(sim);
-		return (EXIT_FAILURE);
-	}
-	i = 0;
-	while (i < sim->num_phils)
-	{
-		pthread_create(&threads[i], NULL, run_sim, philosophers[i]);
-		if (success == false)
-		{
-			free_philosophers(philosophers);
-			free_sim(sim);
-			ft_free(&threads);
-			return (EXIT_FAILURE);
-		}
-		i++;
-	}
+	return (sim);
+}
+
+static void	check_sim(t_sim *sim, t_phil **philosophers)
+{
+	bool	all_ate;
+	size_t	i;
+
 	while (read_sim_status(sim) == true)
 	{
 		all_ate = true;
@@ -79,10 +77,8 @@ int	main(int argc, char **argv)
 			i = 0;
 			while (i < sim->num_phils)
 			{
-				pthread_mutex_lock(&philosophers[i]->num_eats_mutex);
-				if (philosophers[i]->num_eats < sim->min_eats)
+				if (read_num_eats(philosophers[i]) < sim->min_eats)
 					all_ate = false;
-				pthread_mutex_unlock(&philosophers[i]->num_eats_mutex);
 				i++;
 			}
 			if (all_ate == true)
@@ -92,29 +88,32 @@ int	main(int argc, char **argv)
 			}
 		}
 	}
-	temp = 0;
-	while (temp < sim->num_phils)
+}
+
+int	main(int argc, char **argv)
+{
+	t_sim		*sim;
+	t_phil		**philosophers;
+	pthread_t	*threads;
+	size_t		i;
+
+	sim = init_sim(argc, argv, &philosophers);
+	threads = ft_calloc(sim->num_phils, sizeof(pthread_t));
+	if (threads == NULL)
 	{
-		pthread_join(threads[temp], NULL);
-		if (success == false)
-		{
-			free_philosophers(philosophers);
-			free_sim(sim);
-			ft_free(&threads);
-			return (EXIT_FAILURE);
-		}
-		temp++;
+		free_philosophers(philosophers);
+		free_sim(sim);
+		return (EXIT_FAILURE);
 	}
-	temp = 0;
-	while (temp < sim->num_phils)
+	if (sim == NULL)
+		return (EXIT_FAILURE);
+	i = 0;
+	while (i < sim->num_phils)
 	{
-		pthread_mutex_destroy(&sim->fork_mutexes[temp]);
-		temp++;
+		pthread_create(&threads[i], NULL, run_sim, philosophers[i]);
+		i++;
 	}
-	pthread_mutex_destroy(&sim->logging_mutex);
-	pthread_mutex_destroy(&sim->status_mutex);
-	free_philosophers(philosophers);
-	free_sim(sim);
-	ft_free(&threads);
+	check_sim(sim, philosophers);
+	cleanup(sim, threads, philosophers);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 12:35:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 13:50:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,14 +145,10 @@ void	*run_sim(void *phil_ptr)
 			time = get_time(phil->sim->start_time);
 			if (read_sim_status(phil->sim) == false)
 				return (NULL);
-			pthread_mutex_lock(&phil->sim->logging_mutex);
-			log_fork(&time, phil->num);
-			log_fork(&time, phil->num);
-			log_eat(&time, phil->num);
+			log_action(phil->sim, phil->num, log_eat);
 			pthread_mutex_lock(&phil->num_eats_mutex);
 			phil->num_eats++;
 			pthread_mutex_unlock(&phil->num_eats_mutex);
-			pthread_mutex_unlock(&phil->sim->logging_mutex);
 
 			gettimeofday(phil->phil_eat_time, NULL);
 			if (sleepsleep(phil, phil->sim->time_to_eat * 1000) == FAIL)
@@ -254,10 +250,29 @@ void	*run_sim(void *phil_ptr)
 	return (NULL);
 }
 
+unsigned int	read_num_eats(t_phil *phil)
+{
+	unsigned int	num_eats;
+
+	pthread_mutex_lock(&phil->num_eats_mutex);
+	num_eats = phil->num_eats;
+	pthread_mutex_unlock(&phil->num_eats_mutex);
+	return (num_eats);
+}
 
 // Frees a simulation struct
 void free_sim(t_sim *sim)
 {
+	size_t	i;
+
+	i = 0;
+	while (i < sim->num_phils)
+	{
+		pthread_mutex_destroy(&sim->fork_mutexes[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&sim->logging_mutex);
+	pthread_mutex_destroy(&sim->status_mutex);
 	ft_free(&sim->start_time);
 	ft_free(&sim->forks);
 	ft_free(&sim->fork_mutexes);
