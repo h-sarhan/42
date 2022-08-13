@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 10:57:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 11:00:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ struct s_sim
 	unsigned int	min_eats;
 	t_timeval		*start_time;
 	bool			*forks;
-	unsigned int	*fork_taker;
+	unsigned int	*fork_takers;
 	pthread_mutex_t	*fork_mutexes;
 	pthread_mutex_t	logging_mutex;
 	bool			status;

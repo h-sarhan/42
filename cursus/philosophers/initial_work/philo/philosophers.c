@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/08 13:31:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 11:00:49 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ void	create_forks(t_sim *sim)
 	}
 	sim->fork_mutexes = ft_calloc(sim->num_phils, sizeof(pthread_mutex_t));
 	if (sim->fork_mutexes == NULL)
+	{
+		return ;
+	}
+	sim->fork_takers = ft_calloc(sim->num_phils, sizeof(unsigned int));
+	if (sim->fork_takers == NULL)
 	{
 		return ;
 	}

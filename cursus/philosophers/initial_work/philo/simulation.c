@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 10:56:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 11:04:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,21 +98,26 @@ void	*run_sim(void *phil_ptr)
 					else
 					{
 						lock_mutex(&phil->sim->fork_mutexes[right]);
-						right_held = phil->sim->forks[right];
+						if (phil->sim->fork_takers[right] == 0 || phil->sim->fork_takers[right] != phil->num)
+							right_held = phil->sim->forks[right];
+						
 					}
 					lock_mutex(&phil->sim->fork_mutexes[left]);
-					left_held = phil->sim->forks[left];
+					if (phil->sim->fork_takers[left] == 0 || phil->sim->fork_takers[left] != phil->num)
+						left_held = phil->sim->forks[left];
 				}
 				else
 				{
 					lock_mutex(&phil->sim->fork_mutexes[left]);
-					left_held = phil->sim->forks[left];
+					if (phil->sim->fork_takers[left] == 0 || phil->sim->fork_takers[left] != phil->num)
+						left_held = phil->sim->forks[left];
 					if (left == right)
 						right_held = true;
 					else
 					{
 						lock_mutex(&phil->sim->fork_mutexes[right]);
-						right_held = phil->sim->forks[right];
+						if (phil->sim->fork_takers[right] == 0 || phil->sim->fork_takers[right] != phil->num)
+							right_held = phil->sim->forks[right];
 					}
 				}
 				if (left_held == false && right_held == false)
@@ -135,16 +140,10 @@ void	*run_sim(void *phil_ptr)
 					return (NULL);
 				}
 			}
-			if (right == 0 || phil->num % 2 == 0)
-			{
-				phil->sim->forks[right] = true;
-				phil->sim->forks[left] = true;
-			}
-			else
-			{
-				phil->sim->forks[left] = true;
-				phil->sim->forks[right] = true;
-			}
+			phil->sim->forks[left] = true;
+			phil->sim->forks[right] = true;
+			phil->sim->fork_takers[right] = phil->num;
+			phil->sim->fork_takers[left] = phil->num;
 			
 			unlock_mutex(&phil->sim->fork_mutexes[right]);
 			unlock_mutex(&phil->sim->fork_mutexes[left]);
