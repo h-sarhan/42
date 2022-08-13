@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/11 20:34:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 09:03:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,19 @@ void	*ft_calloc(size_t count, size_t size)
 }
 
 // TODO: Make this return an error when sim ends while sleeping
-void	sleepsleep(t_time_ms sleep_time)
+int	sleepsleep(t_phil *phil, t_time_ms sleep_time)
 {
 	t_time_ms	time_slept;
 	t_timeval	start_time;
 
 	time_slept = 0;
 	get_start_time(&start_time);
-	while (time_slept < sleep_time)
+	while (time_slept < sleep_time && read_sim_status(phil->sim) == true && get_micro_time(phil->phil_eat_time) < phil->sim->time_to_die * 1000)
 	{
 		usleep(60);
 		time_slept = get_micro_time(&start_time);
 	}
+	if (time_slept < sleep_time)
+		return (FAIL);
+	return (SUCCESS);
 }

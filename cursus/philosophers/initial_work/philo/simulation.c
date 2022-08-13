@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 08:42:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 09:25:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,39 @@ void	*run_sim(void *phil_ptr)
 		if (phil->state == THINKING)
 		{
 			success = true;
+			left_held = true;
+			right_held = true;
 			while ((left_held == true || right_held == true))	
 			{
-				lock_mutex(&phil->sim->fork_mutexes[left]);
-				left_held = phil->sim->forks[left];
-				unlock_mutex(&phil->sim->fork_mutexes[left]);
-				if (left == right)
-					right_held = true;
+				if (right == 0)
+				{
+					if (left == right)
+						right_held = true;
+					else
+					{
+						lock_mutex(&phil->sim->fork_mutexes[right]);
+						right_held = phil->sim->forks[right];
+					}
+					lock_mutex(&phil->sim->fork_mutexes[left]);
+					left_held = phil->sim->forks[left];
+				}
 				else
 				{
-					lock_mutex(&phil->sim->fork_mutexes[right]);
-					right_held = phil->sim->forks[right];
-					unlock_mutex(&phil->sim->fork_mutexes[right]);
+					lock_mutex(&phil->sim->fork_mutexes[left]);
+					left_held = phil->sim->forks[left];
+					if (left == right)
+						right_held = true;
+					else
+					{
+						lock_mutex(&phil->sim->fork_mutexes[right]);
+						right_held = phil->sim->forks[right];
+					}
 				}
+				if (left_held == false && right_held == false)
+					break;
+				if (left != right)
+					unlock_mutex(&phil->sim->fork_mutexes[right]);
+				unlock_mutex(&phil->sim->fork_mutexes[left]);
 				if (get_micro_time(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 				{
 					phil->state = DEAD;
@@ -117,10 +137,24 @@ void	*run_sim(void *phil_ptr)
 					return (NULL);
 				}
 			}
-			lock_mutex(&phil->sim->fork_mutexes[left]);
-			phil->sim->forks[left] = true;
-			lock_mutex(&phil->sim->fork_mutexes[right]);
-			phil->sim->forks[right] = true;
+			if (right == 0)
+			{
+				// lock_mutex(&phil->sim->fork_mutexes[right]);
+				phil->sim->forks[right] = true;
+				// lock_mutex(&phil->sim->fork_mutexes[left]);
+				phil->sim->forks[left] = true;
+			}
+			else
+			{
+				// lock_mutex(&phil->sim->fork_mutexes[left]);
+				phil->sim->forks[left] = true;
+				// lock_mutex(&phil->sim->fork_mutexes[right]);
+				phil->sim->forks[right] = true;
+			}
+			
+			unlock_mutex(&phil->sim->fork_mutexes[right]);
+			unlock_mutex(&phil->sim->fork_mutexes[left]);
+			
 			time = get_time(phil->sim->start_time);
 			lock_mutex(&phil->sim->logging_mutex);
 			log_fork(&time, phil->num);
@@ -131,7 +165,22 @@ void	*run_sim(void *phil_ptr)
 			phil->num_eats++;
 			unlock_mutex(&phil->num_eats_mutex);
 			get_start_time(phil->phil_eat_time);
-			sleepsleep(phil->sim->time_to_eat * 1000);
+			if (sleepsleep(phil, phil->sim->time_to_eat * 1000) == FAIL)
+			{
+				// unlock_mutex(&phil->sim->fork_mutexes[right]);
+				// unlock_mutex(&phil->sim->fork_mutexes[left]);
+				return (NULL);
+			}
+			if (right == 0)
+			{
+				lock_mutex(&phil->sim->fork_mutexes[right]);
+				lock_mutex(&phil->sim->fork_mutexes[left]);
+			}
+			else
+			{
+				lock_mutex(&phil->sim->fork_mutexes[left]);
+				lock_mutex(&phil->sim->fork_mutexes[right]);
+			}
 			phil->sim->forks[right] = false;
 			unlock_mutex(&phil->sim->fork_mutexes[right]);
 			phil->sim->forks[left] = false;
@@ -163,7 +212,10 @@ void	*run_sim(void *phil_ptr)
 			if (time >= phil->sim->time_to_die * 1000)
 			{
 				phil->state = DEAD;
-				sleepsleep((phil->sim->time_to_die * 1000 - get_micro_time(phil->phil_eat_time)));
+				if (sleepsleep(phil, (phil->sim->time_to_die * 1000 - get_micro_time(phil->phil_eat_time))) == FAIL)
+				{
+					return (NULL);
+				}
 				
 				lock_mutex(&phil->sim->status_mutex);
 				if (phil->sim->status == true)
@@ -179,7 +231,11 @@ void	*run_sim(void *phil_ptr)
 				return (NULL);
 			}
 			else
-				sleepsleep(phil->sim->time_to_sleep * 1000);
+			{
+				if (sleepsleep(phil, phil->sim->time_to_sleep * 1000) == FAIL)
+					return (NULL);
+
+			}
 			if (read_sim_status(phil->sim) == true)
 				log_action(phil->sim, phil->num, log_think);
 			else

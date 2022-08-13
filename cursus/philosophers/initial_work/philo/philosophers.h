@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/11 20:33:49 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 08:57:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void			set_sim_status(t_sim *sim, const bool status);
 size_t			ft_strlen(const char *str);
 void			ft_free(void *memory);
 void			*ft_calloc(size_t count, size_t size);
-void			sleepsleep(t_time_ms sleep_time);
+int				sleepsleep(t_phil *phil, t_time_ms sleep_time);
 
 // Error Handling
 void			write_to_stderror(const char *msg);

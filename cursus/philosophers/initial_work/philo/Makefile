@@ -6,14 +6,14 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 10:29:36 by hsarhan           #+#    #+#              #
-#    Updated: 2022/08/12 18:51:00 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/08/13 09:30:36 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
 # TODO: Add -Werror before submitting
-CFLAGS = -Wall -Wextra -pthread -g3 -O2 -fsanitize=thread# -Werror
+CFLAGS = -Wall -Wextra -pthread -g3 -O2  # -Werror
 
 SRCS = error_handling.c logging.c simulation.c threads.c time.c utils.c parser.c \
 		main.c philosophers.c mutexes.c mutex_operations.c
