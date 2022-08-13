@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 13:56:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 16:43:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ static void	check_sim(t_sim *sim, t_phil **philosophers)
 			}
 			if (all_ate == true)
 			{
-				set_sim_status(sim, false);
+				pthread_mutex_lock(&sim->status_mutex);
+				sim->status = false;
+				pthread_mutex_unlock(&sim->status_mutex);
 				break ;
 			}
 		}

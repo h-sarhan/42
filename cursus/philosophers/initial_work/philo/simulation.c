@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 14:13:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 16:43:46 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,198 +45,23 @@ bool	read_sim_status(t_sim *sim)
 	return (status);
 }
 
-void	set_sim_status(t_sim *sim, const bool status)
-{
-	pthread_mutex_lock(&sim->status_mutex);
-	sim->status = status;
-	pthread_mutex_unlock(&sim->status_mutex);
-}
-
 void	*run_sim(void *phil_ptr)
 {
-	unsigned int	left;
-	unsigned int	right;
-	t_phil			*phil;
-	bool			left_held;
-	bool			right_held;
+	t_phil	*phil;
 
 	phil = (t_phil *) phil_ptr;
 	gettimeofday(phil->phil_eat_time, NULL);
-	if (phil->sim->num_phils == 1)
-	{
-		left = 0;
-		right = 0;
-	}
-	else
-	{
-		left = phil->num - 1;
-		right = phil->num;
-	}
-	if (phil->num == phil->sim->num_phils)
-		right = 0;
-	left_held = true;
-	right_held = true;
 	while (1)
 	{
 		if (phil->state == THINKING)
-		{
-			left_held = true;
-			right_held = true;
-			while ((left_held == true || right_held == true))
-			{
-				if (right == 0 || phil->num % 2 == 0)
-				{
-					if (left == right)
-						right_held = true;
-					else
-					{
-						pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
-						if (phil->sim->fork_takers[right] == 0
-							|| phil->sim->fork_takers[right] != phil->num)
-							right_held = phil->sim->forks[right];
-					}
-					pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
-					if (phil->sim->fork_takers[left] == 0
-						|| phil->sim->fork_takers[left] != phil->num)
-						left_held = phil->sim->forks[left];
-				}
-				else
-				{
-					pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
-					if (phil->sim->fork_takers[left] == 0
-						|| phil->sim->fork_takers[left] != phil->num)
-						left_held = phil->sim->forks[left];
-					if (left == right)
-						right_held = true;
-					else
-					{
-						pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
-						if (phil->sim->fork_takers[right] == 0
-							|| phil->sim->fork_takers[right] != phil->num)
-							right_held = phil->sim->forks[right];
-					}
-				}
-				if (left_held == false && right_held == false)
-					break ;
-				if (left != right)
-					pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
-				pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
-				if (get_mtime(phil->phil_eat_time)
-					>= phil->sim->time_to_die * 1000)
-				{
-					phil->state = DEAD;
-					pthread_mutex_lock(&phil->sim->status_mutex);
-					if (phil->sim->status == true)
-					{
-						phil->sim->status = false;
-						pthread_mutex_unlock(&phil->sim->status_mutex);
-						log_action(phil->sim, phil->num, log_death);
-					}
-					else
-						pthread_mutex_unlock(&phil->sim->status_mutex);
-					return (NULL);
-				}
-			}
-			phil->sim->forks[left] = true;
-			phil->sim->forks[right] = true;
-			phil->sim->fork_takers[right] = phil->num;
-			phil->sim->fork_takers[left] = phil->num;
-			pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
-			pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
-			if (read_sim_status(phil->sim) == false)
+			if (eating_phase(phil) == END)
 				return (NULL);
-			log_action(phil->sim, phil->num, log_eat);
-			pthread_mutex_lock(&phil->num_eats_mutex);
-			phil->num_eats++;
-			pthread_mutex_unlock(&phil->num_eats_mutex);
-			gettimeofday(phil->phil_eat_time, NULL);
-			if (sleepsleep(phil, phil->sim->time_to_eat * 1000) == FAIL)
-				return (NULL);
-			if (right == 0 || phil->num % 2 == 0)
-			{
-				pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
-				pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
-			}
-			else
-			{
-				pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
-				pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
-			}
-			phil->sim->forks[right] = false;
-			pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
-			phil->sim->forks[left] = false;
-			pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
-			if (read_sim_status(phil->sim) == true)
-				log_action(phil->sim, phil->num, log_sleep);
-			else
-				return (NULL);
-			phil->state = EATING;
-		}
 		if (phil->state == EATING)
-		{
-			phil->state = SLEEPING;
-			if (get_mtime(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
-			{
-				phil->state = DEAD;
-				pthread_mutex_lock(&phil->sim->status_mutex);
-				if (phil->sim->status == true)
-				{
-					phil->sim->status = false;
-					pthread_mutex_unlock(&phil->sim->status_mutex);
-					log_action(phil->sim, phil->num, log_death);
-				}
-				else
-					pthread_mutex_unlock(&phil->sim->status_mutex);
+			if (sleep_phase(phil) == END)
 				return (NULL);
-			}
-			if (phil->sim->time_to_sleep * 1000 + get_mtime(phil->phil_eat_time)
-				>= phil->sim->time_to_die * 1000)
-			{
-				phil->state = DEAD;
-				if (sleepsleep(phil, (phil->sim->time_to_die * 1000 - get_mtime(phil->phil_eat_time))) == FAIL)
-					return (NULL);
-				pthread_mutex_lock(&phil->sim->status_mutex);
-				if (phil->sim->status == true)
-				{
-					phil->sim->status = false;
-					pthread_mutex_unlock(&phil->sim->status_mutex);
-					pthread_mutex_lock(&phil->sim->logging_mutex);
-					printf("%-4lu %-3u has died\n",
-						get_time(phil->phil_eat_time), phil->num);
-					pthread_mutex_unlock(&phil->sim->logging_mutex);
-				}
-				else
-					pthread_mutex_unlock(&phil->sim->status_mutex);
-				return (NULL);
-			}
-			else
-			{
-				if (sleepsleep(phil, phil->sim->time_to_sleep * 1000) == FAIL)
-					return (NULL);
-			}
-			if (read_sim_status(phil->sim) == true)
-				log_action(phil->sim, phil->num, log_think);
-			else
-				return (NULL);
-		}
 		if (phil->state == SLEEPING)
-		{
-			phil->state = THINKING;
-			if (get_mtime(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
-			{
-				phil->state = DEAD;
-				pthread_mutex_lock(&phil->sim->status_mutex);
-				if (phil->sim->status == true)
-				{
-					phil->sim->status = false;
-					pthread_mutex_unlock(&phil->sim->status_mutex);
-					log_action(phil->sim, phil->num, log_death);
-				}
-				else
-					pthread_mutex_unlock(&phil->sim->status_mutex);
+			if (think_phase(phil) == END)
 				return (NULL);
-			}
-		}
 		if (phil->state == DEAD)
 			return (NULL);
 	}

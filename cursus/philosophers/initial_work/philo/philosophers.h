@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 14:08:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 16:46:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define FAIL -1
 # define SUCCESS 0
 # define TIME_FAILURE 0
+# define CONTINUE 1
+# define END 0
 
 // Typedefs
 typedef struct s_sim		t_sim;
@@ -84,9 +86,13 @@ void			free_sim(t_sim *sim);
 void			*run_sim(void *phil);
 void			create_forks(t_sim *sim);
 bool			read_sim_status(t_sim *sim);
-void			set_sim_status(t_sim *sim, const bool status);
 unsigned int	read_num_eats(t_phil *phil);
-
+int				think_phase(t_phil *phil);
+int				check_time_since_eat(t_phil *phil);
+int				sleep_phase(t_phil *phil);
+int				eating_phase(t_phil *phil);
+void			put_back_forks(t_phil *phil, const unsigned int left,
+					const unsigned int right);
 // Utils
 size_t			ft_strlen(const char *str);
 void			ft_free(void *memory);
@@ -108,4 +114,5 @@ void			log_action(t_sim *sim, const size_t phil_num, t_log_func f);
 long			atoui(const char *str);
 void			parse_args(t_sim *sim, const int argc, char **argv,
 					bool *success);
+
 #endif
