@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 09:23:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 09:38:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ int	main(int argc, char **argv)
 	while (read_sim_status(sim) == true)
 	{
 		bool	all_ate = true;
-		i = 0;
 		if (sim->min_eats > 0)
 		{
+			i = 0;
 			while (i < sim->num_phils)
 			{
 				lock_mutex(&philosophers[i]->num_eats_mutex);

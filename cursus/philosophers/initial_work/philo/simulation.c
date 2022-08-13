@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 09:25:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 09:39:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,16 +139,12 @@ void	*run_sim(void *phil_ptr)
 			}
 			if (right == 0)
 			{
-				// lock_mutex(&phil->sim->fork_mutexes[right]);
 				phil->sim->forks[right] = true;
-				// lock_mutex(&phil->sim->fork_mutexes[left]);
 				phil->sim->forks[left] = true;
 			}
 			else
 			{
-				// lock_mutex(&phil->sim->fork_mutexes[left]);
 				phil->sim->forks[left] = true;
-				// lock_mutex(&phil->sim->fork_mutexes[right]);
 				phil->sim->forks[right] = true;
 			}
 			
@@ -160,15 +156,13 @@ void	*run_sim(void *phil_ptr)
 			log_fork(&time, phil->num);
 			log_fork(&time, phil->num);
 			log_eat(&time, phil->num);
-			unlock_mutex(&phil->sim->logging_mutex);
 			lock_mutex(&phil->num_eats_mutex);
 			phil->num_eats++;
 			unlock_mutex(&phil->num_eats_mutex);
+			unlock_mutex(&phil->sim->logging_mutex);
 			get_start_time(phil->phil_eat_time);
 			if (sleepsleep(phil, phil->sim->time_to_eat * 1000) == FAIL)
 			{
-				// unlock_mutex(&phil->sim->fork_mutexes[right]);
-				// unlock_mutex(&phil->sim->fork_mutexes[left]);
 				return (NULL);
 			}
 			if (right == 0)
