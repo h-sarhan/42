@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 09:51:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 09:56:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,11 +152,14 @@ void	*run_sim(void *phil_ptr)
 			unlock_mutex(&phil->sim->fork_mutexes[left]);
 			
 			time = get_time(phil->sim->start_time);
-			lock_mutex(&phil->sim->logging_mutex);
-			log_fork(&time, phil->num);
-			log_fork(&time, phil->num);
-			log_eat(&time, phil->num);
-			lock_mutex(&phil->num_eats_mutex);
+			if (read_sim_status(phil->sim) == true)
+			{
+				lock_mutex(&phil->sim->logging_mutex);
+				log_fork(&time, phil->num);
+				log_fork(&time, phil->num);
+				log_eat(&time, phil->num);
+				lock_mutex(&phil->num_eats_mutex);
+			}
 			phil->num_eats++;
 			unlock_mutex(&phil->num_eats_mutex);
 			unlock_mutex(&phil->sim->logging_mutex);
