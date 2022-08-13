@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 16:43:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 19:47:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 // * ./philo 5 200 100 60
 // * ./philo 4 500 400 300
 // * ./philo 3 700 200 200 Philosophers shouldnt die here
+// * ./philo 199 800 200 100
 
 static void	cleanup(t_sim *sim, pthread_t	*threads, t_phil **philosophers)
 {
