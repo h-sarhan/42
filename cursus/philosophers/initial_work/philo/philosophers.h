@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 13:38:32 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 14:08:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int				sleepsleep(t_phil *phil, t_time_ms sleep_time);
 
 // Time
 t_time_ms		get_time(const t_timeval *sim);
-t_time_ms		get_micro_time(const t_timeval *start_time);
+t_time_ms		get_mtime(const t_timeval *start_time);
 
 // Logging Functions
 void			log_eat(const t_time_ms *time, const size_t phil_num);

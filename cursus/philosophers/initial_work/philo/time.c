@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 12:38:30 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 14:08:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_time_ms	get_time(const t_timeval *start_time)
 	return (curr_time_in_ms - start_time_in_ms);
 }
 
-unsigned long	get_micro_time(const t_timeval *start_time)
+unsigned long	get_mtime(const t_timeval *start_time)
 {
 	t_timeval		curr_time;
 	unsigned long	curr_time_in_us;

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 13:54:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 13:56:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,4 @@ int	main(int argc, char **argv)
 	}
 	check_sim(sim, philosophers);
 	cleanup(sim, threads, philosophers);
-	return (EXIT_SUCCESS);
 }

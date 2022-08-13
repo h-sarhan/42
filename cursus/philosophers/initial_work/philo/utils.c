@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 13:39:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 14:08:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ int	sleepsleep(t_phil *phil, t_time_ms sleep_time)
 	time_slept = 0;
 	gettimeofday(&start_time, NULL);
 	while (time_slept < sleep_time && read_sim_status(phil->sim) == true
-		&& get_micro_time(phil->phil_eat_time) < phil->sim->time_to_die * 1000)
+		&& get_mtime(phil->phil_eat_time) < phil->sim->time_to_die * 1000)
 	{
 		usleep(60);
-		time_slept = get_micro_time(&start_time);
+		time_slept = get_mtime(&start_time);
 	}
 	if (time_slept < sleep_time)
 		return (FAIL);
