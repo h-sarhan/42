@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 09:57:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 10:47:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 // * ./philo 5 300 100 60
 // * ./philo 5 200 100 60
 // * ./philo 4 500 400 300
+// ! ./philo 3 700 200 200 Philosophers shouldnt die here
 
 int	main(int argc, char **argv)
 {

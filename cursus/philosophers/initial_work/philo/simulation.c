@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 09:56:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/13 10:56:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	*run_sim(void *phil_ptr)
 {
 	unsigned int	left;
 	unsigned int	right;
-	bool			success;
 	t_phil			*phil;
 	bool			left_held;
 	bool			right_held;
@@ -88,7 +87,6 @@ void	*run_sim(void *phil_ptr)
 	{
 		if (phil->state == THINKING)
 		{
-			success = true;
 			left_held = true;
 			right_held = true;
 			while ((left_held == true || right_held == true))	
