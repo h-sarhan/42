@@ -6,13 +6,13 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 10:29:36 by hsarhan           #+#    #+#              #
-#    Updated: 2022/08/13 18:32:00 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/08/14 12:00:29 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -pthread -g3
+CFLAGS = -Wall -Wextra -pthread -g3
 
 SRCS = logging.c simulation.c simulation2.c simulation3.c time.c utils.c \
 		parser.c main.c philosophers.c

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 18:27:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/14 12:12:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,13 @@ void	*run_sim(void *phil_ptr)
 			if (eating_phase(phil) == END)
 				return (NULL);
 		if (phil->state == EATING)
+		{
 			if (sleep_phase(phil) == END)
 				return (NULL);
+			phil->state = SLEEPING;
+			if (check_time_since_eat(phil) == END)
+				return (NULL);
+		}
 		if (phil->state == SLEEPING)
 			if (think_phase(phil) == END)
 				return (NULL);

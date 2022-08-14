@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 18:31:26 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/14 12:07:47 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,38 @@
 static bool	check_right_fork(t_phil *phil, const unsigned int left,
 							const unsigned int right, const bool old)
 {
+	bool	held;
+
 	if (left == right)
 		return (true);
 	pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
 	if (phil->sim->fork_takers[right] == 0
 		|| phil->sim->fork_takers[right] != phil->num)
-		return (phil->sim->forks[right]);
+	{
+		held = phil->sim->forks[right];
+		pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
+		return (held);
+	}
+	else
+		pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
 	return (old);
 }
 
 static bool	check_left_fork(t_phil *phil, const unsigned int left,
 								const bool old)
 {
+	bool	held;
+
 	pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
 	if (phil->sim->fork_takers[left] == 0
 		|| phil->sim->fork_takers[left] != phil->num)
-		return (phil->sim->forks[left]);
+	{
+		held = phil->sim->forks[left];
+		pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
+		return (held);
+	}
+	else
+		pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
 	return (old);
 }
 
@@ -55,24 +71,18 @@ static int	look_for_fork(t_phil *phil, const unsigned int left,
 		}
 		if (left_right[0] == false && left_right[1] == false)
 			break ;
-		if (left != right)
-			pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
-		pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
-		if (check_time_since_eat(phil) == END)
+		if (check_time_since_eat(phil) == END || !read_sim_status(phil->sim))
 			return (END);
 	}
+	if (left_right[0] == true || left_right[1] == true)
+		return (END);
 	return (CONTINUE);
 }
 
 static int	eat_spaghetti(t_phil *phil, const unsigned int left,
 			const unsigned int right)
 {
-	phil->sim->forks[left] = true;
-	phil->sim->forks[right] = true;
-	phil->sim->fork_takers[right] = phil->num;
-	phil->sim->fork_takers[left] = phil->num;
-	pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
-	pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
+	pick_up_forks(phil, left, right);
 	if (read_sim_status(phil->sim) == false)
 		return (END);
 	log_action(phil->sim, phil->num, log_eat);

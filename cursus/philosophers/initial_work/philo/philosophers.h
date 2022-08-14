@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 16:46:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/14 12:08:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int				think_phase(t_phil *phil);
 int				check_time_since_eat(t_phil *phil);
 int				sleep_phase(t_phil *phil);
 int				eating_phase(t_phil *phil);
+void			pick_up_forks(t_phil *phil, const unsigned int left,
+					const unsigned int right);
 void			put_back_forks(t_phil *phil, const unsigned int left,
 					const unsigned int right);
 // Utils
