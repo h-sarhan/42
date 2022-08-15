@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 13:10:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 11:52:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,16 @@ static int	look_for_fork(t_phil *phil, const unsigned int left,
 	left_right[1] = true;
 	while ((left_right[0] == true || left_right[1] == true))
 	{
-		left_right[0] = check_left_fork(phil, left, left_right[0]);
-		left_right[1] = check_right_fork(phil, left, right, left_right[1]);
+		if (right == 0 || phil->num % 2 == 0)
+		{
+			left_right[1] = check_right_fork(phil, left, right, left_right[1]);
+			left_right[0] = check_left_fork(phil, left, left_right[0]);
+		}
+		else
+		{
+			left_right[0] = check_left_fork(phil, left, left_right[0]);
+			left_right[1] = check_right_fork(phil, left, right, left_right[1]);
+		}
 		if (left_right[0] == false && left_right[1] == false)
 			break ;
 		if (check_time_since_eat(phil) == END)
