@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 13:10:00 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 14:24:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ static int	look_for_fork(t_phil *phil, const unsigned int left,
 static int	eat_spaghetti(t_phil *phil, const unsigned int left,
 			const unsigned int right)
 {
+	if (check_time_since_eat(phil) == END)
+		return (END);
 	pick_up_forks(phil, left, right);
 	if (log_action(phil->sim, phil->num, log_eat) == false)
 		return (END);
