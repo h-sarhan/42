@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/14 12:07:47 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 09:09:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ static int	look_for_fork(t_phil *phil, const unsigned int left,
 		if (check_time_since_eat(phil) == END || !read_sim_status(phil->sim))
 			return (END);
 	}
-	if (left_right[0] == true || left_right[1] == true)
-		return (END);
 	return (CONTINUE);
 }
 
