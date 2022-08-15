@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 11:15:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 14:39:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_sim	*create_simulation(void)
 	if (sim->start_time == NULL)
 		return (NULL);
 	gettimeofday(sim->start_time, NULL);
-	pthread_mutex_init(&sim->logging_mutex, NULL);
-	pthread_mutex_init(&sim->status_mutex, NULL);
+	// pthread_mutex_init(&sim->logging_mutex, NULL);
+	// pthread_mutex_init(&sim->status_mutex, NULL);
 	if (sim->start_time == NULL)
 	{
 		free_sim(sim);
@@ -39,9 +39,9 @@ bool	read_sim_status(t_sim *sim)
 {
 	bool	status;
 
-	pthread_mutex_lock(&sim->status_mutex);
+	// pthread_mutex_lock(&sim->status_mutex);
 	status = sim->status;
-	pthread_mutex_unlock(&sim->status_mutex);
+	// pthread_mutex_unlock(&sim->status_mutex);
 	return (status);
 }
 
@@ -77,9 +77,9 @@ unsigned int	read_num_eats(t_phil *phil)
 {
 	unsigned int	num_eats;
 
-	pthread_mutex_lock(&phil->num_eats_mutex);
+	// pthread_mutex_lock(&phil->num_eats_mutex);
 	num_eats = phil->num_eats;
-	pthread_mutex_unlock(&phil->num_eats_mutex);
+	// pthread_mutex_unlock(&phil->num_eats_mutex);
 	return (num_eats);
 }
 
@@ -91,11 +91,11 @@ void	free_sim(t_sim *sim)
 	i = 0;
 	while (i < sim->num_phils)
 	{
-		pthread_mutex_destroy(&sim->fork_mutexes[i]);
+		// pthread_mutex_destroy(&sim->fork_mutexes[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&sim->logging_mutex);
-	pthread_mutex_destroy(&sim->status_mutex);
+	// pthread_mutex_destroy(&sim->logging_mutex);
+	// pthread_mutex_destroy(&sim->status_mutex);
 	ft_free(&sim->start_time);
 	ft_free(&sim->forks);
 	ft_free(&sim->fork_mutexes);

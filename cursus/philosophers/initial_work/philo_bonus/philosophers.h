@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 11:18:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 14:41:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ struct s_sim
 	t_timeval		*start_time;
 	bool			*forks;
 	unsigned int	*fork_takers;
-	pthread_mutex_t	*fork_mutexes;
-	pthread_mutex_t	logging_mutex;
+	// pthread_mutex_t	*fork_mutexes;
+	// pthread_mutex_t	logging_mutex;
 	bool			status;
-	pthread_mutex_t	status_mutex;
+	// pthread_mutex_t	status_mutex;
 };
 
 // Philosopher States
@@ -70,7 +70,7 @@ struct s_phil
 {
 	t_phil_state	state;
 	unsigned int	num;
-	pthread_mutex_t	num_eats_mutex;
+	// pthread_mutex_t	num_eats_mutex;
 	unsigned int	num_eats;
 	t_sim			*sim;
 	t_timeval		*phil_eat_time;

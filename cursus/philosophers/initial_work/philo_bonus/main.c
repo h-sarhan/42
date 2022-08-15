@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 12:58:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 14:39:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	cleanup(t_sim *sim, pthread_t *threads, t_phil **philosophers)
 	temp = 0;
 	while (temp < sim->num_phils)
 	{
-		pthread_join(threads[temp], NULL);
+		// pthread_join(threads[temp], NULL);
 		temp++;
 	}
 	free_philosophers(philosophers);
@@ -86,9 +86,9 @@ static void	check_sim(t_sim *sim, t_phil **philosophers)
 			}
 			if (all_ate == true)
 			{
-				pthread_mutex_lock(&sim->status_mutex);
+				// pthread_mutex_lock(&sim->status_mutex);
 				sim->status = false;
-				pthread_mutex_unlock(&sim->status_mutex);
+				// pthread_mutex_unlock(&sim->status_mutex);
 				break ;
 			}
 		}
@@ -115,7 +115,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < sim->num_phils)
 	{
-		pthread_create(&threads[i], NULL, run_sim, philosophers[i]);
+		// pthread_create(&threads[i], NULL, run_sim, philosophers[i]);
 		usleep(350);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 16:41:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 12:58:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 14:40:21 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ int	check_time_since_eat(t_phil *phil)
 	if (get_mtime(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 	{
 		phil->state = DEAD;
-		pthread_mutex_lock(&phil->sim->status_mutex);
+		// pthread_mutex_lock(&phil->sim->status_mutex);
 		if (phil->sim->status == true)
 		{
 			phil->sim->status = false;
-			pthread_mutex_unlock(&phil->sim->status_mutex);
+			// pthread_mutex_unlock(&phil->sim->status_mutex);
 			if (log_action(phil->sim, phil->num, log_death) == false)
 				return (END);
 		}
 		else
-			pthread_mutex_unlock(&phil->sim->status_mutex);
+			// pthread_mutex_unlock(&phil->sim->status_mutex);
 		return (END);
 	}
 	return (CONTINUE);
@@ -53,16 +53,16 @@ int	sleep_phase(t_phil *phil)
 		if (sleepsleep(phil, (phil->sim->time_to_die * 1000 - \
 				get_mtime(phil->phil_eat_time))) == FAIL)
 			return (END);
-		pthread_mutex_lock(&phil->sim->status_mutex);
+		// pthread_mutex_lock(&phil->sim->status_mutex);
 		if (phil->sim->status == true)
 		{
 			phil->sim->status = false;
-			pthread_mutex_unlock(&phil->sim->status_mutex);
+			// pthread_mutex_unlock(&phil->sim->status_mutex);
 			if (log_action(phil->sim, phil->num, log_death) == false)
 				return (END);
 		}
 		else
-			pthread_mutex_unlock(&phil->sim->status_mutex);
+			// pthread_mutex_unlock(&phil->sim->status_mutex);
 		return (END);
 	}
 	if (sleepsleep(phil, phil->sim->time_to_sleep * 1000) == FAIL
@@ -74,23 +74,23 @@ int	sleep_phase(t_phil *phil)
 void	put_back_forks(t_phil *phil, const unsigned int left,
 							const unsigned int right)
 {
-	pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
+	// pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
 	phil->sim->forks[right] = false;
-	pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
-	pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
+	// pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
+	// pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
 	phil->sim->forks[left] = false;
-	pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
+	// pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
 }
 
 void	pick_up_forks(t_phil *phil, const unsigned int left,
 						const unsigned int right)
 {
-	pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
+	// pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
 	phil->sim->forks[left] = true;
 	phil->sim->fork_takers[left] = phil->num;
-	pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
-	pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
+	// pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
+	// pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
 	phil->sim->forks[right] = true;
 	phil->sim->fork_takers[right] = phil->num;
-	pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
+	// pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
 }

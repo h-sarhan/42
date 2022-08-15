@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 11:52:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 14:38:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ static bool	check_right_fork(t_phil *phil, const unsigned int left,
 
 	if (left == right)
 		return (true);
-	pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
+	// pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
 	if (phil->sim->fork_takers[right] == 0
 		|| phil->sim->fork_takers[right] != phil->num)
 	{
 		held = phil->sim->forks[right];
-		pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
+		// pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
 		return (held);
 	}
 	else
-		pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
+		// pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
 	return (old);
 }
 
@@ -37,16 +37,16 @@ static bool	check_left_fork(t_phil *phil, const unsigned int left,
 {
 	bool	held;
 
-	pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
+	// pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
 	if (phil->sim->fork_takers[left] == 0
 		|| phil->sim->fork_takers[left] != phil->num)
 	{
 		held = phil->sim->forks[left];
-		pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
+		// pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
 		return (held);
 	}
 	else
-		pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
+		// pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
 	return (old);
 }
 
@@ -59,16 +59,8 @@ static int	look_for_fork(t_phil *phil, const unsigned int left,
 	left_right[1] = true;
 	while ((left_right[0] == true || left_right[1] == true))
 	{
-		if (right == 0 || phil->num % 2 == 0)
-		{
-			left_right[1] = check_right_fork(phil, left, right, left_right[1]);
-			left_right[0] = check_left_fork(phil, left, left_right[0]);
-		}
-		else
-		{
-			left_right[0] = check_left_fork(phil, left, left_right[0]);
-			left_right[1] = check_right_fork(phil, left, right, left_right[1]);
-		}
+		left_right[0] = check_left_fork(phil, left, left_right[0]);
+		left_right[1] = check_right_fork(phil, left, right, left_right[1]);
 		if (left_right[0] == false && left_right[1] == false)
 			break ;
 		if (check_time_since_eat(phil) == END)
@@ -80,14 +72,16 @@ static int	look_for_fork(t_phil *phil, const unsigned int left,
 static int	eat_spaghetti(t_phil *phil, const unsigned int left,
 			const unsigned int right)
 {
+	if (check_time_since_eat(phil) == END)
+		return (END);
 	pick_up_forks(phil, left, right);
 	if (log_action(phil->sim, phil->num, log_eat) == false)
 		return (END);
 	if (phil->sim->min_eats > 0)
 	{
-		pthread_mutex_lock(&phil->num_eats_mutex);
+		// pthread_mutex_lock(&phil->num_eats_mutex);
 		phil->num_eats++;
-		pthread_mutex_unlock(&phil->num_eats_mutex);
+		// pthread_mutex_unlock(&phil->num_eats_mutex);
 	}
 	gettimeofday(phil->phil_eat_time, NULL);
 	if (sleepsleep(phil, phil->sim->time_to_eat * 1000) == FAIL)
