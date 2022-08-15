@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 12:18:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 12:58:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 // * ./philo 3 700 200 200 Philosophers shouldnt die here
 // * ./philo 199 800 200 100
 
-static void	cleanup(t_sim *sim, pthread_t	*threads, t_phil **philosophers)
+static void	cleanup(t_sim *sim, pthread_t *threads, t_phil **philosophers)
 {
 	size_t	temp;
 
@@ -112,8 +112,6 @@ int	main(int argc, char **argv)
 		free_sim(sim);
 		return (EXIT_FAILURE);
 	}
-	if (sim == NULL)
-		return (EXIT_FAILURE);
 	i = 0;
 	while (i < sim->num_phils)
 	{
