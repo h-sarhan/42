@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/13 19:47:59 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 12:18:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 // * ./philo 4 410 200 200: No one should die
 // * ./philo 4 310 200 100: A philosopher should die
 // Philosophers
+
+//  ./philo 100 800 200 200
+//  ./philo 200 800 200 200
 // * ./philo 3 1000 500 600
-// * ./philo 5 300 100 60
 // * ./philo 5 200 100 60
 // * ./philo 4 500 400 300
 // * ./philo 3 700 200 200 Philosophers shouldnt die here
@@ -72,10 +74,10 @@ static void	check_sim(t_sim *sim, t_phil **philosophers)
 
 	while (read_sim_status(sim) == true)
 	{
-		all_ate = true;
 		if (sim->min_eats > 0)
 		{
 			i = 0;
+			all_ate = true;
 			while (i < sim->num_phils)
 			{
 				if (read_num_eats(philosophers[i]) < sim->min_eats)
@@ -116,6 +118,7 @@ int	main(int argc, char **argv)
 	while (i < sim->num_phils)
 	{
 		pthread_create(&threads[i], NULL, run_sim, philosophers[i]);
+		usleep(350);
 		i++;
 	}
 	check_sim(sim, philosophers);

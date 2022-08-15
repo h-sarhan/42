@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 09:09:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/15 11:52:44 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	look_for_fork(t_phil *phil, const unsigned int left,
 		}
 		if (left_right[0] == false && left_right[1] == false)
 			break ;
-		if (check_time_since_eat(phil) == END || !read_sim_status(phil->sim))
+		if (check_time_since_eat(phil) == END)
 			return (END);
 	}
 	return (CONTINUE);
@@ -81,12 +81,14 @@ static int	eat_spaghetti(t_phil *phil, const unsigned int left,
 			const unsigned int right)
 {
 	pick_up_forks(phil, left, right);
-	if (read_sim_status(phil->sim) == false)
+	if (log_action(phil->sim, phil->num, log_eat) == false)
 		return (END);
-	log_action(phil->sim, phil->num, log_eat);
-	pthread_mutex_lock(&phil->num_eats_mutex);
-	phil->num_eats++;
-	pthread_mutex_unlock(&phil->num_eats_mutex);
+	if (phil->sim->min_eats > 0)
+	{
+		pthread_mutex_lock(&phil->num_eats_mutex);
+		phil->num_eats++;
+		pthread_mutex_unlock(&phil->num_eats_mutex);
+	}
 	gettimeofday(phil->phil_eat_time, NULL);
 	if (sleepsleep(phil, phil->sim->time_to_eat * 1000) == FAIL)
 		return (END);
