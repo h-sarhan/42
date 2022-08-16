@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 16:41:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 14:40:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/16 15:55:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,26 +71,24 @@ int	sleep_phase(t_phil *phil)
 	return (CONTINUE);
 }
 
-void	put_back_forks(t_phil *phil, const unsigned int left,
-							const unsigned int right)
+void	put_back_fork(t_phil *phil, const unsigned int fork_idx)
 {
 	// pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
-	phil->sim->forks[right] = false;
+	// phil->sim->forks[right] = false;
 	// pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
 	// pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
-	phil->sim->forks[left] = false;
+	phil->sim->forks[fork_idx] = false;
 	// pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
 }
 
-void	pick_up_forks(t_phil *phil, const unsigned int left,
-						const unsigned int right)
+void	pick_up_fork(t_phil *phil, const unsigned int fork_idx)
 {
 	// pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
-	phil->sim->forks[left] = true;
-	phil->sim->fork_takers[left] = phil->num;
+	phil->sim->forks[fork_idx] = true;
+	phil->sim->fork_takers[fork_idx] = phil->num;
 	// pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
 	// pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
-	phil->sim->forks[right] = true;
-	phil->sim->fork_takers[right] = phil->num;
+	// phil->sim->forks[right] = true;
+	// phil->sim->fork_takers[right] = phil->num;
 	// pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
 }

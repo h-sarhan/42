@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 14:37:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/16 15:11:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ t_phil	**create_philosophers(t_sim *sim)
 	phils = ft_calloc(sim->num_phils, sizeof(t_sim *));
 	if (phils == NULL)
 		return (NULL);
+	sim->philosopher_pids = ft_calloc(sim->num_phils, sizeof(int));
+	if (sim->philosopher_pids == NULL)
+		return (NULL);
 	while (num < sim->num_phils)
 	{
 		phils[num] = create_philosopher(sim, num + 1);
@@ -62,7 +65,7 @@ t_phil	**create_philosophers(t_sim *sim)
 		num++;
 	}
 	create_forks(sim);
-	if (sim->forks == NULL || sim->fork_mutexes == NULL
+	if (sim->forks == NULL
 		|| sim->fork_takers == NULL)
 		return (phil_creation_error(phils, sim->num_phils));
 	return (phils);
@@ -75,9 +78,9 @@ void	create_forks(t_sim *sim)
 	sim->forks = ft_calloc(sim->num_phils, sizeof(bool));
 	if (sim->forks == NULL)
 		return ;
-	sim->fork_mutexes = ft_calloc(sim->num_phils, sizeof(pthread_mutex_t));
-	if (sim->fork_mutexes == NULL)
-		return ;
+	// sim->fork_mutexes = ft_calloc(sim->num_phils, sizeof(pthread_mutex_t));
+	// if (sim->fork_mutexes == NULL)
+	// 	return ;
 	sim->fork_takers = ft_calloc(sim->num_phils, sizeof(unsigned int));
 	if (sim->fork_takers == NULL)
 		return ;

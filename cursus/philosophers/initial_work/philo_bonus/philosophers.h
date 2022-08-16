@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 14:41:02 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/16 15:54:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <limits.h>
 # include <string.h>
 # include <stdint.h>
+# include <semaphore.h>
+# include <fcntl.h>
 
 // Constants
 # define FAIL -1
@@ -39,6 +41,16 @@ typedef enum e_phil_state	t_phil_state;
 typedef struct timeval		t_timeval;
 typedef void				(*t_log_func)(const t_time_ms *time,
 								const size_t phil_num);
+typedef struct s_sems		t_sems;
+
+struct s_sems
+{
+	sem_t	*num_forks;
+	sem_t	*logging;
+	sem_t	*status;
+	sem_t	**num_eats;
+};
+
 // Simulation Struct
 struct s_sim
 {
@@ -50,9 +62,11 @@ struct s_sim
 	t_timeval		*start_time;
 	bool			*forks;
 	unsigned int	*fork_takers;
+	bool			status;
+	int				*philosopher_pids;
+	t_sems			*sems;
 	// pthread_mutex_t	*fork_mutexes;
 	// pthread_mutex_t	logging_mutex;
-	bool			status;
 	// pthread_mutex_t	status_mutex;
 };
 
@@ -91,10 +105,9 @@ int				think_phase(t_phil *phil);
 int				check_time_since_eat(t_phil *phil);
 int				sleep_phase(t_phil *phil);
 int				eating_phase(t_phil *phil);
-void			pick_up_forks(t_phil *phil, const unsigned int left,
-					const unsigned int right);
-void			put_back_forks(t_phil *phil, const unsigned int left,
-					const unsigned int right);
+void			pick_up_fork(t_phil *phil, const unsigned int fork_idx);
+void			put_back_fork(t_phil *phil, const unsigned int fork_idx);
+
 // Utils
 size_t			ft_strlen(const char *str);
 void			ft_free(void *memory);
