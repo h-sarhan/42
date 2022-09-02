@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/16 15:54:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/16 16:01:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,18 @@ static bool	check_fork(t_phil *phil, const unsigned int fork_idx,
 {
 	bool	held;
 
+	sem_wait(phil->sim->sems->num_forks);
 	// pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
 	if (phil->sim->fork_takers[fork_idx] == 0
 		|| phil->sim->fork_takers[fork_idx] != phil->num)
 	{
 		held = phil->sim->forks[fork_idx];
+		sem_post(phil->sim->sems->num_forks);
 		// pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
 		return (held);
 	}
 	else
+		sem_post(phil->sim->sems->num_forks);
 		// pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
 	return (old);
 }
@@ -75,8 +78,10 @@ static int	eat_spaghetti(t_phil *phil, const unsigned int fork_idx)
 		return (END);
 	if (phil->sim->min_eats > 0)
 	{
+		sem_wait(phil->sim->sems->num_eats[phil->num]);
 		// pthread_mutex_lock(&phil->num_eats_mutex);
 		phil->num_eats++;
+		sem_post(phil->sim->sems->num_eats[phil->num]);
 		// pthread_mutex_unlock(&phil->num_eats_mutex);
 	}
 	gettimeofday(phil->phil_eat_time, NULL);

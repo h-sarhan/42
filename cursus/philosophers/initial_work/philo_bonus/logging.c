@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 14:38:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/08/16 16:00:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,22 @@ bool	log_action(t_sim *sim, const size_t phil_num, t_log_func f)
 	t_time_ms	time;
 	bool		status;
 
+	sem_wait(sim->sems->status);
 	// pthread_mutex_lock(&sim->status_mutex);
 	status = sim->status;
 	if (status == true || f == log_death)
 	{
+		sem_post(sim->sems->status);
 		// pthread_mutex_unlock(&sim->status_mutex);
 		// pthread_mutex_lock(&sim->logging_mutex);
+		sem_wait(sim->sems->logging);
 		time = get_time(sim->start_time);
 		f(&time, phil_num);
+		sem_post(sim->sems->logging);
 		// pthread_mutex_unlock(&sim->logging_mutex);
 	}
 	else
+		sem_post(sim->sems->status);
 		// pthread_mutex_unlock(&sim->status_mutex);
 	if (f == log_death)
 		return (false);
