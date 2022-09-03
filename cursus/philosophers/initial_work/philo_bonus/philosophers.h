@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 21:25:32 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 22:03:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ struct s_sems
 {
 	sem_t	*num_forks;
 	sem_t	*logging;
-	sem_t	*status;
 	sem_t	**num_eats;
+	sem_t	*status;
 };
 
 // Simulation Struct
@@ -109,7 +109,8 @@ int				sleep_phase(t_phil *phil);
 int				eating_phase(t_phil *phil);
 void			pick_up_fork(t_phil *phil);
 void			put_back_fork(t_phil *phil);
-
+void			kill_philosophers(t_sim *sim);
+void			check_sim_status(t_phil *phil);
 // Utils
 size_t			ft_strlen(const char *str);
 void			ft_free(void *memory);

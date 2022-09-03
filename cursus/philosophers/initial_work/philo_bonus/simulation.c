@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 21:23:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 22:07:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,15 @@ t_sim	*create_simulation(void)
 		free_sim(sim);
 		return (NULL);
 	}
-	sim->status = true;
 	return (sim);
 }
 
-bool	read_sim_status(t_sim *sim)
+void	check_sim_status(t_phil *phil)
 {
-	bool	status;
-
-	sem_wait(sim->sems->status);
-	status = sim->status;
-	sem_post(sim->sems->status);
-	return (status);
+	sem_wait(phil->sim->sems->status);
+	sem_post(phil->sim->sems->status);
 }
+
 
 void	*run_sim(void *phil_ptr)
 {
@@ -67,10 +63,12 @@ void	*run_sim(void *phil_ptr)
 				exit(0);
 		if (phil->state == DEAD)
 			exit(0);
+		// check_sim_status(phil);
 	}
 	exit(0);
 }
 
+// ! WRONG
 unsigned int	read_num_eats(t_phil *phil)
 {
 	unsigned int	num_eats;

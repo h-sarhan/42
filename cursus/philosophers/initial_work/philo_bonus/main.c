@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 21:29:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 22:11:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,17 @@
 static void	cleanup(t_sim *sim, pthread_t *threads, t_phil **philosophers)
 {
 	size_t	i;
+	pid_t	retval;
 
 	i = 0;
-	while (i < sim->num_phils)
+	while (1)
 	{
-		waitpid(sim->philosopher_pids[i], NULL, 0);
+		if (waitpid(sim->philosopher_pids[i % sim->num_phils], NULL, WNOHANG) != 0)
+			break;
 		// pthread_join(threads[temp], NULL);
 		i++;
 	}
+	kill_philosophers(sim);
 	free_philosophers(philosophers);
 	free_sim(sim);
 	ft_free(&threads);
@@ -68,6 +71,24 @@ static t_sim	*init_sim(int argc, char **argv, t_phil ***philosophers)
 		return (NULL);
 	}
 	return (sim);
+}
+
+
+void	kill_philosophers(t_sim *sim)
+{
+	size_t	i;
+
+	i = 0;
+	printf("KILLING\n");
+	while (i < sim->num_phils)
+	{
+		if (sim->philosopher_pids[i] != 0)
+		{
+			kill(sim->philosopher_pids[i], SIGKILL);
+		}
+		i++;
+	}
+	exit(0);
 }
 
 static void	check_sim(t_sim *sim, t_phil **philosophers)
@@ -151,40 +172,6 @@ void	init_sems(const t_sim *sim, t_sems *sems)
 	free(phil_name);
 }
 
-void	open_sems(const t_sim *sim, t_sems *sems)
-{
-	unsigned int	i;
-	char			*phil_name;
-
-	sems->num_forks = sem_open("/num_forks", O_RDWR);
-	if (sems->num_forks == SEM_FAILED)
-	{
-		// ! BETTER ERROR HANDLING
-		exit(EXIT_FAILURE);
-	}
-	sems->logging = sem_open("/logging", O_RDWR);
-	if (sems->logging == SEM_FAILED)
-	{
-		// ! BETTER ERROR HANDLING
-		exit(EXIT_FAILURE);
-	}
-	sems->status = sem_open("/status", O_RDWR);
-	if (sems->status == SEM_FAILED)
-	{
-		// ! BETTER ERROR HANDLING
-		exit(EXIT_FAILURE);
-	}
-	i = 0;
-	// ! REPLACE THIS WITH LIBFT VERSION
-	phil_name = strdup("/0");
-	while (i < sim->num_phils)
-	{
-		phil_name[1] = i + 1;
-		sems->num_eats[i] = sem_open(phil_name, O_RDWR);
-		i++;
-	}
-	free(phil_name);
-}
 
 int	main(int argc, char **argv)
 {
@@ -218,6 +205,8 @@ int	main(int argc, char **argv)
 		}
 		i++;
 	}
-	check_sim(sim, philosophers);
+	
+	// check_sim(sim, philosophers);
+	// kill_philosophers(sim);
 	cleanup(sim, threads, philosophers);
 }
