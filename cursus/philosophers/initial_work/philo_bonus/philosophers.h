@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 22:40:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 23:35:33 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ struct s_sems
 {
 	sem_t	*num_forks;
 	sem_t	*logging;
-	sem_t	**num_eats;
+	sem_t	**num_eats; // ! Broken
+	sem_t	*turn;
+	sem_t	*fork_pair;
 };
 
 // Simulation Struct

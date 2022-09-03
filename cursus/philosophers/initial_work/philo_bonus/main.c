@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 22:35:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 23:39:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 
 // ! Optional argument doesnt work
 // * ./philo_bonus 5 800 200 200 7: No one should die
-// * ./philo_bonus 4 410 200 200: No one should die
-// ! ./philo_bonus 4 310 200 100: A philosopher should die
+// ! ./philo_bonus 4 410 200 200: No one should die
+// * ./philo_bonus 4 310 200 100: A philosopher should die
 // Philosophers
 
 // * ./philo_bonus 3 1000 500 600
@@ -145,7 +145,14 @@ void	init_sems(const t_sim *sim, t_sems *sems)
 		// ! BETTER ERROR HANDLING
 		exit(EXIT_FAILURE);
 	}
-	sem_unlink("/status");
+	sem_unlink("/turn");
+	sems->turn = sem_open("/turn", O_CREAT | O_EXCL, 0777, 1);
+	if (sems->turn == SEM_FAILED)
+	{
+		// sems->turn = sem_open("/turn", O_CREAT | O_EXCL, 0777, 1);
+		// ! BETTER ERROR HANDLING
+		exit(EXIT_FAILURE);
+	}
 	i = 0;
 	// ! REPLACE THIS WITH LIBFT VERSION
 	phil_name = strdup("/0");
