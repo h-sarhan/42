@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 16:41:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 16:20:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 16:26:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ void	put_back_forks(t_phil *phil, const unsigned int left,
 void	pick_up_forks(t_phil *phil, const unsigned int left,
 						const unsigned int right)
 {
-	pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
+	// pthread_mutex_lock(&phil->sim->fork_mutexes[left]);
 	phil->sim->forks[left] = true;
 	phil->sim->fork_takers[left] = phil->num;
 	pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
-	pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
+	// pthread_mutex_lock(&phil->sim->fork_mutexes[right]);
 	phil->sim->forks[right] = true;
 	phil->sim->fork_takers[right] = phil->num;
 	pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);

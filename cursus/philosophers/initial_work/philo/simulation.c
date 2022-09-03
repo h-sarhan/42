@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 16:22:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 16:28:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	*run_sim(void *phil_ptr)
 				return (NULL);
 		if (phil->state == DEAD)
 			return (NULL);
+		// usleep(200);
 	}
 	return (NULL);
 }
