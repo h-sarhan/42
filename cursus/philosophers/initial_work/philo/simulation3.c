@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 16:41:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 12:58:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 16:20:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	sleep_phase(t_phil *phil)
 		>= phil->sim->time_to_die * 1000)
 	{
 		phil->state = DEAD;
-		if (sleepsleep(phil, (phil->sim->time_to_die * 1000 - \
+		if (phil->sim->time_to_die * 1000 > get_mtime(phil->phil_eat_time)
+			&& sleepsleep(phil, (phil->sim->time_to_die * 1000 - \
 				get_mtime(phil->phil_eat_time))) == FAIL)
 			return (END);
 		pthread_mutex_lock(&phil->sim->status_mutex);
