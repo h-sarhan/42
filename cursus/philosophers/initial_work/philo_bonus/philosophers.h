@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/16 15:54:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 21:25:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 // Includes
 # include <sys/time.h>
+# include <sys/wait.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -25,6 +26,7 @@
 # include <stdint.h>
 # include <semaphore.h>
 # include <fcntl.h>
+# include <signal.h>
 
 // Constants
 # define FAIL -1
@@ -105,8 +107,8 @@ int				think_phase(t_phil *phil);
 int				check_time_since_eat(t_phil *phil);
 int				sleep_phase(t_phil *phil);
 int				eating_phase(t_phil *phil);
-void			pick_up_fork(t_phil *phil, const unsigned int fork_idx);
-void			put_back_fork(t_phil *phil, const unsigned int fork_idx);
+void			pick_up_fork(t_phil *phil);
+void			put_back_fork(t_phil *phil);
 
 // Utils
 size_t			ft_strlen(const char *str);

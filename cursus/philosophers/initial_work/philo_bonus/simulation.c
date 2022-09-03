@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/16 15:52:34 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 21:23:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ t_sim	*create_simulation(void)
 	if (sim->start_time == NULL)
 		return (NULL);
 	gettimeofday(sim->start_time, NULL);
-	// pthread_mutex_init(&sim->logging_mutex, NULL);
-	// pthread_mutex_init(&sim->status_mutex, NULL);
 	if (sim->start_time == NULL)
 	{
 		free_sim(sim);
@@ -39,9 +37,9 @@ bool	read_sim_status(t_sim *sim)
 {
 	bool	status;
 
-	// pthread_mutex_lock(&sim->status_mutex);
+	sem_wait(sim->sems->status);
 	status = sim->status;
-	// pthread_mutex_unlock(&sim->status_mutex);
+	sem_post(sim->sems->status);
 	return (status);
 }
 
@@ -55,31 +53,31 @@ void	*run_sim(void *phil_ptr)
 	{
 		if (phil->state == THINKING)
 			if (eating_phase(phil) == END)
-				return (NULL);
+				exit(0);
 		if (phil->state == EATING)
 		{
 			if (sleep_phase(phil) == END)
-				return (NULL);
+				exit(0);
 			phil->state = SLEEPING;
 			if (check_time_since_eat(phil) == END)
-				return (NULL);
+				exit(0);
 		}
 		if (phil->state == SLEEPING)
 			if (think_phase(phil) == END)
-				return (NULL);
+				exit(0);
 		if (phil->state == DEAD)
-			return (NULL);
+			exit(0);
 	}
-	return (NULL);
+	exit(0);
 }
 
 unsigned int	read_num_eats(t_phil *phil)
 {
 	unsigned int	num_eats;
 
-	// pthread_mutex_lock(&phil->num_eats_mutex);
+	sem_wait(phil->sim->sems->num_eats[phil->num]);
 	num_eats = phil->num_eats;
-	// pthread_mutex_unlock(&phil->num_eats_mutex);
+	sem_post(phil->sim->sems->num_eats[phil->num]);
 	return (num_eats);
 }
 
