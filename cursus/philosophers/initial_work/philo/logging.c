@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 14:23:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 20:03:00 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ bool	log_action(t_sim *sim, const size_t phil_num, t_log_func f)
 	status = sim->status;
 	if (status == true || f == log_death)
 	{
-		pthread_mutex_unlock(&sim->status_mutex);
 		pthread_mutex_lock(&sim->logging_mutex);
 		time = get_time(sim->start_time);
 		f(&time, phil_num);
 		pthread_mutex_unlock(&sim->logging_mutex);
+		pthread_mutex_unlock(&sim->status_mutex);
 	}
 	else
 		pthread_mutex_unlock(&sim->status_mutex);

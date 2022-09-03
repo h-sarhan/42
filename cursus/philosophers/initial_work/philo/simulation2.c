@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 16:42:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 20:08:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ static bool	check_right_fork(t_phil *phil, const unsigned int left,
 		|| phil->sim->fork_takers[right] != phil->num)
 	{
 		held = phil->sim->forks[right];
-		// pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
 		return (held);
 	}
-	// else
-	// 	pthread_mutex_unlock(&phil->sim->fork_mutexes[right]);
 	return (old);
 }
 
@@ -42,11 +39,8 @@ static bool	check_left_fork(t_phil *phil, const unsigned int left,
 		|| phil->sim->fork_takers[left] != phil->num)
 	{
 		held = phil->sim->forks[left];
-		// pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
 		return (held);
 	}
-	// else
-	// 	pthread_mutex_unlock(&phil->sim->fork_mutexes[left]);
 	return (old);
 }
 
