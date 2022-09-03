@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 22:11:07 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 22:35:31 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // Philosophers
 
 // * ./philo_bonus 3 1000 500 600
-// ! ./philo_bonus 5 200 100 60
+// * ./philo_bonus 5 200 100 60
 // * ./philo_bonus 4 500 400 300
 // * ./philo_bonus 3 700 200 200 Philosophers shouldnt die here
 // * ./philo_bonus 199 800 200 100
@@ -79,7 +79,7 @@ void	kill_philosophers(t_sim *sim)
 	size_t	i;
 
 	i = 0;
-	printf("KILLING\n");
+	// printf("KILLING\n");
 	while (i < sim->num_phils)
 	{
 		if (sim->philosopher_pids[i] != 0)
@@ -146,13 +146,6 @@ void	init_sems(const t_sim *sim, t_sems *sems)
 		exit(EXIT_FAILURE);
 	}
 	sem_unlink("/status");
-	sems->status = sem_open("/status", O_CREAT | O_EXCL, 0777, 1);
-	if (sems->status == SEM_FAILED)
-	{
-		// sems->status = sem_open("/status", O_CREAT | O_EXCL, 0777, 1);
-		// ! BETTER ERROR HANDLING
-		exit(EXIT_FAILURE);
-	}
 	i = 0;
 	// ! REPLACE THIS WITH LIBFT VERSION
 	phil_name = strdup("/0");

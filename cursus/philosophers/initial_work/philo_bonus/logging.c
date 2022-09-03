@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 21:36:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 22:40:38 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,16 @@
 // Log that a philosopher is eating
 void	log_eat(const t_time_ms *time, const size_t phil_num)
 {
-	printf("%-4lu %-3zu has taken a fork\n", *time, phil_num);
-	printf("%-4lu %-3zu has taken a fork\n", *time, phil_num);
+	// printf("%-4lu %-3zu has taken a fork\n", *time, phil_num);
+	// printf("%-4lu %-3zu has taken a fork\n", *time, phil_num);
 	printf("%-4lu %-3zu is eating\n", *time, phil_num);
 }
+
+void	log_fork(const t_time_ms *time, const size_t phil_num)
+{
+	printf("%-4lu %-3zu has taken a fork\n", *time, phil_num);
+}
+
 
 // Log that a philosopher is sleeping
 void	log_sleep(const t_time_ms *time, const size_t phil_num)

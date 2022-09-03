@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 22:07:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 22:35:17 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ t_sim	*create_simulation(void)
 	return (sim);
 }
 
-void	check_sim_status(t_phil *phil)
-{
-	sem_wait(phil->sim->sems->status);
-	sem_post(phil->sim->sems->status);
-}
-
 
 void	*run_sim(void *phil_ptr)
 {
@@ -56,14 +50,17 @@ void	*run_sim(void *phil_ptr)
 				exit(0);
 			phil->state = SLEEPING;
 			if (check_time_since_eat(phil) == END)
+			{
+				// printf("DIES HERE\n");
 				exit(0);
+			}
 		}
 		if (phil->state == SLEEPING)
 			if (think_phase(phil) == END)
 				exit(0);
 		if (phil->state == DEAD)
 			exit(0);
-		// check_sim_status(phil);
+		// usleep(200);
 	}
 	exit(0);
 }

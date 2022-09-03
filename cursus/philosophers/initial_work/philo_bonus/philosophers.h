@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 22:03:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/03 22:40:06 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ struct s_sems
 	sem_t	*num_forks;
 	sem_t	*logging;
 	sem_t	**num_eats;
-	sem_t	*status;
 };
 
 // Simulation Struct
@@ -67,9 +66,6 @@ struct s_sim
 	bool			status;
 	int				*philosopher_pids;
 	t_sems			*sems;
-	// pthread_mutex_t	*fork_mutexes;
-	// pthread_mutex_t	logging_mutex;
-	// pthread_mutex_t	status_mutex;
 };
 
 // Philosopher States
@@ -127,6 +123,8 @@ void			log_sleep(const t_time_ms *time, const size_t phil_num);
 void			log_think(const t_time_ms *time, const size_t phil_num);
 void			log_death(const t_time_ms *time, const size_t phil_num);
 bool			log_action(t_sim *sim, const size_t phil_num, t_log_func f);
+void	log_fork(const t_time_ms *time, const size_t phil_num);
+
 
 // Parsing
 long			atoui(const char *str);
