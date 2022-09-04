@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 18:40:21 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 20:33:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 09:14:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ t_phil	**create_philosophers(t_sim *sim)
 	phils = ft_calloc(sim->num_phils, sizeof(t_sim *));
 	if (phils == NULL)
 		return (NULL);
-	sim->philosopher_pids = ft_calloc(sim->num_phils, sizeof(int));
-	if (sim->philosopher_pids == NULL)
+	sim->philo_pids = ft_calloc(sim->num_phils, sizeof(int));
+	if (sim->philo_pids == NULL)
 		return (NULL);
 	while (num < sim->num_phils)
 	{
@@ -62,30 +62,7 @@ t_phil	**create_philosophers(t_sim *sim)
 			return (phil_creation_error(phils, num));
 		num++;
 	}
-	create_forks(sim);
-	if (sim->forks == NULL
-		|| sim->fork_takers == NULL)
-		return (phil_creation_error(phils, sim->num_phils));
 	return (phils);
-}
-
-void	create_forks(t_sim *sim)
-{
-	unsigned int	i;
-
-	sim->forks = ft_calloc(sim->num_phils, sizeof(bool));
-	if (sim->forks == NULL)
-		return ;
-	sim->fork_takers = ft_calloc(sim->num_phils, sizeof(unsigned int));
-	if (sim->fork_takers == NULL)
-		return ;
-	i = 0;
-	while (i < sim->num_phils)
-	{
-		sim->forks[i] = false;
-		sim->fork_takers[i] = 0;
-		i++;
-	}
 }
 
 void	free_philosophers(t_phil **phils)

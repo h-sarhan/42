@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 08:47:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 09:15:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,8 @@ struct s_sim
 	t_time_ms		time_to_sleep;
 	unsigned int	min_eats;
 	t_timeval		*start_time;
-	bool			*forks;
-	unsigned int	*fork_takers;
 	bool			status;
-	int				*philosopher_pids;
+	int				*philo_pids;
 	t_sems			*sems;
 };
 
@@ -84,7 +82,6 @@ struct s_phil
 {
 	t_phil_state	state;
 	unsigned int	num;
-	// pthread_mutex_t	num_eats_mutex;
 	unsigned int	num_eats;
 	t_sim			*sim;
 	t_timeval		*phil_eat_time;
@@ -98,9 +95,6 @@ void			free_philosophers(t_phil **phils);
 t_sim			*create_simulation(void);
 void			free_sim(t_sim *sim);
 void			*run_sim(void *phil);
-void			create_forks(t_sim *sim);
-bool			read_sim_status(t_sim *sim);
-unsigned int	read_num_eats(t_phil *phil);
 int				think_phase(t_phil *phil);
 int				check_time_since_eat(t_phil *phil);
 int				sleep_phase(t_phil *phil);
@@ -108,25 +102,22 @@ int				eating_phase(t_phil *phil);
 void			pick_up_fork(t_phil *phil);
 void			put_back_fork(t_phil *phil);
 void			kill_philosophers(t_sim *sim);
-void			check_sim_status(t_phil *phil);
+t_sim			*init_sim(int argc, char **argv, t_phil ***philosophers);
+
 // Utils
 size_t			ft_strlen(const char *str);
 void			ft_free(void *memory);
 void			*ft_calloc(size_t count, size_t size);
 int				sleepsleep(t_phil *phil, t_time_ms sleep_time);
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
 
 // Time
 t_time_ms		get_time(const t_timeval *sim);
-t_time_ms		get_mtime(const t_timeval *start_time);
+t_time_ms		get_utime(const t_timeval *start_time);
 
 // Logging Functions
-void			log_eat(const t_time_ms *time, const size_t phil_num);
-void			log_sleep(const t_time_ms *time, const size_t phil_num);
-void			log_think(const t_time_ms *time, const size_t phil_num);
-void			log_death(const t_time_ms *time, const size_t phil_num);
-bool			log_action(t_sim *sim, const size_t phil_num, t_log_func f);
-void	log_fork(const t_time_ms *time, const size_t phil_num);
-
+bool			log_action(t_sim *sim, const size_t phil_num,
+					const char *action);
 
 // Parsing
 long			atoui(const char *str);

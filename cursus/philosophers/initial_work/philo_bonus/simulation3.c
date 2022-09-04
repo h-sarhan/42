@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 16:41:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 08:39:17 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 09:15:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,18 @@
 int	think_phase(t_phil *phil)
 {
 	phil->state = THINKING;
-	if (log_action(phil->sim, phil->num, log_think) == false)
+	if (log_action(phil->sim, phil->num, "is thinking") == false)
 		return (END);
-	// if (check_time_since_eat(phil) == END)
-	// 	return (END);
 	return (CONTINUE);
 }
 
 int	check_time_since_eat(t_phil *phil)
 {
 	sem_wait(phil->sim->sems->time);
-	if (get_mtime(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
+	if (get_utime(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 	{
-		// printf("DIES HERE\n");
-		// phil->state = DEAD;
 		sem_post(phil->sim->sems->time);
-		log_action(phil->sim, phil->num, log_death);
-		// sem_wait(phil->sim->sems->logging);
+		log_action(phil->sim, phil->num, "has died");
 		exit(0);
 		return (END);
 	}
@@ -39,31 +34,12 @@ int	check_time_since_eat(t_phil *phil)
 	return (CONTINUE);
 }
 
-// void	kill_philosophers(t_phil *phil)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	printf("KILLING\n");
-// 	while (i < phil->sim->num_phils)
-// 	{
-// 		if (phil->sim->philosopher_pids[i] != 0)
-// 		{
-// 			kill(phil->sim->philosopher_pids[i], SIGKILL);
-// 		}
-// 		i++;
-// 	}
-// 	exit(0);
-// }
-
 int	sleep_phase(t_phil *phil)
 {
-	log_action(phil->sim, phil->num, log_sleep);
+	log_action(phil->sim, phil->num, "is sleeping");
 	sleepsleep(phil, phil->sim->time_to_sleep * 1000);
 	return (CONTINUE);
 }
-
-
 
 void	put_back_fork(t_phil *phil)
 {

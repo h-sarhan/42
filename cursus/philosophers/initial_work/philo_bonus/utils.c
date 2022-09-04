@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:30:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/08/15 13:51:08 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 09:11:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,28 @@ void	*ft_calloc(size_t count, size_t size)
 	return (memory);
 }
 
-int	sleepsleep(t_phil *phil, t_time_ms sleep_time)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	t_time_ms	time_slept;
-	t_timeval	start_time;
+	size_t				i;
+	const unsigned char	*str1;
+	const unsigned char	*str2;
 
-	(void)phil;
-	time_slept = 0;
-	gettimeofday(&start_time, NULL);
-	while (time_slept < sleep_time
-		&& get_mtime(phil->phil_eat_time) < phil->sim->time_to_die * 1000)
+	str1 = (const unsigned char *)s1;
+	str2 = (const unsigned char *)s2;
+	i = 0;
+	while (str1[i] != '\0' && str2[i] != '\0' && i < n)
 	{
-		usleep(100);
-		time_slept = get_mtime(&start_time);
+		if (str1[i] > str2[i])
+			return (1);
+		if (str1[i] < str2[i])
+			return (-1);
+		i++;
 	}
-	if (time_slept < sleep_time)
-		return (FAIL);
-	return (SUCCESS);
+	if (i == n)
+		return (0);
+	if (str1[i] != '\0')
+		return (1);
+	if (str2[i] != '\0')
+		return (-1);
+	return (0);
 }

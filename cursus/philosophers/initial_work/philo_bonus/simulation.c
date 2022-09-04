@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 08:39:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 09:14:29 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ static void	*check_time(void *phil_ptr)
 	}
 	return (NULL);
 }
+
 void	*run_sim(void *phil_ptr)
 {
 	t_phil		*phil;
 	pthread_t	thread;
+
 	phil = phil_ptr;
 	gettimeofday(phil->phil_eat_time, NULL);
 	pthread_create(&thread, NULL, check_time, phil);
@@ -61,25 +63,15 @@ void	*run_sim(void *phil_ptr)
 			if (sleep_phase(phil) == END)
 				exit(0);
 			phil->state = SLEEPING;
-			// if (check_time_since_eat(phil) == END)
-			// {
-			// 	// printf("DIES HERE\n");
-			// 	exit(0);
-			// }
 		}
 		if (phil->state == SLEEPING)
 			if (think_phase(phil) == END)
 				exit(0);
 		if (phil->state == DEAD)
 			exit(0);
-		// usleep(200);
-		
 	}
 	exit(0);
 }
-
-// ! WRONG
-
 
 // Frees a simulation struct
 void	free_sim(t_sim *sim)
@@ -89,14 +81,32 @@ void	free_sim(t_sim *sim)
 	i = 0;
 	while (i < sim->num_phils)
 	{
-		// pthread_mutex_destroy(&sim->fork_mutexes[i]);
 		i++;
 	}
-	// pthread_mutex_destroy(&sim->logging_mutex);
-	// pthread_mutex_destroy(&sim->status_mutex);
 	ft_free(&sim->start_time);
-	ft_free(&sim->forks);
-	// ft_free(&sim->fork_mutexes);
-	ft_free(&sim->fork_takers);
 	ft_free(&sim);
+}
+
+t_sim	*init_sim(int argc, char **argv, t_phil ***philosophers)
+{
+	bool	success;
+	t_sim	*sim;
+
+	sim = create_simulation();
+	if (sim == NULL)
+		return (NULL);
+	parse_args(sim, argc, argv, &success);
+	if (success == false)
+	{
+		write(STDERR_FILENO, "Invalid arguments\n", 18);
+		free_sim(sim);
+		return (NULL);
+	}
+	*philosophers = create_philosophers(sim);
+	if (*philosophers == NULL)
+	{
+		free_sim(sim);
+		return (NULL);
+	}
+	return (sim);
 }
