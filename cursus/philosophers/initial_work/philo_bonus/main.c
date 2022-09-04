@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 17:47:15 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 18:37:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ int	main(int argc, char **argv)
 		if (sim->philo_pids[i] == 0)
 		{
 			run_sim(philosophers[i]);
+			free_philosophers(philosophers);
+			free_sim(sim);
 			exit(EXIT_SUCCESS);
 		}
 		i++;
