@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 23:46:47 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 07:39:26 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,24 @@ t_sim	*create_simulation(void)
 	return (sim);
 }
 
-
-void	*run_sim(void *phil_ptr)
+static void	*check_time(void *phil_ptr)
 {
 	t_phil	*phil;
 
-	phil = (t_phil *) phil_ptr;
+	phil = phil_ptr;
+	while (1)
+	{
+		check_time_since_eat(phil);
+		usleep(500);
+	}
+}
+void	*run_sim(void *phil_ptr)
+{
+	t_phil		*phil;
+	pthread_t	thread;
+	phil = phil_ptr;
 	gettimeofday(phil->phil_eat_time, NULL);
+	pthread_create(&thread, NULL, check_time, phil);
 	while (1)
 	{
 		if (phil->state == THINKING)

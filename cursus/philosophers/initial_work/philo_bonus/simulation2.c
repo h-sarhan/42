@@ -6,11 +6,12 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 23:49:17 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 07:43:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
 
 static int	eat_spaghetti(t_phil *phil)
 {
@@ -36,7 +37,9 @@ static int	eat_spaghetti(t_phil *phil)
 		phil->num_eats++;
 		sem_post(phil->sim->sems->num_eats[phil->num]);
 	}
+	sem_wait(phil->sim->sems->time);
 	gettimeofday(phil->phil_eat_time, NULL);
+	sem_post(phil->sim->sems->time);
 	if (sleepsleep(phil, phil->sim->time_to_eat * 1000) == FAIL)
 		return (END);
 	put_back_fork(phil);

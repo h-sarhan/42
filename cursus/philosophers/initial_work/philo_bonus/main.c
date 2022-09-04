@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 23:39:08 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 07:44:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 // Tests: 
 // ? valgrind --tool=helgrind --history-level=none  ./philo 5 800 200 200 7
 
-// ! HARD CODE THIS
 // * ./philo_bonus 1 800 200 200: Should not eat and die
-
 // ! Optional argument doesnt work
 // * ./philo_bonus 5 800 200 200 7: No one should die
-// ! ./philo_bonus 4 410 200 200: No one should die
+// * ./philo_bonus 4 410 200 200: No one should die
 // * ./philo_bonus 4 310 200 100: A philosopher should die
 // Philosophers
 
@@ -150,6 +148,14 @@ void	init_sems(const t_sim *sim, t_sems *sems)
 	if (sems->turn == SEM_FAILED)
 	{
 		// sems->turn = sem_open("/turn", O_CREAT | O_EXCL, 0777, 1);
+		// ! BETTER ERROR HANDLING
+		exit(EXIT_FAILURE);
+	}
+	sem_unlink("/time");
+	sems->time = sem_open("/time", O_CREAT | O_EXCL, 0777, 1);
+	if (sems->time == SEM_FAILED)
+	{
+		// sems->time = sem_open("/time", O_CREAT | O_EXCL, 0777, 1);
 		// ! BETTER ERROR HANDLING
 		exit(EXIT_FAILURE);
 	}

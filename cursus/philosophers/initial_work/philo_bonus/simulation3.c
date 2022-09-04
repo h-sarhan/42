@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 16:41:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 22:44:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 07:42:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,18 @@ int	think_phase(t_phil *phil)
 
 int	check_time_since_eat(t_phil *phil)
 {
+	sem_wait(phil->sim->sems->time);
 	if (get_mtime(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 	{
 		// printf("DIES HERE\n");
-		phil->state = DEAD;
+		// phil->state = DEAD;
+		sem_post(phil->sim->sems->time);
 		log_action(phil->sim, phil->num, log_death);
 		sem_wait(phil->sim->sems->logging);
 		exit(0);
 		return (END);
 	}
+	sem_post(phil->sim->sems->time);
 	return (CONTINUE);
 }
 
