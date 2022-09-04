@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 10:29:36 by hsarhan           #+#    #+#              #
-#    Updated: 2022/09/03 20:10:55 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/09/04 15:29:36 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,3 +39,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean $(NAME)
+
+.PHONY: all norm clean fclean re
