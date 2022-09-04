@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 09:15:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 10:13:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ struct s_sim
 	bool			status;
 	int				*philo_pids;
 	t_sems			*sems;
+	t_phil			**philosophers;
 };
 
 // Philosopher States

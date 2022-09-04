@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 09:16:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 10:13:09 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ static void	*check_for_min_eats(void *sim_ptr)
 		i++;
 	}
 	kill_philosophers(sim);
-	free_sim(sim);
-	exit(0);
+	// free_sim(sim);
+	// exit(EXIT_SUCCESS);
+	return (NULL);
 }
 
-static void	cleanup(t_sim *sim, pthread_t *threads, t_phil **philosophers)
+static void	cleanup(t_sim *sim, t_phil **philosophers)
 {
 	size_t		i;
 	pthread_t	min_eats_thread;
@@ -54,10 +55,17 @@ static void	cleanup(t_sim *sim, pthread_t *threads, t_phil **philosophers)
 			break ;
 		i++;
 	}
-	kill_philosophers(sim);
+	i = 0;
+	while (i < sim->num_phils)
+	{
+		sem_post(sim->sems->num_eats);
+		i++;
+	}
+	pthread_join(min_eats_thread, NULL);
+	// kill_philosophers(sim);
 	free_philosophers(philosophers);
 	free_sim(sim);
-	ft_free(&threads);
+	exit(EXIT_SUCCESS);
 }
 
 void	kill_philosophers(t_sim *sim)
@@ -71,7 +79,7 @@ void	kill_philosophers(t_sim *sim)
 			kill(sim->philo_pids[i], SIGKILL);
 		i++;
 	}
-	exit(0);
+	// exit(EXIT_SUCCESS);
 }
 
 void	init_sems(t_sim *sim)
@@ -102,27 +110,23 @@ int	main(int argc, char **argv)
 {
 	t_sim		*sim;
 	t_phil		**philosophers;
-	pthread_t	*threads;
 	size_t		i;
 
 	sim = init_sim(argc, argv, &philosophers);
+	sim->philosophers = philosophers;
 	if (sim == NULL)
 		return (EXIT_FAILURE);
-	threads = ft_calloc(sim->num_phils, sizeof(pthread_t));
-	if (threads == NULL)
-	{
-		free_philosophers(philosophers);
-		free_sim(sim);
-		return (EXIT_FAILURE);
-	}
 	i = 0;
 	init_sems(sim);
 	while (i < sim->num_phils)
 	{
 		sim->philo_pids[i] = fork();
 		if (sim->philo_pids[i] == 0)
+		{
 			run_sim(philosophers[i]);
+			exit(EXIT_SUCCESS);
+		}
 		i++;
 	}
-	cleanup(sim, threads, philosophers);
+	cleanup(sim, philosophers);
 }
