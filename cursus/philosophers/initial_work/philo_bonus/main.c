@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 14:04:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 17:47:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ static void	cleanup(t_sim *sim, t_phil **philosophers)
 		pthread_join(min_eats_thread, NULL);
 	kill_philosophers(sim);
 	free_philosophers(philosophers);
-	sem_unlink("/num_forks");
+	free_sim(sim);
+	sem_unlink("/forks");
 	sem_unlink("/logging");
 	sem_unlink("/turn");
 	sem_unlink("/time");
 	sem_unlink("/num_eats");
 	sem_unlink("/status");
-	free_sim(sim);
 	exit(EXIT_SUCCESS);
 }
 
@@ -89,18 +89,18 @@ void	init_sems(t_sim *sim)
 	sems = ft_calloc(1, sizeof(t_sems));
 	if (sems == NULL)
 		exit(EXIT_FAILURE);
-	sem_unlink("/num_forks");
-	sems->num_forks = sem_open("/num_forks", O_CREAT, 0777, sim->num_phils);
+	sem_unlink("/forks");
+	sems->num_forks = sem_open("/forks", O_CREAT, 0644, sim->num_phils);
 	sem_unlink("/logging");
-	sems->logging = sem_open("/logging", O_CREAT, 0777, 1);
+	sems->logging = sem_open("/logging", O_CREAT, 0644, 1);
 	sem_unlink("/turn");
-	sems->turn = sem_open("/turn", O_CREAT, 0777, 1);
+	sems->turn = sem_open("/turn", O_CREAT, 0644, 1);
 	sem_unlink("/time");
-	sems->time = sem_open("/time", O_CREAT, 0777, 1);
+	sems->time = sem_open("/time", O_CREAT, 0644, 1);
 	sem_unlink("/num_eats");
-	sems->num_eats = sem_open("/num_eats", O_CREAT, 0777, 0);
+	sems->num_eats = sem_open("/num_eats", O_CREAT, 0644, 0);
 	sem_unlink("/status");
-	sems->status = sem_open("/status", O_CREAT, 0777, 0);
+	sems->status = sem_open("/status", O_CREAT, 0644, 0);
 	if (sems->num_forks == SEM_FAILED || sems->logging == SEM_FAILED
 		|| sems->turn == SEM_FAILED || sems->time == SEM_FAILED
 		|| sems->num_eats == SEM_FAILED || sems->status == SEM_FAILED)

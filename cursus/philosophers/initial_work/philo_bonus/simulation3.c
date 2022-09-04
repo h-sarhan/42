@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 16:41:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 12:38:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 17:22:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	sleep_phase(t_phil *phil)
 
 void	put_back_fork(t_phil *phil)
 {
-	sem_post(phil->sim->sems->num_forks);
+	if (sem_post(phil->sim->sems->num_forks) != 0)
+		perror(NULL);
 }
 
 void	pick_up_fork(t_phil *phil)
