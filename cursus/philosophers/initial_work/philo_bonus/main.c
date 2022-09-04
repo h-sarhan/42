@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 10:48:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 12:02:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ static void	*check_for_min_eats(void *sim_ptr)
 
 	sim = sim_ptr;
 	i = 0;
+	// sem_wait(sim->sems->num_eats);
 	while (i < sim->num_phils)
 	{
+		// usleep(300);
+		// printf("WAITING #%lu\n", i + 1);
 		sem_wait(sim->sems->num_eats);
 		i++;
 	}
@@ -44,16 +47,17 @@ static void	cleanup(t_sim *sim, t_phil **philosophers)
 	size_t		i;
 	pthread_t	min_eats_thread;
 
-	i = 0;
-	pthread_create(&min_eats_thread, NULL, check_for_min_eats, sim);
+	if (sim->min_eats > 0)
+		pthread_create(&min_eats_thread, NULL, check_for_min_eats, sim);
 	sem_wait(sim->sems->status);
 	i = 0;
-	while (i < sim->num_phils)
+	while (sim->min_eats > 0 && i < sim->num_phils)
 	{
 		sem_post(sim->sems->num_eats);
 		i++;
 	}
-	pthread_join(min_eats_thread, NULL);
+	if (sim->min_eats > 0)
+		pthread_join(min_eats_thread, NULL);
 	kill_philosophers(sim);
 	free_philosophers(philosophers);
 	free_sim(sim);
