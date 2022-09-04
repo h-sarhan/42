@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 10:13:17 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 10:48:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ static void	*check_time(void *phil_ptr)
 			break ;
 		usleep(100);
 	}
-	// free_sim(phil->sim);
-	// free_philosophers(phil->sim->philosophers);
 	return (NULL);
 }
 
@@ -84,11 +82,13 @@ void	free_sim(t_sim *sim)
 	sem_unlink("/turn");
 	sem_unlink("/time");
 	sem_unlink("/num_eats");
+	sem_unlink("/status");
 	sem_close(sim->sems->logging);
 	sem_close(sim->sems->num_eats);
 	sem_close(sim->sems->num_forks);
 	sem_close(sim->sems->time);
 	sem_close(sim->sems->turn);
+	sem_close(sim->sems->status);
 	ft_free(&sim->start_time);
 	ft_free(&sim->sems);
 	ft_free(&sim->philo_pids);

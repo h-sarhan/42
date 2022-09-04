@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 10:13:09 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 10:48:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 // * ./philo_bonus 4 500 400 300
 // * ./philo_bonus 3 700 200 200 Philosophers shouldnt die here
 // * ./philo_bonus 199 800 200 100
-
 static void	*check_for_min_eats(void *sim_ptr)
 {
 	t_sim	*sim;
@@ -36,9 +35,7 @@ static void	*check_for_min_eats(void *sim_ptr)
 		sem_wait(sim->sems->num_eats);
 		i++;
 	}
-	kill_philosophers(sim);
-	// free_sim(sim);
-	// exit(EXIT_SUCCESS);
+	sem_post(sim->sems->status);
 	return (NULL);
 }
 
@@ -49,12 +46,7 @@ static void	cleanup(t_sim *sim, t_phil **philosophers)
 
 	i = 0;
 	pthread_create(&min_eats_thread, NULL, check_for_min_eats, sim);
-	while (1)
-	{
-		if (waitpid(sim->philo_pids[i % sim->num_phils], NULL, WNOHANG) != 0)
-			break ;
-		i++;
-	}
+	sem_wait(sim->sems->status);
 	i = 0;
 	while (i < sim->num_phils)
 	{
@@ -62,7 +54,7 @@ static void	cleanup(t_sim *sim, t_phil **philosophers)
 		i++;
 	}
 	pthread_join(min_eats_thread, NULL);
-	// kill_philosophers(sim);
+	kill_philosophers(sim);
 	free_philosophers(philosophers);
 	free_sim(sim);
 	exit(EXIT_SUCCESS);
@@ -79,7 +71,6 @@ void	kill_philosophers(t_sim *sim)
 			kill(sim->philo_pids[i], SIGKILL);
 		i++;
 	}
-	// exit(EXIT_SUCCESS);
 }
 
 void	init_sems(t_sim *sim)
@@ -99,9 +90,11 @@ void	init_sems(t_sim *sim)
 	sems->time = sem_open("/time", O_CREAT, 0777, 1);
 	sem_unlink("/num_eats");
 	sems->num_eats = sem_open("/num_eats", O_CREAT, 0777, 0);
+	sem_unlink("/status");
+	sems->status = sem_open("/status", O_CREAT, 0777, 0);
 	if (sems->num_forks == SEM_FAILED || sems->logging == SEM_FAILED
 		|| sems->turn == SEM_FAILED || sems->time == SEM_FAILED
-		|| sems->num_eats == SEM_FAILED)
+		|| sems->num_eats == SEM_FAILED || sems->status == SEM_FAILED)
 		exit(EXIT_FAILURE);
 	sim->sems = sems;
 }
