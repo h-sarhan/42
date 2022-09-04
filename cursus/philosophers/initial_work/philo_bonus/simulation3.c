@@ -6,23 +6,22 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 16:41:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 12:00:56 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 12:38:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	think_phase(t_phil *phil)
+void	think_phase(t_phil *phil)
 {
 	phil->state = THINKING;
-	if (log_action(phil->sim, phil->num, "is thinking") == false)
-		return (END);
-	return (CONTINUE);
+	log_action(phil->sim, phil->num, "is thinking");
 }
 
 int	check_time_since_eat(t_phil *phil)
 {
-	sem_wait(phil->sim->sems->time);
+	if (sem_wait(phil->sim->sems->time) != 0)
+		perror(NULL);
 	if (get_utime(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 	{
 		sem_post(phil->sim->sems->time);
@@ -34,11 +33,11 @@ int	check_time_since_eat(t_phil *phil)
 	return (CONTINUE);
 }
 
-int	sleep_phase(t_phil *phil)
+void	sleep_phase(t_phil *phil)
 {
 	log_action(phil->sim, phil->num, "is sleeping");
 	sleepsleep(phil, phil->sim->time_to_sleep * 1000);
-	return (CONTINUE);
+	phil->state = SLEEPING;
 }
 
 void	put_back_fork(t_phil *phil)
@@ -48,5 +47,6 @@ void	put_back_fork(t_phil *phil)
 
 void	pick_up_fork(t_phil *phil)
 {
-	sem_wait(phil->sim->sems->num_forks);
+	if (sem_wait(phil->sim->sems->num_forks) != 0)
+		perror(NULL);
 }

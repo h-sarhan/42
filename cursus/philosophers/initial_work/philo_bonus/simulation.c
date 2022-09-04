@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 12:05:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 14:05:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,11 @@ void	*run_sim(void *phil_ptr)
 	while (1)
 	{
 		if (phil->state == THINKING)
-			if (eating_phase(phil) == END)
-				return (NULL);
+			eating_phase(phil);
 		if (phil->state == EATING)
-		{
-			if (sleep_phase(phil) == END)
-				return (NULL);
-			phil->state = SLEEPING;
-		}
+			sleep_phase(phil);
 		if (phil->state == SLEEPING)
-			if (think_phase(phil) == END)
-				return (NULL);
+			think_phase(phil);
 		if (phil->state == DEAD)
 			return (NULL);
 	}
@@ -77,18 +71,15 @@ void	*run_sim(void *phil_ptr)
 // Frees a simulation struct
 void	free_sim(t_sim *sim)
 {
-	sem_unlink("/num_forks");
-	sem_unlink("/logging");
-	sem_unlink("/turn");
-	sem_unlink("/time");
-	sem_unlink("/num_eats");
-	sem_unlink("/status");
-	sem_close(sim->sems->logging);
-	sem_close(sim->sems->num_eats);
-	sem_close(sim->sems->num_forks);
-	sem_close(sim->sems->time);
-	sem_close(sim->sems->turn);
-	sem_close(sim->sems->status);
+	if (sim->sems != NULL)
+	{
+		sem_close(sim->sems->logging);
+		sem_close(sim->sems->num_eats);
+		sem_close(sim->sems->num_forks);
+		sem_close(sim->sems->time);
+		sem_close(sim->sems->turn);
+		sem_close(sim->sems->status);
+	}
 	ft_free(&sim->start_time);
 	ft_free(&sim->sems);
 	ft_free(&sim->philo_pids);

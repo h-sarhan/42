@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 10:33:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 12:15:10 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ void			free_philosophers(t_phil **phils);
 t_sim			*create_simulation(void);
 void			free_sim(t_sim *sim);
 void			*run_sim(void *phil);
-int				think_phase(t_phil *phil);
+void			think_phase(t_phil *phil);
 int				check_time_since_eat(t_phil *phil);
-int				sleep_phase(t_phil *phil);
-int				eating_phase(t_phil *phil);
+void			sleep_phase(t_phil *phil);
+void			eating_phase(t_phil *phil);
 void			pick_up_fork(t_phil *phil);
 void			put_back_fork(t_phil *phil);
 void			kill_philosophers(t_sim *sim);
@@ -110,7 +110,7 @@ t_sim			*init_sim(int argc, char **argv, t_phil ***philosophers);
 size_t			ft_strlen(const char *str);
 void			ft_free(void *memory);
 void			*ft_calloc(size_t count, size_t size);
-int				sleepsleep(t_phil *phil, t_time_ms sleep_time);
+void			sleepsleep(t_phil *phil, t_time_ms sleep_time);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 
 // Time
@@ -118,7 +118,7 @@ t_time_ms		get_time(const t_timeval *sim);
 t_time_ms		get_utime(const t_timeval *start_time);
 
 // Logging Functions
-bool			log_action(t_sim *sim, const size_t phil_num,
+void			log_action(t_sim *sim, const size_t phil_num,
 					const char *action);
 
 // Parsing

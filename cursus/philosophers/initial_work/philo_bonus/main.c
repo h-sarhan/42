@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 12:05:14 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 14:04:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static void	*check_for_min_eats(void *sim_ptr)
 	i = 0;
 	while (i < sim->num_phils)
 	{
-		sem_wait(sim->sems->num_eats);
+		if (sem_wait(sim->sems->num_eats) != 0)
+			perror(NULL);
 		i++;
 	}
 	sem_post(sim->sems->status);
@@ -46,7 +47,8 @@ static void	cleanup(t_sim *sim, t_phil **philosophers)
 
 	if (sim->min_eats > 0)
 		pthread_create(&min_eats_thread, NULL, check_for_min_eats, sim);
-	sem_wait(sim->sems->status);
+	if (sem_wait(sim->sems->status) != 0)
+		perror(NULL);
 	i = 0;
 	while (sim->min_eats > 0 && i < sim->num_phils)
 	{
@@ -57,6 +59,12 @@ static void	cleanup(t_sim *sim, t_phil **philosophers)
 		pthread_join(min_eats_thread, NULL);
 	kill_philosophers(sim);
 	free_philosophers(philosophers);
+	sem_unlink("/num_forks");
+	sem_unlink("/logging");
+	sem_unlink("/turn");
+	sem_unlink("/time");
+	sem_unlink("/num_eats");
+	sem_unlink("/status");
 	free_sim(sim);
 	exit(EXIT_SUCCESS);
 }
@@ -76,7 +84,7 @@ void	kill_philosophers(t_sim *sim)
 
 void	init_sems(t_sim *sim)
 {
-	t_sems	*sems;
+	t_sems			*sems;
 
 	sems = ft_calloc(1, sizeof(t_sems));
 	if (sems == NULL)
@@ -107,9 +115,9 @@ int	main(int argc, char **argv)
 	size_t		i;
 
 	sim = init_sim(argc, argv, &philosophers);
-	sim->philosophers = philosophers;
 	if (sim == NULL)
 		return (EXIT_FAILURE);
+	sim->philosophers = philosophers;
 	i = 0;
 	init_sems(sim);
 	while (i < sim->num_phils)

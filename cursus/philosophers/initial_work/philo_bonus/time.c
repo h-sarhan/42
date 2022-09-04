@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 09:15:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 12:11:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ unsigned long	get_utime(const t_timeval *start_time)
 	return (curr_time_in_us - start_time_in_us);
 }
 
-int	sleepsleep(t_phil *phil, t_time_ms sleep_time)
+void	sleepsleep(t_phil *phil, t_time_ms sleep_time)
 {
 	t_time_ms	time_slept;
 	t_timeval	start_time;
@@ -50,13 +50,9 @@ int	sleepsleep(t_phil *phil, t_time_ms sleep_time)
 	(void)phil;
 	time_slept = 0;
 	gettimeofday(&start_time, NULL);
-	while (time_slept < sleep_time
-		&& get_utime(phil->phil_eat_time) < phil->sim->time_to_die * 1000)
+	while (time_slept < sleep_time)
 	{
 		usleep(100);
 		time_slept = get_utime(&start_time);
 	}
-	if (time_slept < sleep_time)
-		return (FAIL);
-	return (SUCCESS);
 }
