@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 12:02:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 12:05:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,8 @@ static void	*check_for_min_eats(void *sim_ptr)
 
 	sim = sim_ptr;
 	i = 0;
-	// sem_wait(sim->sems->num_eats);
 	while (i < sim->num_phils)
 	{
-		// usleep(300);
-		// printf("WAITING #%lu\n", i + 1);
 		sem_wait(sim->sems->num_eats);
 		i++;
 	}

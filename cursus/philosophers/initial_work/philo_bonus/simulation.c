@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 11:56:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 12:05:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	*check_time(void *phil_ptr)
 	while (1)
 	{
 		if (check_time_since_eat(phil) == END)
-			return (NULL) ;
+			return (NULL);
 		usleep(500);
 	}
 	return (NULL);
