@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/03 22:40:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 08:37:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ bool	log_action(t_sim *sim, const size_t phil_num, t_log_func f)
 	sem_wait(sim->sems->logging);
 	time = get_time(sim->start_time);
 	f(&time, phil_num);
-	sem_post(sim->sems->logging);
+	if (f != log_death)
+		sem_post(sim->sems->logging);
 	// }
 	// else
 	// 	sem_post(sim->sems->status);
-	if (f == log_death)
-		return (false);
+		// return (false);
 	return (true);
 }

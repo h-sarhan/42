@@ -6,17 +6,16 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 07:44:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 08:40:29 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 // Tests: 
-// ? valgrind --tool=helgrind --history-level=none  ./philo 5 800 200 200 7
+// ? valgrind --tool=helgrind --history-level=none  ./philo_bonus 5 800 200 200 7
 
 // * ./philo_bonus 1 800 200 200: Should not eat and die
-// ! Optional argument doesnt work
 // * ./philo_bonus 5 800 200 200 7: No one should die
 // * ./philo_bonus 4 410 200 200: No one should die
 // * ./philo_bonus 4 310 200 100: A philosopher should die
@@ -28,12 +27,30 @@
 // * ./philo_bonus 3 700 200 200 Philosophers shouldnt die here
 // * ./philo_bonus 199 800 200 100
 
+static void	*check_for_min_eats(void *sim_ptr)
+{
+	t_sim	*sim;
+	size_t	i;
+
+	sim = sim_ptr;
+	i = 0;
+	while (i < sim->num_phils)
+	{
+		sem_wait(sim->sems->num_eats);
+		i++;
+	}
+	kill_philosophers(sim);
+	free_sim(sim);
+	exit(0);
+}
+
 static void	cleanup(t_sim *sim, pthread_t *threads, t_phil **philosophers)
 {
-	size_t	i;
-	pid_t	retval;
-
+	size_t		i;
+	pthread_t	min_eats_thread;
+	
 	i = 0;
+	pthread_create(&min_eats_thread, NULL, check_for_min_eats, sim);
 	while (1)
 	{
 		if (waitpid(sim->philosopher_pids[i % sim->num_phils], NULL, WNOHANG) != 0)
@@ -89,42 +106,9 @@ void	kill_philosophers(t_sim *sim)
 	exit(0);
 }
 
-static void	check_sim(t_sim *sim, t_phil **philosophers)
-{
-	bool	all_ate;
-	size_t	i;
-
-	// while (read_sim_status(sim) == true)
-	// {
-	// 	if (sim->min_eats > 0)
-	// 	{
-	// 		i = 0;
-	// 		all_ate = true;
-	// 		while (i < sim->num_phils)
-	// 		{
-	// 			if (read_num_eats(philosophers[i]) < sim->min_eats)
-	// 				all_ate = false;
-	// 			i++;
-	// 		}
-	// 		if (all_ate == true)
-	// 		{
-	// 			break;
-	// 		}
-	// 	}
-	// }
-	// i = 0;
-	// printf("KILLING\n");
-	// while (i < sim->num_phils)
-	// {
-	// 	kill(SIGKILL, sim->philosopher_pids[i]);
-	// 	i++;
-	// }
-}
 
 void	init_sems(const t_sim *sim, t_sems *sems)
 {
-	unsigned int	i;
-	char			*phil_name;
 
 	// printf("INITIALIZING num_forks semaphore with value %d\n", sim->num_phils);
 	sem_unlink("/num_forks");
@@ -159,23 +143,15 @@ void	init_sems(const t_sim *sim, t_sems *sems)
 		// ! BETTER ERROR HANDLING
 		exit(EXIT_FAILURE);
 	}
-	i = 0;
-	// ! REPLACE THIS WITH LIBFT VERSION
-	phil_name = strdup("/0");
-	sems->num_eats = ft_calloc(sim->num_phils, sizeof(sem_t *));
-	while (i < sim->num_phils)
+	sem_unlink("/num_eats");
+	sems->num_eats = sem_open("/num_eats", O_CREAT | O_EXCL, 0777, 0);
+	if (sems->num_eats == SEM_FAILED)
 	{
-		phil_name[1] = i + 1;
-		sem_unlink(phil_name);
-		sems->num_eats[i] = sem_open(phil_name, O_CREAT | O_EXCL, 0777, 1);
-		if (sems->num_eats[i] == SEM_FAILED)
-		{
-			exit(EXIT_FAILURE);
-			// sems->num_eats[i] = sem_open(phil_name, O_CREAT | O_EXCL, 0777, 1);
-		}
-		i++;
+		// sems->num_eats = sem_open("/num_eats", O_CREAT | O_EXCL, 0777, 1);
+		// ! BETTER ERROR HANDLING
+		exit(EXIT_FAILURE);
 	}
-	free(phil_name);
+	
 }
 
 

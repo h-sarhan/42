@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 07:43:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/04 08:27:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 static int	eat_spaghetti(t_phil *phil)
 {
 	sem_wait(phil->sim->sems->turn);
-	if (check_time_since_eat(phil) == END)
-		return (END);
+	// if (check_time_since_eat(phil) == END)
+	// 	return (END);
 	pick_up_fork(phil);
 	if (log_action(phil->sim, phil->num, log_fork) == false)
 		return (END);
-	if (check_time_since_eat(phil) == END)
-		return (END);
+	// if (check_time_since_eat(phil) == END)
+	// 	return (END);
 	pick_up_fork(phil);
 	if (log_action(phil->sim, phil->num, log_fork) == false)
 		return (END);
@@ -33,9 +33,11 @@ static int	eat_spaghetti(t_phil *phil)
 	// ! BROKEN
 	if (phil->sim->min_eats > 0)
 	{
-		sem_wait(phil->sim->sems->num_eats[phil->num]);
 		phil->num_eats++;
-		sem_post(phil->sim->sems->num_eats[phil->num]);
+		if (phil->num_eats == phil->sim->min_eats)
+		{
+			sem_post(phil->sim->sems->num_eats);
+		}
 	}
 	sem_wait(phil->sim->sems->time);
 	gettimeofday(phil->phil_eat_time, NULL);
@@ -44,8 +46,8 @@ static int	eat_spaghetti(t_phil *phil)
 		return (END);
 	put_back_fork(phil);
 	put_back_fork(phil);
-	if (check_time_since_eat(phil) == END)
-		return (END);
+	// if (check_time_since_eat(phil) == END)
+	// 	return (END);
 	phil->state = EATING;
 	return (CONTINUE);
 }
