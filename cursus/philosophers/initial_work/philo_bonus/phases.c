@@ -5,20 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/13 15:35:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 17:41:57 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/08/13 16:41:00 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/09/05 11:22:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+void	think_phase(t_phil *phil)
+{
+	phil->state = THINKING;
+	log_action(phil->sim, phil->num, "is thinking");
+}
+
+void	sleep_phase(t_phil *phil)
+{
+	log_action(phil->sim, phil->num, "is sleeping");
+	sleepsleep(phil, phil->sim->time_to_sleep * 1000);
+	phil->state = SLEEPING;
+}
+
 void	eating_phase(t_phil *phil)
 {
 	if (sem_wait(phil->sim->sems->turn) != 0)
 		perror(NULL);
-	pick_up_fork(phil);
+	sem_wait(phil->sim->sems->num_forks);
 	log_action(phil->sim, phil->num, "has taken a fork");
-	pick_up_fork(phil);
+	sem_wait(phil->sim->sems->num_forks);
 	log_action(phil->sim, phil->num, "has taken a fork");
 	log_action(phil->sim, phil->num, "is eating");
 	sem_post(phil->sim->sems->turn);
@@ -27,8 +40,8 @@ void	eating_phase(t_phil *phil)
 	gettimeofday(phil->phil_eat_time, NULL);
 	sem_post(phil->sim->sems->time);
 	sleepsleep(phil, phil->sim->time_to_eat * 1000);
-	put_back_fork(phil);
-	put_back_fork(phil);
+	sem_post(phil->sim->sems->num_forks);
+	sem_post(phil->sim->sems->num_forks);
 	phil->state = EATING;
 	if (phil->sim->min_eats > 0)
 	{

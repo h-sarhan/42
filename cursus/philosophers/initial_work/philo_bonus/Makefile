@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 10:29:36 by hsarhan           #+#    #+#              #
-#    Updated: 2022/09/04 17:27:27 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/09/05 11:22:20 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Wextra -g -pthread 
 
-SRCS = logging.c simulation.c simulation2.c simulation3.c time.c utils.c \
+SRCS = logging.c simulation.c phases.c time.c utils.c \
 		parser.c main.c philosophers.c
 
 OBJS := $(SRCS:%.c=%.o)

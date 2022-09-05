@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:29:49 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 12:15:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/05 11:20:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 // Time
 t_time_ms		get_time(const t_timeval *sim);
 t_time_ms		get_utime(const t_timeval *start_time);
-
+void			*check_time(void *phil_ptr);
 // Logging Functions
 void			log_action(t_sim *sim, const size_t phil_num,
 					const char *action);

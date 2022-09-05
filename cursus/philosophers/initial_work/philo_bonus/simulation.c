@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:44:51 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 18:29:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/05 11:23:48 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ t_sim	*create_simulation(void)
 		return (NULL);
 	}
 	return (sim);
-}
-
-static void	*check_time(void *phil_ptr)
-{
-	t_phil	*phil;
-
-	phil = phil_ptr;
-	while (1)
-	{
-		if (check_time_since_eat(phil) == END)
-			return (NULL);
-		usleep(500);
-	}
-	return (NULL);
 }
 
 void	*run_sim(void *phil_ptr)
@@ -108,4 +94,18 @@ t_sim	*init_sim(int argc, char **argv, t_phil ***philosophers)
 		return (NULL);
 	}
 	return (sim);
+}
+
+void	*check_time(void *phil_ptr)
+{
+	t_phil	*phil;
+
+	phil = phil_ptr;
+	while (1)
+	{
+		if (check_time_since_eat(phil) == END)
+			return (NULL);
+		usleep(500);
+	}
+	return (NULL);
 }
