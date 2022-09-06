@@ -6,24 +6,26 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 14:25:24 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 18:47:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/07 02:01:42 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHONE_BOOK
-# define PHONE_BOOK
+#define PHONE_BOOK
 
 #include "Contact.hpp"
+#include <iostream>
 
 class PhoneBook
 {
 public:
-	PhoneBook();
-	void	addContact(const Contact &contact);
-	void	displayContacts() const;
-	void	displayContact(const size_t contact_idx) const;
+	PhoneBook(void);
+	void addContact(void);
+	void searchPhoneBook(void) const;
+
 private:
-	Contact	contacts[8];
-	size_t	contacts_idx;
+	void _displayContacts(void) const;
+	Contact _contacts[8];
+	size_t _contactsIdx;
 };
 #endif

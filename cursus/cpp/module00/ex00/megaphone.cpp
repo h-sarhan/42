@@ -6,14 +6,14 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 00:53:31 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 14:23:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/06 23:09:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	if (argc == 1)
 	{
