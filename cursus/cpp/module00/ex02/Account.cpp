@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 05:49:15 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/07 06:39:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/07 06:55:05 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int Account::getNbWithdrawals(void)
 }
 
 Account::Account(int initial_deposit)
-	: _accountIndex(_nbAccounts), _amount(initial_deposit), _nbDeposits(1), _nbWithdrawals(0)
+	: _accountIndex(_nbAccounts), _amount(initial_deposit), _nbDeposits(0), _nbWithdrawals(0)
 {
 	_displayTimestamp();
 	std::cout << "index:" << _accountIndex << ";amount:" << _amount << ";created" << std::endl;
@@ -71,12 +71,21 @@ void Account::displayAccountsInfos(void)
 			  << std::endl;
 }
 
-// [19920104_091532] index:0;amount:47;closed
 Account::~Account(void)
 {
 	_displayTimestamp();
 	std::cout << "index:" << _accountIndex
 			  << ";amount:" << _amount
 			  << ";closed"
+			  << std::endl;
+}
+
+void Account::displayStatus(void) const
+{
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex
+			  << ";amount:" << _amount
+			  << ";deposits:" << _nbDeposits
+			  << ";withdrawals:" << _nbWithdrawals
 			  << std::endl;
 }

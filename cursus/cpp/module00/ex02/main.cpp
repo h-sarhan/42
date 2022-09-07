@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 06:07:27 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/07 06:38:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/07 06:54:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int main(void)
 	int const amounts[] = {42, 54, 957, 432, 1234, 0, 754, 16576};
 	size_t const amounts_size(sizeof(amounts) / sizeof(int));
 	accounts_t accounts(amounts, amounts + amounts_size);
-	// accounts_t::iterator acc_begin = accounts.begin();
-	// accounts_t::iterator acc_end = accounts.end();
+	accounts_t::iterator acc_begin = accounts.begin();
+	accounts_t::iterator acc_end = accounts.end();
 
 	int const d[] = {5, 765, 564, 2, 87, 23, 9, 20};
 	size_t const d_size(sizeof(d) / sizeof(int));
@@ -39,5 +39,5 @@ int main(void)
 	// ints_t::iterator wit_end = withdrawals.end();
 
 	Account::displayAccountsInfos();
-	// std::for_each(acc_begin, acc_end, std::mem_fun_ref(&Account::displayStatus));
+	std::for_each(acc_begin, acc_end, std::mem_fun_ref(&Account::displayStatus));
 }
