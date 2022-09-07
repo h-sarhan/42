@@ -34,8 +34,8 @@ int main(void)
 	int const w[] = {321, 34, 657, 4, 76, 275, 657, 7654};
 	size_t const w_size(sizeof(w) / sizeof(int));
 	ints_t withdrawals(w, w + w_size);
-	// ints_t::iterator wit_begin = withdrawals.begin();
-	// ints_t::iterator wit_end = withdrawals.end();
+	ints_t::iterator wit_begin = withdrawals.begin();
+	ints_t::iterator wit_end = withdrawals.end();
 
 	Account::displayAccountsInfos();
 	std::for_each(acc_begin, acc_end, std::mem_fun_ref(&Account::displayStatus));
@@ -50,13 +50,13 @@ int main(void)
 	Account::displayAccountsInfos();
 	std::for_each(acc_begin, acc_end, std::mem_fun_ref(&Account::displayStatus));
 
-	// for (acc_int_t it(acc_begin, wit_begin);
-	// 	 it.first != acc_end && it.second != wit_end;
-	// 	 ++(it.first), ++(it.second))
-	// {
+	for (acc_int_t it(acc_begin, wit_begin);
+		 it.first != acc_end && it.second != wit_end;
+		 ++(it.first), ++(it.second))
+	{
 
-	// 	(*(it.first)).makeWithdrawal(*(it.second));
-	// }
+		(*(it.first)).makeWithdrawal(*(it.second));
+	}
 
 	Account::displayAccountsInfos();
 	std::for_each(acc_begin, acc_end, std::mem_fun_ref(&Account::displayStatus));

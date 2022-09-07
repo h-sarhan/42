@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 05:49:15 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/07 07:01:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/07 11:46:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,32 @@ void Account::makeDeposit(int deposit)
 			  << std::endl;
 	_nbDeposits += 1;
 	_amount += deposit;
+	_totalAmount += deposit;
+	_totalNbDeposits += 1;
+}
+// [19920104_091532] index:1;p_amount:819;withdrawal:34;amount:785;nb_withdrawals:1
+// OR
+// [19920104_091532] index:5;p_amount:23;withdrawal:refused
+bool Account::makeWithdrawal(int withdrawal)
+{
+	_displayTimestamp();
+	if (_amount < withdrawal)
+	{
+		std::cout << "index:" << _accountIndex
+				  << ";p_amount:" << _amount
+				  << ";withdrawal:refused"
+				  << std::endl;
+		return false;
+	}
+	std::cout << "index:" << _accountIndex
+				<< ";p_amount:" << _amount
+				<< ";withdrawal:" << withdrawal
+				<< ";amount:" << _amount - withdrawal
+				<< ";nb_withdrawals:" << _nbWithdrawals + 1
+				<< std::endl;
+	_nbWithdrawals += 1;
+	_amount -= withdrawal;
+	_totalNbWithdrawals += 1;
+	_totalAmount -= withdrawal;
+	return true;
 }
