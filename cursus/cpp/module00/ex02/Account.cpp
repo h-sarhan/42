@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 05:49:15 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/07 06:16:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/07 06:39:57 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,17 @@ int Account::getNbWithdrawals(void)
 }
 
 Account::Account(int initial_deposit)
-	: _accountIndex(0), _amount(initial_deposit), _nbDeposits(1), _nbWithdrawals(0)
+	: _accountIndex(_nbAccounts), _amount(initial_deposit), _nbDeposits(1), _nbWithdrawals(0)
 {
-	_totalAmount = initial_deposit;
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex << ";amount:" << _amount << ";created" << std::endl;
+	_nbAccounts += 1;
+	_totalAmount += initial_deposit;
 }
 
-int Account::_nbAccounts = 1;
+int Account::_nbAccounts = 0;
 int Account::_totalAmount = 0;
-int Account::_totalNbDeposits = 1;
+int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
 
 void Account::_displayTimestamp(void)
@@ -55,5 +58,25 @@ void Account::_displayTimestamp(void)
 			  << std::setw(2) << std::setfill('0') << now->tm_hour
 			  << std::setw(2) << std::setfill('0') << now->tm_min
 			  << std::setw(2) << std::setfill('0') << now->tm_sec
-			  << "]\n";
+			  << "] ";
+}
+
+void Account::displayAccountsInfos(void)
+{
+	_displayTimestamp();
+	std::cout << "accounts:" << _nbAccounts
+			  << ";total:" << _totalAmount
+			  << ";deposits:" << _totalNbDeposits
+			  << ";withdrawals:" << _totalNbWithdrawals
+			  << std::endl;
+}
+
+// [19920104_091532] index:0;amount:47;closed
+Account::~Account(void)
+{
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex
+			  << ";amount:" << _amount
+			  << ";closed"
+			  << std::endl;
 }

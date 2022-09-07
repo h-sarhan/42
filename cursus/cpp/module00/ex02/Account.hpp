@@ -6,10 +6,9 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 05:49:12 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/07 06:12:40 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/07 06:19:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #pragma once
 #ifndef __ACCOUNT_H__
@@ -37,7 +36,6 @@ public:
 	bool makeWithdrawal(int withdrawal);
 	int checkAmount(void) const;
 	void displayStatus(void) const;
-	static void _displayTimestamp(void);
 
 private:
 	static int _nbAccounts;
@@ -45,7 +43,7 @@ private:
 	static int _totalNbDeposits;
 	static int _totalNbWithdrawals;
 
-
+	static void _displayTimestamp(void);
 	int _accountIndex;
 	int _amount;
 	int _nbDeposits;
