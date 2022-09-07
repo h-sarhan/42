@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 05:49:15 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/07 06:55:05 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/07 07:01:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,18 @@ void Account::displayStatus(void) const
 			  << ";deposits:" << _nbDeposits
 			  << ";withdrawals:" << _nbWithdrawals
 			  << std::endl;
+}
+
+// [19920104_091532] index:0;p_amount:42;deposit:5;amount:47;nb_deposits:1
+void Account::makeDeposit(int deposit)
+{
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex
+			  << ";p_amount:" << _amount
+			  << ";deposit:" << deposit
+			  << ";amount:" << deposit + _amount
+			  << ";nb_deposits:" << _nbDeposits + 1
+			  << std::endl;
+	_nbDeposits += 1;
+	_amount += deposit;
 }
