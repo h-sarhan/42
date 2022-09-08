@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 11:39:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/05 11:23:51 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/08 22:58:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ void	sleepsleep(t_phil *phil, t_time_ms sleep_time)
 
 int	check_time_since_eat(t_phil *phil)
 {
-	if (sem_wait(phil->sim->sems->time) != 0)
-		perror(NULL);
+	sem_wait(phil->sim->sems->time);
 	if (get_utime(phil->phil_eat_time) >= phil->sim->time_to_die * 1000)
 	{
 		sem_post(phil->sim->sems->time);

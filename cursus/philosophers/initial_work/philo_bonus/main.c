@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 10:54:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/04 18:37:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/08 22:58:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ static void	*check_for_min_eats(void *sim_ptr)
 	i = 0;
 	while (i < sim->num_phils)
 	{
-		if (sem_wait(sim->sems->num_eats) != 0)
-			perror(NULL);
+		sem_wait(sim->sems->num_eats);
 		i++;
 	}
 	sem_post(sim->sems->status);
@@ -47,8 +46,7 @@ static void	cleanup(t_sim *sim, t_phil **philosophers)
 
 	if (sim->min_eats > 0)
 		pthread_create(&min_eats_thread, NULL, check_for_min_eats, sim);
-	if (sem_wait(sim->sems->status) != 0)
-		perror(NULL);
+	sem_wait(sim->sems->status);
 	i = 0;
 	while (sim->min_eats > 0 && i < sim->num_phils)
 	{
