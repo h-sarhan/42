@@ -6,11 +6,11 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 10:29:36 by hsarhan           #+#    #+#              #
-#    Updated: 2022/09/05 11:22:20 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/09/09 08:39:54 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = cc
 
 CFLAGS = -Wall -Wextra -Wextra -g -pthread 
 
