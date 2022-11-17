@@ -6,13 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 12:17:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/07/31 13:49:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/11/17 21:23:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// Checks if an argument id numeric
+// Checks if an argument is numeric
 static bool	is_numeric(char *str)
 {
 	int	i;
